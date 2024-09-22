@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/21 18:00:42 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/09/22 20:31:27 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,32 +70,32 @@ ASTNode *create_ASTNode(NodeType type, char **tokens, ASTNode *left, ASTNode *ri
 //     return (res);
 // }
 
-void operation_parsing(char ***tokens, ASTNode **left_node)
+void operation_parsing(char ***tokens, ASTNode **left_node, char **env)
 {
     if (ft_strcmp(**tokens, "&&") == 0)
     {
         *tokens++;
-        ASTNode *right_node = parse_to_Nodes(*tokens); // 재귀 호출
-        *left_node = create_ASTNode(NODE_AND, NULL, *left_node, right_node);
+        ASTNode *right_node = parse_to_Nodes(*tokens, env); // 재귀 호출
+        *left_node = create_ASTNode(NODE_AND, NULL, *left_node, right_node, env);
     }
     else if (ft_strcmp(**tokens, "||") == 0)
     {
         *tokens++;
-        ASTNode *right_node = parse_to_Nodes(*tokens); // 재귀 호출
-        *left_node = create_ASTNode(NODE_OR, NULL, *left_node, right_node);
+        ASTNode *right_node = parse_to_Nodes(*tokens, env); // 재귀 호출
+        *left_node = create_ASTNode(NODE_OR, NULL, *left_node, right_node, env);
     }
     else if (ft_strcmp(**tokens, "|") == 0)
     {
         *tokens++;
-        ASTNode *right_node = parse_to_Nodes(*tokens); // 재귀 호출
-        *left_node = create_ASTNode(NODE_PIPE, NULL, *left_node, right_node);
+        ASTNode *right_node = parse_to_Nodes(*tokens, env); // 재귀 호출
+        *left_node = create_ASTNode(NODE_PIPE, NULL, *left_node, right_node, env);
     }
     else if (ft_strcmp(***tokens, "(") == 0)
     {
         *tokens++;
         *tokens = tokenize_input(**tokens);
-        ASTNode *right_node = parse_to_Nodes(*tokens); // 재귀 호출
-        *left_node = create_ASTNode(NODE_SUBSHELL, NULL, *left_node, right_node);
+        ASTNode *right_node = parse_to_Nodes(*tokens, env); // 재귀 호출
+        *left_node = create_ASTNode(NODE_SUBSHELL, NULL, *left_node, right_node, env);
     }
     else
         *tokens++;
@@ -108,6 +108,6 @@ ASTNode *parse_to_Nodes(char **tokens, char **env)
     if (*tokens && **tokens != '(')
         left_node = create_ASTNode(NODE_COMMAND, *tokens, NULL, NULL, env);
     while (*tokens)
-        operation_parsing(&tokens, &left_node);
+        operation_parsing(&tokens, &left_node, env);
     return (left_node);
 }
