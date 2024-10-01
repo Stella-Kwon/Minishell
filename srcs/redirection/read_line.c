@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:09:24 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/20 20:43:21 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/01 21:04:23 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int ft_charjoin(char **line, t_line *readline)
         if (!(join))
             return (FAIL);
         ft_strlcpy(join, *line, readline->buf_size);
-        free_one(*line);
+        free_one((void**)line);
         *line = join;
     }
     return (SUCCESS);

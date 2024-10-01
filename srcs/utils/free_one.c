@@ -6,17 +6,19 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 20:42:39 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/20 20:42:50 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/01 21:02:01 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void free_one(char **str)
+#include <stdlib.h>
+
+void free_one(void **ptr)
 {
-    if (*str)
+    if (ptr && *ptr)
     {
-        free(*str);
-        *str = NULL;
+        free(*ptr); 
+        *ptr = NULL;
     }
 }

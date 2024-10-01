@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:50:33 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/02 15:39:39 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/01 22:52:23 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int handle_258_exitcode_print(char *msg)
     ft_putstr_fd("syntax error near unexpected token ", 2);
     ft_putstr_fd(msg, 2);
     ft_putstr_fd("\n", 2);
+    return (FAIL);
 }
 
 int handle_error(int custom_error_code)
@@ -43,7 +44,7 @@ int handle_error(int custom_error_code)
     return exit_status;
 }
 
-int    log_errors(char *msg)
+int    log_errors(char *token, char *msg)
 {
     int fd;
 
@@ -51,36 +52,41 @@ int    log_errors(char *msg)
     if (fd == -1)
     {
         perror("minishell.log open failed");
-        return (handle_error(0));
+        return (FAIL);
     }
-    // 현재 시간 얻기
-    time_t now = time(NULL);
-    if (now == (time_t)-1) {
-        perror("Failed to get current time");
-        close(fd);
-        return (handle_error(0));
-    }
+    // // 현재 시간 얻기
+    // time_t now = time(NULL);
+    // if (now == (time_t)-1) {
+    //     perror("Failed to get current time");
+    //     close(fd);
+    //     return (handle_error(0));
+    // }
     // 현재 시간을 문자열로 변환
-    char *timestamp = ctime(&now);
-    if (timestamp == NULL)
-    {
-        perror("Failed to convert time to string : ");
-        close(fd);
-        return (handle_error(0));
-    }
-    // 문자열의 끝에 있는 개행 문자 제거
-    timestamp[ft_strlen(timestamp) - 1] = '\0';
+    // char *timestamp = ctime(&now);
+    // if (timestamp == NULL)
+    // {
+    //     perror("Failed to convert time to string : ");
+    //     close(fd);
+    //     return (handle_error(0));
+    // }
+    // // 문자열의 끝에 있는 개행 문자 제거
+    // timestamp[ft_strlen(timestamp) - 1] = '\0';
     
     // 표준 에러에 오류 메시지 출력
     ft_putstr_fd("bash: ", 2);
-    perror(msg);
+    perror(token);
 
     // 로그 파일에 시간과 오류 메시지 기록
-    ft_putstr_fd(timestamp, fd);
-    ft_putstr_fd(" : ", fd);
+    // ft_putstr_fd(timestamp, fd);
+    // ft_putstr_fd(" : ", fd);
+    ft_putstr_fd("bash: ", fd);
+    ft_putstr_fd(token, fd);
+    ft_putstr_fd(": ", fd);
     ft_putstr_fd(strerror(errno), fd);
+    ft_putstr_fd(": ", fd);
+    ft_putstr_fd(msg, fd);
     ft_putstr_fd("\n", fd); // 줄바꿈 추가
 
     close(fd);
-    return (handle_error(0));
+    return (FAIL);
 }

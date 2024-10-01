@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:31:39 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/14 17:31:51 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/09/28 17:56:57 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int ft_isspace(char c)
 {
     if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
     {
-        return 1; // 공백 문자
+        return 1;
     }
-    return 0; // 공백 문자가 아님
+    return 0;
 }

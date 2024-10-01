@@ -6,7 +6,7 @@
 #    By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/09/20 15:31:43 by suminkwon        ###   ########.fr        #
+#    Updated: 2024/10/02 05:20:05 by suminkwon        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,23 +31,23 @@ SRCS = minishell.c\
 		utils/ft_strcmp.c\
 		utils/ft_strndup.c\
 		utils/ft_realloc.c\
-		utils/isspace.c\
-		utils/ft_strndup.c\
 		utils/ft_isspace.c\
+		utils/free_one.c\
 		utils/waitpid_status.c\
 		tokenize/readline_again.c\
 		tokenize/check_set.c\
 		tokenize/tokenize.c\
 		tokenize/tokenize_operator.c\
 		tokenize/store_words.c\
+		tokenize/operation_error.c\
 		signal/signal.c \
 		redirection/heredoc.c\
 		redirection/herestring.c\
 		redirection/read_line.c\
 		parsing/create_parse.c\
 		parsing/create_command.c\
-		execution/execution_node.c\
 		error_log/log_file.c\
+		# execution/execution_node.c\
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
@@ -57,8 +57,7 @@ vpath %.c $(SRCS_DIR)
 all: $(LIBFT) $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAG) $(COMPILE_FLAG) -c $< -o $@
-
+	@$(CC) $(FLAG) $(COMPILE_FLAG) -c $< -o $@
 $(NAME): $(MAN_OBJS)
 	@$(CC) $(FLAG) $(COMPILE_FLAG) $(LINK_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
 	@echo "making minishell"

@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:36:33 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/19 16:38:26 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/01 23:02:11 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int waitpid_status(int wstatus)
     }
     else if (WIFSIGNALED(wstatus))
     {
-        log_errors("WAIT_STATUS : Child process terminated due to signal");
+        log_errors("WAIT_STATUS : Child process terminated due to signal", "");
         return (WTERMSIG(wstatus));
     }
     else if (WIFSTOPPED(wstatus))
     {
-        log_errors("WAIT_STATUS : Child process was stopped by signal");
+        log_errors("WAIT_STATUS : Child process was stopped by signal", "");
         return (WSTOPSIG(wstatus));
     }
     ft_putstr_fd("Unexpected termination status\n", 2);

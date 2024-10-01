@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:18:11 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/22 20:56:53 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/01 22:54:14 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int pipe_action_parents(Command *cmd, Pipeline *pipeline) // 이미 콜백함수
     //waitpid담에 해줘야 기존의 STDIN이 유지돼어 실행되고 자식프로세스 종류후에 변경해줘야한다.
     close(pipeline->fd[1]);                        // 쓰기 끝을 닫음
     if (dup2(pipeline->fd[0], STDIN_FILENO) == -1) // 그 파이프안의 있는 내용을 읽기 끝을 표준 입력으로 설정
-        return (log_errors("Failed to dup2 fd[0] in pipe_action_parents"));
+        return (log_errors("Failed to dup2 fd[0] in pipe_action_parents", ""));
     close(pipeline->fd[0]);                         // 읽기 끝을 닫음
     if (dup2(pipeline->tmp_fd, STDIN_FILENO) == -1) // lsof에 다 닫히게 하기위해 stdin을 복구
-        return (log_errors("Failed to dup2 tmp_fd in pipe_action_parents"));
+        return (log_errors("Failed to dup2 tmp_fd in pipe_action_parents", ""));
     close(pipeline->tmp_fd);
     cmd->exitcode = waitpid_status(cmd->wstatus);
     return (cmd->exitcode);
@@ -36,7 +36,7 @@ int pipe_execute_command(ASTNode **node)
 
     pid = fork();
     if (pid == -1)
-        return (log_errors("Failed to fork in excute_command"));
+        return (log_errors("Failed to fork in excute_command", ""));
     if (pid == 0)
     {
         if (action_child((*node)->command, (*node)->pipeline) != SUCCESS)
