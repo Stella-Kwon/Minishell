@@ -61,8 +61,8 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
             continue;
         }
 
-        printf("print start\n");
-        print_ASTNode(root, 0); // AST 노드 출력
+        // printf("print start\n");
+        // print_ASTNode(root, 0); // AST 노드 출력
 
         // 사용한 메모리 해제
         free(input);
