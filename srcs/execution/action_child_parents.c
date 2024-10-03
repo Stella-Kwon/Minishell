@@ -14,7 +14,7 @@
 
 int action_child(Command *cmd, Redirection *redir, Pipeline *pipeline)
 {
-    if (redir->infile) // fork이후에는 여기에 있어야 자식프로세스에 반영이되지, 부모에서 불러주면 부모에만 반영된다.
+    if (redir->infile != -2) // fork이후에는 여기에 있어야 자식프로세스에 반영이되지, 부모에서 불러주면 부모에만 반영된다.
     {
         if (dup2(redir->infile, STDIN_FILENO) == -1)
             return (log_errors("Failed to dup2 in action_child", ""));
@@ -28,7 +28,7 @@ int action_child(Command *cmd, Redirection *redir, Pipeline *pipeline)
             return (log_errors("Failed to dup2 in action_child", ""));
         close(redir->infile);
     }
-    if (redir->outfile)
+    if (redir->outfile != -2)
     {
         if (dup2(redir->outfile, STDOUT_FILENO) == -1)
             return (log_errors("Failed to dup2 in action_child", ""));
