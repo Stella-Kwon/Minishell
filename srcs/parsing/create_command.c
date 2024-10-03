@@ -262,7 +262,7 @@ Command *create_command(char ***tokens, char **env)
             free_Command(&res);
             return (NULL);
         }
-        printf("res->args : %s\n", res->args[args_index]);
+        //printf("res->args : %s\n", res->args[args_index]);
         (*tokens)++;
         args_index++;
     }
