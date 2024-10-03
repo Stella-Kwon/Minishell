@@ -103,6 +103,11 @@ int initialize_ASTNode(ASTNode **node, char ***tokens)
         (*node)->left = NULL;
         (*node)->right = NULL;
     }
+    if (!tokens || !*tokens) // 이거 없으면 fsanitizer할때 잘못된 주소접근으로 에러생김 
+    {
+        // Handle the error: tokens are invalid
+        return FAIL;
+    }
     if (is_redirection(*tokens))
     {
         (*node)->redir = create_redirection();
