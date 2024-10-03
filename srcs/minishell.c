@@ -60,6 +60,7 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
             free(input);
             continue;
         }
+		execute_node(&root);
 
         // printf("print start\n");
         // print_ASTNode(root, 0); // AST 노드 출력
