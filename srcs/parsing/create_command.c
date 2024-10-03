@@ -266,7 +266,7 @@ Command *create_command(char ***tokens, char **env)
         (*tokens)++;
         args_index++;
     }
-    printf("----------------------------------\n");
+    //printf("----------------------------------\n");
     res->args[args_index] = NULL;
     // 다이렉트로 res->args넣어야지char **tmp_args = res->args; 해서 넣어주면 전달이 제대로 안됨..
     res->exitcode = -1; // 기본값 설정
