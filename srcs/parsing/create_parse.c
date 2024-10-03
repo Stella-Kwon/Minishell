@@ -128,21 +128,21 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
     if (initialize_ASTNode(&ast, tokens) == FAIL)
         return(NULL);
     ast->type = type;
-    printf("ast->type : %u\n", ast->type);
+    //printf("ast->type : %u\n", ast->type);
     if (!tokens || !*tokens || !**tokens)
     {
-        printf("\nNODE_OPERATION\n");
+        //printf("\nNODE_OPERATION\n");
         ast->command = NULL;
     }
     else
     {
-        printf("tokens : %s\n", **tokens);
+        //printf("tokens : %s\n", **tokens);
         ast->command = create_command(tokens, env);
         if (!ast->command)
             return (NULL);
     }
-    printf("\n AFTER CREATE COMMAND tokens : %s\n\n", **tokens);
-    printf("hello\n\n\n");
+   // printf("\n AFTER CREATE COMMAND tokens : %s\n\n", **tokens);
+   // printf("hello\n\n\n");
     ast->pipeline = create_pipeline();
     if (!ast->pipeline)
         return (NULL);
@@ -161,16 +161,16 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
             return (NULL);
         }
     }
-    printf("now\n\n");
+    //printf("now\n\n");
     ast->left = left;
     ast->right = right;
-    printf("now\n\n");
+   //printf("now\n\n");
     return (ast);
 }
 
 void operation_parsing(char ***tokens, ASTNode **left_node, char **env)
 {
-    printf("-----------------OPERATING PARSING TOKEN : %s\n------------------------", **tokens);
+    //printf("-----------------OPERATING PARSING TOKEN : %s\n------------------------", **tokens);
     if (ft_strcmp(**tokens, "&&") == 0)
     {
         (*tokens)++;
@@ -203,13 +203,13 @@ ASTNode *parse_to_Nodes(char **tokens, char **env)
     ASTNode *left_node;
     if (!tokens || !*tokens)
         return (NULL);
-    printf("--------------------start parsing tokens : %s---------------------\n", *tokens);
+    //printf("--------------------start parsing tokens : %s---------------------\n", *tokens);
     if (*tokens)
     {
         left_node = create_ASTNode(NODE_COMMAND, &tokens, NULL, NULL, env);
         if (!left_node)
             return (NULL);
-        printf("--------------------passed creating the first left node tokens : %s----------------------\n", *tokens);
+        //printf("--------------------passed creating the first left node tokens : %s----------------------\n", *tokens);
     }
     while (*tokens)//left + right 연산자 노드 만들고 나면 나와서 다시 토큰위치다음부터 시작.
     {
