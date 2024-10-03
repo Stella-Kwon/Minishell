@@ -12,6 +12,8 @@
 
 #include "../../includes/minishell.h"
 
+#include "../../includes/minishell.h"
+
 void free_redirection(Redirection **redir)
 {
     if (!(*redir))
@@ -92,6 +94,11 @@ Pipeline *create_pipeline()
         log_errors("Failed to malloc pipeline in create_pipeline", "");
         return (NULL);
     }
+    pipeline->fd[0] = -2; // 파이프의 읽기 및 쓰기 끝을 -2으로 초기화
+    pipeline->fd[1] = -2;
+    pipeline->pid = -2;       // 유효하지 않은 PID로 초기화
+    pipeline->tmp_fd = -2;    // 유효하지 않은 파일 디스크립터로 초기화
+
     return (pipeline);
 }
 
@@ -266,14 +273,15 @@ void print_ASTNode(ASTNode *node, int depth)
         // 명령어가 NULL이 아닐 경우, 명령어의 이름을 출력
         printf("Command: %s\n", node->command->cmd);
     }
+
     if (node->command && node->command->args)
     {
-        while (*node->command->args)
+        char **args = node->command->args; // 원래의 args를 저장
+        while (*args)
         {
-            printf("cmd->args : %s\n", *node->command->args);
-            (node->command->args)++;
+            printf("cmd->args : %s\n", *args);
+            args++; // args 포인터를 증가시킴
         }
-        printf("\n\n\n");
     }
     if (node->redir)
     {
