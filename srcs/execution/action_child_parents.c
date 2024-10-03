@@ -36,13 +36,13 @@ int action_child(Command *cmd, Redirection *redir, Pipeline *pipeline)
         close(pipeline->fd[0]);
         close(pipeline->fd[1]);
     }
-    else
-    {
-        close(pipeline->fd[0]);                         // 쓰기 끝을 닫음
-        if (dup2(pipeline->fd[1], STDOUT_FILENO) == -1) // 읽기 끝을 표준 입력으로 설정
-            return (log_errors("Failed to dup2 fd[0] in action_child", ""));
-        close(pipeline->fd[1]); // 읽기 끝을 닫음
-    }
+    // else
+    // {
+    //     close(pipeline->fd[0]);                         // 쓰기 끝을 닫음
+    //     if (dup2(pipeline->fd[1], STDOUT_FILENO) == -1) // 읽기 끝을 표준 입력으로 설정
+    //         return (log_errors("Failed to dup2 fd[0] in action_child", ""));
+    //     close(pipeline->fd[1]); // 읽기 끝을 닫음
+    // }
     if (execute_cmd(cmd) == FAIL) // 이부분 cmd->cmd는 path까지 들어가게 바꿔야댐.
     	log_errors("Execute_cmd has failed.", "");
     return (cmd->exitcode);
