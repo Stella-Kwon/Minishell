@@ -12,13 +12,11 @@
 
 #include "../../includes/minishell.h"
 
-#include <stdlib.h>
-
-void free_one(void **ptr)
+void	free_one(void **ptr)
 {
-    if (ptr && *ptr)
-    {
-        free(*ptr); 
-        *ptr = NULL;
-    }
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }

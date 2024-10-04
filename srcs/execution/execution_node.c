@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	heredoc_check(ASTNode **node)
+int	heredoc_check(t_ASTNode **node)
 {
     if ((*node)->redir->heredoc_limiter)
     {
@@ -22,7 +22,7 @@ int	heredoc_check(ASTNode **node)
     return (SUCCESS);
 }
 
-int ast_node_execution(ASTNode **node)
+int ast_node_execution(t_ASTNode **node)
 {
     if (node == NULL || *node == NULL)
         return (log_errors("AST node is NULL", ""));
@@ -40,7 +40,7 @@ int ast_node_execution(ASTNode **node)
     return (execute_node(node));
 }
 
-int execute_node(ASTNode **node)
+int execute_node(t_ASTNode **node)
 {
     if ((*node)->type == NODE_PIPE)
         return (PIPEnode_exec(node));
@@ -54,7 +54,7 @@ int execute_node(ASTNode **node)
     return (SUCCESS);
 }
 
-int ANDnode_exec(ASTNode **node)
+int ANDnode_exec(t_ASTNode **node)
 {
     int pid;
 
@@ -72,7 +72,7 @@ int ANDnode_exec(ASTNode **node)
 	return (SUCCESS);
 }
 
-int ORnode_exec(ASTNode **node)
+int ORnode_exec(t_ASTNode **node)
 {
     int pid;
 
@@ -90,7 +90,7 @@ int ORnode_exec(ASTNode **node)
     return (SUCCESS);
 }
 
-int CMDnode_exec(ASTNode **node)
+int CMDnode_exec(t_ASTNode **node)
 {
     int pid;
     

@@ -18,26 +18,21 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 
-COMPILE_FLAG = -I/usr/local/opt/readline/include/
+COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
-LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
-
-# COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
-
-# LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
 
 SRCS_DIR = ./srcs/
 
-SRCS =	mini.c \
+SRCS = minishell.c\
 		utils/setting_display.c\
 		utils/ft_strcmp.c\
 		utils/ft_strndup.c\
 		utils/ft_realloc.c\
 		utils/ft_isspace.c\
 		utils/free_one.c\
-		utils/all_free.c\
 		utils/waitpid_status.c\
 		tokenize/readline_again.c\
 		tokenize/check_set.c\
@@ -52,27 +47,7 @@ SRCS =	mini.c \
 		parsing/create_parse.c\
 		parsing/create_command.c\
 		error_log/log_file.c\
-
-		# minishell.c
-		# builtin/builtin.c\
-		# builtin/cd.c\
-		# builtin/echo.c\
-		# builtin/env_utils.c\
-		# builtin/env.c\
-		# builtin/exit.c\
-		# builtin/export.c\
-		# builtin/print_error.c\
-		# builtin/pwd.c\
-		# builtin/unset.c\
-		# execution/action_child.c\
-		# execution/action_parents.c\
-		# execution/execute.c\
 		# execution/execution_node.c\
-		# execution/pipe_execution.c\
-		# execution/utils.c\
-		# expand/expand.c\
-		# expand/utils.c\
-
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)

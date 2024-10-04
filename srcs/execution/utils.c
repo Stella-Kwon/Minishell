@@ -1,13 +1,13 @@
 #include "../../includes/minishell.h"
 
-int	error_exitcode(Command *command, char *s, int error_nb)
+int	error_exitcode(t_Command *command, char *s, int error_nb)
 {
 	ft_putstr_fd(s, STDERR_FILENO);
 	command->exitcode = error_nb;
 	return (FAIL);
 }
 
-int	cmd_error(Command *command, char *s, int error_nb)
+int	cmd_error(t_Command *command, char *s, int error_nb)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(command->cmd, STDERR_FILENO);
@@ -16,7 +16,7 @@ int	cmd_error(Command *command, char *s, int error_nb)
 	return (FAIL);
 }
 
-int	check_path(char *path, Command *command)
+int	check_path(char *path, t_Command *command)
 {
 	if (access(path, F_OK) == -1)
 		return (cmd_error(command, ": command not found\n", 127));
@@ -25,7 +25,7 @@ int	check_path(char *path, Command *command)
 	return (SUCCESS);
 }
 
-int	check_cmd_script(Command *command)
+int	check_cmd_script(t_Command *command)
 {
 	int	len;
 
@@ -43,13 +43,13 @@ int	check_cmd_script(Command *command)
 	return (SUCCESS);
 }
 
-int	check_cmd_error(Command *command)
+int	check_cmd_error(t_Command *command)
 {
 	int	len;
 
 	if (command->cmd == NULL)
 		return (cmd_error(command, ": command not found\n", 127));
-	if (remove_quotes(command) == FAIL || check_null_cmd(command) == FAIL)
+	if (check_null_cmd(command) == FAIL)
 		return (FAIL);
 	if (command->cmd[0] == '.' || command->cmd[0] == '/')
 	{
@@ -68,7 +68,7 @@ int	check_cmd_error(Command *command)
 	return (SUCCESS);
 }
 
-int	check_null_cmd(Command *command)
+int	check_null_cmd(t_Command *command)
 {
 	int	len;
 	int	i;
@@ -91,30 +91,6 @@ int	check_null_cmd(Command *command)
 		ft_putstr_fd(command->cmd, STDERR_FILENO);
 		cmd_error(command, ": command not found\n", 127);
 		return (FAIL);
-	}
-	return (SUCCESS);
-}
-
-int	remove_quotes(Command *command)
-{
-	int		len;
-	char	*new_s;
-
-	len = ft_strlen(command->cmd);
-	if ((command->cmd[0] == '"' && command->cmd[len - 1] == '"')
-		|| (command->cmd[0] == '\'' && command->cmd[len - 1] == '\''))
-	{
-		new_s = malloc((len - 1) * sizeof(char));
-		if (!new_s)
-		{
-			free(new_s);
-			cmd_error(command, ": Memory allocation failed\n", 1);
-			return (FAIL);
-		}
-		ft_strncpy(new_s, command->cmd + 1, len - 2);
-		new_s[len - 2] = '\0';
-		free(command->cmd);
-		command->cmd = new_s;
 	}
 	return (SUCCESS);
 }

@@ -21,7 +21,7 @@ static char	**find_env(char **envp)
 	return (ft_split(path_var, ':'));
 }
 
-static char	*get_path(Command *command, char **env_path)
+static char	*get_path(t_Command *command, char **env_path)
 {
 	char	*temp;
 	char	*path;
@@ -47,7 +47,7 @@ static char	*get_path(Command *command, char **env_path)
 	return (path);
 }
 
-static char	*find_and_check_path(Command *command) 
+static char	*find_and_check_path(t_Command *command) 
 {
     char	**env_path;
     char	*path;
@@ -66,7 +66,7 @@ static char	*find_and_check_path(Command *command)
     return (path);
 }
 
-int	execute_cmd(Command *command)
+int	execute_cmd(t_Command *command)
 {
 	char	*path;
 

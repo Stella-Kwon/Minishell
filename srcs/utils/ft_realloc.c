@@ -12,28 +12,28 @@
 
 #include "../../includes/minishell.h"
 
-char **ft_realloc(char **token, int position, int *bufsize)
+char	**ft_realloc(char **token, int position, int *bufsize)
 {
-    char **realloc_token;
-    int i;
-    
-    i = 0;
-    if (position >= *bufsize)
-    {
-        *bufsize *= 2;
-        realloc_token = (char **)malloc(*bufsize * sizeof(char *));
-        if (!realloc_token)
-            return (NULL);
-        if (token)
-        {
-            while (i <= position)
-            {
-                realloc_token[i] = token[i];
-                i++;
-            }
-            free(token);
-            token = realloc_token;
-        }
-    }
-    return (token);
+	char	**realloc_token;
+	int		i;
+
+	i = 0;
+	if (position >= *bufsize)
+	{
+		*bufsize *= 2;
+		realloc_token = (char **)malloc(*bufsize * sizeof(char *));
+		if (!realloc_token)
+			return (NULL);
+		if (token)
+		{
+			while (i <= position)
+			{
+				realloc_token[i] = token[i];
+				i++;
+			}
+			free(token);
+			token = realloc_token;
+		}
+	}
+	return (token);
 }

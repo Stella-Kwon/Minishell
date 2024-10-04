@@ -12,20 +12,17 @@
 
 #include "../../includes/minishell.h"
 
-char *store_words(char **start)
+char	*store_words(char **start)
 {
-    char *word_start;
-    
-    // printf("store : %c\n", **start);
-    word_start = *start;
-    while (**start && !ft_isspace(**start) &&
-            **start != '\'' && **start != '\"' && **start != '(' &&
-            **start != ')' && **start != '|' && **start != '&' &&
-            **start != '>' && **start != '$')
-    {
-        (*start)++;
-        // printf("c : %c\n", **start);
-    }
+	char	*word_start;
 
-    return (ft_strndup(word_start, *start - word_start));
+	word_start = *start;
+	while (**start && !ft_isspace(**start) && **start != '\'' && \
+			**start != '\"' && **start != '(' && **start != ')' && \
+			**start != '|' && **start != '&' && **start != '>' && \
+			**start != '$')
+	{
+		(*start)++;
+	}
+	return (ft_strndup(word_start, *start - word_start));
 }

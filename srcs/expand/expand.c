@@ -1,16 +1,17 @@
 #include "../../includes/minishell.h"
 
-static int	expand_value(t_dollar *dol)
+static int	expand_value(t_Dollar *dol)
 {
 	size_t	value_len;
 	char	*new_output;
 
 	if (!dol->var_value)
-		return (FAIL);
+		return(SUCCESS);
 	value_len = strlen(dol->var_value);
-	new_output = malloc(dol->out_len + value_len);
+	new_output = malloc((dol->out_len + value_len) * sizeof(char));
 	if (new_output == NULL)
 	{
+		log_errors("Malloc failed", "");
 		free(dol->output);
 		return (FAIL);
 	}
@@ -23,7 +24,7 @@ static int	expand_value(t_dollar *dol)
 	return (SUCCESS);
 }
 
-static int	for_exit_code(t_dollar *dol)
+static int	for_exit_code(t_Dollar *dol)
 {
 	size_t	exit_status;
 
@@ -32,7 +33,7 @@ static int	for_exit_code(t_dollar *dol)
 	return (SUCCESS);
 }
 
-static int	for_curly_braces(char *input, t_dollar *dol, char **env)
+static int	for_curly_braces(char *input, t_Dollar *dol, char **env)
 {
 	dol->i++;
 	if (input[dol->i] == '?')
@@ -60,7 +61,7 @@ static int	for_curly_braces(char *input, t_dollar *dol, char **env)
 	return (SUCCESS);
 }
 
-static int	for_dollar_sign(char *input, t_dollar *dol, char **env)
+static int	for_dollar_sign(char *input, t_Dollar *dol, char **env)
 {
 	dol->i++;
 	if (input[dol->i] == '{')
@@ -84,21 +85,24 @@ static int	for_dollar_sign(char *input, t_dollar *dol, char **env)
 		free(dol->var);
 	}
 	if (dol->var_value == NULL)
-		return (FAIL);
+		return (SUCCESS);
 	return (expand_value(dol));
 }
 
 char	*find_dollar_signs(char *input, char **env)
 {
-	t_dollar dol;
+	t_Dollar dol;
 
 	if (!input)
-		return (NULL);
+		return (input);
 	dol.len = ft_strlen(input);
 	dol.out_len = dol.len + 1;
-	dol.output = malloc(dol.out_len);
+	dol.output = malloc(dol.out_len * sizeof(char));
 	if (dol.output == NULL)
-		return (NULL);
+	{
+		log_errors("Malloc failed", "");
+		return (input);
+	}
 	dol.out_i = 0;
 	dol.i = 0;
 	while (dol.i < dol.len)
@@ -106,7 +110,7 @@ char	*find_dollar_signs(char *input, char **env)
 		if (input[dol.i] == '$')
 		{
 			if (for_dollar_sign(input, &dol, env) == FAIL)
-				return (NULL);
+				return (input);
 		}
 		else
 		{
@@ -118,19 +122,3 @@ char	*find_dollar_signs(char *input, char **env)
 	return (dol.output);
 }
 
-
-char *expand_cmd(char *cmd, char **env)
-{
-    return (find_dollar_signs(cmd, env)); // 달러 기호로 시작하는 변수를 확장
-}
-
-// 인자 확장 처리
-char **expand_args(char **args, char **env)
-{
-    int i = 0; // 인덱스 초기화
-    while (args[i] != NULL) { // args가 NULL이 아닐 때까지 반복
-        args[i] = find_dollar_signs(args[i], env); // 각 인자에 대해 확장 처리
-        i++; // 인덱스 증가
-    }
-    return args;
-}

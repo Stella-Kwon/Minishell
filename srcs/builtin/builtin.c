@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int builtin(Command *command) 
+int builtin(t_Command *command) 
 {
     if (ft_strncmp(command->cmd, "echo", 5) == 0)
         return echo(command->args, &command->env); //리턴 부분에서 cmd->args가 사용되는 이유는 echo와 같은 빌트인 함수가 해당 명령어에 대한 인자 목록을 필요로 하기 때문입니다. Command 구조체에서 args는 사용자가 입력한 명령어와 함께 제공된 인자(예: echo hello의 경우 "hello")를 포함하고 있습니다.

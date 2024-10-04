@@ -15,12 +15,13 @@
 
 # include "minishell.h"
 
-int set_ehcoctl(int flag);
-char **ft_realloc(char **token, int position, int *bufsize);
-char *ft_strndup(char *str, int n);
-int ft_isspace(char c);
-int ft_strcmp(const char *line, const char *limiter);
-int waitpid_status(int wstatus);
-void free_one(void **ptr);
+int		set_ehcoctl(int flag);
+char	**ft_realloc(char **token, int position, int *bufsize);
+char	*ft_strndup(char *str, int n);
+int		ft_isspace(char c);
+int		ft_strcmp(const char *line, const char *limiter);
+int		waitpid_status(int wstatus);
+void	free_one(void **ptr);
 char	**all_free(char ***res);
+
 #endif

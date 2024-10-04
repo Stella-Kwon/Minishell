@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int pipe_action_parents(Command *cmd, Pipeline *pipeline)
+int pipe_action_parents(t_Command *cmd, t_Pipeline *pipeline)
 {
     waitpid(pipeline->pid, &cmd->wstatus, 0); 
     close(pipeline->fd[1]); 
@@ -26,7 +26,7 @@ int pipe_action_parents(Command *cmd, Pipeline *pipeline)
     return (cmd->exitcode);
 }
 
-int pipe_execute_command(ASTNode **node)
+int pipe_execute_command(t_ASTNode **node)
 {
     int pid;
 
@@ -47,7 +47,7 @@ int pipe_execute_command(ASTNode **node)
     return (SUCCESS);
 }
 
-int PIPEnode_exec(ASTNode **node)
+int PIPEnode_exec(t_ASTNode **node)
 {
     if ((*node)->left) // pipe용 따로 해줘야함.ㅎ 왜냐면 구현할때 parents부분이 달라지기때문에.
     {

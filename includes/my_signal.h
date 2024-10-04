@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 
 #ifndef MY_SIGNAL_H
-#define MY_SIGNAL_H
+# define MY_SIGNAL_H
 
-#include "minishell.h"
+# include "minishell.h"
 
-// volatile sig_atomic_t g_received_signal = 0;
-extern int g_received_signal; // 다른 파일에서 사용할 수 있도록 선언
+extern int	g_received_signal;
 
-void init_signal();
-void init_execution_signal();
+void	init_signal(void);
+void	init_execution_signal(void);
+
 #endif

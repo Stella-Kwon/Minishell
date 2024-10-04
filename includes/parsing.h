@@ -15,22 +15,21 @@
 
 # include "minishell.h"
 
-#define INVALID -100
+# define INVALID -100
 
-ASTNode *parse_to_Nodes(char **tokens, char **env);
+t_ASTNode	*parse_to_Nodes(char **tokens, char **env);
+t_Command	*create_command(char ***tokens, char **env);
+int			is_operator(char **tokens);
+int			set_redirection(t_Redirection **redirect, char *filename, \
+			int direction_type);
+int			set_heredoc(t_Redirection **redirect, char *limiter);
+int			set_herestring(t_Redirection **redirect, char *string);
+int			set_dollar_vari(t_Redirection **redirect, char *vari);
+int			redirection_parsing(char ***args, t_Redirection **redirect);
+int			heredoc_herestring_dollar_parsing(char ***args, \
+			t_Redirection **redirect);
+int			parsing_others(char ***args, t_Redirection **redirect, int start);
+void		free_Command(t_Command **res);
+void		print_ASTNode(t_ASTNode *node, int depth);
 
-
-Command *create_command(char ***tokens, char **env);
-int is_operator(char **tokens);
-int set_redirection(Redirection **redirect, char *filename, int direction_type);
-int set_heredoc(Redirection **redirect, char *limiter);
-int set_herestring(Redirection **redirect, char *string);
-int set_dollar_vari(Redirection **redirect, char *vari);
-int redirection_parsing(char ***args, Redirection **redirect);
-int heredoc_herestring_dollar_parsing(char ***args, Redirection **redirect);
-int parsing_others(char ***args, Redirection **redirect, int start);
-void free_Command(Command **res);
-
-// print
-void print_ASTNode(ASTNode *node, int depth);
 #endif
