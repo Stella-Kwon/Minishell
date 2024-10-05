@@ -53,6 +53,11 @@ SRCS = mini.c\
 		redirection/read_line.c\
 		parsing/create_parse.c\
 		parsing/create_command.c\
+		parsing/astnode_utils.c\
+		parsing/heredoc_herestr_parsing.c\
+		parsing/parsing_utils.c\
+		parsing/redirection_parsing.c\
+		error_log/log_file.c\
 		error_log/log_file.c\
 		# execution/execution_node.c\
 		# minishell.c

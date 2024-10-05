@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 00:45:29 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/05 15:58:39 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_Redirection
 	int		direction_type;
 	char	*heredoc_limiter;
 	char	*herestring_str;
-	char	*dollar_vari;
 }	t_Redirection;
 
 typedef struct s_ASTNode
