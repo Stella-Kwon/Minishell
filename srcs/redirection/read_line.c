@@ -29,7 +29,7 @@ int	ft_charjoin(char **line, t_Line *readline)
 		if (!(join))
 			return (FAIL);
 		ft_strlcpy(join, *line, readline->buf_size);
-		free_one(line);
+		free_one((void **)line);
 		*line = join;
 	}
 	return (SUCCESS);

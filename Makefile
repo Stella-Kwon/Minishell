@@ -18,7 +18,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
 
 COMPILE_FLAG = -I/usr/local/opt/readline/include/
 
@@ -30,7 +30,7 @@ LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
 SRCS_DIR = ./srcs/
 
-SRCS = mini.c\
+SRCS =	mini.c \
 		utils/setting_display.c\
 		utils/ft_strcmp.c\
 		utils/ft_strndup.c\
@@ -58,9 +58,27 @@ SRCS = mini.c\
 		parsing/parsing_utils.c\
 		parsing/redirection_parsing.c\
 		error_log/log_file.c\
-		error_log/log_file.c\
-		# execution/execution_node.c\
+
 		# minishell.c
+		# builtin/builtin.c\
+		# builtin/cd.c\
+		# builtin/echo.c\
+		# builtin/env_utils.c\
+		# builtin/env.c\
+		# builtin/exit.c\
+		# builtin/export.c\
+		# builtin/print_error.c\
+		# builtin/pwd.c\
+		# builtin/unset.c\
+		# execution/action_child.c\
+		# execution/action_parents.c\
+		# execution/execute.c\
+		# execution/execution_node.c\
+		# execution/pipe_execution.c\
+		# execution/utils.c\
+		# expand/expand.c\
+		# expand/utils.c\
+
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
