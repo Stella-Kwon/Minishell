@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/29 14:36:33 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 22:58:15 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/08/29 14:36:33 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/05 17:48:06 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	heredoc_child(int fd, char *limiter)
 
 int	here_doc(t_ASTNode **node)
 {
-	(*node)->redir->infile = open(".heredoc.tmp",\
+	(*node)->redir->infile = open(".heredoc.tmp", \
 		O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*node)->redir->infile == -1)
 		return (log_errors(".heredoc.tmp", "Failed to open file in here_doc"));

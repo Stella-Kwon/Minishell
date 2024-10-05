@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 17:09:24 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 21:04:23 by suminkwon        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   read_line.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 17:09:24 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 21:04:23 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/09/18 17:09:24 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/01 21:04:23 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +29,7 @@ int	ft_charjoin(char **line, t_Line *readline)
 		if (!(join))
 			return (FAIL);
 		ft_strlcpy(join, *line, readline->buf_size);
-		free_one((void**)line);
+		free_one(line);
 		*line = join;
 	}
 	return (SUCCESS);
