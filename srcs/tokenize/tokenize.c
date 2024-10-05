@@ -3,105 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/16 09:30:43 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 23:01:54 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/05 03:41:00 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	store_str(char **tokens, char **start, int *token_count, int *buffsize)
+int	store_str(t_For_tokenize *tokenize, int *buffsize)
 {
-	if (!ft_isspace(**start) && **start != '\0')
+	if (!ft_isspace(*tokenize->start) && *tokenize->start != '\0')
 	{
-		tokens[*token_count] = store_words(start);
-		if (!tokens[*token_count])
+		tokenize->tokens[tokenize->token_count] = \
+										store_words(&tokenize->start);
+		if (!tokenize->tokens[tokenize->token_count])
 		{
-			all_free(&tokens);
+			all_free(&tokenize->tokens);
 			return (log_errors("Failed to store word", ""));
 		}
-		(*token_count)++;
-		tokens = ft_realloc(tokens, *token_count, buffsize);
-		if (!tokens)
+		tokenize->token_count++;
+		tokenize->tokens = ft_realloc(tokenize->tokens, \
+									tokenize->token_count, buffsize);
+		if (!tokenize->tokens)
 			return (log_errors("Failed to \"reallocate\" memory for tokens", \
 					""));
 	}
 	return (SUCCESS);
 }
 
-int	handle_special_tokens(int *buffsize, char **tokens, char **start, \
-	int *token_count, char **input)
+static int	handle_space(t_For_tokenize *tokenize)
 {
-	if (**start == '\'')
-		return (handle_set(tokens, start, token_count, input, '\''));
-	else if (**start == '"')
-		return (handle_set(tokens, start, token_count, input, '"'));
-	else if (**start == '(' || **start == ')')
-		return handle_set(tokens, start, token_count, input, ')');
-	else if (**start == '|')
-		return (handle_pipe_and_or(input, tokens, start, token_count));
-	else if (**start == '&')
-		return (handle_And_and_background(input, tokens, start, token_count));
-	else if (**start == '<')
-		return (handle_input_redirection(tokens, start, token_count));
-	else if (**start == '>')
-		return (handle_output_redirection(tokens, start, token_count));
-	else if (**start == '$')
-		return (handle_token(tokens, start, token_count, 1));
-	else if (ft_isspace(**start))
-	{
-		while (ft_isspace(**start))
-			(*start)++;
-		return (SUCCESS);
-	}
+	while (ft_isspace(*tokenize->start))
+		(*tokenize->start)++;
+	return (SUCCESS);
+}
+
+int	handle_special_tokens(int *buffsize, t_For_tokenize *tokenize)
+{
+	if (*tokenize->start == '\'')
+		return (handle_set(tokenize, '\''));
+	else if (*tokenize->start == '"')
+		return (handle_set(tokenize, '"'));
+	else if (*tokenize->start == '(' || *tokenize->start == ')')
+		return (handle_set(tokenize, ')'));
+	else if (*tokenize->start == '|')
+		return (handle_pipe_and_or(tokenize));
+	else if (*tokenize->start == '&')
+		return (handle_and_and_background(tokenize));
+	else if (*tokenize->start == '<')
+		return (handle_input_redirection(tokenize));
+	else if (*tokenize->start == '>')
+		return (handle_output_redirection(tokenize));
+	else if (*tokenize->start == '$')
+		return (handle_token(tokenize, 1));
+	else if (ft_isspace(*tokenize->start))
+		return (handle_space(tokenize));
 	else
 	{
-		if (store_str(tokens, start, token_count, buffsize) != SUCCESS)
+		if (store_str(tokenize, buffsize) != SUCCESS)
 			return (FAIL);
 	}
 	return (SUCCESS);
 }
 
-char	**initialize_tokenization(int buffsize, int *token_count)
+char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
 {
-	char	**tokens;
-
-	tokens = NULL;
-	tokens = malloc(buffsize * sizeof(char *));
-	if (!tokens)
+	tokenize->tokens = NULL;
+	tokenize->tokens = malloc(buffsize * sizeof(char *));
+	if (!tokenize->tokens)
 	{
 		log_errors("Failed to allocate memory for tokens", "");
 		return (NULL);
 	}
-	*token_count = 0;
-	return (tokens);
+	tokenize->token_count = 0;
+	return (tokenize->tokens);
 }
 
 char	**tokenize_input(char **input)
 {
-	char	*start;
-	int		token_count;
-	int		buffsize;
-	char	**tokens;
+	int				buffsize;
+	t_For_tokenize	tokenize;
 
-	start = *input;
+	tokenize.input = *input;
+	tokenize.start = *input;
 	buffsize = BUFFSIZE;
-	tokens = initialize_tokenization(buffsize, &token_count);
-	if (!tokens)
+	tokenize.tokens = initialize_tokenization(buffsize, &tokenize);
+	if (!tokenize.tokens)
 		return (NULL);
-	if (check_first_input(&start) != SUCCESS)
+	if (check_first_input(&tokenize) != SUCCESS)
 		return (NULL);
-	while (*start)
+	while (*tokenize.start)
 	{
-		if (handle_special_tokens(&buffsize, tokens, &start, \
-			&token_count, input) != SUCCESS)
+		if (handle_special_tokens(&buffsize, &tokenize) != SUCCESS)
 		{
-			all_free(&tokens);
+			all_free(&tokenize.tokens);
 			return (NULL);
 		}
 	}
-	tokens[token_count] = NULL;
-	return (tokens);
+	tokenize.tokens[tokenize.token_count] = NULL;
+	return (tokenize.tokens);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_set.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 22:11:48 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 22:59:41 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/09/13 22:11:48 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/05 08:42:19 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,27 @@ void	update_quotes_and_depth(int *single_quote, int *double_quote,
 	}
 }
 
-static int	check_quotes_and_depth(char **input, char **start, \
-								t_Set *set, char ref)
+static int	check_quotes_and_depth(t_For_tokenize *tokenize, t_Set *set, \
+									char ref)
 {
 	if (set->depth > 0 || set->single_quote || set->double_quote)
 	{
-		readline_again(input, set, start);
-		if (!input)
+		readline_again(tokenize, set);
+		if (!tokenize->input)
 			return (FAIL);
-		*start = *input + strlen(*input);
+		tokenize->start = tokenize->input + strlen(tokenize->input);
 	}
 	else
 	{
-		set->tmp_end = *start + 1;
+		set->tmp_end = tokenize->start + 1;
 		while (*set->tmp_end != ref)
 			set->tmp_end++;
-		*start = set->tmp_end + 1;
+		tokenize->start = set->tmp_end + 1;
 	}
 	return (SUCCESS);
 }
 
-static void	check_set_start(t_Set *set, char **tokens, int *token_count)
+static void	check_set_start(t_Set *set, t_For_tokenize *tokenize)
 {
 	if (*set->tmp_start == '\'' || *set->tmp_start == '"')
 	{
@@ -81,23 +81,22 @@ static void	check_set_start(t_Set *set, char **tokens, int *token_count)
 	}
 	if (*set->tmp_start == '(' || *set->tmp_end == ')')
 	{
-		tokens[*token_count] = ft_strdup("(");
-		tokens[(*token_count) + 1] = ft_strdup(")");
-		*token_count += 2;
+		tokenize->tokens[tokenize->token_count] = ft_strdup("(");
+		tokenize->tokens[tokenize->token_count + 1] = ft_strdup(")");
+		tokenize->token_count += 2;
 		set->tmp_start += 1;
 		set->tmp_end -= 1;
 	}
 }
 
-char	*check_set(char **input, char **start, char **tokens, \
-				int *token_count, char ref)
+char	*check_set(t_For_tokenize *tokenize, char ref)
 {
 	t_Set	set;
 
 	set.depth = 0;
 	set.single_quote = 0;
 	set.double_quote = 0;
-	set.tmp_start = *start;
+	set.tmp_start = tokenize->start;
 	set.tmp_end = NULL;
 	while (*set.tmp_start)
 	{
@@ -105,12 +104,13 @@ char	*check_set(char **input, char **start, char **tokens, \
 			&set.depth, *set.tmp_start);
 		set.tmp_start++;
 	}
-	set.tmp_start = *start;
-	if (check_quotes_and_depth(input, start, &set, ref) == FAIL)
+	set.tmp_start = tokenize->start;
+	if (check_quotes_and_depth(tokenize, &set, ref) == FAIL)
 		return (NULL);
-	check_set_start(&set, tokens, token_count);
-	tokens[*token_count] = store_inside_set(set.tmp_start, set.tmp_end);
-	if (!tokens[*token_count])
+	check_set_start(&set, tokenize);
+	tokenize->tokens[tokenize->token_count] = store_inside_set(set.tmp_start, \
+																set.tmp_end);
+	if (!tokenize->tokens[tokenize->token_count])
 		return (NULL);
-	return (tokens[*token_count]);
+	return (tokenize->tokens[tokenize->token_count]);
 }

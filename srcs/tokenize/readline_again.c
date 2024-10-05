@@ -3,42 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   readline_again.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 19:18:27 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 23:01:05 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/09/14 19:18:27 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/05 02:59:40 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	readline_again(char **input, t_Set *set, char **start)
+static int	prepare_new_start(char **input, char **new_start, char **result)
 {
 	char		*new_input;
+	char		*tmp;
+
+	new_input = readline("> ");
+	if (!new_input)
+		return (log_errors("new_input readline(>) failed", ""));
+	tmp = ft_strjoin("\n", new_input);
+	free(new_input);
+	if (!tmp)
+		return (log_errors("Fail to add new line before add readline", ""));
+	*result = ft_strjoin(*input, tmp);
+	free(tmp);
+	if (!*result)
+		return (log_errors("Fail to strjoin in \"readline_again\"", ""));
+	*new_start = *result + ft_strlen(*input);
+	return (SUCCESS);
+}
+
+int	readline_again(t_For_tokenize *tokenize, t_Set *set)
+{
 	char		*new_start;
 	char		*result;
-	char		*tmp;
 	ptrdiff_t	offset;
-	char		*st;
-	char		*in;
 
 	while (set->single_quote || set->double_quote || set->depth > 0)
 	{
-		st = *start;
-		in = *input;
-		offset = st - in;
-		new_input = readline("> ");
-		if (!new_input)
-			return (log_errors("new_input readline(>) failed", ""));
-		tmp = ft_strjoin("\n", new_input);
-		free(new_input);
-		if (!tmp)
-			return (log_errors("Fail to add new line before add readline", ""));
-		result = ft_strjoin(*input, tmp);
-		free(tmp);
-		if (!result)
-			return (log_errors("Fail to strjoin in \"readline_again\"", ""));
-		new_start = result + ft_strlen(*input);
+		offset = tokenize->start - tokenize->input;
+		if (prepare_new_start(&tokenize->input, &new_start, &result) == FAIL)
+			return (FAIL);
 		while (*new_start)
 		{
 			update_quotes_and_depth(&set->single_quote,
@@ -47,12 +51,12 @@ int	readline_again(char **input, t_Set *set, char **start)
 				break ;
 			new_start++;
 		}
-		free(*input);
-		*input = result;
-		*start = *input + offset;
-		set->tmp_start = *start;
+		free(tokenize->input);
+		tokenize->input = result;
+		tokenize->start = tokenize->input + offset;
+		set->tmp_start = tokenize->start;
 		set->tmp_end = new_start;
-		add_history(*input);
+		add_history(tokenize->input);
 	}
 	return (SUCCESS);
 }
