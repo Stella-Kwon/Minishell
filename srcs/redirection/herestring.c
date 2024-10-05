@@ -31,4 +31,3 @@ int	here_string(t_Redirection **redir)
 		return (log_errors("Failed to unlink in here_string", ""));
 	return (SUCCESS);
 }
-
