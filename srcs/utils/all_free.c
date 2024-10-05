@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char	**all_free(char ***res)
+void	all_free(char ***res)
 {
 	int	i;
 
@@ -13,5 +13,4 @@ char	**all_free(char ***res)
 	}
 	free(*res);
 	*res = NULL;
-	return (NULL);
 }
