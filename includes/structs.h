@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 20:03:49 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/05 00:45:29 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,13 @@ typedef struct s_Dollar
 	char	*var;
 	char	*var_value;
 }	t_Dollar;
+
+typedef struct s_For_tokenize
+{
+	char	*input;
+	char	*start;
+	char	**tokens;
+	int		token_count;
+}	t_For_tokenize;
 
 #endif

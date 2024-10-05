@@ -22,6 +22,6 @@ int		ft_isspace(char c);
 int		ft_strcmp(const char *line, const char *limiter);
 int		waitpid_status(int wstatus);
 void	free_one(void **ptr);
-char	**all_free(char ***res);
+void	all_free(char ***res);
 
 #endif
