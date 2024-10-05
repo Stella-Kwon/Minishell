@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:50:33 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 22:52:23 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/04 16:09:46 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int    log_errors(char *token, char *msg)
     // 로그 파일에 시간과 오류 메시지 기록
     // ft_putstr_fd(timestamp, fd);
     // ft_putstr_fd(" : ", fd);
-    ft_putstr_fd("bash: ", fd);
+    ft_putstr_fd("MINISHELL : ", fd);
     ft_putstr_fd(token, fd);
     ft_putstr_fd(": ", fd);
     ft_putstr_fd(strerror(errno), fd);

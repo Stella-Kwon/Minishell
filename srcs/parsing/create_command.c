@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/02 02:12:34 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/05 22:42:07 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int set_redirection(Redirection **redirect, char *filename, int direction_type)
     (*redirect)->filename = ft_strdup(filename);
     if (!(*redirect)->filename)
         return (log_errors("Failed in storing filename in set_redirection", ""));
-
+    // printf("type : %d\n", direction_type);
     if (direction_type == REDIRECT_OUTPUT)
         (*redirect)->outfile = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     else if (direction_type == REDIRECT_APPEND)
@@ -54,20 +54,23 @@ int set_heredoc(Redirection **redirect, char *limiter)
 // herestring 설정
 int set_herestring(Redirection **redirect, char *string)
 {
-    (*redirect)->herestring_str = ft_strdup(string);
+    char *str;
+    
+    str = ft_strjoin(string, "\n");
+    (*redirect)->herestring_str = str;
     if (!(*redirect)->herestring_str)
         return (log_errors("Failed malloc in set_herestring", ""));
     return (SUCCESS);
 }
 
 // 달러 변수 설정
-int set_dollar_vari(Redirection **redirect, char *vari)
-{
-    (*redirect)->dollar_vari = ft_strdup(vari);
-    if (!(*redirect)->dollar_vari)
-        return (log_errors("Failed malloc in set_dollar_vari", ""));
-    return (SUCCESS);
-}
+// int set_dollar_vari(Redirection **redirect, char *vari)
+// {
+//     (*redirect)->dollar_vari = ft_strdup(vari);
+//     if (!(*redirect)->dollar_vari)
+//         return (log_errors("Failed malloc in set_dollar_vari", ""));
+//     return (SUCCESS);
+// }
 
 // 리다이렉션 파싱
 int get_direction_type(char *token)
@@ -79,37 +82,6 @@ int get_direction_type(char *token)
     if (ft_strcmp(token, "<") == 0)
         return (REDIRECT_INPUT);
     return (INVALID); // 유효하지 않은 방향 타입
-}
-
-int redirection_parsing(char ***args, Redirection **redirect)
-{
-    int direction_type;
-    int i;
-
-    i = 0;
-    // printf("1 redirection_parsing :: tokens : %s\n", **args);
-    if (ft_strcmp(**args, ">") == 0 || ft_strcmp(**args, ">>") == 0 || ft_strcmp(**args, "<") == 0)
-    {
-        direction_type = get_direction_type(**args);
-        if (direction_type == INVALID)
-            return (log_errors("Invalid redirection type", ""));
-
-        (*args)++;
-        // printf("filename :: tokens : %s && direction type :: %d\n", **args, direction_type);
-        if (set_redirection(redirect, **args, direction_type) == FAIL)
-            return (FAIL);
-        (*args)++; // 파일명을 건너뜀
-        // printf("2 redirection_parsing :: tokens : %s\n", **args);
-    }
-    else
-    {
-        i = heredoc_herestring_dollar_parsing(args, redirect);
-        if (i == FAIL) 
-            return (FAIL);
-        else if (i == 2)
-            return (2);
-    }
-    return (SUCCESS);
 }
 
 // heredoc, herestring, dollar 파싱
@@ -130,19 +102,55 @@ int heredoc_herestring_dollar_parsing(char ***args, Redirection **redirect)
             return (FAIL);
         (*args)++;
     }
-    else if (ft_strcmp(**args, "$") == 0)
-    {
-        (*args)++;
-        if (set_dollar_vari(redirect, **args) == FAIL)
-            return (FAIL);
-        (*args)++;
-    }
+    // else if (ft_strcmp(**args, "$") == 0)
+    // {
+    //     (*args)++;
+    //     if (set_dollar_vari(redirect, **args) == FAIL)
+    //         return (FAIL);
+    //     (*args)++;
+    // }
     else
     {
+        
+        // (*args)++;
         return (2);
     }
     return (SUCCESS);
 }
+
+int redirection_parsing(char ***args, Redirection **redirect)
+{
+    int direction_type;
+    int i;
+
+    i = 0;
+    // printf("1 redirection_parsing :: tokens : %s\n", **args);
+    if (ft_strcmp(**args, ">") == 0 || ft_strcmp(**args, ">>") == 0 || ft_strcmp(**args, "<") == 0)
+    {
+        printf("3333 redirection_parsing :: tokens : %s\n", **args);
+        direction_type = get_direction_type(**args);
+        if (direction_type == INVALID)
+            return (log_errors("Invalid redirection type", ""));
+
+        (*args)++;
+        printf("filename :: tokens : %s && direction type :: %d\n", **args, direction_type);
+        if (set_redirection(redirect, **args, direction_type) == FAIL)
+            return (FAIL);
+        (*args)++; // 파일명을 건너뜀
+        printf("2 redirection_parsing :: tokens : %s\n", **args);
+    }
+    else
+    {
+        // printf("2 redirection_parsing :: tokens : %s\n", **args);
+        i = heredoc_herestring_dollar_parsing(args, redirect);
+        if (i == FAIL) 
+            return (FAIL);
+        else if (i == 2)
+            return (2);
+    }
+    return (SUCCESS);
+}
+
 
 int parsing(char ***tmp_args, Redirection **redirect)
 {
@@ -153,10 +161,11 @@ int parsing(char ***tmp_args, Redirection **redirect)
     {
         // printf("1  tmp_args in loop : %s\n", **tmp_args);
         i = redirection_parsing(tmp_args, redirect);
+        printf("2  tmp_args in loop : %s\n", **tmp_args);
         if (i == FAIL)
             return (FAIL);
         if (i == 2)
-            return (2);
+            return (SUCCESS);
     }
     // printf("passing parsing\n\n");
     return (SUCCESS);
@@ -174,25 +183,37 @@ int parsing_others(char ***args, Redirection **redirect, int start) // 주어진
     {
         // printf("finish\n");
         return (SUCCESS);
-    }                                                                                                                                                                                                                                                                                                    
+    }
+    char **t_args = *args; // 원래의 args를 저장
+    while (*t_args)
+    {
+        // printf("cmd->t_args : %s\n", *t_args);
+        t_args++; // args 포인터를 증가시킴
+    }
     if (start == FALSE)
     {
         char **tmp_args = *args;
-        // printf("tmp_args : %s\n", *tmp_args);
+        // while (*tmp_args)
+        // {
+        //     printf("cmd->tmp_args : %s\n", *tmp_args);
+        //     tmp_args++; // args 포인터를 증가시킴
+        // }
         (tmp_args)++;
         i = parsing(&tmp_args, redirect);
         if (i == FAIL)
             return (FAIL);
-        if (i == 2)
-            return (2);
+        // if (i == 2)
+        //     return (2);
     }
-    else
+    else //맨 처음일떄.. 
     {
+        // printf("args : %s\n", **args);
         i = parsing(args, redirect);
+        printf("args : %s\n", **args);
         if (i == FAIL)
             return (FAIL);
-        if (i == 2)
-            return (2);
+        // if (i == 2)
+        //     return (2);
     }
     // printf("--------------getting in to while loopppppppp-------------\n");
     return (SUCCESS);
@@ -247,13 +268,7 @@ Command *create_command(char ***tokens, char **env)
     while (**tokens && !is_operator(*tokens))
     {
         // printf("args_index : %d\n", args_index);
-        res->args = ft_realloc(res->args, args_index, &buffersize);
-        if (!res->args)
-        {
-            log_errors("Failed to realloc res->args in create_command", "");
-            free_Command(&res);
-            return (NULL);
-        }
+
         // printf("tokens in repeated : %s\n", **tokens); // 여기서 |나 다른 연산자 나와선 안돼
         res->args[args_index] = ft_strdup(**tokens);
         if (!res->args[args_index])
@@ -265,6 +280,13 @@ Command *create_command(char ***tokens, char **env)
         //printf("res->args : %s\n", res->args[args_index]);
         (*tokens)++;
         args_index++;
+        res->args = ft_realloc(res->args, args_index, &buffersize);
+        if (!res->args)
+        {
+            log_errors("Failed to realloc res->args in create_command", "");
+            free_Command(&res);
+            return (NULL);
+        }
     }
     //printf("----------------------------------\n");
     res->args[args_index] = NULL;

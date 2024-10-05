@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 18:02:03 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/02 00:45:53 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/03 18:55:29 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int redirection_parsing(char ***args, Redirection **redirect);
 int heredoc_herestring_dollar_parsing(char ***args, Redirection **redirect);
 int parsing_others(char ***args, Redirection **redirect, int start);
 void free_Command(Command **res);
-
-// print
+void free_ASTNODE(ASTNode **node);
+    // print
 void print_ASTNode(ASTNode *node, int depth);
 #endif

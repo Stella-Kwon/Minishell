@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/02 01:53:35 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/05 22:27:41 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void free_redirection(Redirection **redir)
         free_one((void **)&(*redir)->heredoc_limiter);
     if ((*redir)->herestring_str)
         free_one((void **)&(*redir)->herestring_str);
-    if ((*redir)->dollar_vari)
-        free_one((void **)&(*redir)->dollar_vari);
+    // if ((*redir)->dollar_vari)
+    //     free_one((void **)&(*redir)->dollar_vari);
     free_one((void **)&(*redir));
 }
 
@@ -32,31 +32,33 @@ int is_redirection(char **token)
     int i;
 
     i = 0;
-    while (token[i])
-    {
-        if (ft_strcmp(token[i], "<") == 0 || ft_strcmp(token[i], "<<") == 0 || ft_strcmp(token[i], "<<<") == 0 ||
-            ft_strcmp(token[i], ">") == 0 || ft_strcmp(token[i], ">>") == 0)
-            return (TRUE);
-        i++;
-    }
+    // printf("re : token : %s\n", token[i]);
+    // while (token[i])
+    // {
+    if (ft_strcmp(token[i], "<") == 0 || ft_strcmp(token[i], "<<") == 0 || ft_strcmp(token[i], "<<<") == 0 ||
+        ft_strcmp(token[i], ">") == 0 || ft_strcmp(token[i], ">>") == 0)
+        return (TRUE);
+    i++;
+    // }
     return (FALSE);
 }
 
 Redirection *create_redirection()
 {
+    // printf("redirection start\n");
     Redirection *redir = (Redirection *)malloc(sizeof(Redirection));
     if (!redir)
     {
         log_errors("Failed to malloc redirection in create_redirection", "");
         return (NULL);
     }
+
     redir->infile = -2;
     redir->outfile = -2;
     redir->filename = NULL;
     redir->direction_type = -1;
     redir->heredoc_limiter = NULL;
     redir->herestring_str = NULL;
-    redir->dollar_vari = NULL;
     return (redir);
 }
 
@@ -89,12 +91,19 @@ Pipeline *create_pipeline()
         log_errors("Failed to malloc pipeline in create_pipeline", "");
         return (NULL);
     }
+    pipeline->fd[0] = -2; // 파이프의 읽기 및 쓰기 끝을 -2으로 초기화
+    pipeline->fd[1] = -2;
+    pipeline->pid = -2;       // 유효하지 않은 PID로 초기화
+    pipeline->left_pid = -2;       // 유효하지 않은 PID로 초기화
+    pipeline->right_pid = -2;       // 유효하지 않은 PID로 초기화
+    pipeline->tmp_fd = -2;    // 유효하지 않은 파일 디스크립터로 초기화
+
     return (pipeline);
 }
 
 int initialize_ASTNode(ASTNode **node, char ***tokens)
 {
-    if ((*node))
+    if (node && (*node))
     {
         (*node)->type = 0; // 적절한 기본 타입으로 설정
         (*node)->command = NULL;
@@ -103,7 +112,9 @@ int initialize_ASTNode(ASTNode **node, char ***tokens)
         (*node)->left = NULL;
         (*node)->right = NULL;
     }
-    if (is_redirection(*tokens))
+
+    // printf("11111\n");
+    if (tokens && *tokens && is_redirection(*tokens))
     {
         (*node)->redir = create_redirection();
         if (parsing_others(tokens, &(*node)->redir, TRUE) == FAIL)
@@ -112,6 +123,9 @@ int initialize_ASTNode(ASTNode **node, char ***tokens)
             return (FAIL);
         }
     }
+    // if (tokens && *tokens)
+        // printf("tokens in  : %s\n", **tokens);
+    // printf("22222\n");
     return (SUCCESS);
 }
 
@@ -125,24 +139,26 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
         log_errors("Failed to malloc node in create_ASTNode", "");
         return (NULL);
     }
+    // printf("Node address before initialization: %p\n", (void *)ast);
+    // printf("Tokens address: %p, first token: %s\n", (void *)*tokens, *tokens ? **tokens : "NULL");
+
     if (initialize_ASTNode(&ast, tokens) == FAIL)
-        return(NULL);
-    ast->type = type;
-    //printf("ast->type : %u\n", ast->type);
-    if (!tokens || !*tokens || !**tokens)
     {
-        //printf("\nNODE_OPERATION\n");
-        ast->command = NULL;
+        free(ast);
+        return (NULL);
     }
-    else
+    ast->type = type;
+    // printf("ast->type : %u\n", ast->type);
+    printf("tokens before create_command : %s\n", **tokens);
+    if (tokens && *tokens && **tokens)
     {
-        //printf("tokens : %s\n", **tokens);
+        printf("tokens before create_command : %s\n", **tokens);
         ast->command = create_command(tokens, env);
         if (!ast->command)
             return (NULL);
+        // if (**tokens)
+        //     printf("\n AFTER CREATE COMMAND tokens : %s\n\n", **tokens);
     }
-   // printf("\n AFTER CREATE COMMAND tokens : %s\n\n", **tokens);
-   // printf("hello\n\n\n");
     ast->pipeline = create_pipeline();
     if (!ast->pipeline)
         return (NULL);
@@ -161,26 +177,33 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
             return (NULL);
         }
     }
-    //printf("now\n\n");
     ast->left = left;
     ast->right = right;
-   //printf("now\n\n");
+    printf("now\n\n");
     return (ast);
 }
 
-void operation_parsing(char ***tokens, ASTNode **left_node, char **env)
+int operation_parsing(char ***tokens, ASTNode **left_node, char **env)
 {
-    //printf("-----------------OPERATING PARSING TOKEN : %s\n------------------------", **tokens);
+    // printf("-----------------OPERATING PARSING TOKEN : %s\n------------------------", **tokens);
     if (ft_strcmp(**tokens, "&&") == 0)
     {
         (*tokens)++;
         ASTNode *right_node = create_ASTNode(NODE_COMMAND, tokens, NULL, NULL, env);
+        if (!right_node)
+        {
+            return(log_errors("NULL in RIGHT NODE : '&&' operation_parsing", ""));
+        }
         *left_node = create_ASTNode(NODE_AND, NULL, *left_node, right_node, env);
     }
     else if (ft_strcmp(**tokens, "||") == 0)
     {
         (*tokens)++;
         ASTNode *right_node = create_ASTNode(NODE_COMMAND, tokens, NULL, NULL, env);
+        if (!right_node)
+        {
+            return (log_errors("NULL in RIGHT NODE : '||' operation_parsing", ""));
+        }
         *left_node = create_ASTNode(NODE_OR, NULL, *left_node, right_node, env);
 
     }
@@ -188,13 +211,18 @@ void operation_parsing(char ***tokens, ASTNode **left_node, char **env)
     {
         (*tokens)++;
         ASTNode *right_node = create_ASTNode(NODE_COMMAND, tokens, NULL, NULL, env);
+        if (!right_node)
+        {
+            return (log_errors("NULL in RIGHT NODE : '|' operation_parsing", ""));
+        }
         *left_node = create_ASTNode(NODE_PIPE, NULL, *left_node, right_node, env);
-
     }
     else
     {
         (*tokens)++; // *tokens++에서 괄호 추가
     }
+    // printf("tokens : %s\n", **tokens);
+    return (SUCCESS);
 }
 
 
@@ -203,7 +231,7 @@ ASTNode *parse_to_Nodes(char **tokens, char **env)
     ASTNode *left_node;
     if (!tokens || !*tokens)
         return (NULL);
-    //printf("--------------------start parsing tokens : %s---------------------\n", *tokens);
+    // printf("--------------------start parsing tokens : %s---------------------\n", *tokens);
     if (*tokens)
     {
         left_node = create_ASTNode(NODE_COMMAND, &tokens, NULL, NULL, env);
@@ -213,8 +241,10 @@ ASTNode *parse_to_Nodes(char **tokens, char **env)
     }
     while (*tokens)//left + right 연산자 노드 만들고 나면 나와서 다시 토큰위치다음부터 시작.
     {
-        operation_parsing(&tokens, &left_node, env);
+        if (operation_parsing(&tokens, &left_node, env) == FAIL)
+            return (NULL);
     }
+    // printf("finised\n\n");
     return (left_node); //결국 맨마지막 연산자 노드가 탑이된다. ls | pwd && cd 하면 &&가 맨 마지막이지만 트리구조에선 루트로 이걸타고 실행되는것이 맞아.
 }
 
@@ -244,6 +274,16 @@ void print_ASTNode(ASTNode *node, int depth)
         // 명령어가 NULL이 아닐 경우, 명령어의 이름을 출력
         printf("Command: %s\n", node->command->cmd);
     }
+
+    if (node->command && node->command->args)
+    {
+        char **args = node->command->args; // 원래의 args를 저장
+        while (*args)
+        {
+            printf("cmd->args : %s\n", *args);
+            args++; // args 포인터를 증가시킴
+        }
+    }
     if (node->redir)
     {
         printf("Redirection details:\n");
@@ -253,7 +293,6 @@ void print_ASTNode(ASTNode *node, int depth)
         printf("direction_type: %d\n", node->redir->direction_type);
         printf("heredoc_limiter: %s\n", node->redir->heredoc_limiter ? node->redir->heredoc_limiter : "(NULL)");
         printf("herestring_str: %s\n", node->redir->herestring_str ? node->redir->herestring_str : "(NULL)");
-        printf("dollar_vari: %s\n", node->redir->dollar_vari ? node->redir->dollar_vari : "(NULL)");
     }
         // 왼쪽 자식 노드 출력
         print_ASTNode(node->left, depth + 1);

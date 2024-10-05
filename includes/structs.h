@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 20:03:49 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/05 18:02:54 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct Pipeline
 {
     int fd[2];
     pid_t pid;
+    pid_t left_pid;
+    pid_t right_pid;
     int tmp_fd;
 }   Pipeline;
 

@@ -6,7 +6,7 @@
 #    By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/02 05:20:05 by suminkwon        ###   ########.fr        #
+#    Updated: 2024/10/04 16:03:56 by suminkwon        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,14 @@ RM = rm -rf
 LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) 
+#-fsanitize=address
+#COMPILE_FLAG = -I/usr/local/opt/readline/include/
 
-COMPILE_FLAG = -I/usr/local/opt/readline/include/
+#LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
-LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
+COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
-# COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
-
-# LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
 
 SRCS_DIR = ./srcs/
 

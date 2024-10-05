@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:09:30 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 23:01:30 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/03 16:15:54 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int handle_pipe_and_or(char **input, char **tokens, char **start, int *token_cou
     // tmp_start = *start + len;
     while (ft_isspace(*(*start + (++i))))
         ;
-    if (*(*start + len + i) == '\0')
+    if (*(*start + len + i - 1) == '\0')
     {
         if (check_operation_next(input, start, 0) == FAIL)
             return (FAIL);
