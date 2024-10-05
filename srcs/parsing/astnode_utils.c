@@ -68,19 +68,19 @@ int	initialize_astnode(t_ASTNode **node, char ***tokens)
 	return (SUCCESS);
 }
 
-// static void	print_redir_details(t_ASTNode *node)
-// {
-// 	printf("Redirection details:\n");
-// 	printf("infile: %d\n", node->redir->infile);
-// 	printf("outfile: %d\n", node->redir->outfile);
-// 	printf("filename: %s\n", node->redir->filename ? \
-// 			node->redir->filename : "(NULL)");
-// 	printf("direction_type: %d\n", node->redir->direction_type);
-// 	printf("heredoc_limiter: %s\n", node->redir->heredoc_limiter ? \
-// 			node->redir->heredoc_limiter : "(NULL)");
-// 	printf("herestring_str: %s\n", node->redir->herestring_str ? \
-// 			node->redir->herestring_str : "(NULL)");
-// }
+static void	print_redir_details(t_ASTNode *node)
+{
+	printf("Redirection details:\n");
+	printf("infile: %d\n", node->redir->infile);
+	printf("outfile: %d\n", node->redir->outfile);
+	printf("filename: %s\n", node->redir->filename ? \
+			node->redir->filename : "(NULL)");
+	printf("direction_type: %d\n", node->redir->direction_type);
+	printf("heredoc_limiter: %s\n", node->redir->heredoc_limiter ? \
+			node->redir->heredoc_limiter : "(NULL)");
+	printf("herestring_str: %s\n", node->redir->herestring_str ? \
+			node->redir->herestring_str : "(NULL)");
+}
 
 void	print_astnode(t_ASTNode *node, int depth)
 {
@@ -104,8 +104,8 @@ void	print_astnode(t_ASTNode *node, int depth)
 			args++;
 		}
 	}
-	// if (node->redir)
-	// 	print_redir_details(node);
+	if (node->redir)
+		print_redir_details(node);
 	print_astnode(node->left, depth + 1);
 	print_astnode(node->right, depth + 1);
 }
