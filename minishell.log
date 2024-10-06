@@ -168,3 +168,4 @@ MINISHELL : cat: No such file or directory: Failed in opening file in set_redire
 MINISHELL : waitpid failed: Interrupted system call: 
 MINISHELL : waitpid failed: Interrupted system call: 
 MINISHELL : waitpid failed: Interrupted system call: 
+MINISHELL : out: No such file or directory: Failed in opening file in set_redirection

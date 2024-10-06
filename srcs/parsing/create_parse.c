@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/05 22:27:41 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 13:21:21 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,28 @@ int initialize_ASTNode(ASTNode **node, char ***tokens)
     return (SUCCESS);
 }
 
+void remove_args_after_redirection(char ***args)
+{
+    int i;
+
+    i = 0;
+    while ((*args)[i])
+    {
+        if (strcmp((*args)[i], "<") == 0 || strcmp((*args)[i], "<<<") == 0 ||
+            strcmp((*args)[i], "<<") == 0 || strcmp((*args)[i], ">") == 0 ||
+            strcmp((*args)[i], ">>") == 0)
+        {
+            (*args)[i] = NULL;
+            break;
+        }
+        i++;
+    }
+    // for (int j = 0; (*args)[j] != NULL; j++)
+    // {
+    //     printf("(*args)[%d] = %s\n", j, (*args)[j]);
+    // }
+}
+
 ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *right, char **env)
 {
     ASTNode *ast;
@@ -139,20 +161,15 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
         log_errors("Failed to malloc node in create_ASTNode", "");
         return (NULL);
     }
-    // printf("Node address before initialization: %p\n", (void *)ast);
-    // printf("Tokens address: %p, first token: %s\n", (void *)*tokens, *tokens ? **tokens : "NULL");
-
     if (initialize_ASTNode(&ast, tokens) == FAIL)
     {
         free(ast);
         return (NULL);
     }
     ast->type = type;
-    // printf("ast->type : %u\n", ast->type);
-    printf("tokens before create_command : %s\n", **tokens);
     if (tokens && *tokens && **tokens)
     {
-        printf("tokens before create_command : %s\n", **tokens);
+        // printf("tokens before create_command : %s\n", **tokens);
         ast->command = create_command(tokens, env);
         if (!ast->command)
             return (NULL);
@@ -168,7 +185,6 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
         if (!ast->redir)
             return (NULL);
     }
-    // printf("now\n\n");
     if (ast->command)
     {
         if (parsing_others(&ast->command->args, &ast->redir, FALSE) == FAIL)
@@ -176,6 +192,16 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
             free_ASTNODE(&ast);
             return (NULL);
         }
+    }
+    char **t_args = ast->command->args; // 원래의 args를 저장
+    while (*t_args)
+    {
+        printf("cmd->t_args : %s\n", *t_args);
+        t_args++; // args 포인터를 증가시킴
+    }
+    if (ast->command->args)
+    {
+        remove_args_after_redirection(&ast->command->args);
     }
     ast->left = left;
     ast->right = right;

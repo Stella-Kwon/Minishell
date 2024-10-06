@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/05 22:42:07 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 12:54:34 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ int redirection_parsing(char ***args, Redirection **redirect)
         direction_type = get_direction_type(**args);
         if (direction_type == INVALID)
             return (log_errors("Invalid redirection type", ""));
-
         (*args)++;
         printf("filename :: tokens : %s && direction type :: %d\n", **args, direction_type);
         if (set_redirection(redirect, **args, direction_type) == FAIL)
@@ -146,7 +145,10 @@ int redirection_parsing(char ***args, Redirection **redirect)
         if (i == FAIL) 
             return (FAIL);
         else if (i == 2)
-            return (2);
+        {
+            printf(" else :: tokens : %s\n", **args);
+            (*args)++; //다음
+        }
     }
     return (SUCCESS);
 }
@@ -159,13 +161,13 @@ int parsing(char ***tmp_args, Redirection **redirect)
     i = 0;
     while (**tmp_args)
     {
-        // printf("1  tmp_args in loop : %s\n", **tmp_args);
+        printf("1  tmp_args in loop : %s\n", **tmp_args);
         i = redirection_parsing(tmp_args, redirect);
-        printf("2  tmp_args in loop : %s\n", **tmp_args);
+        // printf("2  tmp_args in loop : %s\n", **tmp_args);
         if (i == FAIL)
             return (FAIL);
-        if (i == 2)
-            return (SUCCESS);
+        // if (i == 2)
+        //     return (SUCCESS);
     }
     // printf("passing parsing\n\n");
     return (SUCCESS);
@@ -184,22 +186,19 @@ int parsing_others(char ***args, Redirection **redirect, int start) // 주어진
         // printf("finish\n");
         return (SUCCESS);
     }
-    char **t_args = *args; // 원래의 args를 저장
-    while (*t_args)
-    {
-        // printf("cmd->t_args : %s\n", *t_args);
-        t_args++; // args 포인터를 증가시킴
-    }
+    // char **t_args = *args; // 원래의 args를 저장
+    // while (*t_args)
+    // {
+    //     // printf("cmd->t_args : %s\n", *t_args);
+    //     t_args++; // args 포인터를 증가시킴
+    // }
     if (start == FALSE)
     {
         char **tmp_args = *args;
-        // while (*tmp_args)
-        // {
-        //     printf("cmd->tmp_args : %s\n", *tmp_args);
-        //     tmp_args++; // args 포인터를 증가시킴
-        // }
-        (tmp_args)++;
+        // (tmp_args)++;
+        printf("first cmd->tmp_args : %s\n", *tmp_args);
         i = parsing(&tmp_args, redirect);
+        printf("cmd->tmp_args : %s\n", *tmp_args);
         if (i == FAIL)
             return (FAIL);
         // if (i == 2)
@@ -277,7 +276,7 @@ Command *create_command(char ***tokens, char **env)
             free_Command(&res);
             return (NULL);
         }
-        //printf("res->args : %s\n", res->args[args_index]);
+        // printf("res->args : %s\n", res->args[args_index]);
         (*tokens)++;
         args_index++;
         res->args = ft_realloc(res->args, args_index, &buffersize);

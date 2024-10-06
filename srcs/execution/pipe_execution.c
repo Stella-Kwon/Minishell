@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:18:11 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/05 20:52:11 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 01:00:14 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,14 @@ int execute_command(ASTNode **node)
     {
         return log_errors("Failed to fork", "");
     }
-    printf("(*pipeline)->fd[1]  : %d\n", (*node)->pipeline->fd[1]);
+
     if (pid == 0)
     { // 자식 프로세스
         // 명령어 실행
+        
         ft_putstr_fd("in execution\n", 2);
+        printf("(*pipeline)->fd[1]  : %d\n", (*node)->pipeline->fd[1]);
+        printf("(*pipeline)->fd[0]  : %d\n", (*node)->pipeline->fd[0]);
         if (common_pre_child(&(*node)->redir) == FAIL)
             return (FAIL);
         printf("infile : %d\n", (*node)->redir->infile);
@@ -229,22 +232,21 @@ int pipe_exec(ASTNode **node)
 {
     if (node == NULL || *node == NULL)
         return log_errors("PIPE : AST node is NULL in pipe_ast_node", "");
-
     if (pipe((*node)->pipeline->fd) == PIPE_FAILURE)
         return log_errors("PIPE : Failed to create pipe", "");
-
     if ((*node)->left)
     {
         (*node)->pipeline->left_pid = fork();
         if ((*node)->pipeline->left_pid == FORK_FAILURE)
             return log_errors("PIPE : Failed to fork for left command", "");
-
         if ((*node)->pipeline->left_pid == CHILD)
         {
             ft_putstr_fd("leftnode\n", 2);
             // 왼쪽 명령어 실행
+            printf("(*pipeline)->fd[1]  : %d\n", (*node)->pipeline->fd[1]);
+            close((*node)->pipeline->fd[0]);
             dup2((*node)->pipeline->fd[1], STDOUT_FILENO); // 왼쪽 명령어의 출력을 파이프의 쓰기쪽으로
-            close((*node)->pipeline->fd[0]);               // 읽기쪽 파이프 닫기
+                      // 읽기쪽 파이프 닫기
             close((*node)->pipeline->fd[1]);               // 쓰기쪽 파이프 닫기
             if ((*node)->left->type == NODE_COMMAND)
             {
@@ -253,6 +255,7 @@ int pipe_exec(ASTNode **node)
                     log_errors("PIPE : Execute_cmd has failed in left_node.", "");
                     exit((*node)->left->command->exitcode);
                 }
+                exit(EXIT_SUCCESS); // 성공 시 종료
             }
             ft_putstr_fd("getting in recursive\n", 2);
             if (pipe_exec(&(*node)->left) != SUCCESS)
@@ -277,9 +280,11 @@ int pipe_exec(ASTNode **node)
         if ((*node)->pipeline->right_pid == CHILD)
         {
             ft_putstr_fd("rightnode\n", 2);
+            printf("(*pipeline)->fd[1]  : %d\n", (*node)->pipeline->fd[1]);
             // 오른쪽 명령어 실행
+            close((*node)->pipeline->fd[1]);
             dup2((*node)->pipeline->fd[0], STDIN_FILENO); // 오른쪽 명령어의 입력을 파이프의 읽기쪽으로
-            close((*node)->pipeline->fd[1]);              // 쓰기쪽 파이프 닫기
+                // 쓰기쪽 파이프 닫기
             close((*node)->pipeline->fd[0]);              // 읽기쪽 파이프 닫기
             if ((*node)->right->type == NODE_COMMAND)
             {
