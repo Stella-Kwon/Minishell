@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:36:33 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/05 22:47:51 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 19:04:24 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int heredoc_child(int fd, char *limiter)
 int here_doc(ASTNode **node)
 {
     int exitcode;
-    
+
     (*node)->redir->infile = open(".heredoc.tmp", O_WRONLY | O_CREAT | O_APPEND, 0644);
     if ((*node)->redir->infile == -1)
         return (log_errors(".heredoc.tmp", "Failed to open file in here_doc"));

@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 12:54:34 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 19:02:28 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,16 @@ int set_redirection(Redirection **redirect, char *filename, int direction_type)
     else if (direction_type == REDIRECT_APPEND)
         (*redirect)->outfile = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
     else if (direction_type == REDIRECT_INPUT)
+    {
+        if ((*redirect)->heredoc_limiter != NULL)
+            (*redirect)->tmp_infile = open(filename, O_RDONLY);
+        if ((*redirect)->herestring_str != NULL)
+            free_one((void **)&(*redirect)->herestring_str);
         (*redirect)->infile = open(filename, O_RDONLY);
+    }
     // printf("outfile : %d\n infile : %d\n", (*redirect)->outfile, (*redirect)->infile);
     if ((*redirect)->outfile == -1 || (*redirect)->infile == -1)
         return (log_errors((*redirect)->filename, "Failed in opening file in set_redirection"));
-
     return (SUCCESS);
 }
 
@@ -85,7 +90,7 @@ int get_direction_type(char *token)
 }
 
 // heredoc, herestring, dollar 파싱
-int heredoc_herestring_dollar_parsing(char ***args, Redirection **redirect)
+int heredoc_herestring_dollar_parsing(char ***args, Redirection **redirect, int start)
 {
     // printf("1  heredoc_herestring_dollar_parsing :: tokens : %s\n", **args);
     if (ft_strcmp(**args, "<<") == 0)
@@ -111,14 +116,14 @@ int heredoc_herestring_dollar_parsing(char ***args, Redirection **redirect)
     // }
     else
     {
-        
-        // (*args)++;
+        if (start == false)
+            (*args)++;
         return (2);
     }
     return (SUCCESS);
 }
 
-int redirection_parsing(char ***args, Redirection **redirect)
+int redirection_parsing(char ***args, Redirection **redirect, int start)
 {
     int direction_type;
     int i;
@@ -141,20 +146,17 @@ int redirection_parsing(char ***args, Redirection **redirect)
     else
     {
         // printf("2 redirection_parsing :: tokens : %s\n", **args);
-        i = heredoc_herestring_dollar_parsing(args, redirect);
+        i = heredoc_herestring_dollar_parsing(args, redirect, start);
         if (i == FAIL) 
             return (FAIL);
         else if (i == 2)
-        {
-            printf(" else :: tokens : %s\n", **args);
-            (*args)++; //다음
-        }
+            return 2;
     }
     return (SUCCESS);
 }
 
 
-int parsing(char ***tmp_args, Redirection **redirect)
+int parsing(char ***tmp_args, Redirection **redirect, int start)
 {
     int i;
 
@@ -162,12 +164,12 @@ int parsing(char ***tmp_args, Redirection **redirect)
     while (**tmp_args)
     {
         printf("1  tmp_args in loop : %s\n", **tmp_args);
-        i = redirection_parsing(tmp_args, redirect);
+        i = redirection_parsing(tmp_args, redirect, start);
         // printf("2  tmp_args in loop : %s\n", **tmp_args);
         if (i == FAIL)
             return (FAIL);
-        // if (i == 2)
-        //     return (SUCCESS);
+        if (i == 2)
+            return (SUCCESS);
     }
     // printf("passing parsing\n\n");
     return (SUCCESS);
@@ -180,7 +182,7 @@ int parsing_others(char ***args, Redirection **redirect, int start) // 주어진
     int i;
 
     i = 0;
-    // printf("\n--------------GOT INTO PARSING OTEHRS----------\n\n");
+    printf("\n--------------GOT INTO PARSING OTEHRS----------\n\n");
     if (!args || !*args || !**args)
     {
         // printf("finish\n");
@@ -192,13 +194,21 @@ int parsing_others(char ***args, Redirection **redirect, int start) // 주어진
     //     // printf("cmd->t_args : %s\n", *t_args);
     //     t_args++; // args 포인터를 증가시킴
     // }
+    printf("ssss\n");
     if (start == FALSE)
     {
         char **tmp_args = *args;
-        // (tmp_args)++;
+        printf("ssss\n");
         printf("first cmd->tmp_args : %s\n", *tmp_args);
-        i = parsing(&tmp_args, redirect);
-        printf("cmd->tmp_args : %s\n", *tmp_args);
+        // tmp_args가 NULL이 아니고, 인자가 존재하는 동안 루프 진행
+        while (tmp_args && *tmp_args && is_redirection(tmp_args) == FALSE)
+        {
+            tmp_args++;
+        }
+        if (!tmp_args || !*tmp_args)
+            return SUCCESS;
+        i = parsing(&tmp_args, redirect, start);
+        // printf("cmd->tmp_args : %s\n", *tmp_args);
         if (i == FAIL)
             return (FAIL);
         // if (i == 2)
@@ -207,7 +217,10 @@ int parsing_others(char ***args, Redirection **redirect, int start) // 주어진
     else //맨 처음일떄.. 
     {
         // printf("args : %s\n", **args);
-        i = parsing(args, redirect);
+        i = parsing(args, redirect, start);
+        printf("args : %s\n", **args);
+        // if (!**args)
+        //     (*args)--;
         printf("args : %s\n", **args);
         if (i == FAIL)
             return (FAIL);
@@ -255,7 +268,7 @@ Command *create_command(char ***tokens, char **env)
         free_Command(&res);
         return (NULL);
     }
-    // printf("res->cmd : %s\n", res->cmd);
+    printf("res->cmd : %s\n", res->cmd);
     res->env = env;
     res->args = (char **)malloc(sizeof(char *) * buffersize);
     if (!res->args)
@@ -268,7 +281,7 @@ Command *create_command(char ***tokens, char **env)
     {
         // printf("args_index : %d\n", args_index);
 
-        // printf("tokens in repeated : %s\n", **tokens); // 여기서 |나 다른 연산자 나와선 안돼
+        printf("tokens in repeated : %s\n", **tokens); // 여기서 |나 다른 연산자 나와선 안돼
         res->args[args_index] = ft_strdup(**tokens);
         if (!res->args[args_index])
         {
@@ -287,7 +300,7 @@ Command *create_command(char ***tokens, char **env)
             return (NULL);
         }
     }
-    //printf("----------------------------------\n");
+    printf("----------------------------------\n");
     res->args[args_index] = NULL;
     // 다이렉트로 res->args넣어야지char **tmp_args = res->args; 해서 넣어주면 전달이 제대로 안됨..
     res->exitcode = -1; // 기본값 설정

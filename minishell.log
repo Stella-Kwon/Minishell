@@ -169,3 +169,14 @@ MINISHELL : waitpid failed: Interrupted system call:
 MINISHELL : waitpid failed: Interrupted system call: 
 MINISHELL : waitpid failed: Interrupted system call: 
 MINISHELL : out: No such file or directory: Failed in opening file in set_redirection
+MINISHELL : waitpid failed: Interrupted system call: 
+MINISHELL : Execute_cmd has failed.: No such file or directory: 
+MINISHELL : Execute_cmd has failed.: No such file or directory: 
+MINISHELL : Execute_cmd has failed.: No such file or directory: 
+MINISHELL : Execute_cmd has failed.: No such file or directory: 
+MINISHELL : Failed to write in heredoc childe: Bad file descriptor: 
+MINISHELL : .heredoc.tmp: No such file or directory: Failed to open file in here_doc
+MINISHELL : Failed here_doc in heredoc_check: No such file or directory: 
+MINISHELL : Failed to write in heredoc childe: Bad file descriptor: 
+MINISHELL : .heredoc.tmp: No such file or directory: Failed to open file in here_doc
+MINISHELL : Failed here_doc in heredoc_check: No such file or directory: 

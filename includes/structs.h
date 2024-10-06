@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/05 18:02:54 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 19:01:28 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef enum
 typedef struct s_redirection
 {
     int infile;  // redirection <
+    int tmp_infile;
     int outfile; // redirection > >>
     char *filename;
     int direction_type; // REDIRECT_OUTPUT, REDIRECT_APPEND, REDIRECT_INPUT 등

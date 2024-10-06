@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:19:04 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/05 22:48:55 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 17:12:17 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int common_pre_child(Redirection **redir)
             close((*redir)->infile);
             return (log_errors("Failed to dup2 in action_child", ""));
         }
-        printf("infile\n\n");
         close((*redir)->infile);
+        
     }
     if ((*redir)->herestring_str) // fork이후에는 여기에 있어야 자식프로세스에 반영이되지, 부모에서 불러주면 부모에만 반영된다.
     {

@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/05 17:41:49 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 19:04:06 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	heredoc_check(ASTNode **node)
     {
         if (here_doc(node) == FAIL)
             return (log_errors("Failed here_doc in heredoc_check", ""));
+        if ((*node)->redir->tmp_infile != -2)
+            (*node)->redir->infile = (*node)->redir->tmp_infile;
     }
     return (SUCCESS);
 }

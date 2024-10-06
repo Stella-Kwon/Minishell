@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 13:21:21 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 19:02:00 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ Redirection *create_redirection()
     }
 
     redir->infile = -2;
+    redir->tmp_infile = -2;
     redir->outfile = -2;
     redir->filename = NULL;
     redir->direction_type = -1;
@@ -169,7 +170,7 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
     ast->type = type;
     if (tokens && *tokens && **tokens)
     {
-        // printf("tokens before create_command : %s\n", **tokens);
+        printf("tokens before create_command : %s\n", **tokens);
         ast->command = create_command(tokens, env);
         if (!ast->command)
             return (NULL);
@@ -193,13 +194,13 @@ ASTNode *create_ASTNode(NodeType type, char ***tokens, ASTNode *left, ASTNode *r
             return (NULL);
         }
     }
-    char **t_args = ast->command->args; // 원래의 args를 저장
-    while (*t_args)
-    {
-        printf("cmd->t_args : %s\n", *t_args);
-        t_args++; // args 포인터를 증가시킴
-    }
-    if (ast->command->args)
+    // char **t_args = ast->command->args; // 원래의 args를 저장
+    // while (*t_args)
+    // {
+    //     printf("cmd->t_args : %s\n", *t_args);
+    //     t_args++; // args 포인터를 증가시킴
+    // }
+    if (ast->command && ast->command->args)
     {
         remove_args_after_redirection(&ast->command->args);
     }
