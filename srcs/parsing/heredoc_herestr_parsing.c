@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_herestr_parsing.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:35:17 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 19:34:28 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 21:09:46 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@ int	set_heredoc(t_Redirection **redirect, char *limiter)
 
 int	set_herestring(t_Redirection **redirect, char *string)
 {
-	(*redirect)->herestring_str = ft_strdup(string);
+	char	*str;
+
+	str = ft_strjoin(string, "\n");
+	(*redirect)->herestring_str = str;
 	if (!(*redirect)->herestring_str)
 		return (log_errors("Failed malloc in set_herestring", ""));
 	return (SUCCESS);
 }
 
-int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect)
+int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect, \
+int start)
 {
 	if (ft_strcmp(**args, "<<") == 0)
 	{
@@ -46,6 +50,8 @@ int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect)
 	}
 	else
 	{
+		if (start == false)
+			(*args)++;
 		return (2);
 	}
 	return (SUCCESS);

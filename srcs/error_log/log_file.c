@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:50:33 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 22:52:23 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 19:25:31 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,17 @@ int	log_errors(char *token, char *msg)
 		perror("minishell.log open failed");
 		return (FAIL);
 	}
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("MINISHELL: ", 2);
 	perror(token);
-	ft_putstr_fd("bash: ", fd);
+	ft_putstr_fd("MINISHELL: ", fd);
 	ft_putstr_fd(token, fd);
 	ft_putstr_fd(": ", fd);
 	ft_putstr_fd(strerror(errno), fd);
-	ft_putstr_fd(": ", fd);
-	ft_putstr_fd(msg, fd);
+	if (msg)
+	{
+		ft_putstr_fd(": ", fd);
+		ft_putstr_fd(msg, fd);
+	}
 	ft_putstr_fd("\n", fd);
 	close(fd);
 	return (FAIL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 15:58:39 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 21:15:15 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_Pipeline
 {
 	int		fd[2];
 	pid_t	pid;
+	pid_t	left_pid;
+	pid_t	right_pid;
 	int		tmp_fd;
 }	t_Pipeline;
 
@@ -69,6 +71,7 @@ typedef struct s_Redirection
 {
 	int		infile;
 	int		outfile;
+	int		tmp_infile;
 	char	*filename;
 	int		direction_type;
 	char	*heredoc_limiter;

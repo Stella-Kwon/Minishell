@@ -6,37 +6,56 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:19:04 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/22 20:19:22 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 21:17:39 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	action_child(t_Command *cmd, t_Redirection *redir, t_Pipeline *pipeline)
+int	common_pre_child(t_Redirection	**redir)
 {
-	if (redir->infile != -2)
+	if ((*redir)->infile != -2)
 	{
-		if (dup2(redir->infile, STDIN_FILENO) == -1)
-			return (log_errors("Failed to dup2 infile", ""));
-		close(redir->infile);
+		if (dup2((*redir)->infile, STDIN_FILENO) == -1)
+		{
+			close((*redir)->infile);
+			return (log_errors("Failed to dup2 in action_child", ""));
+		}
+		close((*redir)->infile);
 	}
-	if (redir->herestring_str)
+	if ((*redir)->herestring_str)
 	{
-		if (here_string(&redir) != SUCCESS)
+		if (here_string(redir) != SUCCESS)
+		{
+			close((*redir)->infile);
 			return (FAIL);
-		if (dup2(redir->infile, STDIN_FILENO) == -1)
-			return (log_errors("Failed to dup2 herestring", ""));
-		close(redir->infile);
+		}
+		if (dup2((*redir)->infile, STDIN_FILENO) == -1)
+		{
+			close((*redir)->infile);
+			return (log_errors("Failed to dup2 in action_child", ""));
+		}
+		close((*redir)->infile);
 	}
-	if (redir->outfile != -2)
+	return (SUCCESS);
+}
+
+int	action_child(t_Command **cmd, t_Redirection **redir)
+{
+	if (common_pre_child(redir) == FAIL)
+		return (FAIL);
+	if ((*redir)->outfile != -2)
 	{
-		if (dup2(redir->outfile, STDOUT_FILENO) == -1)
-			return (log_errors("Failed to dup2 outfile", ""));
-		close(redir->outfile);
-		close(pipeline->fd[0]);
-		close(pipeline->fd[1]);
+		if (dup2((*redir)->outfile, STDOUT_FILENO) == -1)
+		{
+			close((*redir)->outfile);
+			return (log_errors("Failed to dup2 in action_child", ""));
+		}
+		close((*redir)->outfile);
 	}
 	if (execute_cmd(cmd) == FAIL)
 		log_errors("Execute_cmd has failed.", "");
-	return (cmd->exitcode);
+	else
+		exit(SUCCESS);
+	exit((*cmd)->exitcode);
 }

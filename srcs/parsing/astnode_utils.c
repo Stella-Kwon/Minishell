@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   astnode_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 04:29:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 19:21:05 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 21:29:41 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_Pipeline	*create_pipeline(void)
 	pipeline->fd[0] = -2;
 	pipeline->fd[1] = -2;
 	pipeline->pid = -2;
+	pipeline->left_pid = -2;
+	pipeline->right_pid = -2;
 	pipeline->tmp_fd = -2;
 	return (pipeline);
 }
@@ -34,14 +36,10 @@ int	is_redirection(char **token)
 	int	i;
 
 	i = 0;
-	while (token[i])
-	{
-		if (ft_strcmp(token[i], "<") == 0 || ft_strcmp(token[i], "<<") == 0 || \
-		ft_strcmp(token[i], "<<<") == 0 || ft_strcmp(token[i], ">") == 0 || \
-		ft_strcmp(token[i], ">>") == 0)
-			return (TRUE);
-		i++;
-	}
+	if (ft_strcmp(token[i], "<") == 0 || ft_strcmp(token[i], "<<") == 0 || \
+	ft_strcmp(token[i], "<<<") == 0 || ft_strcmp(token[i], ">") == 0 || \
+	ft_strcmp(token[i], ">>") == 0)
+		return (TRUE);
 	return (FALSE);
 }
 
@@ -66,6 +64,24 @@ int	initialize_astnode(t_ASTNode **node, char ***tokens)
 		}
 	}
 	return (SUCCESS);
+}
+
+void	remove_args_after_redirection(char ***args)
+{
+	int	i;
+
+	i = 0;
+	while ((*args)[i])
+	{
+		if (strcmp((*args)[i], "<") == 0 || strcmp((*args)[i], "<<<") == 0 ||
+			strcmp((*args)[i], "<<") == 0 || strcmp((*args)[i], ">") == 0 ||
+			strcmp((*args)[i], ">>") == 0)
+		{
+			(*args)[i] = NULL;
+			break ;
+		}
+		i++;
+	}
 }
 
 static void	print_redir_details(t_ASTNode *node)
@@ -100,7 +116,7 @@ void	print_astnode(t_ASTNode *node, int depth)
 		args = node->command->args;
 		while (*args)
 		{
-			printf("cmd->args : %s\n", *node->command->args);
+			printf("cmd->args : %s\n", *args);
 			args++;
 		}
 	}

@@ -43,19 +43,27 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 			printf("tokens[%d] : %s\n", i, tokens[i]);
 
 		root = parse_to_nodes(tokens, env); // 파싱
-		if (!root)						  // 파싱 실패한 경우
+		if (!root)							// 파싱 실패한 경우
 		{
 			free(input);
-			continue ;
+			free(tokens);
+			continue;
 		}
-
-		printf("print start\n");
+		printf("\n\n----------print start----------\n\n");
 		print_astnode(root, 0); // AST 노드 출력
-
+		printf("\n\n=================================\n\n");
+		init_execution_signal();
+		if (ast_node_execution(&root) == FAIL)
+		{
+			free_astnode(&root);
+			free(input);
+			free(tokens);
+			continue;
+		}
 		// 사용한 메모리 해제
+		free_astnode(&root);
 		free(input);
-		free(tokens); // tokens 배열 메모리 해제 (필요한 경우)
-		// free_astnode(root); // 필요하다면 AST 노드 메모리 해제
+		free(tokens);
 	}
 	return (0);
 }

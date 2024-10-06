@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 17:42:51 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 21:32:35 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 	}
 	if (create_astnode_content(ast, tokens, env) == FAIL)
 		return (NULL);
+	if (ast->command && ast->command->args)
+		remove_args_after_redirection(&ast->command->args);
 	ast->left = left;
 	ast->right = right;
 	return (ast);
@@ -109,7 +111,7 @@ int	operation_parsing(char ***tokens, t_ASTNode **left_node, char **env)
 		if (!right_node)
 			return (log_errors("NULL in RIGHT NODE : '|' operation_parsing", \
 					""));
-		*left_node = create_astnode(NULL, *left_node, right_node, env);
+		*left_node = create_astnode(tokens, *left_node, right_node, env);
 		(*left_node)->type = NODE_PIPE;
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 18:56:40 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 19:17:18 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,53 +73,4 @@ int	get_direction_type(char *token)
 	if (ft_strcmp(token, "<") == 0)
 		return (REDIRECT_INPUT);
 	return (INVALID);
-}
-
-int	handle_redirection(char **args)
-{
-	int	i;
-	int	redirection_found;
-	int	fd_in;
-	int	fd_out;
-
-	i = 0;
-	redirection_found = 0;
-	fd_in = -1;
-	fd_out = -1;
-
-	while (args[i])
-	{
-		if (ft_strcmp(args[i], "<") == 0 && !redirection_found)
-		{
-			fd_in = open(args[i + 1], O_RDONLY);
-			if (fd_in < 0)
-			{
-				log_errors("Opening file error: input redirection", "");
-				return (FAIL);
-			}
-			redirection_found = 1;
-		}
-		else if (ft_strcmp(args[i], ">") == 0 && !redirection_found)
-		{
-			fd_out = open(args[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd_out < 0)
-			{
-				log_errors("Opening file error: output redirection", "");
-				return (FAIL);
-			}
-			redirection_found = 1;
-		}
-		i++;
-	}
-	if (fd_in != -1)
-	{
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
-	}
-	if (fd_out != -1)
-	{
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-	}
-	return (SUCCESS);
 }

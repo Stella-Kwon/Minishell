@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 03:41:00 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 21:04:33 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	store_str(t_For_tokenize *tokenize, int *buffsize)
 	return (SUCCESS);
 }
 
-static int	handle_space(t_For_tokenize *tokenize)
+int	handle_whitespace(t_For_tokenize	*tokenize)
 {
 	while (ft_isspace(*tokenize->start))
-		(*tokenize->start)++;
+		(tokenize->start)++;
 	return (SUCCESS);
 }
 
@@ -56,10 +56,8 @@ int	handle_special_tokens(int *buffsize, t_For_tokenize *tokenize)
 		return (handle_input_redirection(tokenize));
 	else if (*tokenize->start == '>')
 		return (handle_output_redirection(tokenize));
-	else if (*tokenize->start == '$')
-		return (handle_token(tokenize, 1));
-	else if (ft_isspace(*tokenize->start))
-		return (handle_space(tokenize));
+	else if (ft_isspace(*(tokenize->start)))
+		return (handle_whitespace(tokenize));
 	else
 	{
 		if (store_str(tokenize, buffsize) != SUCCESS)

@@ -1,0 +1,17 @@
+bash: out: No such file or directory: Failed in opening file in set_redirection
+bash: Execute_cmd has failed.: No such file or directory: 
+bash: .herestring.tmp: No such file or directory: Failed to open file in here_string
+MINISHELL .herestring.tmp: No such file or directory: Failed to open file in here_string
+MINISHELL: .herestring.tmp: No such file or directory: Failed to open file in here_string
+MINISHELL: Failed here_doc in heredoc_check: Interrupted system call: 
+MINISHELL: Failed here_doc in heredoc_check: Interrupted system call: 
+MINISHELL: Execute_cmd has failed.: No such file or directory: 
+MINISHELL: Execute_cmd has failed.: No such file or directory: 
+MINISHELL: waitpid failed: Interrupted system call: 
+MINISHELL: l: No such file or directory: Failed in opening file in set_redirection
+MINISHELL: l: No such file or directory: Failed in opening file in set_redirection
+MINISHELL: Execute_cmd has failed.: No such file or directory: 
+MINISHELL: l: No such file or directory: Failed in opening file in set_redirection
+MINISHELL: l: No such file or directory: Failed in opening file in set_redirection
+MINISHELL: l: No such file or directory: Failed in opening file in set_redirection
+MINISHELL: l: No such file or directory: Failed in opening file in set_redirection

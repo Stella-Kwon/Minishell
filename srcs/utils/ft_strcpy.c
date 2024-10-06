@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action_parents.c                                   :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:19:05 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 21:19:31 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/10/06 15:51:40 by suminkwon         #+#    #+#             */
+/*   Updated: 2024/10/06 22:06:38 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	action_parents(t_Redirection **redir, t_Pipeline **pipeline)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	int	wstatus;
-	int	exitcode;
+	size_t	i;
 
-	exitcode = 0;
-	wstatus = -2;
-	if (waitpid((*pipeline)->pid, &wstatus, 0) == -1)
-		return (log_errors("waitpid failed", ""));
-	if ((*redir)->outfile >= 0)
-		close((*redir)->outfile);
-	if ((*redir)->infile >= 0)
-		close((*redir)->infile);
-	exitcode = waitpid_status(wstatus);
-	return (exitcode);
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
 }

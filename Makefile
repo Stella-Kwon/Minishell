@@ -6,7 +6,7 @@
 #    By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/02 05:20:05 by suminkwon        ###   ########.fr        #
+#    Updated: 2024/10/06 16:35:15 by suminkwon        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,13 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
 
-COMPILE_FLAG = -I/usr/local/opt/readline/include/
+#COMPILE_FLAG = -I/usr/local/opt/readline/include/
 
-LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
+#LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
-# COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
-# LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
 
 SRCS_DIR = ./srcs/
 
@@ -38,6 +38,7 @@ SRCS =	mini.c \
 		utils/ft_isspace.c\
 		utils/free_one.c\
 		utils/all_free.c\
+		utils/ft_strcpy.c\
 		utils/waitpid_status.c\
 		tokenize/readline_again.c\
 		tokenize/check_set.c\
@@ -57,27 +58,26 @@ SRCS =	mini.c \
 		parsing/heredoc_herestr_parsing.c\
 		parsing/parsing_utils.c\
 		parsing/redirection_parsing.c\
+		execution/action_child.c\
+		execution/action_parents.c\
+		execution/execute.c\
+		execution/util_node.c\
+		execution/utils.c\
+		execution/pipe_execution.c\
+		execution/execution_node.c\
 		error_log/log_file.c\
-
-		# minishell.c
-		# builtin/builtin.c\
-		# builtin/cd.c\
-		# builtin/echo.c\
-		# builtin/env_utils.c\
-		# builtin/env.c\
-		# builtin/exit.c\
-		# builtin/export.c\
-		# builtin/print_error.c\
-		# builtin/pwd.c\
-		# builtin/unset.c\
-		# execution/action_child.c\
-		# execution/action_parents.c\
-		# execution/execute.c\
-		# execution/execution_node.c\
-		# execution/pipe_execution.c\
-		# execution/utils.c\
-		# expand/expand.c\
-		# expand/utils.c\
+		expand/expand.c\
+		expand/utils.c\
+		builtin/builtin.c\
+		builtin/cd.c\
+		builtin/echo.c\
+		builtin/env_utils.c\
+		builtin/env.c\
+		builtin/exit.c\
+		builtin/export.c\
+		builtin/print_error.c\
+		builtin/pwd.c\
+		builtin/unset.c\
 
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))

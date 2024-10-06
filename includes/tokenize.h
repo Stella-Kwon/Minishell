@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 13:01:42 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 03:12:39 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 21:13:33 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ int		check_operation_next(t_For_tokenize *tokenize, int flag);
 int		check_first_input(t_For_tokenize *tokenize);
 char	**tokenize_input(char **input);
 int		redirect_operation_error(char *start);
-
+char	*ft_strcpy(char *dst, const char *src);
 #endif
-

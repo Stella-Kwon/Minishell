@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 17:45:34 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 21:09:59 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	parsing(char ***tmp_args, t_Redirection **redirect)
+int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
 {
 	int	i;
-	int	redirection_found;
 
 	i = 0;
-	redirection_found = 0;
 	while (**tmp_args)
 	{
-		i = redirection_parsing(tmp_args, redirect, &redirection_found);
+		i = redirection_parsing(tmp_args, redirect, start);
 		if (i == FAIL)
 			return (FAIL);
 		if (i == 2)
-			return (2);
+			return (SUCCESS);
 	}
 	return (SUCCESS);
 }
@@ -41,20 +39,19 @@ int	parsing_others(char ***args, t_Redirection **redirect, int start)
 	if (start == FALSE)
 	{
 		tmp_args = *args;
-		(tmp_args)++;
-		i = parsing(&tmp_args, redirect);
+		while (tmp_args && *tmp_args && is_redirection(tmp_args) == FALSE)
+			tmp_args++;
+		if (!tmp_args || !*tmp_args)
+			return (SUCCESS);
+		i = parsing(&tmp_args, redirect, start);
 		if (i == FAIL)
 			return (FAIL);
-		if (i == 2)
-			return (2);
 	}
 	else
 	{
-		i = parsing(args, redirect);
+		i = parsing(args, redirect, start);
 		if (i == FAIL)
 			return (FAIL);
-		if (i == 2)
-			return (2);
 	}
 	return (SUCCESS);
 }
@@ -85,6 +82,16 @@ static int	create_command_args(t_Command *res, char ***tokens, \
 {
 	while (**tokens && !is_operator(*tokens))
 	{
+		res->args[*args_index] = ft_strdup(**tokens);
+		if (!res->args[*args_index])
+		{
+			log_errors("Failed to malloc res->args[args_index] \
+			in create_command", "");
+			free_command(&res);
+			return (FAIL);
+		}
+		(*tokens)++;
+		(*args_index)++;
 		res->args = ft_realloc(res->args, *args_index, buffersize);
 		if (!res->args)
 		{
@@ -92,17 +99,8 @@ static int	create_command_args(t_Command *res, char ***tokens, \
 			free_command(&res);
 			return (FAIL);
 		}
-		res->args[*args_index] = ft_strdup(**tokens);
-		if (!res->args[*args_index])
-		{
-			log_errors("Failed to malloc res->args[args_index] " \
-					"in create_command", "");
-			free_command(&res);
-			return (FAIL);
-		}
-		(*tokens)++;
-		(*args_index)++;
 	}
+	res->args[*args_index] = NULL;
 	return (SUCCESS);
 }
 
@@ -112,7 +110,7 @@ t_Command	*create_command(char ***tokens, char **env)
 	int			buffersize;
 	int			args_index;
 
-	buffersize = 1;
+	buffersize = BUFFER_SIZE;
 	args_index = 0;
 	if (!tokens || !*tokens)
 		return (NULL);
@@ -126,7 +124,6 @@ t_Command	*create_command(char ***tokens, char **env)
 		return (NULL);
 	if (create_command_args(res, tokens, &buffersize, &args_index) == FAIL)
 		return (NULL);
-	res->args[args_index] = NULL;
 	res->exitcode = -1;
 	res->wstatus = 0;
 	return (res);

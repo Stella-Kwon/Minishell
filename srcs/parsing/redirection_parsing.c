@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:42:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 19:18:19 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/06 21:10:17 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_Redirection	*create_redirection(void)
 		return (NULL);
 	}
 	redir->infile = -2;
+	redir->tmp_infile = -2;
 	redir->outfile = -2;
 	redir->filename = NULL;
 	redir->direction_type = -1;
@@ -45,7 +46,13 @@ int	set_redirection(t_Redirection **redirect, char *filename, \
 		(*redirect)->outfile = open(filename, O_WRONLY | \
 				O_CREAT | O_APPEND, 0644);
 	else if (direction_type == REDIRECT_INPUT)
+	{
+		if ((*redirect)->heredoc_limiter != NULL)
+			(*redirect)->tmp_infile = open(filename, O_RDONLY);
+		if ((*redirect)->herestring_str != NULL)
+			free_one((void **)&(*redirect)->herestring_str);
 		(*redirect)->infile = open(filename, O_RDONLY);
+	}
 	if ((*redirect)->outfile == -1 || (*redirect)->infile == -1)
 		return (log_errors((*redirect)->filename, \
 				"Failed in opening file in set_redirection"));
@@ -60,47 +67,27 @@ static int	redirection_parsing_set(char ***args, t_Redirection **redirect)
 	if (direction_type == INVALID)
 		return (log_errors("Invalid redirection type", ""));
 	(*args)++;
-	if (access(**args, F_OK) == -1)
-	{
-		log_errors("File not found", "");
-		return (FAIL);
-	}
 	if (set_redirection(redirect, **args, direction_type) == FAIL)
 		return (FAIL);
 	(*args)++;
 	return (SUCCESS);
 }
 
-static int	handle_redirection_found(char ***args)
-{
-	while (**args && (ft_strcmp(**args, ">") == 0 || \
-			ft_strcmp(**args, ">>") == 0 || ft_strcmp(**args, "<") == 0))
-	{
-		(*args)++;
-		if (**args)
-			(*args)++;
-	}
-	return (SUCCESS);
-}
-
 int	redirection_parsing(char ***args, t_Redirection **redirect,	\
-						int *redirection_found)
+						int start)
 {
 	int	i;
 
 	i = 0;
-	if (*redirection_found == 1)
-		return (handle_redirection_found(args));
 	if (ft_strcmp(**args, ">") == 0 || ft_strcmp(**args, ">>") == 0 || \
 		ft_strcmp(**args, "<") == 0)
 	{
 		if (redirection_parsing_set(args, redirect) == FAIL)
 			return (FAIL);
-		*redirection_found = 1;
 	}
 	else
 	{
-		i = heredoc_herestring_parsing(args, redirect);
+		i = heredoc_herestring_parsing(args, redirect, start);
 		if (i == FAIL)
 			return (FAIL);
 		else if (i == 2)

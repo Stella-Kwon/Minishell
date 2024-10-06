@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:36:33 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 17:48:06 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/06 21:11:09 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,11 @@ int	heredoc_child(int fd, char *limiter)
 	line = NULL;
 	while (read_line(&line) != FAIL)
 	{
+		if (line == NULL)
+			break ;
 		if (ft_strcmp(line, limiter) == 0)
 		{
-			line = ft_strjoin(line, "\n");
-			if (!line)
-				return (log_errors("Failed to ft_strjoin in heredoc_child", \
-				""));
-			else
-				free_one((void **)&line);
-			close(fd);
+			free_one((void **)&line);
 			return (SUCCESS);
 		}
 		line = ft_strjoin(line, "\n");
@@ -45,6 +41,7 @@ int	here_doc(t_ASTNode **node)
 		O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*node)->redir->infile == -1)
 		return (log_errors(".heredoc.tmp", "Failed to open file in here_doc"));
+	ft_putstr_fd("> ", 0);
 	(*node)->command->exitcode = heredoc_child((*node)->redir->infile, \
 			(*node)->redir->heredoc_limiter);
 	close((*node)->redir->infile);
