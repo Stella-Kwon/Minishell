@@ -1,0 +1,16 @@
+{
+    "name": "My Dev Container",
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "settings": {
+        // 필요한 VS Code 설정 추가
+    },
+    "extensions": [
+        // 필요한 VS Code 확장 목록 추가
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "ms-vscode.cpptools"  // C/C++ 확장
+    ],
+    "postCreateCommand": "apt-get update && apt-get install -y gcc make gdb"
+}
