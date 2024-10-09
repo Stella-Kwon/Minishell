@@ -49,7 +49,6 @@ typedef struct s_Pipeline
 	pid_t	pid;
 	pid_t	left_pid;
 	pid_t	right_pid;
-	int		tmp_fd;
 }	t_Pipeline;
 
 typedef enum e_redirect

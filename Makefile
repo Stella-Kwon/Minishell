@@ -70,9 +70,9 @@ SRCS =	mini.c \
 		execution/execution_node.c\
 		error_log/log_file.c\
 		execution/utils.c\
-		#execution/pipe_execution.c\
-		#expand/expand.c\
-		#expand/utils.c\
+		execution/pipe_execution.c\
+		expand/expand.c\
+		expand/utils.c\
 		builtin/builtin.c\
 		builtin/cd.c\
 		builtin/echo.c\

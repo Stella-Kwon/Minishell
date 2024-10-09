@@ -27,7 +27,6 @@ t_Pipeline	*create_pipeline(void)
 	pipeline->pid = -2;
 	pipeline->left_pid = -2;
 	pipeline->right_pid = -2;
-	pipeline->tmp_fd = -2;
 	return (pipeline);
 }
 

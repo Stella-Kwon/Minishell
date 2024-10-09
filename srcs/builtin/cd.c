@@ -17,6 +17,7 @@ void	check_and_set_path(char **args, char ***envp_ptr)
 	char	*path;
 	char	*home;
 
+	home = NULL;
 	path = NULL;
 	if (args[1][0] == '-' && args[1][1] == '\0')
 	{

@@ -30,3 +30,9 @@ MINISHELL: 1.txt: No such file or directory: Failed in opening file in set_redir
 MINISHELL: 1.txt: No such file or directory: Failed in opening file in set_redirection
 MINISHELL: 4.txt: No such file or directory: Failed in opening file in set_redirection
 MINISHELL: 4.txt: No such file or directory: Failed in opening file in set_redirection
+MINISHELL: new_input readline(>) failed: Success: 
+MINISHELL: new_input readline(>) failed: Success: 
+MINISHELL: new_input readline(>) failed: Success: 
+MINISHELL: Invalid pointers in store_inside_set: Success: 
+MINISHELL: Failed to handle set token in tokenize_input: Success: 
+MINISHELL: waitpid failed: Interrupted system call: 

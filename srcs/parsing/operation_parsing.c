@@ -69,6 +69,7 @@ int	operation_parsing(char ***tokens, t_ASTNode **left_node, char **env)
 	else if (ft_strcmp(**tokens, "|") == 0)
 	{
 		(*tokens)++;
+		printf("token : %s\n", **tokens);
 		right_node = create_astnode(tokens, NULL, NULL, env);
 		if (!right_node)
 			return (log_errors("NULL in RIGHT NODE : '|' operation_parsing", \

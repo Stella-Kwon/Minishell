@@ -12,22 +12,20 @@
 
 #include "../../includes/minishell.h"
 
-char	*store_words(char **start)
+
+char *store_words(char **start)
 {
-	char	*word_start;
+	char *word_start;
 
 	word_start = *start;
-	while (**start && !ft_isspace(**start) && **start != '(' && **start != ')' && \
-			**start != '|' && **start != '&' && **start != '>' && \
-			**start != '$')
+	while (**start && !ft_isspace(**start) && **start != '(' && **start != ')' &&
+		   **start != '|' && **start != '&' && **start != '>' &&
+		   **start != '$')
 	{
-		if (**start != '\'' || **start != '\"')
-		{
-			
-
-		}
+		printf("start : %c\n", **start);
 		(*start)++;
 	}
+
 	return (ft_strndup(word_start, *start - word_start));
 }
 
@@ -49,9 +47,9 @@ int *in_double_quote)
 	len = strlen(input);
 	while (i < len)
 	{
-		if (input[i] == '\'')
+		if (input[i] == '\'' && !*in_double_quote)
 			*in_single_quote = !*in_single_quote;
-		else if (input[i] == '"')
+		else if (input[i] == '"' && !*in_single_quote)
 			*in_double_quote = !*in_double_quote;
 		if (!(*in_single_quote || *in_double_quote) \
 		&& is_special_character(input[i]))

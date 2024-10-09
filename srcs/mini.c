@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/09 23:14:01 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 23:16:35 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 			input = NULL;
 			continue ;
 		}
+		add_history(input);
 		if (check_input(input) == FAIL) //258exitcode?
 		{
 			free(input);
 			input = NULL;
 			continue;
 		}
-		add_history(input);
 		char *tmp_input = input;
 		tokens = tokenize_input(&input);
 		if (!tokens)
@@ -99,7 +99,7 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 			if (tmp_input)
 			{
 				// printf("input\n");
-				free(tmp_input);`
+				free(tmp_input);
 				tmp_input = NULL;
 			}
 			if (tmp_tokens)

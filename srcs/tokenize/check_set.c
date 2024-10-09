@@ -65,8 +65,14 @@ static int	check_quotes_and_depth(t_For_tokenize *tokenize, t_Set *set, \
 	else
 	{
 		set->tmp_end = tokenize->start + 1;
-		while (*set->tmp_end != ref)
+		while (*set->tmp_end && * set->tmp_end != ref)
 			set->tmp_end++;
+		while (*set->tmp_end)
+		{
+			set->tmp_end++;
+			if (ft_isspace(*set->tmp_end))
+				break;
+		}
 		tokenize->start = set->tmp_end + 1;
 	}
 	return (SUCCESS);
@@ -74,11 +80,6 @@ static int	check_quotes_and_depth(t_For_tokenize *tokenize, t_Set *set, \
 
 static void	check_set_start(t_Set *set, t_For_tokenize *tokenize)
 {
-	if (*set->tmp_start == '\'' || *set->tmp_start == '"')
-	{
-		set->tmp_start += 1;
-		set->tmp_end -= 1;
-	}
 	if (*set->tmp_start == '(' || *set->tmp_end == ')')
 	{
 		tokenize->tokens[tokenize->token_count] = ft_strdup("(");
@@ -98,6 +99,7 @@ char	*check_set(t_For_tokenize *tokenize, char ref)
 	set.double_quote = 0;
 	set.tmp_start = tokenize->start;
 	set.tmp_end = NULL;
+	printf("where : %s", tokenize->start);
 	while (*set.tmp_start)
 	{
 		update_quotes_and_depth(&set.single_quote, &set.double_quote,

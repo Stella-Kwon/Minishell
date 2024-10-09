@@ -91,12 +91,12 @@ int readline_again(t_For_tokenize *tokenize, t_Set *set)
 				break;
 			new_start++;
 		}
-		printf("hod\n");
-		if (tokenize->input)
-			printf("tokenize->input is %s\n", tokenize->input);
-		// free_one((void**)&tokenize->input);
-		if (tokenize->input == NULL)
-			printf("tokenize->input is null\n");
+		// printf("hod\n");
+		// if (tokenize->input)
+		// 	printf("tokenize->input is %s\n", tokenize->input);
+		free_one((void**)&tokenize->input);
+		// if (tokenize->input == NULL)
+		// 	printf("tokenize->input is null\n");
 		tokenize->input = result;
 		tokenize->start = tokenize->input + offset;
 		set->tmp_start = tokenize->start;
