@@ -99,7 +99,6 @@ char	*check_set(t_For_tokenize *tokenize, char ref)
 	set.double_quote = 0;
 	set.tmp_start = tokenize->start;
 	set.tmp_end = NULL;
-	printf("where : %s", tokenize->start);
 	while (*set.tmp_start)
 	{
 		update_quotes_and_depth(&set.single_quote, &set.double_quote,

@@ -32,12 +32,9 @@ t_Pipeline	*create_pipeline(void)
 
 int	is_redirection(char **token)
 {
-	int	i;
-
-	i = 0;
-	if (ft_strcmp(token[i], "<") == 0 || ft_strcmp(token[i], "<<") == 0 || \
-	ft_strcmp(token[i], "<<<") == 0 || ft_strcmp(token[i], ">") == 0 || \
-	ft_strcmp(token[i], ">>") == 0)
+	if (ft_strcmp(*token, "<") == 0 || ft_strcmp(*token, "<<") == 0 || \
+	ft_strcmp(*token, "<<<") == 0 || ft_strcmp(*token, ">") == 0 || \
+	ft_strcmp(*token, ">>") == 0)
 		return (TRUE);
 	return (FALSE);
 }
@@ -53,7 +50,7 @@ int	initialize_astnode(t_ASTNode **node, char ***tokens)
 		(*node)->left = NULL;
 		(*node)->right = NULL;
 	}
-	if (tokens && *tokens && is_redirection(*tokens))
+	if (tokens && *tokens && **tokens && is_redirection(*tokens))
 	{
 		(*node)->redir = create_redirection();
 		if (parsing_others(tokens, &(*node)->redir, TRUE) == FAIL)

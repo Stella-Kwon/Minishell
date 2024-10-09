@@ -63,9 +63,9 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 			continue ;
 		}
 
-		// 토큰 출력
-		for (int i = 0; tokens[i]; i++)
-			printf("tokens[%d] : %s\n", i, tokens[i]);
+		// // 토큰 출력
+		// for (int i = 0; tokens[i]; i++)
+		// 	printf("tokens[%d] : %s\n", i, tokens[i]);
 		
 		char **tmp_tokens = tokens;
 		root = parse_to_nodes(tokens, env); // 파싱
@@ -79,9 +79,9 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 				all_free(&tmp_tokens);
 			continue;
 		}
-		printf("\n\n----------print start----------\n\n");
-		print_astnode(root, 0); // AST 노드 출력
-		printf("\n\n=================================\n\n");
+		// printf("\n\n----------print start----------\n\n");
+		// print_astnode(root, 0); // AST 노드 출력
+		// printf("\n\n=================================\n\n");
 		init_execution_signal();
 		set_last_exitcode(&root, last_exit_code);
 		t_ASTNode *tmp_root = root;

@@ -85,7 +85,6 @@ t_ASTNode	*parse_to_nodes(char **tokens, char **env)
 	{
 		if (operation_parsing(&tokens, &left_node, env) == FAIL)
 			return (NULL);
-		printf("tokens : %s\n",*tokens);
 	}
 	return (left_node);
 }

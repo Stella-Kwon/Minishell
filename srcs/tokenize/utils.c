@@ -19,10 +19,8 @@ char *store_words(char **start)
 
 	word_start = *start;
 	while (**start && !ft_isspace(**start) && **start != '(' && **start != ')' &&
-		   **start != '|' && **start != '&' && **start != '>' &&
-		   **start != '$')
+		   **start != '|' && **start != '&' && **start != '>' && **start != '<' && **start != '$')
 	{
-		printf("start : %c\n", **start);
 		(*start)++;
 	}
 

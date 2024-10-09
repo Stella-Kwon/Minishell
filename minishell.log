@@ -36,3 +36,9 @@ MINISHELL: new_input readline(>) failed: Success:
 MINISHELL: Invalid pointers in store_inside_set: Success: 
 MINISHELL: Failed to handle set token in tokenize_input: Success: 
 MINISHELL: waitpid failed: Interrupted system call: 
+MINISHELL: WAIT_STATUS : Child process terminated due to signal: Success: 
+MINISHELL: WAIT_STATUS : Child process terminated due to signal: Success: 
+MINISHELL: Failed to dup2 in action_child: Bad file descriptor: 
+MINISHELL: Failed to dup2 in action_child: Bad file descriptor: 
+MINISHELL: WAIT_STATUS : Child process terminated due to signal: Success: 
+MINISHELL: Failed to dup2 in action_child: Bad file descriptor: 
