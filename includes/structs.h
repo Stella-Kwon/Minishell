@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/06 21:15:15 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 02:16:12 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_ASTNode
 	t_Pipeline			*pipeline;
 	struct s_ASTNode	*left;
 	struct s_ASTNode	*right;
+	int					last_exit_code;
 }	t_ASTNode;
 
 typedef struct s_Dollar

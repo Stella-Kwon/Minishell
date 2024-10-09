@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 13:26:48 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 19:54:14 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/07 23:19:17 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ char	**ft_realloc(char **token, int position, int *bufsize)
 			return (NULL);
 		if (token)
 		{
-			while (i <= position)
+			while (i < position)
 			{
 				realloc_token[i] = token[i];
 				i++;
 			}
-			free(token);
+			free_one((void **)&token);
 			token = realloc_token;
 		}
 	}

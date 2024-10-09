@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/06 21:04:33 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/08 01:00:40 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ int	store_str(t_For_tokenize *tokenize, int *buffsize)
 		if (!tokenize->tokens[tokenize->token_count])
 		{
 			all_free(&tokenize->tokens);
-			return (log_errors("Failed to store word", ""));
+			return (log_errors("Failed to store words in store_str", ""));
 		}
 		tokenize->token_count++;
 		tokenize->tokens = ft_realloc(tokenize->tokens, \
 									tokenize->token_count, buffsize);
 		if (!tokenize->tokens)
-			return (log_errors("Failed to \"reallocate\" memory for tokens", \
-					""));
+		{
+			all_free(&tokenize->tokens);
+			return (log_errors("Failed to realloc in store_str", ""));
+		}
 	}
 	return (SUCCESS);
 }
@@ -86,7 +88,7 @@ char	**tokenize_input(char **input)
 
 	tokenize.input = *input;
 	tokenize.start = *input;
-	buffsize = BUFFSIZE;
+	buffsize = BUFFER_SIZE;
 	tokenize.tokens = initialize_tokenization(buffsize, &tokenize);
 	if (!tokenize.tokens)
 		return (NULL);

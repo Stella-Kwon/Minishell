@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 04:44:20 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 21:28:03 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 17:11:40 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # define PIPE_FAILURE -1
 # include "minishell.h"
 
-char	*find_dollar_signs(char *input, char **envp);
 int		error_exitcode(t_Command **command, char *s, int error_nb);
 int		cmd_error(t_Command **command, char *s, int error_nb);
 int		check_path(char *path, t_Command **command);
 int		check_cmd_script(t_Command **command);
+int 	prepare_cmd(t_Command **command, int last_exit_code);
 int		execute_cmd(t_Command **command);
 int		check_cmd_error(t_Command **command);
 int		action_parents(t_Redirection **redir, t_Pipeline **pipeline);
@@ -38,5 +38,9 @@ int		pipe_execute_command(t_ASTNode **node);
 int		pipenode_exec(t_ASTNode **node);
 int		execute_node(t_ASTNode **node);
 int		check_null_cmd(t_Command *command);
+void	set_last_exitcode(t_ASTNode	**node, int last_exit_code);
 char	*ft_strcpy(char *dst, const char *src);
+int		dup_and_close(int oldfd, int newfd);
+
 #endif
+

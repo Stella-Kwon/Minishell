@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 21:24:33 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 17:28:47 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,10 @@ int	ast_node_execution(t_ASTNode	**node)
 {
 	if (node == NULL || *node == NULL)
 		return (log_errors("AST node is NULL", ""));
-	if ((*node)->type == NODE_PIPE)
-		return (pipenode_exec(node));
 	if (heredoc_check(node) == FAIL)
 		return (FAIL);
 	if ((*node)->type == NODE_COMMAND)
 		return (cmdnode_exec(node));
-	return (execute_node(node));
-}
-
-int	execute_node(t_ASTNode	**node)
-{
 	if ((*node)->type == NODE_PIPE)
 		return (pipenode_exec(node));
 	if ((*node)->type == NODE_OR)
@@ -38,16 +31,37 @@ int	execute_node(t_ASTNode	**node)
 
 int	cmdnode_exec(t_ASTNode	**node)
 {
+	int	last_exit_code;
+	int	wstatus;
+
+	last_exit_code = (*node)->last_exit_code;
+	if (prepare_cmd(&(*node)->command, last_exit_code) == FAIL)
+		return (FAIL);
+	if (builtin_filesystem((*node)->command) == SUCCESS)
+	{
+		if (common_pre_child(&(*node)->redir) == FAIL)
+			return (FAIL);
+		(*node)->last_exit_code = 0;
+		return (SUCCESS);
+	}
 	(*node)->pipeline->pid = fork();
-	if ((*node)->pipeline->pid == -1)
-		return (log_errors("Failed to fork in cmdnode_exec", ""));
-	if ((*node)->left || (*node)->right)
-		return (log_errors("Something has been allocated \
-		on left or right in the COMMAND_NODE", ""));
-	if ((*node)->pipeline->pid == 0)
-		exit(action_child(&(*node)->command, &(*node)->redir));
-	return (action_parents(&(*node)->redir, &(*node)->pipeline));
+    if ((*node)->pipeline->pid == -1)
+        return (log_errors("Failed to fork in cmdnode_exec", ""));
+    if ((*node)->pipeline->pid == 0) 
+	{
+        if (common_pre_child(&(*node)->redir) == FAIL)
+            exit(EXIT_FAILURE);
+        exit(action_child(&(*node)->command, &(*node)->redir));
+	}
+    if (waitpid((*node)->pipeline->pid, &wstatus, 0) == -1)
+	{
+		return (log_errors("waitpid failed", ""));
+	}
+	last_exit_code = waitpid_status(wstatus);
+    (*node)->last_exit_code = last_exit_code; // 마지막 종료 코드 저장
+    return (SUCCESS);
 }
+
 
 int	andnode_exec(t_ASTNode	**node)
 {

@@ -6,7 +6,7 @@
 #    By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/06 16:35:15 by suminkwon        ###   ########.fr        #
+#    Updated: 2024/10/08 23:07:08 by suminkwon        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,15 +18,19 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) -g# -fsanitize=address
 
-#COMPILE_FLAG = -I/usr/local/opt/readline/include/
+# #COMPILE_FLAG = -I/usr/local/opt/readline/include/
 
-#LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
+# #LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
-COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+# COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
-LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+# LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+
+COMPILE_FLAG = -I/usr/include/readline
+LINK_FLAG = -L/usr/local/lib -lreadline
+
 
 SRCS_DIR = ./srcs/
 
@@ -44,10 +48,10 @@ SRCS =	mini.c \
 		tokenize/check_set.c\
 		tokenize/tokenize.c\
 		tokenize/tokenize_operator.c\
-		tokenize/store_words.c\
 		tokenize/operation_error.c\
 		tokenize/operation_utils.c\
 		tokenize/input_utils.c\
+		tokenize/utils.c\
 		signal/signal.c \
 		redirection/heredoc.c\
 		redirection/herestring.c\
@@ -57,17 +61,18 @@ SRCS =	mini.c \
 		parsing/astnode_utils.c\
 		parsing/heredoc_herestr_parsing.c\
 		parsing/parsing_utils.c\
+		parsing/operation_parsing.c\
 		parsing/redirection_parsing.c\
 		execution/action_child.c\
 		execution/action_parents.c\
 		execution/execute.c\
 		execution/util_node.c\
-		execution/utils.c\
-		execution/pipe_execution.c\
 		execution/execution_node.c\
 		error_log/log_file.c\
-		expand/expand.c\
-		expand/utils.c\
+		execution/utils.c\
+		#execution/pipe_execution.c\
+		#expand/expand.c\
+		#expand/utils.c\
 		builtin/builtin.c\
 		builtin/cd.c\
 		builtin/echo.c\
@@ -90,8 +95,12 @@ all: $(LIBFT) $(NAME)
 %.o: %.c
 	@$(CC) $(FLAG) $(COMPILE_FLAG) -c $< -o $@
 $(NAME): $(MAN_OBJS)
-	@$(CC) $(FLAG) $(COMPILE_FLAG) $(LINK_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
+	@$(CC) $(FLAG) $(COMPILE_FLAG) $(MAN_OBJS) $(LIBFT) $(LINK_FLAG) -o $@
 	@echo "making minishell"
+
+# $(NAME): $(MAN_OBJS)
+# 	@$(CC) $(FLAG) $(COMPILE_FLAG) $(LINK_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
+# 	@echo "making minishell"
 
 $(LIBFT):
 	@make -C ./libft

@@ -14,7 +14,7 @@
 
 int	handle_258_exitcode_print(char *msg)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("MINISHELL: ", 2);
 	ft_putstr_fd("syntax error near unexpected token ", 2);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
@@ -33,10 +33,8 @@ int	handle_error(int custom_error_code)
 		exit_status = 127;
 	else
 		exit_status = 1;
-
 	if (exit_status < 0 || exit_status > 255)
 		exit_status = 255;
-
 	return (exit_status);
 }
 

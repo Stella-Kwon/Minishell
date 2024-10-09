@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/09 17:30:54 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/10/09 17:30:56 by hlee-sun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static int	is_n(char *str)
@@ -42,3 +54,19 @@ int	echo(char **args, char ***envp_ptr)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (SUCCESS);
 }
+
+char* process_quotes(char *input) {
+    size_t len = strlen(input);
+    char *result = malloc(len + 1);
+    if (!result) return NULL;
+
+    size_t j = 0;
+    for (size_t i = 0; i < len; i++) {
+        if (input[i] != '\'' && input[i] != '\"') {
+            result[j++] = input[i];  // 따옴표가 아니면 복사
+        }
+    }
+    result[j] = '\0';
+    return result;
+}
+

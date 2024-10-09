@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:52:09 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 21:26:45 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 14:38:56 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	check_cmd_script(t_Command **command)
 	int	len;
 
 	len = ft_strlen((*command)->cmd);
-	if ((*command)->cmd[len - 3] == '.' && \
-	(*command)->cmd[len - 2] == 's' && (*command)->cmd[len - 1] == 'h')
+	if (len > 3 && (*command)->cmd[len - 3] == '.' && \
+		(*command)->cmd[len - 2] == 's' && (*command)->cmd[len - 1] == 'h')
 	{
 		if (ft_strrchr((*command)->cmd, '/') == NULL)
 		{

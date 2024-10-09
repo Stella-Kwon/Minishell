@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/06 21:32:35 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/07 21:03:57 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,66 +57,15 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 		return (NULL);
 	}
 	if (create_astnode_content(ast, tokens, env) == FAIL)
+	{
+		free_astnode(&ast);
 		return (NULL);
+	}
 	if (ast->command && ast->command->args)
 		remove_args_after_redirection(&ast->command->args);
 	ast->left = left;
 	ast->right = right;
 	return (ast);
-}
-
-static int	operation_and_or(char ***tokens, t_ASTNode **left_node, char **env)
-{
-	t_ASTNode	*right_node;
-
-	if (ft_strcmp(**tokens, "&&") == 0)
-	{
-		(*tokens)++;
-		right_node = create_astnode(tokens, NULL, NULL, env);
-		right_node->type = NODE_COMMAND;
-		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : '&&' operation_parsing", \
-					""));
-		*left_node = create_astnode(NULL, *left_node, right_node, env);
-		(*left_node)->type = NODE_AND;
-	}
-	else if (ft_strcmp(**tokens, "||") == 0)
-	{
-		(*tokens)++;
-		right_node = create_astnode(tokens, NULL, NULL, env);
-		right_node->type = NODE_COMMAND;
-		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : '||' operation_parsing", \
-					""));
-		*left_node = create_astnode(NULL, *left_node, right_node, env);
-		(*left_node)->type = NODE_OR;
-	}
-	return (SUCCESS);
-}
-
-int	operation_parsing(char ***tokens, t_ASTNode **left_node, char **env)
-{
-	t_ASTNode	*right_node;
-
-	if (ft_strcmp(**tokens, "&&") == 0 || ft_strcmp(**tokens, "||") == 0)
-	{
-		if (operation_and_or(tokens, left_node, env) == FAIL)
-			return (FAIL);
-	}
-	else if (ft_strcmp(**tokens, "|") == 0)
-	{
-		(*tokens)++;
-		right_node = create_astnode(tokens, NULL, NULL, env);
-		right_node->type = NODE_COMMAND;
-		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : '|' operation_parsing", \
-					""));
-		*left_node = create_astnode(tokens, *left_node, right_node, env);
-		(*left_node)->type = NODE_PIPE;
-	}
-	else
-		(*tokens)++;
-	return (SUCCESS);
 }
 
 t_ASTNode	*parse_to_nodes(char **tokens, char **env)
@@ -128,9 +77,9 @@ t_ASTNode	*parse_to_nodes(char **tokens, char **env)
 	if (*tokens)
 	{
 		left_node = create_astnode(&tokens, NULL, NULL, env);
-		left_node->type = NODE_COMMAND;
 		if (!left_node)
 			return (NULL);
+		left_node->type = NODE_COMMAND;
 	}
 	while (*tokens)
 	{

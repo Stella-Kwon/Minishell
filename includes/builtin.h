@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:13:11 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 21:13:14 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 16:27:11 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	print_strs(char **str_arr);
 void	sort_envp(size_t len, char **envp);
 void	ft_perror(char *message);
 void	print_error_cd(char *filename);
-int		builtin(t_Command *command);
+int		builtin_filesystem(t_Command *command);
+int		builtin_with_output(t_Command *command);
+char	*ft_strjoin_three(char *s1, char *s2, char *s3);
+
+
+
 
 #endif

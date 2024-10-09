@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:19:04 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 21:17:39 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 17:33:36 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,15 @@ int	common_pre_child(t_Redirection	**redir)
 {
 	if ((*redir)->infile != -2)
 	{
-		if (dup2((*redir)->infile, STDIN_FILENO) == -1)
-		{
-			close((*redir)->infile);
-			return (log_errors("Failed to dup2 in action_child", ""));
-		}
-		close((*redir)->infile);
+		if (dup_and_close((*redir)->infile, STDIN_FILENO) == FAIL)
+			return (FAIL);
 	}
 	if ((*redir)->herestring_str)
 	{
 		if (here_string(redir) != SUCCESS)
-		{
-			close((*redir)->infile);
 			return (FAIL);
-		}
-		if (dup2((*redir)->infile, STDIN_FILENO) == -1)
-		{
-			close((*redir)->infile);
-			return (log_errors("Failed to dup2 in action_child", ""));
-		}
-		close((*redir)->infile);
+	if (dup_and_close((*redir)->infile, STDIN_FILENO) == FAIL)
+		return (FAIL);
 	}
 	return (SUCCESS);
 }
@@ -45,17 +34,7 @@ int	action_child(t_Command **cmd, t_Redirection **redir)
 	if (common_pre_child(redir) == FAIL)
 		return (FAIL);
 	if ((*redir)->outfile != -2)
-	{
-		if (dup2((*redir)->outfile, STDOUT_FILENO) == -1)
-		{
-			close((*redir)->outfile);
-			return (log_errors("Failed to dup2 in action_child", ""));
-		}
-		close((*redir)->outfile);
-	}
-	if (execute_cmd(cmd) == FAIL)
-		log_errors("Execute_cmd has failed.", "");
-	else
-		exit(SUCCESS);
-	exit((*cmd)->exitcode);
+		if (dup_and_close((*redir)->outfile, STDOUT_FILENO) == FAIL)
+			return (FAIL);
+	exit(execute_cmd(cmd));
 }

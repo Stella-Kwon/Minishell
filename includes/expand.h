@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:13:41 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 21:13:45 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/08 21:29:32 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include "minishell.h"
 
-char	*find_dollar_signs(char *input, char **envp);
-char	*expand_cmd(char *cmd, char **env);
-char	**expand_args(char **args, char **env);
+char	*find_dollar_signs(char *input, char **env, int last_exit_code);
+char	*expand_cmd(char *cmd, char **env, int last_exit_code);
+char	**expand_args(char **args, char **env, int last_exit_code);
+int		expand_error(char *command);
 
 #endif

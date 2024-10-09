@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:11:15 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/02 05:19:06 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 00:21:09 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <errno.h>
 # include <stdbool.h>
 # include <sys/param.h>
+# include <sys/wait.h>
 # include <termios.h>
 # include <readline/readline.h>
 # include <stddef.h>

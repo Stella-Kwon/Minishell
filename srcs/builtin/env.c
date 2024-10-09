@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/09 17:31:09 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/10/09 17:31:11 by hlee-sun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int env(char **args, char ***envp_ptr)
@@ -62,14 +74,15 @@ int append_to_env(char *str, char ***envp_ptr)
         return (FAIL);
     }
     copy_envp(new_envp, *envp_ptr, env_len);
-    delete_str_array(envp_ptr); // 기존 환경 배열 해제
     new_envp[env_len] = ft_strdup(str); // 새 문자열 추가
     if (new_envp[env_len] == NULL)
     {
         perror("Error: strdup failed");
+		delete_str_array(&new_envp); // 기존 환경 배열 해제
         return (FAIL);
     }
     new_envp[env_len + 1] = NULL;
+	delete_str_array(envp_ptr); // 기존 환경 배열 해제
     *envp_ptr = new_envp; // 새 환경 배열을 설정
 	return (SUCCESS);
 }

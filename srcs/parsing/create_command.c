@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/06 21:09:59 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/07 22:23:28 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	parsing_others(char ***args, t_Redirection **redirect, int start)
 }
 
 static int	command_initialize(t_Command *res, char ***tokens, \
-								int buffersize, char **env)
+int buffersize, char **env)
 {
 	res->cmd = ft_strdup(**tokens);
 	if (!res->cmd)
@@ -78,7 +78,7 @@ static int	command_initialize(t_Command *res, char ***tokens, \
 }
 
 static int	create_command_args(t_Command *res, char ***tokens, \
-								int *buffersize, int *args_index)
+int *buffersize, int *args_index)
 {
 	while (**tokens && !is_operator(*tokens))
 	{

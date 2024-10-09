@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:20:10 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/06 21:21:03 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/09 16:33:24 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,25 @@ static char	*find_and_check_path(t_Command **command)
 	return (path);
 }
 
+int prepare_cmd(t_Command **command, int last_exit_code)
+{
+	if (!command || !*command)
+		return (SUCCESS);
+	(*command)->cmd = expand_cmd((*command)->cmd, (*command)->env, \
+									last_exit_code);
+	(*command)->args = expand_args((*command)->args, (*command)->env, \
+									last_exit_code);
+	if (!(*command)->cmd)
+		return (cmd_error(command, ": command not found\n", 127));
+	return (SUCCESS);
+}
+
 int	execute_cmd(t_Command **command)
 {
 	char	*path;
 
-	if (!command || !*command)
-		return (SUCCESS);
-	(*command)->cmd = expand_cmd((*command)->cmd, (*command)->env);
-	(*command)->args = expand_args((*command)->args, (*command)->env);
-	if (!(*command)->cmd)
-		return (cmd_error(command, ": command not found\n", 127));
-	if (builtin(*command) == SUCCESS)
-	{
-		(*command)->exitcode = 0;
-		return (SUCCESS);
-	}
+	if (builtin_with_output(*command) == SUCCESS)
+		return ((*command)->exitcode);
 	if (check_cmd_script(command) == FAIL || check_cmd_error(command) == FAIL)
 		return (FAIL);
 	path = find_and_check_path(command);

@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 10:15:52 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/03/15 13:46:57 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/09 01:39:23 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 
 # include <unistd.h>
 # include <string.h>
+# include <stdint.h>
 # include <stdlib.h>
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
+
+#ifndef OPEN_MAX
+#define OPEN_MAX 1024
+#endif
 
 typedef struct s_list
 {
@@ -75,7 +80,6 @@ char	*ft_strncpy(char *dest, const char *src, size_t n);
 char	*read_and_save(int fd, char *read_buffer);
 char	*extract_line(char *read_buffer);
 char	*get_remainder(char *read_buffer);
-char	*get_next_line(int fd);
 char	*check_string(char *str);
 char	*ft_free(char **str);
 

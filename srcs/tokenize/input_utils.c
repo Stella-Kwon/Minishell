@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operation_error.c                                  :+:      :+:    :+:   */
+/*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:59:50 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 03:07:25 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/08 01:17:02 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,22 @@ int	check_first_input(t_For_tokenize *tokenize)
 
 static int	join_inputs(t_For_tokenize *tokenize, char *new_input)
 {
-	char		*tmp;
+	char	*tmp;
 
+	free_one((void **)&tokenize->input);
 	tmp = ft_strjoin(" ", new_input);
-	free(new_input);
 	if (!tmp)
 	{
 		log_errors("Failed to join inputs", "");
 		return (FAIL);
 	}
-	new_input = ft_strjoin(tokenize->input, tmp);
-	free(tmp);
-	if (!new_input)
+	tokenize->input = ft_strjoin(tokenize->input, tmp);
+	free_one((void **)&tmp);
+	if (!tokenize->input)
 	{
 		log_errors("Failed to join inputs", "");
 		return (FAIL);
 	}
-	free(tokenize->input);
-	tokenize->input = new_input;
 	return (SUCCESS);
 }
 
