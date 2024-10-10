@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/06 21:20:10 by suminkwon         #+#    #+#             */
+/*   Updated: 2024/10/10 19:55:51 by hlee-sun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static char	**find_env(char **envp)
@@ -21,7 +33,7 @@ static char	**find_env(char **envp)
 	return (ft_split(path_var, ':'));
 }
 
-static char	*get_path(Command **command, char **env_path)
+static char	*get_path(t_Command **command, char **env_path)
 {
 	char	*temp;
 	char	*path;
@@ -36,75 +48,71 @@ static char	*get_path(Command **command, char **env_path)
 		temp = ft_strjoin(env_path[i], "/");
 		path = ft_strjoin(temp, (*command)->cmd);
 		if (temp)
-			free(temp);
+			free_one((void **)&temp);
 		if (access(path, F_OK) == 0)
 			break ;
 		if (path)
-			free(path);
+			free_one((void **)&path);
 		path = NULL;
 		i++;
 	}
 	return (path);
 }
 
-static char	*find_and_check_path(Command **command) 
+static char	*find_and_check_path(t_Command **command)
 {
-    char	**env_path;
-    char	*path;
+	char	**env_path;
+	char	*path;
 
-    if (ft_strrchr((*command)->cmd, '/') != NULL)
-        return ((*command)->cmd);
-    env_path = find_env((*command)->env);
-    path = get_path(command, env_path);
-	{
-		if (env_path != NULL)
-			free_arrays(env_path);
-	}
-    if (!path)
+	if (ft_strrchr((*command)->cmd, '/') != NULL)
+		return ((*command)->cmd);
+	env_path = find_env((*command)->env);
+	path = get_path(command, env_path);
+	if (env_path != NULL)
+			all_free(&env_path);
+	if (!path)
 		return (NULL);
-    check_path(path, command);
-    return (path);
+	check_path(path, command);
+	return (path);
 }
 
-int	execute_cmd(Command **command)
+int prepare_cmd(t_Command **command, int last_exitcode)
+{
+	if (!command || !*command)
+		return (SUCCESS);
+	(*command)->cmd = expand_cmd((*command)->cmd, (*command)->env, \
+									last_exitcode);
+	check_null_cmd((*command)->cmd);
+	(*command)->args = expand_args((*command)->args, (*command)->env, \
+									last_exitcode);
+	if (!(*command)->cmd)
+		return (cmd_error(command, ": command not found\n", 127));
+	return (SUCCESS);
+}
+
+int	execute_cmd(t_Command **command)
 {
 	char	*path;
 
-	if (!command || !*command)
+	if (builtin_with_output(*command) == SUCCESS)
 		return (SUCCESS);
-	(*command)->cmd = expand_cmd((*command)->cmd, (*command)->env);
-	(*command)->args = expand_args((*command)->args, (*command)->env);
-
-	if (!(*command)->cmd)
-		return (cmd_error(command, ": command not found\n", 127));
-
-	if (builtin(*command) == SUCCESS)
-	{
-		printf("success in builtin\n");
-		(*command)->exitcode = 0;
-		return (SUCCESS);
-	}
-
 	if (check_cmd_script(command) == FAIL || check_cmd_error(command) == FAIL)
 		return (FAIL);
-
 	path = find_and_check_path(command);
 	if (!path)
 		return (cmd_error(command, ": command not found\n", 127));
-
-	// char **args = (*command)->args; // 원래의 args를 저장
-	// while (*args)
-	// {
-		// printf("cmd->args : %s\n", *args);
-		// args++; // args 포인터를 증가시킴
-	// }
-	// if (!*args)
-		// printf("no args\n");
-	// printf("path : %s\n", path);
-	execve(path, (*command)->args, (*command)->env);
+	if (execve(path, (*command)->args, (*command)->env) == -1)
+	{
+		(*command)->exitcode = errno;
+		ft_putstr_fd("MINISHELL: ", STDERR_FILENO);
+		ft_putstr_fd(path, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO); // 구체적인 오류 메시지 출력
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
+	else
+		(*command)->exitcode = 0;
 	if (path != (*command)->cmd)
 		free_one((void **)&path);
-	(*command)->exitcode  = 127;
-	return ((*command)->exitcode);
+	return (SUCCESS);
 }
-

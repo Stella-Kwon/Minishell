@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+         #
+#    By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/04 16:03:56 by suminkwon        ###   ########.fr        #
+#    Updated: 2024/10/10 20:05:00 by hlee-sun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,19 +18,19 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) 
-#-fsanitize=address
-#COMPILE_FLAG = -I/usr/local/opt/readline/include/
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
 
-#LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
+COMPILE_FLAG = -I/usr/local/opt/readline/include/
 
-COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
-LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+# COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+
+# LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
 
 SRCS_DIR = ./srcs/
 
-SRCS = minishell.c\
+SRCS =	mini.c \
 		utils/setting_display.c\
 		utils/ft_strcmp.c\
 		utils/ft_strndup.c\
@@ -38,20 +38,39 @@ SRCS = minishell.c\
 		utils/ft_isspace.c\
 		utils/free_one.c\
 		utils/all_free.c\
+		utils/ft_strcpy.c\
 		utils/waitpid_status.c\
+		tokenize/utils.c\
 		tokenize/readline_again.c\
 		tokenize/check_set.c\
 		tokenize/tokenize.c\
 		tokenize/tokenize_operator.c\
-		tokenize/store_words.c\
 		tokenize/operation_error.c\
+		tokenize/operation_utils.c\
+		tokenize/input_utils.c\
 		signal/signal.c \
 		redirection/heredoc.c\
 		redirection/herestring.c\
 		redirection/read_line.c\
-		parsing/create_parse.c\
+		parsing/create_astnode.c\
 		parsing/create_command.c\
+		parsing/initialize_func.c\
+		parsing/free_func.c\
+		parsing/astnode_utils.c\
+		parsing/heredoc_herestr_parsing.c\
+		parsing/parsing_utils.c\
+		parsing/redirection_parsing.c\
+		execution/action_child.c\
+		execution/action_parents.c\
+		execution/execute.c\
+		execution/util_node.c\
+		execution/utils.c\
+		execution/pipe_execution.c\
+		execution/execution_node.c\
 		error_log/log_file.c\
+		expand/expand.c\
+		expand/utils.c\
+		expand/quotes.c\
 		builtin/builtin.c\
 		builtin/cd.c\
 		builtin/echo.c\
@@ -62,15 +81,7 @@ SRCS = minishell.c\
 		builtin/print_error.c\
 		builtin/pwd.c\
 		builtin/unset.c\
-		execution/action_child_parents.c\
-		execution/execute.c\
-		execution/execution_node.c\
-		execution/expand.c\
-		execution/pipe_execution.c\
-		execution/utils.c\
 
-
-		# execution/execution_node.c\
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
@@ -82,7 +93,7 @@ all: $(LIBFT) $(NAME)
 %.o: %.c
 	@$(CC) $(FLAG) $(COMPILE_FLAG) -c $< -o $@
 $(NAME): $(MAN_OBJS)
-	@$(CC) $(FLAG) $(COMPILE_FLAG) $(LINK_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
+	@$(CC) $(FLAG) $(COMPILE_FLAG) -o $@ $(MAN_OBJS) $(LIBFT) $(LINK_FLAG) 
 	@echo "making minishell"
 
 $(LIBFT):

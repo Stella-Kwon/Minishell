@@ -1,19 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/09 17:31:09 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/10/10 00:28:40 by hlee-sun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-int env(char **args, char ***envp_ptr)
-{
-    if (args[0] == NULL)
-        return (FAIL);
 
-    if (args[1] != NULL && args[1][0] == '-')
+int env(t_Command *command)
+{
+    if (command->args[0] == NULL)
+    {
+        command->exitcode = FAIL;
+        return (command->exitcode);
+    }
+
+    if (command->args[1] != NULL && command->args[1][0] == '-')
     {
         ft_putstr_fd("Error: env, invalid argument ", STDERR_FILENO);
-        ft_putstr_fd(args[1], STDERR_FILENO);
-        return (FAIL);
+        ft_putstr_fd(command->args[1], STDERR_FILENO);
+        command->exitcode = FAIL;
+        return (command->exitcode);
     }
-    print_strs(*envp_ptr);
-    return (SUCCESS);
+    
+    print_strs(command->env);  // 환경 변수 출력
+    command->exitcode = SUCCESS;  // 정상 종료 코드
+    return (command->exitcode);
 }
+
+// int env(char **args, char ***envp_ptr)
+// {
+//     if (args[0] == NULL)
+//         return (FAIL);
+
+//     if (args[1] != NULL && args[1][0] == '-')
+//     {
+//         ft_putstr_fd("Error: env, invalid argument ", STDERR_FILENO);
+//         ft_putstr_fd(args[1], STDERR_FILENO);
+//         return (FAIL);
+//     }
+//     print_strs(*envp_ptr);
+//     return (SUCCESS);
+// }
 
 char **create_env(char **curr_envp)
 {
@@ -62,14 +96,15 @@ int append_to_env(char *str, char ***envp_ptr)
         return (FAIL);
     }
     copy_envp(new_envp, *envp_ptr, env_len);
-    delete_str_array(envp_ptr); // 기존 환경 배열 해제
     new_envp[env_len] = ft_strdup(str); // 새 문자열 추가
     if (new_envp[env_len] == NULL)
     {
         perror("Error: strdup failed");
+		delete_str_array(&new_envp); // 기존 환경 배열 해제
         return (FAIL);
     }
     new_envp[env_len + 1] = NULL;
+	delete_str_array(envp_ptr); // 기존 환경 배열 해제
     *envp_ptr = new_envp; // 새 환경 배열을 설정
 	return (SUCCESS);
 }

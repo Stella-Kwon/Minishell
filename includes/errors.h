@@ -14,13 +14,11 @@
 # define ERRORS_H
 
 # include "minishell.h"
-# include <time.h> //이거 추후에 뺴
 
-// 로그 파일 경로를 정의
 # define LOG_FILE "minishell.log"
 
-int log_errors(char *tokens, char *msg);
-int handle_error(int custom_error_code);
+int	log_errors(char *tokens, char *msg);
+int	handle_error(int custom_error_code);
+int	handle_258_exitcode_print(char *msg);
 
-int handle_258_exitcode_print(char *msg);
 #endif

@@ -15,7 +15,8 @@
 
 # include "minishell.h"
 
-int here_doc(ASTNode **node);
-int here_string(Redirection **redir);
-int read_line(char **line);
+int		here_doc(t_ASTNode **node);
+int		here_string(t_Redirection **redir);
+int		read_line(char **line);
+
 #endif

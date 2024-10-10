@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lalex-ku <lalex-ku@42sp.org.br>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 06:26:02 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/03/15 13:45:55 by hlee-sun         ###   ########.fr       */
+/*   Created: 2022/06/22 17:32:45 by lalex-ku          #+#    #+#             */
+/*   Updated: 2022/06/22 17:32:50 by lalex-ku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
 
-char	*check_string(char *str)
+int	main(int argc, char const *argv[])
 {
-	if (!str)
+	int	pid;
+
+	pid = fork();
+	open("infile", O_RDONLY);
+	while (1)
 	{
-		str = (char *)malloc(sizeof(char) * 1);
-		if (!str)
-			return (0);
-		*str = 0;
+		printf("Helloo miniHELL %i\n", pid);
+		sleep(1);
 	}
-	return (str);
-}
-
-char	*ft_free(char **str)
-{
-	free(*str);
-	*str = 0;
 	return (0);
 }

@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/29 14:19:56 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/03/15 13:42:41 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/10/06 15:51:40 by suminkwon         #+#    #+#             */
+/*   Updated: 2024/10/06 22:06:38 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-char	*check_string(char *str)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	if (!str)
+	size_t	i;
+
+	i = 0;
+	while (src[i] != '\0')
 	{
-		str = (char *)malloc(sizeof(char) * 1);
-		if (!str)
-			return (0);
-		*str = 0;
+		dst[i] = src[i];
+		i++;
 	}
-	return (str);
-}
-
-char	*ft_free(char **str)
-{
-	free(*str);
-	*str = 0;
-	return (0);
+	dst[i] = '\0';
+	return (dst);
 }

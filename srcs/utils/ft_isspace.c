@@ -6,17 +6,18 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:31:39 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/09/28 17:56:57 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/06 22:06:55 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_isspace(char c)
+int	ft_isspace(char c)
 {
-    if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
-    {
-        return 1;
-    }
-    return 0;
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || \
+		c == '\f' || c == '\r')
+	{
+		return (1);
+	}
+	return (0);
 }
