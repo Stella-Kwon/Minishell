@@ -1,0 +1,6 @@
+MINISHELL: out: No such file or directory: Failed in opening file in set_redirection
+MINISHELL: Failed to "reallocate" memory for tokens: Cannot allocate memory: 
+MINISHELL: Failed to dup2 in action_child: Bad file descriptor: 
+MINISHELL: Failed to dup2 in action_child: Bad file descriptor: 
+MINISHELL: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to realloc new_args in create_command: Cannot allocate memory: 
