@@ -37,9 +37,9 @@
 # include <stddef.h>
 # include <readline/history.h>
 # include "my_signal.h"
+# include "structs.h"
 # include "utils.h"
 # include "errors.h"
-# include "structs.h"
 # include "tokenize.h"
 # include "redirection.h"
 # include "parsing.h"

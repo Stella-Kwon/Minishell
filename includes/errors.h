@@ -18,7 +18,7 @@
 # define LOG_FILE "minishell.log"
 
 int	log_errors(char *tokens, char *msg);
-int	handle_error(int custom_error_code);
-int	handle_258_exitcode_print(char *msg);
+void handle_error(t_Command **command, char *path);
+int handle_258_exitcode_print(char *msg);
 
 #endif

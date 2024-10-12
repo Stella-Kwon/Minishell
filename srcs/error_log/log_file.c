@@ -21,23 +21,31 @@ int	handle_258_exitcode_print(char *msg)
 	return (FAIL);
 }
 
-int	handle_error(int custom_error_code)
+void	handle_error(t_Command **command, char *path)
 {
-	int	exit_status;
-
-	if (custom_error_code != 0)
-		exit_status = custom_error_code;
-	else if (errno == EACCES)
-		exit_status = 126;
+	(*command)->exitcode = errno;
+	// printf("errno :%d\n", errno);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(path, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	if (errno == EACCES)
+	{
+		ft_putstr_fd("Permission denied\n", STDERR_FILENO);
+		(*command)->exitcode = 126;
+	}
 	else if (errno == ENOENT)
-		exit_status = 127;
+	{
+		ft_putstr_fd("No /such file or directory\n", STDERR_FILENO);
+		(*command)->exitcode = 127;
+	}
+	else if (errno == EISDIR) // 디렉토리일 경우
+	{
+		ft_putstr_fd("Is a directory\n", STDERR_FILENO);
+		(*command)->exitcode = 126;
+	}
 	else
-		exit_status = 1;
-
-	if (exit_status < 0 || exit_status > 255)
-		exit_status = 255;
-
-	return (exit_status);
+		(*command)->exitcode = 1;
+	// printf("(*command)->exitcode : %d\n", (*command)->exitcode);
 }
 
 int	log_errors(char *token, char *msg)

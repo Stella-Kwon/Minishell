@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:57:20 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/10 16:59:50 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/12 00:57:59 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ t_Redirection *create_redirection(void)
 {
     t_Redirection *redir;
 
-    redir = (t_Redirection *)malloc(sizeof(t_Redirection));
+    redir = (t_Redirection *)ft_calloc(1, sizeof(t_Redirection));
     if (!redir)
     {
-        log_errors("Failed to malloc redirection in create_redirection", "");
+        log_errors("Failed to ft_calloc redirection in create_redirection", "");
         return (NULL);
     }
     redir->infile = -2;
@@ -59,10 +59,10 @@ t_Pipeline *create_pipeline(void)
 {
     t_Pipeline *pipeline;
 
-    pipeline = (t_Pipeline *)malloc(sizeof(t_Pipeline));
+    pipeline = (t_Pipeline *)ft_calloc(1, sizeof(t_Pipeline));
     if (!pipeline)
     {
-        log_errors("Failed to malloc pipeline in create_pipeline", "");
+        log_errors("Failed to ft_calloc pipeline in create_pipeline", "");
         return (NULL);
     }
     pipeline->fd[0] = -2;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 10:15:52 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/09 01:39:23 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/10 23:50:52 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 # define LIBFT_H
 
 # include <unistd.h>
+# include <stdint.h>
 # include <string.h>
 # include <stdlib.h>
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 10
 # endif
 
-typedef struct s_list
+	typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;

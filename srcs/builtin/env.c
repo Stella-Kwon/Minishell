@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:09 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/10 00:28:40 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/12 09:41:09 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int env(t_Command *command)
         return (command->exitcode);
     }
     
-    print_strs(command->env);  // 환경 변수 출력
+    print_strs(*(command->env));  // 환경 변수 출력
     command->exitcode = SUCCESS;  // 정상 종료 코드
     return (command->exitcode);
 }
@@ -49,21 +49,21 @@ int env(t_Command *command)
 //     return (SUCCESS);
 // }
 
-char **create_env(char **curr_envp)
-{
-    size_t env_count;
-    char **new_envp;
+// char **create_env(char **curr_envp)
+// {
+//     size_t env_count;
+//     char **new_envp;
 
-    env_count = get_str_len(curr_envp);
-    new_envp = ft_calloc(env_count + 1, sizeof(*new_envp));
-    if (new_envp == NULL)
-    {
-        perror("Error: malloc failed");
-        return (NULL);
-    }
-    copy_envp(new_envp, curr_envp, env_count);
-    return (new_envp);
-}
+//     env_count = get_str_len(curr_envp);
+//     new_envp = ft_calloc(env_count + 1, sizeof(*new_envp));
+//     if (new_envp == NULL)
+//     {
+//         perror("Error: malloc failed");
+//         return (NULL);
+//     }
+//     copy_envp(new_envp, curr_envp, env_count);
+//     return (new_envp);
+// }
 
 void delete_str_array(char ***str_arr)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 18:02:03 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/10 17:30:35 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/12 03:13:47 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 
 # define INVALID -100
 
-t_ASTNode		*parse_to_nodes(char **tokens, char **env);
+t_ASTNode		*parse_to_nodes(char **tokens, char ***env);
 t_ASTNode		*create_astnode(char ***tokens, t_ASTNode *left, \
-t_ASTNode *right, char **env);
-t_Command		*create_command(char ***tokens, char **env);
+t_ASTNode *right, char ***env);
+t_Command		*create_command(char ***tokens, char ***env);
 t_Pipeline		*create_pipeline(void);
 t_Redirection	*create_redirection(void);
 int				is_operator(char **tokens);
 int				operation_parsing(char ***tokens, t_ASTNode **left_node, \
-char **env);
+char ***env);
 int				set_redirection(t_Redirection **redirect, char ***args, \
 int direction_type);
 int				set_heredoc(t_Redirection **redirect, char *limiter);
@@ -43,5 +43,6 @@ int				initialize_astnode(t_ASTNode **node, char ***tokens);
 int				get_direction_type(char *token);
 int 			remove_args_after_redirection(char ***args);
 int				is_redirection(char **token);
-int             put_last_open_file(t_Redirection **redirect, char ***args);
+int             put_last_open_infile(t_Redirection **redirect, char ***args, char **filename);
+int             rm_quote_filename(t_Redirection **redirect, char ***args);
 #endif

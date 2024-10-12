@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:20:10 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/10 02:51:16 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/12 09:40:08 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*find_and_check_path(t_Command **command)
 
 	if (ft_strrchr((*command)->cmd, '/') != NULL)
 		return ((*command)->cmd);
-	env_path = find_env((*command)->env);
+	env_path = find_env(*((*command)->env));
 	path = get_path(command, env_path);
 	{
 		if (env_path != NULL)
@@ -78,13 +78,13 @@ static char	*find_and_check_path(t_Command **command)
 	return (path);
 }
 
-int prepare_cmd(t_Command **command, int last_exitcode)
+int	prepare_cmd(t_Command **command, int last_exitcode)
 {
 	if (!command || !*command)
 		return (SUCCESS);
-	(*command)->cmd = expand_cmd((*command)->cmd, (*command)->env, \
+	(*command)->cmd = expand_cmd((*command)->cmd, *((*command)->env), \
 									last_exitcode);
-	(*command)->args = expand_args((*command)->args, (*command)->env, \
+	(*command)->args = expand_args((*command)->args, *((*command)->env), \
 									last_exitcode);
 	if (!(*command)->cmd)
 		return (cmd_error(command, ": command not found\n", 127));
@@ -102,7 +102,7 @@ int	execute_cmd(t_Command **command)
 	path = find_and_check_path(command);
 	if (!path)
 		return (cmd_error(command, ": command not found\n", 127));
-	if (execve(path, (*command)->args, (*command)->env) == -1)
+	if (execve(path, (*command)->args, *((*command)->env)) == -1)
 		(*command)->exitcode = errno;
 	else
 		(*command)->exitcode = 0;

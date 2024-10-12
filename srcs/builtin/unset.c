@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/10 00:38:25 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/12 11:26:50 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,15 @@ static void remove_env_var(t_Command *command, char **new)
     size_t len;
     char **var_name;
 
-    len = get_str_len(command->env);
+    len = get_str_len(*(command->env));
     i = 0;
     j = 0;
     while (i < len)
     {
-        var_name = ft_split(command->env[i], '=');
+        var_name = ft_split((*(command->env))[i], '=');
         if (ft_strncmp(var_name[0], command->args[1], ft_strlen(var_name[0]) + 1) != 0)
         {
-            new[j] = command->env[i];
+            new[j] = (*(command->env))[i];
             j++;
         }
         delete_str_array(&var_name);
@@ -110,7 +110,7 @@ int unset(t_Command *command)
 
     if (command->args[1] != NULL)
     {
-        len = get_str_len(command->env);
+        len = get_str_len(*(command->env));
         new_envp = ft_calloc(len + 1, sizeof(*new_envp));
         if (new_envp == NULL)
         {
@@ -119,7 +119,8 @@ int unset(t_Command *command)
             return (command->exitcode);
         }
         remove_env_var(command, new_envp);  // Remove environment variable
-        command->env = new_envp;  // Update pointer to new array
+		delete_str_array(command->env);
+        *(command->env) = new_envp;  // Update pointer to new array
     }
 
     command->exitcode = SUCCESS;

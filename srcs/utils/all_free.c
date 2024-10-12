@@ -17,12 +17,15 @@ void	all_free(char ***res)
 	int	i;
 
 	i = 0;
-	while ((*res)[i])
+	if (res && *res)
 	{
-		free((*res)[i]);
-		(*res)[i] = NULL;
-		i++;
+		while ((*res)[i])
+		{
+			free((*res)[i]);
+			(*res)[i] = NULL;
+			i++;
+		}
+		free(*res);
+		*res = NULL;
 	}
-	free(*res);
-	*res = NULL;
 }

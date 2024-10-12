@@ -19,7 +19,7 @@ char *store_words(char **start)
 
 	word_start = *start;
 	while (**start && !ft_isspace(**start) && **start != '(' && **start != ')' &&
-		   **start != '|' && **start != '&' && **start != '>' && **start != '<' && **start != '$')
+		   **start != '|' && **start != '&' && **start != '>' && **start != '<')// && **start != '$')
 	{
 		(*start)++;
 	}
@@ -50,15 +50,6 @@ int *in_double_quote)
 			*in_single_quote = !*in_single_quote;
 		else if (input[i] == '"' && !*in_single_quote)
 			*in_double_quote = !*in_double_quote;
-		// if (!(*in_single_quote || *in_double_quote) \
-		// && is_special_character(input[i]))
-		// {
-		// 	ft_putstr_fd((char *)&input[i], 2);
-		// 	ft_putstr_fd("syntax error: unexpected character ", 2);
-		// 	ft_putstr_fd((char *)&input[i], 2);
-		// 	ft_putstr_fd("\n", 2);
-		// 	return (FAIL);
-		// }
 		i++;
 	}
 	return (SUCCESS);
@@ -75,7 +66,7 @@ int	check_input(const char *input)
 		return (FAIL);
 	if (in_single_quote || in_double_quote)
 	{
-		ft_putstr_fd("MINISHELL: ", 2);
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd("syntax error: unclosed quotes\n", 2);
 		return (FAIL);
 	}

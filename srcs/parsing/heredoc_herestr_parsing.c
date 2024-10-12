@@ -6,13 +6,13 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:35:17 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/06 21:09:46 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/12 00:58:00 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	set_heredoc(t_Redirection **redirect, char *limiter)
+int set_heredoc(t_Redirection **redirect, char *limiter)
 {
 	(*redirect)->heredoc_limiter = ft_strdup(limiter);
 	if (!(*redirect)->heredoc_limiter)
@@ -20,9 +20,9 @@ int	set_heredoc(t_Redirection **redirect, char *limiter)
 	return (SUCCESS);
 }
 
-int	set_herestring(t_Redirection **redirect, char *string)
+int set_herestring(t_Redirection **redirect, char *string)
 {
-	char	*str;
+	char *str;
 
 	str = ft_strjoin(string, "\n");
 	(*redirect)->herestring_str = str;
@@ -31,8 +31,8 @@ int	set_herestring(t_Redirection **redirect, char *string)
 	return (SUCCESS);
 }
 
-int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect, \
-int start)
+int heredoc_herestring_parsing(char ***args, t_Redirection **redirect,
+							   int start)
 {
 	if (ft_strcmp(**args, "<<") == 0)
 	{

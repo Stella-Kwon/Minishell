@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:19:04 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/10 14:45:50 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/10 17:33:56 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	common_pre_child(t_Redirection	**redir)
 	{
 		if (here_string(redir) != SUCCESS)
 			return (FAIL);
-		if (dup_and_close((*redir)->infile, STDIN_FILENO) == FAIL)
+	if (dup_and_close((*redir)->infile, STDIN_FILENO) == FAIL)
 		return (FAIL);
 	}
 	return (SUCCESS);

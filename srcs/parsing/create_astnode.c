@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_parse.c                                     :+:      :+:    :+:   */
+/*   create_astnode.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/10 16:53:26 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/12 03:13:26 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char **env)
+static int create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
 {
 	if (tokens && *tokens && **tokens)
 	{
@@ -40,10 +40,10 @@ static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char **env)
 	return (SUCCESS);
 }
 
-t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
-							t_ASTNode *right, char **env)
+t_ASTNode *create_astnode(char ***tokens, t_ASTNode *left,
+						  t_ASTNode *right, char ***env)
 {
-	t_ASTNode	*ast;
+	t_ASTNode *ast;
 
 	ast = (t_ASTNode *)malloc(sizeof(t_ASTNode));
 	if (!ast)
@@ -60,7 +60,7 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 		return (NULL);
 	if (ast->command && ast->command->args)
 	{
-		if (remove_args_after_redirection(&ast->command->args) != SUCCESS)//여기에 free_astnode먼저해줄까?25줄넘어서 ... 나중에 메인에서 해주긴함.
+		if (remove_args_after_redirection(&ast->command->args) != SUCCESS) // 여기에 free_astnode먼저해줄까?25줄넘어서 ... 나중에 메인에서 해주긴함.
 			return (NULL);
 	}
 	ast->left = left;
@@ -68,9 +68,9 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 	return (ast);
 }
 
-static int	operation_and_or(char ***tokens, t_ASTNode **left_node, char **env)
+static int operation_and_or(char ***tokens, t_ASTNode **left_node, char ***env)
 {
-	t_ASTNode	*right_node;
+	t_ASTNode *right_node;
 
 	if (ft_strcmp(**tokens, "&&") == 0)
 	{
@@ -78,8 +78,8 @@ static int	operation_and_or(char ***tokens, t_ASTNode **left_node, char **env)
 		right_node = create_astnode(tokens, NULL, NULL, env);
 		right_node->type = NODE_COMMAND;
 		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : '&&' operation_parsing", \
-					""));
+			return (log_errors("NULL in RIGHT NODE : '&&' operation_parsing",
+							   ""));
 		*left_node = create_astnode(NULL, *left_node, right_node, env);
 		(*left_node)->type = NODE_AND;
 	}
@@ -89,17 +89,17 @@ static int	operation_and_or(char ***tokens, t_ASTNode **left_node, char **env)
 		right_node = create_astnode(tokens, NULL, NULL, env);
 		right_node->type = NODE_COMMAND;
 		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : '||' operation_parsing", \
-					""));
+			return (log_errors("NULL in RIGHT NODE : '||' operation_parsing",
+							   ""));
 		*left_node = create_astnode(NULL, *left_node, right_node, env);
 		(*left_node)->type = NODE_OR;
 	}
 	return (SUCCESS);
 }
 
-int	operation_parsing(char ***tokens, t_ASTNode **left_node, char **env)
+int operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
 {
-	t_ASTNode	*right_node;
+	t_ASTNode *right_node;
 
 	if (ft_strcmp(**tokens, "&&") == 0 || ft_strcmp(**tokens, "||") == 0)
 	{
@@ -112,8 +112,8 @@ int	operation_parsing(char ***tokens, t_ASTNode **left_node, char **env)
 		right_node = create_astnode(tokens, NULL, NULL, env);
 		right_node->type = NODE_COMMAND;
 		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : '|' operation_parsing", \
-					""));
+			return (log_errors("NULL in RIGHT NODE : '|' operation_parsing",
+							   ""));
 		*left_node = create_astnode(tokens, *left_node, right_node, env);
 		(*left_node)->type = NODE_PIPE;
 	}
@@ -122,18 +122,18 @@ int	operation_parsing(char ***tokens, t_ASTNode **left_node, char **env)
 	return (SUCCESS);
 }
 
-t_ASTNode	*parse_to_nodes(char **tokens, char **env)
+t_ASTNode *parse_to_nodes(char **tokens, char ***env)
 {
-	t_ASTNode	*left_node;
+	t_ASTNode *left_node;
 
 	if (!tokens || !*tokens)
 		return (NULL);
 	if (*tokens)
 	{
 		left_node = create_astnode(&tokens, NULL, NULL, env);
-		left_node->type = NODE_COMMAND;
 		if (!left_node)
 			return (NULL);
+		left_node->type = NODE_COMMAND;
 	}
 	while (*tokens)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:31:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 15:54:04 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/10 22:41:33 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include "minishell.h"
 
 int		set_ehcoctl(int flag);
-char	**ft_realloc(char **token, int position, int *bufsize);
+char    *ft_realloc_single(char *token, int position, int *bufsize);
+char	**ft_realloc_double(char **token, int position, int *bufsize);
 char	*ft_strndup(char *str, int n);
 int		ft_isspace(char c);
 int		ft_strcmp(const char *line, const char *limiter);

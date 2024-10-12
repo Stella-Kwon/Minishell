@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/09 20:59:07 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/10 23:50:32 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	store_str(t_For_tokenize *tokenize, int *buffsize)
 			return (log_errors("Failed to store word", ""));
 		}
 		tokenize->token_count++;
-		tokenize->tokens = ft_realloc(tokenize->tokens, \
+		tokenize->tokens = ft_realloc_double(tokenize->tokens, \
 									tokenize->token_count, buffsize);
 		if (!tokenize->tokens)
 			return (log_errors("Failed to \"reallocate\" memory for tokens", \
@@ -69,7 +69,7 @@ int	handle_special_tokens(int *buffsize, t_For_tokenize *tokenize)
 char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
 {
 	tokenize->tokens = NULL;
-	tokenize->tokens = malloc(buffsize * sizeof(char *));
+	tokenize->tokens = ft_calloc(buffsize, sizeof(char *));
 	if (!tokenize->tokens)
 	{
 		log_errors("Failed to allocate memory for tokens", "");
@@ -86,7 +86,7 @@ char	**tokenize_input(char **input)
 
 	tokenize.input = *input;
 	tokenize.start = *input;
-	buffsize = BUFFSIZE;
+	buffsize = BUFFER_SIZE;
 	tokenize.tokens = initialize_tokenization(buffsize, &tokenize);
 	if (!tokenize.tokens)
 		return (NULL);

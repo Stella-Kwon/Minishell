@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+         #
+#    By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/10 17:01:46 by suminkwon        ###   ########.fr        #
+#    Updated: 2024/10/12 01:44:44 by hlee-sun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,16 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
 
-#COMPILE_FLAG = -I/usr/local/opt/readline/include/
+COMPILE_FLAG = -I/usr/local/opt/readline/include/
 
-#LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
+LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
-COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+#COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
-LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+#LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+
+# COMPILE_FLAG = -I/usr/include/readline
+# LINK_FLAG = -L/usr/local/lib -lreadline
 
 SRCS_DIR = ./srcs/
 

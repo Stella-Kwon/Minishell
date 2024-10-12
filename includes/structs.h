@@ -21,7 +21,7 @@
 typedef struct s_Command
 {
 	char	*cmd;
-	char	**env;
+	char	***env;
 	char	**args;
 	int		exitcode;
 	int		wstatus;

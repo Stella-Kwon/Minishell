@@ -23,14 +23,14 @@ int	waitpid_status(int wstatus)
 	}
 	else if (WIFSIGNALED(wstatus))
 	{
-		log_errors("WAIT_STATUS : Child process terminated due to signal", "");
+		// log_errors("WAIT_STATUS : Child process terminated due to signal", "");
 		return (WTERMSIG(wstatus));
 	}
 	else if (WIFSTOPPED(wstatus))
 	{
-		log_errors("WAIT_STATUS : Child process was stopped by signal", "");
+		// log_errors("WAIT_STATUS : Child process was stopped by signal", "");
 		return (WSTOPSIG(wstatus));
 	}
-	ft_putstr_fd("Unexpected termination status\n", 2);
+	// ft_putstr_fd("Unexpected termination status\n", 2);
 	return (FAIL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/10 15:38:42 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/12 03:00:19 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 			continue ;
 		}
 		add_history(input);
-		if (check_input(input) == FAIL) //258exitcode?
+		if (check_input(input) == FAIL) //258exitcode? 아님 
 		{
 			free(input);
 			input = NULL;
@@ -64,11 +64,11 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 			continue ;
 		}
 		// 토큰 출력
-		for (int i = 0; tokens[i]; i++)
-			printf("tokens[%d] : %s\n", i, tokens[i]);
+		// for (int i = 0; tokens[i]; i++)
+		// 	printf("tokens[%d] : %s\n", i, tokens[i]);
 		
 		char **tmp_tokens = tokens;
-		root = parse_to_nodes(tokens, env); // 파싱
+		root = parse_to_nodes(tokens, &env); // 파싱
 		if (!root)							// 파싱 실패한 경우
 		{
 			if (tmp_input){
@@ -79,12 +79,19 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 				all_free(&tmp_tokens);
 			continue;
 		}
-		printf("\n\n----------print start----------\n\n");
-		print_astnode(root, 0); // AST 노드 출력
-		printf("\n\n=================================\n\n");
+
+
+		// printf("\n\n----------print start----------\n\n");
+		// print_astnode(root, 0); // AST 노드 출력
+		// printf("\n\n=================================\n\n");
+
+
+
+
 		init_execution_signal();
-		set_last_exitcode(&root, last_exit_code);
 		t_ASTNode *tmp_root = root;
+		t_ASTNode *set_root = root;
+		set_last_exitcode(&set_root, last_exit_code);
 		// printf("root: %p\n", (void *)tmp_root);
 		// printf("root: %s\n", tmp_root->command->cmd);
 		if (ast_node_execution(&root) != SUCCESS)

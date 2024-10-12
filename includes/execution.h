@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 04:44:20 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/09 23:26:10 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/10 21:11:36 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode);
 char	*ft_strcpy(char *dst, const char *src);
 int		dup_and_close(int oldfd, int newfd);
 
+void record_exit_codes(t_ASTNode **node);
 #endif
 

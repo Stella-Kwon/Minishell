@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/06 21:09:59 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/12 03:01:27 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
+int parsing(char ***tmp_args, t_Redirection **redirect, int start)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (**tmp_args)
@@ -28,10 +28,10 @@ int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
 	return (SUCCESS);
 }
 
-int	parsing_others(char ***args, t_Redirection **redirect, int start)
+int parsing_others(char ***args, t_Redirection **redirect, int start)
 {
-	int		i;
-	char	**tmp_args;
+	int i;
+	char **tmp_args;
 
 	i = 0;
 	if (!args || !*args || !**args)
@@ -56,8 +56,8 @@ int	parsing_others(char ***args, t_Redirection **redirect, int start)
 	return (SUCCESS);
 }
 
-static int	command_initialize(t_Command *res, char ***tokens, \
-								int buffersize, char **env)
+static int command_initialize(t_Command *res, char ***tokens,
+							  int buffersize, char ***env)
 {
 	res->cmd = ft_strdup(**tokens);
 	if (!res->cmd)
@@ -77,8 +77,8 @@ static int	command_initialize(t_Command *res, char ***tokens, \
 	return (SUCCESS);
 }
 
-static int	create_command_args(t_Command *res, char ***tokens, \
-								int *buffersize, int *args_index)
+static int create_command_args(t_Command *res, char ***tokens,
+							   int *buffersize, int *args_index)
 {
 	while (**tokens && !is_operator(*tokens))
 	{
@@ -86,13 +86,14 @@ static int	create_command_args(t_Command *res, char ***tokens, \
 		if (!res->args[*args_index])
 		{
 			log_errors("Failed to malloc res->args[args_index] \
-			in create_command", "");
+			in create_command",
+					   "");
 			free_command(&res);
 			return (FAIL);
 		}
 		(*tokens)++;
 		(*args_index)++;
-		res->args = ft_realloc(res->args, *args_index, buffersize);
+		res->args = ft_realloc_double(res->args, *args_index, buffersize);
 		if (!res->args)
 		{
 			log_errors("Failed to realloc res->args in create_command", "");
@@ -104,11 +105,11 @@ static int	create_command_args(t_Command *res, char ***tokens, \
 	return (SUCCESS);
 }
 
-t_Command	*create_command(char ***tokens, char **env)
+t_Command *create_command(char ***tokens, char ***env)
 {
-	t_Command	*res;
-	int			buffersize;
-	int			args_index;
+	t_Command *res;
+	int buffersize;
+	int args_index;
 
 	buffersize = BUFFER_SIZE;
 	args_index = 0;

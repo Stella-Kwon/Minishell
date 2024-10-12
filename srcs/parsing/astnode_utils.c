@@ -6,23 +6,44 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 04:29:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/10 17:49:08 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/12 00:58:03 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_redirection(char **token)
+int is_redirection(char **token)
 {
-	if (ft_strcmp(*token, "<") == 0 || ft_strcmp(*token, "<<") == 0 || \
-		ft_strcmp(*token, "<<<") == 0 || ft_strcmp(*token, ">") == 0 || \
+	if (ft_strcmp(*token, "<") == 0 || ft_strcmp(*token, "<<") == 0 ||
+		ft_strcmp(*token, "<<<") == 0 || ft_strcmp(*token, ">") == 0 ||
 		ft_strcmp(*token, ">>") == 0)
 		return (TRUE);
 	return (FALSE);
 }
 
-static void	check_file_access(char ***args, int *origin_i)
+static void infile_in_row(char ***args, int *origin_i)
 {
+	while ((*args)[*origin_i])
+	{
+		// printf("(*args)[*origin_i - i] : %s\n", (*args)[*origin_i - i]);
+		// printf("(*args)[*origin_i] : %s\n", (*args)[*origin_i]);
+		if (strcmp((*args)[*origin_i - 1], "<") == 0 && (*args)[*origin_i])
+		{
+			(*origin_i)++;
+		}
+		else if (strcmp((*args)[*origin_i], "<") == 0 && (*args)[*origin_i + 1])
+			(*origin_i) += 2;
+		else if (access((*args)[*origin_i], F_OK) != 0)
+			break;
+		else if (access((*args)[*origin_i], F_OK) == 0)
+			(*origin_i)++;
+	}
+}
+
+static void check_file_access(char ***args, int *origin_i)
+{
+	int flag;
+
 	if (strcmp((*args)[*origin_i], "<") == 0 || strcmp((*args)[*origin_i], "<<<") == 0 ||
 		strcmp((*args)[*origin_i], "<<") == 0 || strcmp((*args)[*origin_i], ">") == 0 ||
 		strcmp((*args)[*origin_i], ">>") == 0)
@@ -30,15 +51,23 @@ static void	check_file_access(char ***args, int *origin_i)
 		(*origin_i)++;
 		while ((*args)[*origin_i])
 		{
-			if (strcmp((*args)[*origin_i], "<") == 0 || strcmp((*args)[*origin_i], "<<<") == 0 ||
+			flag = 0;
+			infile_in_row(args, origin_i);
+			// printf("args in redirect 1 : %s\n", (*args)[*origin_i]);
+			if (!(*args)[*origin_i])
+				break;
+			if (strcmp((*args)[*origin_i], "<<<") == 0 ||
 				strcmp((*args)[*origin_i], "<<") == 0 || strcmp((*args)[*origin_i], ">") == 0 ||
 				strcmp((*args)[*origin_i], ">>") == 0)
+			{
 				(*origin_i)++;
-			printf("args in redirect : %s\n", (*args)[*origin_i]);
+				flag = 1;
+			}
+			// printf("args in redirect  2: %s\n", (*args)[*origin_i]);
 			if (access((*args)[*origin_i], F_OK) != 0)
 			{
-				printf(" get out \n");
-				(*origin_i)--;
+				if (flag)
+					(*origin_i)++;
 				break;
 			}
 			(*origin_i)++;
@@ -46,63 +75,70 @@ static void	check_file_access(char ***args, int *origin_i)
 	}
 }
 
-static int	restore_new_args(char ***args, t_rm_args *rm)
+static int restore_new_args(char ***args, t_rm_args *rm)
 {
 	while ((*args)[rm->origin_i])
 	{
-		printf("args : %s\n", (*args)[rm->origin_i]);
+		// printf("args : %s\n", (*args)[rm->origin_i]);
 		check_file_access(args, &rm->origin_i);
+		if (!(*args)[rm->origin_i])
+		{
+			(*args)[rm->origin_i] = NULL;
+			return (SUCCESS);
+		}
 		rm->new_args[rm->i] = ft_strdup((*args)[rm->origin_i]);
 		if (!rm->new_args[rm->i])
 			return (log_errors("Failed to malloc new_args[i] in rm_arg function", ""));
-		printf("new : %s\n", (rm->new_args)[rm->i]);
+		// printf("new : %s\n", (rm->new_args)[rm->i]);
 		rm->origin_i++;
 		rm->i++;
-		rm->new_args = ft_realloc(rm->new_args, rm->i, &rm->buffersize);
+		rm->new_args = ft_realloc_double(rm->new_args, rm->i, &rm->buffersize);
 		if (!rm->new_args)
 			return (log_errors("Failed to realloc new_args in create_command", ""));
 	}
+	if (!(*args)[rm->origin_i])
+		(*args)[rm->origin_i] = NULL;
 	return (SUCCESS);
 }
 
-int	remove_args_after_redirection(char ***args)
+int remove_args_after_redirection(char ***args)
 {
-	t_rm_args	rm;
+	t_rm_args rm;
 
 	rm.buffersize = BUFFER_SIZE;
 	rm.i = 0;
 	rm.origin_i = 0;
-	rm.new_args = malloc(rm.buffersize * sizeof(char *));
+	rm.new_args = ft_calloc(rm.buffersize, sizeof(char *));
 	if (!rm.new_args)
 		return (log_errors("Failed to malloc new_args in remove_args function", ""));
 	if (restore_new_args(args, &rm) != SUCCESS)
 		return (FAIL);
-	all_free(args);
+	if (*args)
+	{
+		all_free(args);
+	}
 	*args = rm.new_args;
 	return (SUCCESS);
 }
 
-static void	print_redir_details(t_ASTNode *node)
+static void print_redir_details(t_ASTNode *node)
 {
 	printf("Redirection details:\n");
 	printf("infile: %d\n", node->redir->infile);
 	printf("outfile: %d\n", node->redir->outfile);
-	printf("filename: %s\n", node->redir->filename ? \
-			node->redir->filename : "(NULL)");
+	printf("filename: %s\n", node->redir->filename ? node->redir->filename : "(NULL)");
 	printf("direction_type: %d\n", node->redir->direction_type);
-	printf("heredoc_limiter: %s\n", node->redir->heredoc_limiter ? \
-			node->redir->heredoc_limiter : "(NULL)");
-	printf("herestring_str: %s\n", node->redir->herestring_str ? \
-			node->redir->herestring_str : "(NULL)");
+	printf("heredoc_limiter: %s\n", node->redir->heredoc_limiter ? node->redir->heredoc_limiter : "(NULL)");
+	printf("herestring_str: %s\n", node->redir->herestring_str ? node->redir->herestring_str : "(NULL)");
 }
 
-void	print_astnode(t_ASTNode *node, int depth)
+void print_astnode(t_ASTNode *node, int depth)
 {
-	char	**args;
+	char **args;
 
 	args = NULL;
 	if (!node)
-		return ;
+		return;
 	printf("\n");
 	printf("Node Type: %d\n", node->type);
 	if (node->command == NULL)
