@@ -39,7 +39,11 @@ static void	read_exitcode(t_ASTNode **node, int *exitcode)
 	{
 		if ((*node)->command && (*node)->command->exitcode != -1)
 		{
+			
 			*exitcode = (*node)->command->exitcode;
+
+			// ft_putstr_fd("exitcode  in the last: ", STDERR_FILENO);
+			// ft_putnbr_fd(*exitcode, STDERR_FILENO);
 		}
 		if ((*node)->right)
 			read_exitcode(&(*node)->right, exitcode);

@@ -26,7 +26,7 @@ char	**expand_args(char **args, char **env, int last_exitcode)
 
 int	expand_error(char *command)
 {
-	ft_putstr_fd("MINISHELL: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(command, STDERR_FILENO);
 	ft_putstr_fd(": bad substition", STDERR_FILENO);
 	return (FAIL);
@@ -51,7 +51,7 @@ void	check_null_cmd(char *argv)
 	}
 	if (found == 0)
 	{
-		ft_putstr_fd("pipex: ", STDERR_FILENO);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(argv, STDERR_FILENO);
 		//error_exit(": command not found\n", 127);
 	}

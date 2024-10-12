@@ -12,7 +12,7 @@ char	*remove_quotes(char *s)
 		new_s = malloc((len - 1) * sizeof(char));
 		if (!new_s)
 		{
-			perror("MINISHELL: Memory allocation failed\n");
+			perror("minishell: Memory allocation failed\n");
 			free(s);
 		}
 		ft_strncpy(new_s, s + 1, len - 2);

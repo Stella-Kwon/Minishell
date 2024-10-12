@@ -45,7 +45,8 @@ void	handle_error(t_Command **command, char *path)
 	}
 	else
 		(*command)->exitcode = 1;
-	// printf("(*command)->exitcode : %d\n", (*command)->exitcode);
+	ft_putstr_fd("exitcode : \n", STDERR_FILENO);
+	ft_putnbr_fd((*command)->exitcode, STDERR_FILENO);
 }
 
 int	log_errors(char *token, char *msg)

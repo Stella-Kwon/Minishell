@@ -97,16 +97,23 @@ int	execute_cmd(t_Command **command)
 
 	if (builtin_with_output(*command) == SUCCESS)
 		return (SUCCESS);
+	// ft_putstr_fd("before exec 1 \n", 2);
 	if (check_cmd_script(command) == FAIL || check_cmd_error(command) == FAIL)
 		return (FAIL);
+	// ft_putstr_fd("before exec 2 \n", 2);
 	path = find_and_check_path(command);
 	if (!path)
 		return (cmd_error(command, ": command not found\n", 127));
+	// ft_putstr_fd("before exec 3\n", 2);
 	if (execve(path, (*command)->args, *((*command)->env)) == -1)
-		(*command)->exitcode = errno;
-	else
-		(*command)->exitcode = 0;
+	{	
+		// (*command)->exitcode = errno;
+		// ft_putstr_fd("after exec\n", 2);
+		handle_error(command, path);
+	}
+	// else
+	// 	(*command)->exitcode = 0;
 	if (path != (*command)->cmd)
 		free_one((void **)&path);
-	return (SUCCESS);
+	return ((*command)->exitcode);
 }

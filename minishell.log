@@ -53,3 +53,6 @@ minishell: WAIT_STATUS : Child process terminated due to signal: Success:
 minishell: WAIT_STATUS : Child process terminated due to signal: Success: 
 minishell: WAIT_STATUS : Child process terminated due to signal: Success: 
 minishell: WAIT_STATUS : Child process terminated due to signal: Success: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 

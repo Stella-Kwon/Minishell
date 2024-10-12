@@ -96,6 +96,7 @@ int main(int argc, char **argv, char **env) //(int argc, char **argv, char **env
 		// printf("root: %s\n", tmp_root->command->cmd);
 		if (ast_node_execution(&root) != SUCCESS)
 		{
+			get_last_exitcode(&root, &last_exit_code);
 			// printf("sdf\n");
 			if (tmp_root)
 			{

@@ -96,7 +96,7 @@ static bool	is_valid(char *var_name)
 // 		return ;
 // 	}
 // 	// 변수명이 유효하지 않거나 '='로 시작하면 에러 처리
-// 	if (!is_valid(command->args[1]) || command->args[1][0] == '=' || \
+// 	if (!is_valid(command->args[1]) || command->args[1][0] == '=' || 
 // 				ft_strchr(command->args[1], '-') != NULL)
 // 	{
 // 		ft_putstr_fd("export: `", STDERR_FILENO);

@@ -12,18 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_perror(char *message)
-{
-	ft_putstr_fd("lesh: ", STDERR_FILENO);
-	ft_putstr_fd(message, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-}
-
 int	print_error_cd(t_Command *command, char *s, int error_nb)
 {
-	ft_putstr_fd("MINISHELL: cd: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 	ft_putstr_fd(command->args[1], STDERR_FILENO);
 	return (error_exitcode(&command, s, error_nb));
 }

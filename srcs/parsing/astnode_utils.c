@@ -25,7 +25,7 @@ static void infile_in_row(char ***args, int *origin_i)
 {
 	while ((*args)[*origin_i])
 	{
-		// printf("(*args)[*origin_i - i] : %s\n", (*args)[*origin_i - i]);
+		// printf("(*args)[*origin_i - i] : %s\n", (*args)[*origin_i - 1]);
 		// printf("(*args)[*origin_i] : %s\n", (*args)[*origin_i]);
 		if (strcmp((*args)[*origin_i - 1], "<") == 0 && (*args)[*origin_i])
 		{
@@ -68,6 +68,9 @@ static void check_file_access(char ***args, int *origin_i)
 			{
 				if (flag)
 					(*origin_i)++;
+				// if (strcmp((*args)[*origin_i], "<<<") != 0 &&
+				// 	strcmp((*args)[*origin_i], "<<") != 0 && strcmp((*args)[*origin_i], ">") != 0 &&
+				// 	strcmp((*args)[*origin_i], ">>") != 0)
 				break;
 			}
 			(*origin_i)++;

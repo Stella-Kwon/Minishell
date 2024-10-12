@@ -21,7 +21,7 @@ int	error_exitcode(t_Command **command, char *s, int error_nb)
 
 int	cmd_error(t_Command **command, char *s, int error_nb)
 {
-	ft_putstr_fd("MINISHELL: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((*command)->cmd, STDERR_FILENO);
 	ft_putstr_fd(s, STDERR_FILENO);
 	(*command)->exitcode = error_nb;
@@ -66,7 +66,7 @@ int	check_cmd_error(t_Command **command)
 		len = ft_strlen((*command)->cmd);
 		if ((*command)->cmd[len - 1] == '/')
 		{
-			ft_putstr_fd("MINISHELL: ", STDERR_FILENO);
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd((*command)->cmd, STDERR_FILENO);
 			return (error_exitcode(command, " is a directory", 126));
 		}

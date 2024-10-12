@@ -14,10 +14,10 @@
 
 static void print_exit_err_msg(char *arg)
 {
-	ft_putstr_fd("minishell, exit: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putstr_fd("numeric argument required\n", STDERR_FILENO);
-	exit (255);
+	exit (2);
 }
 
 // int	mini_exit(char **args, char ***envp_ptr)
@@ -73,6 +73,6 @@ int mini_exit(t_Command *command)
     exit_status = ft_atoi(command->args[1]);  // 종료 코드 설정
     command->exitcode = exit_status % 256;
 	if(command->exitcode < 0)
-		command->exitcode += 256;    // 종료 코드 범위 제한
+		command->exitcode += 256;
     exit(command->exitcode);
 }
