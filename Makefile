@@ -62,6 +62,7 @@ SRCS =	mini.c \
 		parsing/astnode_utils.c\
 		parsing/heredoc_herestr_parsing.c\
 		parsing/parsing_utils.c\
+		parsing/redirection_utils.c\
 		parsing/redirection_parsing.c\
 		execution/action_child.c\
 		execution/action_parents.c\

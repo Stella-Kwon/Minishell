@@ -42,8 +42,6 @@ static void infile_in_row(char ***args, int *origin_i)
 
 static void check_file_access(char ***args, int *origin_i)
 {
-	int flag;
-
 	if (strcmp((*args)[*origin_i], "<") == 0 || strcmp((*args)[*origin_i], "<<<") == 0 ||
 		strcmp((*args)[*origin_i], "<<") == 0 || strcmp((*args)[*origin_i], ">") == 0 ||
 		strcmp((*args)[*origin_i], ">>") == 0)
@@ -51,29 +49,36 @@ static void check_file_access(char ***args, int *origin_i)
 		(*origin_i)++;
 		while ((*args)[*origin_i])
 		{
-			flag = 0;
-			infile_in_row(args, origin_i);
+			if (strcmp((*args)[*origin_i], "<") == 0)
+				infile_in_row(args, origin_i);
 			// printf("args in redirect 1 : %s\n", (*args)[*origin_i]);
 			if (!(*args)[*origin_i])
 				break;
-			if (strcmp((*args)[*origin_i], "<<<") == 0 ||
-				strcmp((*args)[*origin_i], "<<") == 0 || strcmp((*args)[*origin_i], ">") == 0 ||
-				strcmp((*args)[*origin_i], ">>") == 0)
+			if (strcmp((*args)[*origin_i - 1], "<<<") == 0 ||
+				strcmp((*args)[*origin_i - 1], "<<") == 0 || strcmp((*args)[*origin_i - 1], ">") == 0 ||
+				strcmp((*args)[*origin_i - 1], ">>") == 0)
 			{
 				(*origin_i)++;
-				flag = 1;
 			}
+			else if (strcmp((*args)[*origin_i], "<<<") == 0 ||
+				strcmp((*args)[*origin_i], "<<") == 0 || strcmp((*args)[*origin_i], ">") == 0 ||
+				strcmp((*args)[*origin_i], ">>") == 0)
+				(*origin_i) += 2;
+			if (!(*args)[*origin_i])
+				break;
 			// printf("args in redirect  2: %s\n", (*args)[*origin_i]);
 			if (access((*args)[*origin_i], F_OK) != 0)
 			{
-				if (flag)
-					(*origin_i)++;
+				if (strcmp((*args)[*origin_i], "<<<") == 0 ||
+					strcmp((*args)[*origin_i], "<<") == 0 || strcmp((*args)[*origin_i], ">") == 0 ||
+					strcmp((*args)[*origin_i], ">>") == 0)
+					continue;
 				// if (strcmp((*args)[*origin_i], "<<<") != 0 &&
 				// 	strcmp((*args)[*origin_i], "<<") != 0 && strcmp((*args)[*origin_i], ">") != 0 &&
 				// 	strcmp((*args)[*origin_i], ">>") != 0)
-				break;
+				else
+					break;
 			}
-			(*origin_i)++;
 		}
 	}
 }

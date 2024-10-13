@@ -45,4 +45,6 @@ int 			remove_args_after_redirection(char ***args);
 int				is_redirection(char **token);
 int             put_last_open_infile(t_Redirection **redirect, char ***args, char **filename);
 int             rm_quote_filename(t_Redirection **redirect, char ***args);
+int             filename_restore(int *i, char ***args, char **new_filename, int *buffersize);
+void            check_directory_exist(t_Redirection **redirect, char *filename);
 #endif
