@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:31:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/13 17:01:50 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:28:03 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "minishell.h"
 
 int		set_ehcoctl(int flag);
-char    *ft_realloc_single(char *token, size_t position, size_t *bufsize);
-char	**ft_realloc_double(char **token, size_t position, size_t *bufsize);
+char    *ft_realloc_single(char *token, int position, int *bufsize);
+char	**ft_realloc_double(char **token, int position, int *bufsize);
 char	*ft_strndup(char *str, int n);
 int		ft_isspace(char c);
 int		ft_strcmp(const char *line, const char *limiter);

@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:42:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/13 17:06:34 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:30:37 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int set_infile(t_Redirection **redirect, char ***args, char *filename, in
 	return (SUCCESS);
 }
 
-int filename_restore(int *i, char ***args, char **new_filename, size_t *buffersize)
+int filename_restore(int *i, char ***args, char **new_filename, int *buffersize)
 {
 	(void)buffersize;
 	int j;
@@ -102,7 +102,7 @@ int rm_quote_filename(t_Redirection **redirect, char ***args)
 {
 	char *new_filename;
 	int i;
-	size_t buffersize;
+	int buffersize;
 
 	i = 0;
 	buffersize = BUFFER_SIZE;

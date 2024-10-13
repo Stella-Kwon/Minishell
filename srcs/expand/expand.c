@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:17 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/13 17:50:11 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:38:22 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static int	handle_single_quote(char *input, t_Dollar *dol)
 		if (dol->out_i >= dol->out_len - 1)
 		{
 			dol->output = ft_realloc_single(dol->output, dol->out_i, \
-											&dol->out_len);
+											(int *)&dol->out_len);
 			if (!dol->output)
 			{
 				log_errors("Realloc failed", "");
@@ -143,7 +143,7 @@ static int	handle_double_quote(char *input, t_Dollar *dol, char **env, \
 			if (dol->out_i >= dol->out_len - 1)
 			{
 				dol->output = ft_realloc_single(dol->output, dol->i, \
-												&dol->out_len);
+												(int *)&dol->out_len);
 				if (!dol->output)
 				{
 					log_errors("Realloc failed", "");
@@ -215,9 +215,10 @@ static int	process_character(char *input, t_Dollar *dol, char **env, \
 	else
 	{
 		dol->output[dol->out_i++] = input[dol->i++];
-		if (dol->out_i >= dol->out_len - 1) 
+		if (dol->out_i >= dol->out_len - 1)
 		{
-			dol->output = ft_realloc_single(dol->output, dol->out_i, &dol->out_len);
+			dol->output = ft_realloc_single(dol->output, dol->out_i, \
+											(int *)&dol->out_len);
 			if (!dol->output)
 			{
 				log_errors("Realloc failed", "");

@@ -72,7 +72,7 @@ typedef struct s_remove_args
 	char	**new_args;
 	int		i;
 	int		origin_i;
-	size_t		buffersize;
+	int		buffersize;
 }	t_rm_args;
 
 typedef struct s_Redirection
