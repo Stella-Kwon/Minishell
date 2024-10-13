@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 01:07:03 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/12 12:38:04 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 04:16:20 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ static char	*get_current_dir(char *prefix)
 	buf = ft_calloc(1, MAXPATHLEN);
 	if (buf == NULL)
 	{
-		perror("Error: calloc failed\n");
+		perror("cd: calloc failed\n");
 		return (NULL);
 	}
 	if (getcwd(buf, MAXPATHLEN) == NULL)
 	{
-		perror("Error: getcwd failed\n");
+		perror("cd: getcwd failed\n");
 		free(buf);
 		return (NULL);
 	}
@@ -109,7 +109,7 @@ static char	*get_current_dir(char *prefix)
 	free(buf);
 	if (path == NULL)
 	{
-		perror("Error: strjoin failed\n");
+		perror("cd: strjoin failed\n");
 		return (NULL);
 	}
 	return (path);
@@ -164,7 +164,7 @@ static void	go_home(t_Command *command)
 int	cd(t_Command *command)
 {
 	int			status;
-	char 		*new_dir;
+	char		*new_dir;
 
 	status = SUCCESS;
 	if (command->args[1] == NULL || command->args[1][0] == '\0')

@@ -6,7 +6,7 @@
 #    By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/12 01:44:44 by hlee-sun         ###   ########.fr        #
+#    Updated: 2024/10/13 18:06:04 by hlee-sun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
 
-COMPILE_FLAG = -I/usr/local/opt/readline/include/
+# COMPILE_FLAG = -I/usr/local/opt/readline/include/
 
-LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
+# LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
 #COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
@@ -30,6 +30,8 @@ LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
 # COMPILE_FLAG = -I/usr/include/readline
 # LINK_FLAG = -L/usr/local/lib -lreadline
+
+LINK_FLAG = -lreadline -lncurses -L/
 
 SRCS_DIR = ./srcs/
 
@@ -73,7 +75,6 @@ SRCS =	mini.c \
 		error_log/log_file.c\
 		expand/expand.c\
 		expand/utils.c\
-		expand/quotes.c\
 		builtin/builtin.c\
 		builtin/cd.c\
 		builtin/echo.c\

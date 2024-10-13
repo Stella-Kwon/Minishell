@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:42:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/12 00:57:56 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/13 17:06:34 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int set_infile(t_Redirection **redirect, char ***args, char *filename, in
 	return (SUCCESS);
 }
 
-int filename_restore(int *i, char ***args, char **new_filename, int *buffersize)
+int filename_restore(int *i, char ***args, char **new_filename, size_t *buffersize)
 {
 	(void)buffersize;
 	int j;
@@ -102,7 +102,7 @@ int rm_quote_filename(t_Redirection **redirect, char ***args)
 {
 	char *new_filename;
 	int i;
-	int buffersize;
+	size_t buffersize;
 
 	i = 0;
 	buffersize = BUFFER_SIZE;

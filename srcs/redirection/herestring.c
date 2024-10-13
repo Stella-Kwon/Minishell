@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herestring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 19:20:17 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/11 01:26:36 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/12 20:20:18 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	here_string(t_Redirection **redir)
 {
 	if ((*redir)->infile == -1)
-		return(log_errors((*redir)->filename, ""));
+		return (log_errors((*redir)->filename, ""));
 	(*redir)->infile = open(".herestring.tmp", \
 	O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*redir)->infile == -1)

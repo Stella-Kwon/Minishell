@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/10 23:50:32 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/13 17:01:31 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	store_str(t_For_tokenize *tokenize, int *buffsize)
+int	store_str(t_For_tokenize *tokenize, size_t *buffsize)
 {
 	if (!ft_isspace(*tokenize->start) && *tokenize->start != '\0')
 	{
@@ -40,7 +40,7 @@ int	handle_whitespace(t_For_tokenize	*tokenize)
 	return (SUCCESS);
 }
 
-int	handle_special_tokens(int *buffsize, t_For_tokenize *tokenize)
+int	handle_special_tokens(size_t *buffsize, t_For_tokenize *tokenize)
 {
 	if (*tokenize->start == '\'')
 		return (handle_set(tokenize, '\''));
@@ -66,7 +66,7 @@ int	handle_special_tokens(int *buffsize, t_For_tokenize *tokenize)
 	return (SUCCESS);
 }
 
-char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
+char	**initialize_tokenization(size_t buffsize, t_For_tokenize *tokenize)
 {
 	tokenize->tokens = NULL;
 	tokenize->tokens = ft_calloc(buffsize, sizeof(char *));
@@ -81,7 +81,7 @@ char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
 
 char	**tokenize_input(char **input)
 {
-	int				buffsize;
+	size_t				buffsize;
 	t_For_tokenize	tokenize;
 
 	tokenize.input = *input;

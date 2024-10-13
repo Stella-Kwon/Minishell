@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/12 03:01:27 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:58:59 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int parsing_others(char ***args, t_Redirection **redirect, int start)
 }
 
 static int command_initialize(t_Command *res, char ***tokens,
-							  int buffersize, char ***env)
+							  size_t buffersize, char ***env)
 {
 	res->cmd = ft_strdup(**tokens);
 	if (!res->cmd)
@@ -78,7 +78,7 @@ static int command_initialize(t_Command *res, char ***tokens,
 }
 
 static int create_command_args(t_Command *res, char ***tokens,
-							   int *buffersize, int *args_index)
+							   size_t *buffersize, int *args_index)
 {
 	while (**tokens && !is_operator(*tokens))
 	{
@@ -108,7 +108,7 @@ static int create_command_args(t_Command *res, char ***tokens,
 t_Command *create_command(char ***tokens, char ***env)
 {
 	t_Command *res;
-	int buffersize;
+	size_t buffersize;
 	int args_index;
 
 	buffersize = BUFFER_SIZE;

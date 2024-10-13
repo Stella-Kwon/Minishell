@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:13:11 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/10 00:48:17 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/12 22:19:17 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ size_t	get_str_len(char **str_arr);
 int		copy_envp(char **dest, char **src, size_t len);
 void	print_strs(char **str_arr);
 void	sort_envp(size_t len, char **envp);
-void	ft_perror(char *message);
+// void	ft_perror(char *message);
 int		print_error_cd(t_Command *command, char *s, int error_nb);
 int		builtin_filesystem(t_Command *command);
+int 	exec_command_with_env(t_Command *command, char **env, int last_exitcode);
 int		builtin_with_output(t_Command *command);
-
-
-
 
 #endif

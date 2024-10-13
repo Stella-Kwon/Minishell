@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/12 04:09:26 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 01:33:33 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,27 @@ int	ast_node_execution(t_ASTNode	**node)
 int	cmdnode_exec(t_ASTNode	**node)
 {
 	int	last_exitcode;
-	int	wstatus;
 
 	last_exitcode = (*node)->last_exitcode;
 	if (prepare_cmd(&(*node)->command, last_exitcode) == FAIL)
 		return (FAIL);
 	if (builtin_filesystem((*node)->command) == SUCCESS)
 	{
-		if (common_pre_child(&(*node)->redir) == FAIL)
+		if (common_pre_child(&(*node)->redir, &(*node)->command) == FAIL)
 			return (FAIL);
 		(*node)->last_exitcode = 0;
 		return (SUCCESS);
 	}
 	(*node)->pipeline->pid = fork();
-    if ((*node)->pipeline->pid == -1)
-        return (log_errors("Failed to fork in cmdnode_exec", ""));
-    if ((*node)->pipeline->pid == 0) 
-        exit(action_child(&(*node)->command, &(*node)->redir));
-    if (waitpid((*node)->pipeline->pid, &wstatus, 0) == -1)
-        return (log_errors("waitpid failed", ""));
-	(*node)->command->exitcode = waitpid_status(wstatus);
-    return (SUCCESS);
+	if ((*node)->pipeline->pid == -1)
+		return (log_errors("Failed to fork in cmdnode_exec", ""));
+	if ((*node)->pipeline->pid == 0)
+	{
+		exit(action_child(&(*node)->command, &(*node)->redir));
+	}
+	return (action_parents(&(*node)->redir, &(*node)->pipeline, \
+							&(*node)->command));
 }
-
 
 int	andnode_exec(t_ASTNode	**node)
 {

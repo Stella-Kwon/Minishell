@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:37:15 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/09 23:24:53 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 01:10:09 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ static void	read_exitcode(t_ASTNode **node, int *exitcode)
 		{
 			*exitcode = (*node)->command->exitcode;
 		}
-		if ((*node)->right)
-			read_exitcode(&(*node)->right, exitcode);
 		if ((*node)->left)
 			read_exitcode(&(*node)->left, exitcode);
+		if ((*node)->right)
+			read_exitcode(&(*node)->right, exitcode);
 	}
 }
 
 void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode)
 {
-	int exitcode;
+	int	exitcode;
 
 	exitcode = -1;
 	read_exitcode(node, &exitcode);

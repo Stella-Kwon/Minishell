@@ -6,13 +6,13 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/12 03:13:26 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/12 20:09:03 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
+static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
 {
 	if (tokens && *tokens && **tokens)
 	{

@@ -53,3 +53,4 @@ minishell: WAIT_STATUS : Child process terminated due to signal: Success:
 minishell: WAIT_STATUS : Child process terminated due to signal: Success: 
 minishell: WAIT_STATUS : Child process terminated due to signal: Success: 
 minishell: WAIT_STATUS : Child process terminated due to signal: Success: 
+minishell: waitpid failed: Interrupted system call: 

@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:52:09 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/10 02:34:16 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:40:06 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	error_exitcode(t_Command **command, char *s, int error_nb)
 
 int	cmd_error(t_Command **command, char *s, int error_nb)
 {
-	ft_putstr_fd("MINISHELL: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((*command)->cmd, STDERR_FILENO);
 	ft_putstr_fd(s, STDERR_FILENO);
 	(*command)->exitcode = error_nb;
@@ -59,21 +59,27 @@ int	check_cmd_error(t_Command **command)
 {
 	int	len;
 
-	if ((*command)->cmd == NULL)
-		return (cmd_error(command, ": (*command) not found\n", 127));
+	len = ft_strlen((*command)->cmd);
 	if ((*command)->cmd[0] == '.' || (*command)->cmd[0] == '/')
 	{
-		len = ft_strlen((*command)->cmd);
 		if ((*command)->cmd[len - 1] == '/')
 		{
-			ft_putstr_fd("MINISHELL: ", STDERR_FILENO);
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd((*command)->cmd, STDERR_FILENO);
-			return (error_exitcode(command, " is a directory", 126));
+			return (error_exitcode(command, " Is a directory", 126));
 		}
 		if (access((*command)->cmd, F_OK) == -1)
 			return (cmd_error(command, ": No such file or directory\n", 127));
 		if (access((*command)->cmd, X_OK) == -1)
-			return (cmd_error(command, ": Permission denied\n", 126));
+		{
+			// 파일이 디렉토리인지 확인
+			if (errno == EISDIR)
+				return (cmd_error(command, ": Is a directory\n", 126));
+			else
+				return (cmd_error(command, ": Permission denied\n", 126));
+		}
+			// return (cmd_error(command, ": Permission denied\n", 126));
 	}
 	return (SUCCESS);
 }
+

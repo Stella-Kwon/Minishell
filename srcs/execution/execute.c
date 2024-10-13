@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:20:10 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/12 09:40:08 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:14:42 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	prepare_cmd(t_Command **command, int last_exitcode)
 									last_exitcode);
 	if (!(*command)->cmd)
 		return (cmd_error(command, ": command not found\n", 127));
+	if (handle_empty_cmd(command) == FAIL)
+		return (FAIL);
 	return (SUCCESS);
 }
 
@@ -98,15 +100,15 @@ int	execute_cmd(t_Command **command)
 	if (builtin_with_output(*command) == SUCCESS)
 		return (SUCCESS);
 	if (check_cmd_script(command) == FAIL || check_cmd_error(command) == FAIL)
-		return (FAIL);
+		return ((*command)->exitcode);
 	path = find_and_check_path(command);
 	if (!path)
 		return (cmd_error(command, ": command not found\n", 127));
 	if (execve(path, (*command)->args, *((*command)->env)) == -1)
-		(*command)->exitcode = errno;
-	else
-		(*command)->exitcode = 0;
+	{
+		handle_error(command, path);
+	}
 	if (path != (*command)->cmd)
 		free_one((void **)&path);
-	return (SUCCESS);
+	return ((*command)->exitcode);
 }

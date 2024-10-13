@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   log_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:50:33 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/10 15:39:07 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/13 18:42:53 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,77 @@ int	handle_258_exitcode_print(char *msg)
 	return (FAIL);
 }
 
+// void	handle_error(t_Command **command, char *path)
+// {
+// 	(*command)->exitcode = errno;
+// 	// printf("errno :%d\n", errno);
+// 	ft_putstr_fd("minishell: ", STDERR_FILENO);
+// 	ft_putstr_fd(path, STDERR_FILENO);
+// 	ft_putstr_fd(": ", STDERR_FILENO);
+// 	if (errno == EACCES)
+// 	{
+// 		// ft_putstr_fd("Permission denied\n", STDERR_FILENO);
+// 		ft_putstr_fd("is a directory1\n", STDERR_FILENO);
+// 		(*command)->exitcode = 126;
+// 	}
+// 	else if (errno == ENOENT)
+// 	{
+// 		ft_putstr_fd("No /such file or directory\n", STDERR_FILENO);
+// 		(*command)->exitcode = 127;
+// 	}
+// 	else if (errno == EISDIR) // 디렉토리일 경우
+// 	{
+// 		ft_putstr_fd("Is a directory\n", STDERR_FILENO);
+// 		(*command)->exitcode = 126;
+// 	}
+// 	else
+// 		(*command)->exitcode = 1;
+// 	// printf("(*command)->exitcode : %d\n", (*command)->exitcode);
+// }
+
+
+//""
 void	handle_error(t_Command **command, char *path)
 {
+	int	len;
+
+	len = ft_strlen(path);
 	(*command)->exitcode = errno;
-	// printf("errno :%d\n", errno);
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(path, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
+	if(path[len -1] == '/')
+	{
+		ft_putstr_fd("Is a directory", STDERR_FILENO);
+		(*command)->exitcode = 126;
+		return ;
+	}
 	if (errno == EACCES)
 	{
-		ft_putstr_fd("Permission denied\n", STDERR_FILENO);
+		// 디렉터리일 경우를 정확히 처리
+		if (access(path, F_OK) == 0 && access(path, X_OK) == -1)
+			ft_putstr_fd("Permission denied\n", STDERR_FILENO);
+		else
+			ft_putstr_fd("Is a directory\n", STDERR_FILENO);
 		(*command)->exitcode = 126;
 	}
 	else if (errno == ENOENT)
 	{
-		ft_putstr_fd("No /such file or directory\n", STDERR_FILENO);
+		ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 		(*command)->exitcode = 127;
 	}
-	else if (errno == EISDIR) // 디렉토리일 경우
+	else if (errno == EISDIR)
 	{
 		ft_putstr_fd("Is a directory\n", STDERR_FILENO);
 		(*command)->exitcode = 126;
 	}
 	else
+	{
+		ft_putstr_fd("Unknown error\n", STDERR_FILENO);
 		(*command)->exitcode = 1;
-	// printf("(*command)->exitcode : %d\n", (*command)->exitcode);
+	}
 }
+
 
 int	log_errors(char *token, char *msg)
 {

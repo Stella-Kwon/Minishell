@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 13:26:48 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/11 00:09:04 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/13 17:02:39 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**ft_realloc_double(char **token, int position, int *bufsize)
+char	**ft_realloc_double(char **token, size_t position, size_t *bufsize)
 {
 	char	**realloc_token;
-	int		i;
+	size_t		i;
 
 	i = 0;
 	if (position >= *bufsize)
@@ -38,10 +38,10 @@ char	**ft_realloc_double(char **token, int position, int *bufsize)
 	return (token);
 }
 
-char *ft_realloc_single(char *token, int position, int *bufsize)
+char *ft_realloc_single(char *token, size_t position, size_t *bufsize)
 {
 	char	*realloc_token;
-	int		i;
+	size_t		i;
 
 	i = 0;
 	if (position >= *bufsize)

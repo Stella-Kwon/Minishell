@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 13:01:42 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/10 04:54:16 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:57:02 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ int		redirect_operation_error(char *start);
 char	*ft_strcpy(char *dst, const char *src);
 int		is_special_character(char c);
 int		check_input(const char *input);
+
+int	store_str(t_For_tokenize *tokenize, size_t *buffsize);
 
 #endif
