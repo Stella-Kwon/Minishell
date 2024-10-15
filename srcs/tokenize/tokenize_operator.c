@@ -12,6 +12,19 @@
 
 #include "../../includes/minishell.h"
 
+static void error_handling_in_middle_operator(t_For_tokenize *tokenize, int len, int *i)
+{
+	if ((*(tokenize->start + len + *i) == '<' && *(tokenize->start + len + *i + 1) == '<' && *(tokenize->start + len + *i + 1) == '<'))
+		*i += 3;
+	else if ((*(tokenize->start + len + *i) == '<' && *(tokenize->start + len + *i + 1) == '<'))
+		*i += 2;
+	else if ((*(tokenize->start + len + *i) == '>' && *(tokenize->start + len + *i + 1) == '>'))
+		*i += 2;
+	else if ((*(tokenize->start + len + *i) == '<') || (*(tokenize->start + len + *i) == '>'))
+		(*i)++;
+
+}
+
 int	handle_pipe_and_or(t_For_tokenize *tokenize)
 {
 	int	len;
@@ -22,12 +35,18 @@ int	handle_pipe_and_or(t_For_tokenize *tokenize)
 		len = 2;
 	else
 		len = 1;
-	while (ft_isspace(*(tokenize->start + (++i))))
-		;
+	while (ft_isspace(*(tokenize->start + len + i)))
+		i++;
 	if (*(tokenize->start + len + i) == '\0')
 	{
-		if (check_operation_next(tokenize, 0) == FAIL)
+		if (check_operation_next(tokenize) == FAIL)
 			return (FAIL);
+	}
+	else 
+	{
+		error_handling_in_middle_operator(tokenize, len, &i);
+		if (redirect_operation_error(tokenize->start + len + i) != SUCCESS)
+			return (2);
 	}
 	return (handle_token(tokenize, len));
 }
@@ -42,12 +61,18 @@ int	handle_and_and_background(t_For_tokenize *tokenize)
 		len = 2;
 	else
 		len = 1;
-	while (ft_isspace(*(tokenize->start + (++i))))
-		;
+	while (ft_isspace(*(tokenize->start + len + i)))
+		i++;
 	if (*(tokenize->start + len + i) == '\0')
 	{
-		if (check_operation_next(tokenize, 0) == FAIL)
+		if (check_operation_next(tokenize) == FAIL)
 			return (FAIL);
+	}
+	else
+	{
+		error_handling_in_middle_operator(tokenize, len, &i);
+		if (redirect_operation_error(tokenize->start + len + i) != SUCCESS)
+			return (2);
 	}
 	return (handle_token(tokenize, len));
 }

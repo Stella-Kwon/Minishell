@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:53:17 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 04:46:04 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 22:51:35 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	expand_value(t_Dollar *dol)
 	char	*new_output;
 
 	value_len = ft_strlen(dol->var_value);
-	new_output = malloc((dol->out_len + value_len + 1) * sizeof(char));
+	new_output = malloc((dol->tmp_len + value_len + 1) * sizeof(char));
 	if (!dol->var_value)
 		dol->var_value = ft_strdup("");
 	if (!dol->var_value)
@@ -29,15 +29,15 @@ int	expand_value(t_Dollar *dol)
 	if (!new_output)
 	{
 		log_errors("Failed malloc in expand_value", "");
-		free(dol->output);
+		free(dol->tmp);
 		return (FAIL);
 	}
-	ft_strcpy(new_output, dol->output);
-	ft_strcpy(new_output + dol->out_i, dol->var_value);
-	free(dol->output);
-	dol->output = new_output;
-	dol->out_i += value_len;
-	dol->out_len = dol->out_i;
+	ft_strcpy(new_output, dol->tmp);
+	ft_strcpy(new_output + dol->tmp_i, dol->var_value);
+	free(dol->tmp);
+	dol->tmp = new_output;
+	dol->tmp_i += value_len;
+	dol->tmp_len = dol->tmp_i;
 	return (SUCCESS);
 }
 
@@ -70,12 +70,12 @@ static int	process_character(char *input, t_Dollar *dol, char **env, \
 {
 	if (handle_special_character(input, dol, env, last_exitcode) == FAIL)
 		return (FAIL);
-	dol->output[dol->out_i++] = input[dol->i++];
-	if (dol->out_i >= dol->out_len - 1)
+	dol->tmp[dol->tmp_i++] = input[dol->i++];
+	if (dol->tmp_i >= dol->tmp_len - 1)
 	{
-		dol->output = ft_realloc_single(dol->output, dol->out_i, \
-										(int *)&dol->out_len);
-		if (!dol->output)
+		dol->tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
+										(int *)&dol->tmp_len);
+		if (!dol->tmp)
 		{
 			log_errors("Failed realloc in process_character", "");
 			return (FAIL);
@@ -109,25 +109,27 @@ static int	process_quotes(char *input, t_Dollar *dol, char **env, \
 	return (SUCCESS);
 }
 
-char	*find_dollar_signs(char *input, char **env, int last_exitcode)
+int	find_dollar_signs(char **in_out, char **env, int last_exitcode)
 {
 	t_Dollar	dol;
 
-	dol.out_i = 0;
+	dol.tmp_i = 0;
 	dol.i = 0;
-	dol.len = ft_strlen(input);
-	dol.out_len = dol.len + 1;
-	dol.output = malloc(dol.out_len);
-	if (!input || !dol.output)
+	dol.len = ft_strlen(*in_out);
+	dol.tmp_len = dol.len + 1;
+	dol.tmp = malloc(dol.tmp_len);
+	if (!(*in_out) || !dol.tmp)
 	{
 		log_errors("Failed malloc in expand", "");
-		return (NULL);
+		return (FAIL);
 	}
-	if (process_quotes(input, &dol, env, last_exitcode) == FAIL) 
+	if (process_quotes(*in_out, &dol, env, last_exitcode) == FAIL)
 	{
-		free(dol.output);
-		return (NULL);
+		free(dol.tmp);
+		return (FAIL);
 	}
-	dol.output[dol.out_i] = '\0';
-	return (dol.output);
+	dol.tmp[dol.tmp_i] = '\0';
+	free(*in_out);
+	*in_out = dol.tmp;
+	return (SUCCESS);
 }

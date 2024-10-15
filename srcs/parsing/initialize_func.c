@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:57:20 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/12 00:57:59 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/13 22:33:45 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ t_Redirection *create_redirection(void)
         return (NULL);
     }
     redir->infile = -2;
-    redir->tmp_infile = -2;
+    redir->heredoc_infile = -2;
     redir->outfile = -2;
-    redir->filename = NULL;
+    redir->in_filename = NULL;
+    redir->out_filename = NULL;
     redir->direction_type = -1;
     redir->heredoc_limiter = NULL;
+    redir->heredoc_i = 0;
     redir->herestring_str = NULL;
+    redir->heredoc_buffsize = BUFFER_SIZE;
     return (redir);
 }
 
@@ -43,9 +46,11 @@ int initialize_astnode(t_ASTNode **node, char ***tokens)
         (*node)->left = NULL;
         (*node)->right = NULL;
     }
-    if (tokens && *tokens && **tokens && is_redirection(*tokens))
+    if (tokens && *tokens && **tokens && is_redirection(**tokens))
     {
         (*node)->redir = create_redirection();
+        if (!(*node)->redir)
+            return (FAIL);
         if (parsing_others(tokens, &(*node)->redir, TRUE) == FAIL)
         {
             free_astnode(node);

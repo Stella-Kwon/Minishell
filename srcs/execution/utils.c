@@ -6,20 +6,20 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:52:09 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/15 04:00:07 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:40:06 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	error_exitcode(t_Command **command, char *s, int error_nb)
+int error_exitcode(t_Command **command, char *s, int error_nb)
 {
 	ft_putstr_fd(s, STDERR_FILENO);
 	(*command)->exitcode = error_nb;
 	return (FAIL);
 }
 
-int	cmd_error(t_Command **command, char *s, int error_nb)
+int cmd_error(t_Command **command, char *s, int error_nb)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd((*command)->cmd, STDERR_FILENO);
@@ -28,7 +28,7 @@ int	cmd_error(t_Command **command, char *s, int error_nb)
 	return (FAIL);
 }
 
-int	check_path(char *path, t_Command **command)
+int check_path(char *path, t_Command **command)
 {
 	if (access(path, F_OK) == -1)
 		return (cmd_error(command, ": command not found\n", 127));
@@ -37,12 +37,12 @@ int	check_path(char *path, t_Command **command)
 	return (SUCCESS);
 }
 
-int	check_cmd_script(t_Command **command)
+int check_cmd_script(t_Command **command)
 {
-	int	len;
+	int len;
 
 	len = ft_strlen((*command)->cmd);
-	if (len > 3 && (*command)->cmd[len - 3] == '.' && \
+	if (len > 3 && (*command)->cmd[len - 3] == '.' &&
 		(*command)->cmd[len - 2] == 's' && (*command)->cmd[len - 1] == 'h')
 	{
 		if (ft_strrchr((*command)->cmd, '/') == NULL)
@@ -56,9 +56,9 @@ int	check_cmd_script(t_Command **command)
 	return (SUCCESS);
 }
 
-int	check_cmd_error(t_Command **command)
+int check_cmd_error(t_Command **command)
 {
-	int	len;
+	int len;
 
 	len = ft_strlen((*command)->cmd);
 	if ((*command)->cmd[0] == '.' || (*command)->cmd[0] == '/')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 01:33:33 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:27:12 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 int	ast_node_execution(t_ASTNode	**node)
 {
+	init_execution_signal();
+
 	if (node == NULL || *node == NULL)
 		return (log_errors("AST node is NULL", ""));
 	if (heredoc_check(node) == FAIL)
 		return (FAIL);
+	if ((*node)->type == NODE_COMMAND && !(*node)->command)
+		return (SUCCESS);
 	if ((*node)->type == NODE_COMMAND)
 		return (cmdnode_exec(node));
 	if ((*node)->type == NODE_PIPE)
-		return (pipenode_exec(node));
+	return (pipenode_exec(node));
 	if ((*node)->type == NODE_OR)
 		return (ornode_exec(node));
 	if ((*node)->type == NODE_AND)
@@ -50,8 +54,8 @@ int	cmdnode_exec(t_ASTNode	**node)
 	{
 		exit(action_child(&(*node)->command, &(*node)->redir));
 	}
-	return (action_parents(&(*node)->redir, &(*node)->pipeline, \
-							&(*node)->command));
+	int exitcode =  action_parents(&(*node)->redir, &(*node)->pipeline, &(*node)->command);
+	return (exitcode);
 }
 
 int	andnode_exec(t_ASTNode	**node)

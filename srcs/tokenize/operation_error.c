@@ -53,7 +53,7 @@ int	redirect_operation_error(char *start)
 		else
 			return (handle_258_exitcode_print("'&'"));
 	}
-	else if (operation_error_rest(start) == FAIL)
-		return (FAIL);
+	else if (operation_error_rest(start) != SUCCESS)
+		return (2);
 	return (SUCCESS);
 }

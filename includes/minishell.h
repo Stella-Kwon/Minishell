@@ -23,6 +23,8 @@
 # define SUCCESS 0
 # define FAIL 1
 
+extern int g_received_signal;
+
 # include "../libft/libft.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -36,6 +38,7 @@
 # include <readline/readline.h>
 # include <stddef.h>
 # include <readline/history.h>
+# include <signal.h>
 # include "my_signal.h"
 # include "structs.h"
 # include "utils.h"

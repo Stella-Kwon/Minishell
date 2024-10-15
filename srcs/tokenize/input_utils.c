@@ -58,7 +58,7 @@ static int	join_inputs(t_For_tokenize *tokenize, char *new_input)
 	return (SUCCESS);
 }
 
-int	check_operation_next(t_For_tokenize *tokenize, int flag)
+int	check_operation_next(t_For_tokenize *tokenize)
 {
 	char		*new_input;
 	ptrdiff_t	offset;
@@ -70,11 +70,9 @@ int	check_operation_next(t_For_tokenize *tokenize, int flag)
 		log_errors("Failed to readline for additional input", "");
 		return (FAIL);
 	}
-	if (flag)
-		add_history(new_input);
 	if (join_inputs(tokenize, new_input) == FAIL)
 		return (FAIL);
-	*tokenize->start = *tokenize->input + offset;
+	tokenize->start = tokenize->input + offset;
 	add_history(tokenize->input);
 	return (SUCCESS);
 }

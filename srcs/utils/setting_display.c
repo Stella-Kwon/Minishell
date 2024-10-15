@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:51:43 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/01 23:02:05 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/13 21:40:43 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	set_ehcoctl(int flag)
 	struct termios	attr;
 
 	if (tcgetattr(STDIN_FILENO, &attr) == -1)
-		return (log_errors("tcgetattr", ""));
+		return (FAIL);
 	if (!flag)
 		attr.c_lflag |= ECHOCTL;
 	else
 		attr.c_lflag &= ~ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &attr) == -1)
-		return (log_errors("tcsetattr", ""));
+		return (FAIL);
 	return (SUCCESS);
 }

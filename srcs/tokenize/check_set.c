@@ -36,58 +36,36 @@ char *store_inside_set(char *tmp_start, char *tmp_end)
 	return (tmp);
 }
 
-void update_quotes_and_depth(int *single_quote, int *double_quote,
-							 int *depth, char c)
+void check_quotes_in_loop(t_Set *set, char ref, int *count)
 {
-	if (c == '\'' && !*double_quote)
-		*single_quote = !*single_quote;
-	else if (c == '"' && !*single_quote)
-		*double_quote = !*double_quote;
-	else if (!*single_quote && !*double_quote)
+	while (*set->tmp_end)
 	{
-		if (c == '(')
-			(*depth)++;
-		else if (c == ')')
-			(*depth)--;
+		if (*set->tmp_end == ref)
+			(*count)++;
+		if ((*count % 2) == 0 && *set->tmp_end == ref)
+		{
+			while (ft_isspace(*(set->tmp_end)) == FALSE && *set->tmp_end)
+				set->tmp_end++;
+			break;
+		}
+		set->tmp_end++;
 	}
 }
 
-static int check_quotes_and_depth(t_For_tokenize *tokenize, t_Set *set,
-								  char ref)
+static int check_quotes_and_depth(t_For_tokenize *tokenize, t_Set *set, char ref)
 {
-	if (set->depth > 0 || set->single_quote || set->double_quote)
+	int count;
+
+	count = 0;
+	if (set->depth == 0 || !set->single_quote || !set->double_quote)
 	{
-		readline_again(tokenize, set);
-		if (!tokenize->input)
-			return (FAIL);
-		tokenize->start = tokenize->input + strlen(tokenize->input);
-	}
-	else
-	{
+		if (*set->tmp_start == ref)
+			count++;
 		set->tmp_end = tokenize->start + 1;
-		// while (*set->tmp_end && !(*set->tmp_end == ref && ft_isspace(*set->tmp_end))
-		// 	set->tmp_end++;
-		while (*set->tmp_end)
-		{
-			set->tmp_end++;
-			if ((*set->tmp_end == ref && ft_isspace(*(set->tmp_end + 1))) || (*set->tmp_end == ref && *(set->tmp_end + 1) == '\0'))
-				break;
-		}
-		tokenize->start = set->tmp_end + 1;
+		check_quotes_in_loop(set, ref, &count);
+		tokenize->start = set->tmp_end;
 	}
 	return (SUCCESS);
-}
-
-static void check_set_start(t_Set *set, t_For_tokenize *tokenize)
-{
-	if (*set->tmp_start == '(' || *set->tmp_end == ')')
-	{
-		tokenize->tokens[tokenize->token_count] = ft_strdup("(");
-		tokenize->tokens[tokenize->token_count + 1] = ft_strdup(")");
-		tokenize->token_count += 2;
-		set->tmp_start += 1;
-		set->tmp_end -= 1;
-	}
 }
 
 char *check_set(t_For_tokenize *tokenize, char ref)
@@ -108,7 +86,6 @@ char *check_set(t_For_tokenize *tokenize, char ref)
 	set.tmp_start = tokenize->start;
 	if (check_quotes_and_depth(tokenize, &set, ref) == FAIL)
 		return (NULL);
-	check_set_start(&set, tokenize);
 	tokenize->tokens[tokenize->token_count] = store_inside_set(set.tmp_start,
 															   set.tmp_end);
 	if (!tokenize->tokens[tokenize->token_count])

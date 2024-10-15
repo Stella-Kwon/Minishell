@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 01:55:19 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 03:24:01 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 22:47:27 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	handle_single_quote(char *input, t_Dollar *dol)
 	dol->i++;
 	while (input[dol->i] && input[dol->i] != '\'')
 	{
-		dol->output[dol->out_i++] = input[dol->i++];
-		if (dol->out_i >= dol->out_len - 1)
+		dol->tmp[dol->tmp_i++] = input[dol->i++];
+		if (dol->tmp_i >= dol->tmp_len - 1)
 		{
-			dol->output = ft_realloc_single(dol->output, dol->out_i, \
-											(int *)&dol->out_len);
-			if (!dol->output)
+			dol->tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
+											(int *)&dol->tmp_len);
+			if (!dol->tmp)
 			{
 				log_errors("Failed realloc in quote", "");
 				return (FAIL);
@@ -46,12 +46,12 @@ static int	check_double_quote(char *input, t_Dollar *dol, char **env, \
 		}
 		else
 		{
-			dol->output[dol->out_i++] = input[dol->i++];
-			if (dol->out_i >= dol->out_len - 1)
+			dol->tmp[dol->tmp_i++] = input[dol->i++];
+			if (dol->tmp_i >= dol->tmp_len - 1)
 			{
-				dol->output = ft_realloc_single(dol->output, dol->out_i, \
-												(int *)&dol->out_len);
-				if (!dol->output)
+				dol->tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
+												(int *)&dol->tmp_len);
+				if (!dol->tmp)
 				{
 					log_errors("Failed realloc in quote double", "");
 					return (FAIL);

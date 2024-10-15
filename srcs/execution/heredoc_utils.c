@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util_node.c                                        :+:      :+:    :+:   */
+/*   heredoc_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,51 +12,48 @@
 
 #include "../../includes/minishell.h"
 
-int	heredoc_check(t_ASTNode	**node)
+static int iterate_heredoc(t_ASTNode **node, int *i)
 {
-	if ((*node)->redir->heredoc_limiter)
+	int exitcode;
+
+	
+	if ((*node)->command)
 	{
-		if (here_doc(node) == FAIL)
-			return (log_errors("Failed here_doc in heredoc_check", ""));
-		if ((*node)->redir->tmp_infile != -2)
-			(*node)->redir->infile = (*node)->redir->tmp_infile;
+		(*node)->command->exitcode = here_doc(node, (*node)->redir->heredoc_limiter[*i]);
+		exitcode = (*node)->command->exitcode;
+	}
+	else
+	{
+		exitcode = here_doc(node, (*node)->redir->heredoc_limiter[*i]);
+	}
+	if (exitcode == FAIL)
+		return (log_errors("Failed here_doc in heredoc_check", ""));
+	if ((*node)->redir->heredoc_infile != -2 && (*node)->redir->infile != -1)
+	{
+		if ((*node)->redir->infile >= 0)
+			close((*node)->redir->infile);
+		(*node)->redir->infile = (*node)->redir->heredoc_infile;
 	}
 	return (SUCCESS);
 }
 
-void	set_last_exitcode(t_ASTNode	**node, int last_exitcode)
+int	heredoc_check(t_ASTNode	**node)
 {
-	(*node)->last_exitcode = last_exitcode;
-	if ((*node)->left)
-		set_last_exitcode(&(*node)->left, last_exitcode);
-	if ((*node)->right)
-		set_last_exitcode(&(*node)->right, last_exitcode);
-}
+	int	i;
 
-static void	read_exitcode(t_ASTNode **node, int *exitcode)
-{
-	if (*node)
+	i = 0;
+	if ((*node)->redir->heredoc_limiter && (*node)->redir->heredoc_limiter[0])
 	{
-		if ((*node)->command && (*node)->command->exitcode != -1)
+		while ((*node)->redir->heredoc_limiter[i] && i < (*node)->redir->heredoc_i)
 		{
-			*exitcode = (*node)->command->exitcode;
+			if (iterate_heredoc(node, &i) != SUCCESS)
+				return (FAIL);
+			i++;
 		}
-		if ((*node)->left)
-			read_exitcode(&(*node)->left, exitcode);
-		if ((*node)->right)
-			read_exitcode(&(*node)->right, exitcode);
 	}
+	return (SUCCESS);
 }
 
-void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode)
-{
-	int	exitcode;
-
-	exitcode = -1;
-	read_exitcode(node, &exitcode);
-	if (exitcode != -1)
-		*last_exitcode = exitcode;
-}
 
 int	dup_and_close(int oldfd, int newfd)
 {

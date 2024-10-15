@@ -79,11 +79,14 @@ typedef struct s_Redirection
 {
 	int		infile;
 	int		outfile;
-	int		tmp_infile;
-	char	*filename;
+	int		heredoc_infile;
+	char	*in_filename;
+	char	*out_filename;
 	int		direction_type;
-	char	*heredoc_limiter;
+	char	**heredoc_limiter;
+	int		heredoc_i;
 	char	*herestring_str;
+	int		heredoc_buffsize;
 }	t_Redirection;
 
 typedef struct s_ASTNode
@@ -100,10 +103,10 @@ typedef struct s_ASTNode
 typedef struct s_Dollar
 {
 	size_t	len;
-	size_t	out_len;
-	char	*output;
+	size_t	tmp_len;
+	char	*tmp;
 	size_t	i;
-	size_t	out_i;
+	size_t	tmp_i;
 	size_t	var_len;
 	size_t	var_start;
 	char	*var;

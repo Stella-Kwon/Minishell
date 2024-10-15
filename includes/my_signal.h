@@ -15,8 +15,6 @@
 
 # include "minishell.h"
 
-extern int	g_received_signal;
-
 void	init_signal(void);
 void	init_execution_signal(void);
 

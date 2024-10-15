@@ -32,6 +32,34 @@ static int	prepare_new_start(char **input, char **new_start, char **result)
 	return (SUCCESS);
 }
 
+void update_quotes_and_depth(int *single_quote, int *double_quote,
+							 int *depth, char c)
+{
+	if (c == '\'' && !*double_quote)
+		*single_quote = !*single_quote;
+	else if (c == '"' && !*single_quote)
+		*double_quote = !*double_quote;
+	else if (!*single_quote && !*double_quote)
+	{
+		if (c == '(')
+			(*depth)++;
+		else if (c == ')')
+			(*depth)--;
+	}
+}
+
+void check_set_iterate(t_Set *set, char **new_start)
+{
+	while (**new_start)
+	{
+		update_quotes_and_depth(&set->single_quote,
+								&set->double_quote, &set->depth, **new_start);
+		if (!set->single_quote && !set->double_quote && set->depth == 0)
+			break;
+		(*new_start)++;
+	}
+}
+
 int	readline_again(t_For_tokenize *tokenize, t_Set *set)
 {
 	char		*new_start;
@@ -43,15 +71,8 @@ int	readline_again(t_For_tokenize *tokenize, t_Set *set)
 		offset = tokenize->start - tokenize->input;
 		if (prepare_new_start(&tokenize->input, &new_start, &result) == FAIL)
 			return (FAIL);
-		while (*new_start)
-		{
-			update_quotes_and_depth(&set->single_quote,
-				&set->double_quote, &set->depth, *new_start);
-			if (!set->single_quote && !set->double_quote && set->depth == 0)
-				break ;
-			new_start++;
-		}
-		free(tokenize->input);
+		check_set_iterate(set, &new_start);
+		free_one((void **)&tokenize->input);
 		tokenize->input = result;
 		tokenize->start = tokenize->input + offset;
 		set->tmp_start = tokenize->start;

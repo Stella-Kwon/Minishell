@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 18:02:03 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/12 03:13:47 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:04:21 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void			print_astnode(t_ASTNode *node, int depth);
 int				initialize_astnode(t_ASTNode **node, char ***tokens);
 int				get_direction_type(char *token);
 int 			remove_args_after_redirection(char ***args);
-int				is_redirection(char **token);
+int				is_redirection(char *token);
 int             put_last_open_infile(t_Redirection **redirect, char ***args, char **filename);
-int             rm_quote_filename(t_Redirection **redirect, char ***args);
+int             rm_quote_filename(t_Redirection **redirect, char ***args, char **filename);
+int             restore_new_args(char ***args, t_rm_args *rm);
 #endif

@@ -19,8 +19,6 @@ int	heredoc_child(int fd, char *limiter)
 	line = NULL;
 	while (read_line(&line) != FAIL)
 	{
-		if (line == NULL)
-			break ;
 		if (ft_strcmp(line, limiter) == 0)
 		{
 			free_one((void **)&line);
@@ -35,20 +33,21 @@ int	heredoc_child(int fd, char *limiter)
 	return (FAIL);
 }
 
-int	here_doc(t_ASTNode **node)
+int	here_doc(t_ASTNode **node, char *limiter)
 {
-	(*node)->redir->infile = open(".heredoc.tmp", \
+	int	exitcode;
+
+	(*node)->redir->heredoc_infile = open(".heredoc.tmp", \
 		O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if ((*node)->redir->infile == -1)
+	if ((*node)->redir->heredoc_infile == -1)
 		return (log_errors(".heredoc.tmp", "Failed to open file in here_doc"));
 	ft_putstr_fd("> ", 0);
-	(*node)->command->exitcode = heredoc_child((*node)->redir->infile, \
-			(*node)->redir->heredoc_limiter);
-	close((*node)->redir->infile);
-	(*node)->redir->infile = open(".heredoc.tmp", O_RDONLY);
-	if ((*node)->redir->infile == -1)
+	exitcode = heredoc_child((*node)->redir->heredoc_infile, limiter);
+	close((*node)->redir->heredoc_infile);
+	(*node)->redir->heredoc_infile = open(".heredoc.tmp", O_RDONLY);
+	if ((*node)->redir->heredoc_infile == -1)
 		return (log_errors(".heredoc.tmp", "Failed to open file in here_doc"));
 	if (unlink(".heredoc.tmp") == -1)
 		return (log_errors("Failed to unlink in here_doc", ""));
-	return ((*node)->command->exitcode);
+	return (exitcode);
 }

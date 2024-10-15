@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 03:56:42 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/14 04:37:35 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 22:46:57 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	for_dollar_sign(char *input, t_Dollar *dol, char **env, \
 	}
 	else
 	{
-		dol->output[dol->out_i++] = '$';
+		dol->tmp[dol->tmp_i++] = '$';
 		return (SUCCESS);
 	}
 	return (expand_value(dol));

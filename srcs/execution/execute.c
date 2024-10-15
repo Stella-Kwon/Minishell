@@ -6,15 +6,15 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:20:10 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/15 03:49:54 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 22:49:47 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	**find_env(char **envp)
+static char **find_env(char **envp)
 {
-	char	*path_var;
+	char *path_var;
 
 	path_var = NULL;
 	if (*envp == NULL)
@@ -24,7 +24,7 @@ static char	**find_env(char **envp)
 		if (ft_strncmp("PATH=", *envp, 5) == 0)
 		{
 			path_var = *envp + 5;
-			break ;
+			break;
 		}
 		envp++;
 	}
@@ -33,11 +33,11 @@ static char	**find_env(char **envp)
 	return (ft_split(path_var, ':'));
 }
 
-static char	*get_path(t_Command **command, char **env_path)
+static char *get_path(t_Command **command, char **env_path)
 {
-	char	*tmp;
-	char	*path;
-	int		i;
+	char *tmp;
+	char *path;
+	int i;
 
 	i = 0;
 	path = NULL;
@@ -60,7 +60,7 @@ static char	*get_path(t_Command **command, char **env_path)
 		if (tmp)
 			free_one((void **)&tmp);
 		if (access(path, F_OK) == 0)
-			break ;
+			break;
 		if (path)
 			free_one((void **)&path);
 		path = NULL;
@@ -69,9 +69,9 @@ static char	*get_path(t_Command **command, char **env_path)
 	return (path);
 }
 
-static int	find_and_check_path(t_Command **command, char **path)
+static int find_and_check_path(t_Command **command, char **path)
 {
-	char	**env_path;
+	char **env_path;
 
 	if (ft_strrchr((*command)->cmd, '/') != NULL)
 	{
@@ -89,9 +89,9 @@ static int	find_and_check_path(t_Command **command, char **path)
 	return (check_path(*path, command));
 }
 
-int	prepare_cmd(t_Command **command, int last_exitcode)
+int prepare_cmd(t_Command **command, int last_exitcode)
 {
-	int	argc;
+	int argc;
 
 	if (!command || !*command)
 		return (SUCCESS);
@@ -100,10 +100,7 @@ int	prepare_cmd(t_Command **command, int last_exitcode)
 		argc = get_str_len((*command)->args);
 		merge_quoted_args((*command)->args, &argc);
 	}
-	(*command)->cmd = expand_cmd((*command)->cmd, *((*command)->env), \
-									last_exitcode);
-	(*command)->args = expand_args((*command)->args, *((*command)->env), \
-									last_exitcode);
+	expand_cmd_args(*command, last_exitcode);
 	if (!(*command)->cmd)
 		return (cmd_error(command, ": command not found\n", 127));
 	if (handle_empty_cmd(command) == FAIL)
@@ -111,9 +108,9 @@ int	prepare_cmd(t_Command **command, int last_exitcode)
 	return (SUCCESS);
 }
 
-int	execute_cmd(t_Command **command)
+int execute_cmd(t_Command **command)
 {
-	char	*path;
+	char *path;
 
 	if (builtin_with_output(*command) == SUCCESS)
 		return (SUCCESS);

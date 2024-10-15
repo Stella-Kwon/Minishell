@@ -54,3 +54,57 @@ minishell: WAIT_STATUS : Child process terminated due to signal: Success:
 minishell: WAIT_STATUS : Child process terminated due to signal: Success: 
 minishell: WAIT_STATUS : Child process terminated due to signal: Success: 
 minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid faimliendi:s hIenltle:r rwuapittepdi ds yfsatielme dc:a lIln:t e
+rrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minishell: waitpid failed: Interrupted system call: 
+minisminishheellll::  wwaaiittppiidd  lfeafitl efda iilne dc:m dI:n tIenrtreurprtuepdt esdy sstyesmt ecma lcla:l l
+: 
+minishell: waitpid left failed: Interrupted system call: 
+mminiinsihsehlell:l :w awiatiptipdi df alieft failed: Interrupted systelme dc ailnl :c m
+d: Interrupted system call: 
+minishell: waitpid left failed: Interrupted system call: 
+minishell: waitpid failed in cmd: Interrupted system call: 
+minishell: waitpid failed in cmd: Interrupted system call: 
+minishell: waitpid failed in cmd: Interrupted system call: 
+minishell: waitpid failed in cmd: Interrupted system call: 
+minishell: waitpid failed in cmd: Interrupted system call: 
+minishell: waitpid failed in cmd: Interrupted system call: 
+minishell: waitpid failed in cmd: Interrupted system call: 
+minishell: waitpid left failed: Interrupted system call: 
+minishell: waitpid left failed: Interrupted system call: 
+minishell: waitpid left failed: Interrupted system call: 
+minishell: waitpid left failed: Interrupted system call: 
+minishell: waitpid left failed: Interrupted system call: 
+minishell: new_input readline(>) failed: Success: 
+minishell: Invalid pointers in store_inside_set: Success: 
+minishell: Failed to handle set token in tokenize_input: Success: 
+minishell: Failed here_doc in heredoc_check: Interrupted system call: 
+minishell: Failed here_doc in heredoc_check: Interrupted system call: 
+minishell: Failed here_doc in heredoc_check: Interrupted system call: 
+minishell: Failed malloc in set_heredoc: Success: 
+minishell: Failed here_doc in heredoc_check: Interrupted system call: 
+minishell: Failed here_doc in heredoc_check: Interrupted system call: 
+minishell: Failed here_doc in heredoc_check: Interrupted system call: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to redirect infile: Bad file descriptor: Bad file descriptor
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to redirect infile: Bad file descriptor: Bad file descriptor
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to redirect infile: Bad file descriptor: Bad file descriptor
+minishell: new_input readline(>) failed: Success: 
+minishell: Failed to readline for additional input: Success: 
+minishell: Failed to readline for additional input: Success: 
+minishell: Failed to readline for additional input: Success: 
+minishell: Failed to readline for additional input: Success: 
+minishell: Failed to readline for additional input: Success: 

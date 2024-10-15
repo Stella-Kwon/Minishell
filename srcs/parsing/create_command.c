@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/15 15:40:52 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/12 03:01:27 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,16 @@ int parsing(char ***tmp_args, t_Redirection **redirect, int start)
 		i = redirection_parsing(tmp_args, redirect, start);
 		if (i == FAIL)
 			return (FAIL);
-		if (i == 2)
-			return (SUCCESS);
+		if (start == false)
+		{
+			while (**tmp_args && is_redirection(**tmp_args) == FALSE)
+				(*tmp_args)++;
+		}
+		else
+		{
+			if (!**tmp_args || is_redirection(**tmp_args) == FALSE)
+				break;
+		}
 	}
 	return (SUCCESS);
 }
@@ -39,7 +47,7 @@ int parsing_others(char ***args, t_Redirection **redirect, int start)
 	if (start == FALSE)
 	{
 		tmp_args = *args;
-		while (tmp_args && *tmp_args && is_redirection(tmp_args) == FALSE)
+		while (tmp_args && *tmp_args && is_redirection(*tmp_args) == FALSE)
 			tmp_args++;
 		if (!tmp_args || !*tmp_args)
 			return (SUCCESS);
@@ -86,8 +94,7 @@ static int create_command_args(t_Command *res, char ***tokens,
 		if (!res->args[*args_index])
 		{
 			log_errors("Failed to malloc res->args[args_index] \
-			in create_command",
-					   "");
+			in create_command", "");
 			free_command(&res);
 			return (FAIL);
 		}

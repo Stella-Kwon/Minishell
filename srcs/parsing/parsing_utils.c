@@ -6,7 +6,7 @@
 /*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/12 00:57:58 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/13 22:54:50 by suminkwon        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,23 @@ int get_direction_type(char *token)
 
 int put_last_open_infile(t_Redirection **redirect, char ***args, char **filename)
 {
-	char **tmp_args;
-	int i;
+	char	*start;
 
-	i = 0;
-	tmp_args = *args;
-	while (tmp_args[i])
+	start = **args;
+	while (**args && is_redirection(**args) == FALSE)
 	{
-		// printf("tmp_args[%d] : %s", i, tmp_args[i]);
-		if (access(tmp_args[i], F_OK) != 0)
+		if (access(start, F_OK) != 0)
 			break;
-		i++;
+		else
+			(*args)++;
+		if (access(**args, F_OK) != 0)
+		{
+			(*args)--;
+			break;
+		}
+		(*args)++;
 	}
-	if (rm_quote_filename(redirect, args) != SUCCESS)
+	if (rm_quote_filename(redirect, args, filename) != SUCCESS)
 		return (log_errors("Failed in rm_quote_filename in set_redirection", ""));
-	*filename = (*redirect)->filename;
 	return (SUCCESS);
 }

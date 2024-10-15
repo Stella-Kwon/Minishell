@@ -24,7 +24,12 @@ int	waitpid_status(int wstatus)
 	else if (WIFSIGNALED(wstatus))
 	{
 		// log_errors("WAIT_STATUS : Child process terminated due to signal", "");
-		return (WTERMSIG(wstatus));
+		if (g_received_signal == 130)
+			return (130);
+		else if (g_received_signal == 131)
+			return (131);
+		else
+			return (WTERMSIG(wstatus));
 	}
 	else if (WIFSTOPPED(wstatus))
 	{

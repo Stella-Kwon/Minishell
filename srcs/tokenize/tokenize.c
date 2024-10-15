@@ -79,10 +79,11 @@ char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
 	return (tokenize->tokens);
 }
 
-char	**tokenize_input(char **input)
+char	**tokenize_input(char **input, int *last_exit_code)
 {
 	int				buffsize;
 	t_For_tokenize	tokenize;
+	int				exitcode;
 
 	tokenize.input = *input;
 	tokenize.start = *input;
@@ -94,8 +95,11 @@ char	**tokenize_input(char **input)
 		return (NULL);
 	while (*tokenize.start)
 	{
-		if (handle_special_tokens(&buffsize, &tokenize) != SUCCESS)
+		exitcode = handle_special_tokens(&buffsize, &tokenize);
+		if (exitcode != SUCCESS)
 		{
+			if (exitcode == 2)
+				*last_exit_code = 2;
 			all_free(&tokenize.tokens);
 			return (NULL);
 		}
