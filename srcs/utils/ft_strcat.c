@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action_parents.c                                   :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:19:05 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/15 03:21:52 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/10/14 22:49:49 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/10/14 22:50:28 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	action_parents(t_Redirection **redir, t_Pipeline **pipeline, t_Command **cmd)
+void	ft_strcat(char *dest, const char *src)
 {
-	int	wstatus;
-
-	wstatus = -2;
-	if (waitpid((*pipeline)->pid, &wstatus, 0) == -1)
-		return (log_errors("Failed waitpid in cd action parents", ""));
-	if ((*redir)->outfile >= 0)
-		close((*redir)->outfile);
-	if ((*redir)->infile >= 0)
-		close((*redir)->infile);
-	(*cmd)->exitcode = waitpid_status(wstatus);
-	return ((*cmd)->exitcode);
+	if (!dest || !src)
+		return ;
+	while (*dest != '\0')
+	{
+		dest++;
+	}
+	while (*src != '\0')
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*dest = '\0';
 }

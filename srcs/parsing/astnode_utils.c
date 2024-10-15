@@ -6,13 +6,13 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 04:29:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/12 20:08:06 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:49:12 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int is_redirection(char **token)
+int	is_redirection(char **token)
 {
 	if (ft_strcmp(*token, "<") == 0 || ft_strcmp(*token, "<<") == 0 ||
 		ft_strcmp(*token, "<<<") == 0 || ft_strcmp(*token, ">") == 0 ||

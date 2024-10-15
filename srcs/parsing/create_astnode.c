@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/12 20:09:03 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 05:18:47 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,17 @@ t_ASTNode *create_astnode(char ***tokens, t_ASTNode *left,
 		return (NULL);
 	}
 	if (create_astnode_content(ast, tokens, env) == FAIL)
+	{
+		// free(ast);
 		return (NULL);
+	}
 	if (ast->command && ast->command->args)
 	{
 		if (remove_args_after_redirection(&ast->command->args) != SUCCESS) // 여기에 free_astnode먼저해줄까?25줄넘어서 ... 나중에 메인에서 해주긴함.
+		{
+			// free_astnode(&ast);
 			return (NULL);
+		}
 	}
 	ast->left = left;
 	ast->right = right;

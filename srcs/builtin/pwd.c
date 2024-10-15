@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:35 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/12 21:06:58 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 03:16:30 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ int	pwd(t_Command *command)
 	char	*buf;
 
 	buf = ft_calloc(1, MAXPATHLEN);
-	if (buf == NULL)
+	if (!buf)
 	{
-		perror("pwd: malloc failed");
+		log_errors("Failed calloc in pwd", "");
 		command->exitcode = FAIL;
 		return (command->exitcode);
 	}
-	if (getcwd(buf, MAXPATHLEN) == NULL)
+	if (!getcwd(buf, MAXPATHLEN))
 	{
-		perror("pwd: getcwd failed");
+		log_errors("Failed getcwd in pwd", "");
 		free(buf);
 		command->exitcode = FAIL;
 		return (command->exitcode);

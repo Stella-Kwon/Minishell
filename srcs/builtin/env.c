@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:09 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/13 15:23:53 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 04:36:01 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	env(t_Command *command)
 {
-	if (command->cmd == NULL)
+	if (!command->cmd)
 	{
 		command->exitcode = FAIL;
 		return (command->exitcode);
@@ -40,11 +40,9 @@ void	delete_str_array(char ***str_arr)
 		return ;
 	while ((*str_arr)[i] != NULL)
 	{
-		//free((*str_arr)[i]);
 		(*str_arr)[i] = NULL;
 		i++;
 	}
-	//free(*str_arr);
 	*str_arr = NULL;
 }
 
@@ -55,16 +53,16 @@ int	append_to_env(char *str, char ***envp_ptr)
 
 	env_len = get_str_len(*envp_ptr);
 	new_envp = ft_calloc(env_len + 2, sizeof(*new_envp));
-	if (new_envp == NULL)
+	if (!new_envp)
 	{
-		log_errors("Malloc failed", "");
+		log_errors("Failed calloc in append_to_env", "");
 		return (FAIL);
 	}
 	copy_envp(new_envp, *envp_ptr, env_len);
 	new_envp[env_len] = ft_strdup(str);
-	if (new_envp[env_len] == NULL)
+	if (!new_envp[env_len])
 	{
-		log_errors("strdup failed", "");
+		log_errors("Failed strdup in append_to_env", "");
 		delete_str_array(&new_envp);
 		return (FAIL);
 	}

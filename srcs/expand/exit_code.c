@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action_parents.c                                   :+:      :+:    :+:   */
+/*   exit_code.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:19:05 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/15 03:21:52 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/10/14 03:55:10 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/10/14 04:56:05 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	action_parents(t_Redirection **redir, t_Pipeline **pipeline, t_Command **cmd)
+int	for_exit_code(t_Dollar *dol, int last_exitcode)
 {
-	int	wstatus;
+	char	*exit_code_str;
 
-	wstatus = -2;
-	if (waitpid((*pipeline)->pid, &wstatus, 0) == -1)
-		return (log_errors("Failed waitpid in cd action parents", ""));
-	if ((*redir)->outfile >= 0)
-		close((*redir)->outfile);
-	if ((*redir)->infile >= 0)
-		close((*redir)->infile);
-	(*cmd)->exitcode = waitpid_status(wstatus);
-	return ((*cmd)->exitcode);
+	exit_code_str = ft_itoa(last_exitcode);
+	if (!exit_code_str)
+		return (FAIL);
+	dol->var_value = exit_code_str;
+	dol->i++;
+	return (SUCCESS);
 }

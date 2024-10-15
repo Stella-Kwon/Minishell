@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action_parents.c                                   :+:      :+:    :+:   */
+/*   ft_strjoin3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:19:05 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/15 03:21:52 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/10/15 02:41:52 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/10/15 02:45:10 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	action_parents(t_Redirection **redir, t_Pipeline **pipeline, t_Command **cmd)
+char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 {
-	int	wstatus;
+	size_t	total_len;
+	char	*result;
 
-	wstatus = -2;
-	if (waitpid((*pipeline)->pid, &wstatus, 0) == -1)
-		return (log_errors("Failed waitpid in cd action parents", ""));
-	if ((*redir)->outfile >= 0)
-		close((*redir)->outfile);
-	if ((*redir)->infile >= 0)
-		close((*redir)->infile);
-	(*cmd)->exitcode = waitpid_status(wstatus);
-	return ((*cmd)->exitcode);
+	total_len = strlen(s1) + strlen(s2) + strlen(s3);
+	result = malloc(total_len + 1);
+	if (!result)
+		return (NULL);
+	ft_strcpy(result, s1);
+	ft_strcat(result, s2);
+	ft_strcat(result, s3);
+	return (result);
 }

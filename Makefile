@@ -6,7 +6,7 @@
 #    By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/13 18:06:04 by hlee-sun         ###   ########.fr        #
+#    Updated: 2024/10/15 05:24:59 by hlee-sun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -g -fsanitize=address
 
 # COMPILE_FLAG = -I/usr/local/opt/readline/include/
 
@@ -39,6 +39,8 @@ SRCS =	mini.c \
 		utils/setting_display.c\
 		utils/ft_strcmp.c\
 		utils/ft_strndup.c\
+		utils/ft_strcat.c\
+		utils/ft_strjoin3.c\
 		utils/ft_realloc.c\
 		utils/ft_isspace.c\
 		utils/free_one.c\
@@ -74,14 +76,22 @@ SRCS =	mini.c \
 		execution/execution_node.c\
 		error_log/log_file.c\
 		expand/expand.c\
+		expand/curly_braces.c\
+		expand/merge.c\
+		expand/quote.c\
+		expand/exit_code.c\
+		expand/dollar_sign.c\
 		expand/utils.c\
 		builtin/builtin.c\
 		builtin/cd.c\
+		builtin/cd_utils.c\
+		builtin/cd_utils_2.c\
 		builtin/echo.c\
 		builtin/env_utils.c\
 		builtin/env.c\
 		builtin/exit.c\
 		builtin/export.c\
+		builtin/export_utils.c\
 		builtin/print_error.c\
 		builtin/pwd.c\
 		builtin/unset.c\

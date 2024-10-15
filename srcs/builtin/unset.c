@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/12 21:06:10 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 03:17:17 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,31 @@ static void	remove_env_var(t_Command *command, char **new)
 	new[j] = NULL;
 }
 
+static int	process_unset_args(t_Command *command, char ***new_envp)
+{
+	size_t	len;
+
+	len = get_str_len(*(command->env));
+	*new_envp = ft_calloc(len + 1, sizeof(**new_envp));
+	if (*new_envp == NULL)
+	{
+		log_errors("Failed calloc in unset, process unset", "");
+		command->exitcode = FAIL;
+		return (command->exitcode);
+	}
+	remove_env_var(command, *new_envp);
+	delete_str_array(command->env);
+	*(command->env) = *new_envp;
+	return (SUCCESS);
+}
+
 int	unset(t_Command *command)
 {
 	char	**new_envp;
-	size_t	len;
 
 	if (command->args[1] != NULL && command->args[1][0] == '-')
 	{
-		ft_putstr_fd("unset : invalid option", STDERR_FILENO);
+		ft_putstr_fd("unset: invalid option", STDERR_FILENO);
 		ft_putstr_fd(command->args[1], STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 		command->exitcode = FAIL;
@@ -52,17 +69,8 @@ int	unset(t_Command *command)
 	}
 	if (command->args[1] != NULL)
 	{
-		len = get_str_len(*(command->env));
-		new_envp = ft_calloc(len + 1, sizeof(*new_envp));
-		if (new_envp == NULL)
-		{
-			perror("unset: malloc failed");
-			command->exitcode = FAIL;
+		if (process_unset_args(command, &new_envp) == FAIL)
 			return (command->exitcode);
-		}
-		remove_env_var(command, new_envp);
-		delete_str_array(command->env);
-		*(command->env) = new_envp;
 	}
 	command->exitcode = SUCCESS;
 	return (command->exitcode);

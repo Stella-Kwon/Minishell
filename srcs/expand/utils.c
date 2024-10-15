@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:57:00 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/13 15:28:33 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/14 05:25:38 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	handle_empty_cmd(t_Command **command)
 	while ((*command)->cmd == NULL || ft_strlen((*command)->cmd) == 0 || \
 			check_null_cmd((*command)->cmd) == TRUE)
 	{
-		if ((*command)->args[1] == NULL)
+		if (!(*command)->args[1])
 		{
 			(*command)->exitcode = 0;
 			return (FAIL);
@@ -93,27 +93,4 @@ int	handle_empty_cmd(t_Command **command)
 		}
 	}
 	return (SUCCESS);
-}
-
-char	*remove_quotes(char *s)
-{
-	int		len;
-	char	*new_s;
-
-	len = ft_strlen(s);
-	if ((s[0] == '"' && s[len - 1] == '"')
-		|| (s[0] == '\'' && s[len - 1] == '\''))
-	{
-		new_s = malloc((len - 1) * sizeof(char));
-		if (!new_s)
-		{
-			perror("minishell: Memory allocation failed\n");
-			free(s);
-		}
-		ft_strncpy(new_s, s + 1, len - 2);
-		new_s[len - 2] = '\0';
-		free(s);
-		return (new_s);
-	}
-	return (s);
 }

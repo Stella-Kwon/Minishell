@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:20:10 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 15:14:42 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 03:49:54 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	**find_env(char **envp)
 
 static char	*get_path(t_Command **command, char **env_path)
 {
-	char	*temp;
+	char	*tmp;
 	char	*path;
 	int		i;
 
@@ -45,10 +45,20 @@ static char	*get_path(t_Command **command, char **env_path)
 		cmd_error(command, ": No such file or directory\n", 127);
 	while (env_path[i])
 	{
-		temp = ft_strjoin(env_path[i], "/");
-		path = ft_strjoin(temp, (*command)->cmd);
-		if (temp)
-			free_one((void **)&temp);
+		tmp = ft_strjoin(env_path[i], "/");
+		if (!tmp)
+		{
+			log_errors("Failed strjoin in get_path, temp", "");
+			return (NULL);
+		}
+		path = ft_strjoin(tmp, (*command)->cmd);
+		if (!path)
+		{
+			log_errors("Failed strjoin in get_path, path", "");
+			return (NULL);
+		}
+		if (tmp)
+			free_one((void **)&tmp);
 		if (access(path, F_OK) == 0)
 			break ;
 		if (path)
@@ -59,29 +69,37 @@ static char	*get_path(t_Command **command, char **env_path)
 	return (path);
 }
 
-static char	*find_and_check_path(t_Command **command)
+static int	find_and_check_path(t_Command **command, char **path)
 {
 	char	**env_path;
-	char	*path;
 
 	if (ft_strrchr((*command)->cmd, '/') != NULL)
-		return ((*command)->cmd);
+	{
+		*path = (*command)->cmd;
+		return (check_path(*path, command));
+	}
 	env_path = find_env(*((*command)->env));
-	path = get_path(command, env_path);
+	*path = get_path(command, env_path);
 	{
 		if (env_path != NULL)
 			all_free(&env_path);
 	}
-	if (!path)
-		return (NULL);
-	check_path(path, command);
-	return (path);
+	if (!(*path))
+		return (cmd_error(command, ": command not found\n", 127));
+	return (check_path(*path, command));
 }
 
 int	prepare_cmd(t_Command **command, int last_exitcode)
 {
+	int	argc;
+
 	if (!command || !*command)
 		return (SUCCESS);
+	if (ft_strncmp((*command)->cmd, "export", 7) == 0)
+	{
+		argc = get_str_len((*command)->args);
+		merge_quoted_args((*command)->args, &argc);
+	}
 	(*command)->cmd = expand_cmd((*command)->cmd, *((*command)->env), \
 									last_exitcode);
 	(*command)->args = expand_args((*command)->args, *((*command)->env), \
@@ -100,10 +118,9 @@ int	execute_cmd(t_Command **command)
 	if (builtin_with_output(*command) == SUCCESS)
 		return (SUCCESS);
 	if (check_cmd_script(command) == FAIL || check_cmd_error(command) == FAIL)
-		return ((*command)->exitcode);
-	path = find_and_check_path(command);
-	if (!path)
-		return (cmd_error(command, ": command not found\n", 127));
+		return (FAIL);
+	if (find_and_check_path(command, &path) == FAIL)
+		return (FAIL);
 	if (execve(path, (*command)->args, *((*command)->env)) == -1)
 	{
 		handle_error(command, path);

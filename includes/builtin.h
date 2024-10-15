@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 21:13:11 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 19:31:20 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 04:43:41 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,8 @@
 
 # include "minishell.h"
 
-char	**create_env(char **curr_envp);
-void	delete_str_array(char ***str_arr);
 int		append_to_env(char *str, char ***envp_ptr);
-char	*get_env_value(const char *key, char **envp);
-void	check_and_set_path(t_Command *command);
+int		check_and_set_path(t_Command *command);
 int		cd(t_Command *command);
 int		echo(t_Command *command);
 int		env(t_Command *command);
@@ -27,13 +24,20 @@ int		unset(t_Command *command);
 int		mini_exit(t_Command *command);
 int		export(t_Command *command);
 int		pwd(t_Command *command);
-size_t	get_str_len(char **str_arr);
 int		copy_envp(char **dest, char **src, size_t len);
-void	print_strs(char **str_arr);
-void	sort_envp(size_t len, char **envp);
 int		print_error_cd(t_Command *command, char *s, int error_nb);
+int		print_sorted_envp(char **envp);
 int		builtin_filesystem(t_Command *command);
-int 	exec_command_with_env(t_Command *command, char **env, int last_exitcode);
+int		exec_command_with_env(t_Command *command, char **env, \
+		int last_exitcode);
 int		builtin_with_output(t_Command *command);
+int		add_env_item(t_Command *command, char *var_name, char *value);
+char	*get_current_dir(char *prefix);
+char	*get_env_value(const char *key, char **envp);
+void	print_strs(char **str_arr);
+void	delete_str_array(char ***str_arr);
+void	sort_envp(size_t len, char **envp);
+void	currdir_to_old_pwd(t_Command *command);
+size_t	get_str_len(char **str_arr);
 
 #endif

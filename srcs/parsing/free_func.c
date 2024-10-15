@@ -3,26 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   free_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:55:15 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/12 00:58:01 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/15 05:29:09 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// void free_command(t_Command **res)
+// {
+//     if (*res)
+//     {
+//         if ((*res)->cmd)
+//             free_one((void **)&(*res)->cmd);
+//         if ((*res)->args)
+//             all_free(&(*res)->args);
+//         free_one((void **)&(*res));
+//     }
+// }
+
 void free_command(t_Command **res)
 {
-    if (*res)
+    if (res && *res)  // res가 NULL이 아닌지 체크
     {
         if ((*res)->cmd)
-            free_one((void **)&(*res)->cmd);
+        {
+            free((*res)->cmd);  // cmd 해제
+            (*res)->cmd = NULL;  // 사용 후 NULL로 설정
+        }
+        
         if ((*res)->args)
-            all_free(&(*res)->args);
-        free_one((void **)&(*res));
+        {
+            for (int i = 0; (*res)->args[i]; i++)  // 각 인자 해제
+            {
+                free((*res)->args[i]);  // 각 인자 해제
+                (*res)->args[i] = NULL;  // 사용 후 NULL로 설정
+            }
+            free((*res)->args);  // 인자 배열 해제
+            (*res)->args = NULL;  // 사용 후 NULL로 설정
+        }
+        
+        free(*res);  // 구조체 해제
+        *res = NULL; // 포인터를 NULL로 설정
     }
 }
+
 
 void free_redirection(t_Redirection **redir)
 {
