@@ -23,6 +23,7 @@ static int	process_variable(char *input, t_Dollar *dol, char **env)
 		return (log_errors("Failed strndup in process_variable", ""));
 	dol->var_value = get_env_value(dol->var, env);
 	free(dol->var);
+	dol->var = NULL;
 	if (!dol->var_value)
 		dol->var_value = ft_strdup("");
 	return (SUCCESS);

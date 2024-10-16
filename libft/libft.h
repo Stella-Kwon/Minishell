@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 10:15:52 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/10 23:50:52 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/16 11:04:53 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #  define BUFFER_SIZE 50
 # endif
 
-	typedef struct s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;

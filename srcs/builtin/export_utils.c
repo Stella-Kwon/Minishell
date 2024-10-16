@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 06:02:36 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 04:42:55 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:39:56 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int	output_sorted_envp(char **sorted_envp, size_t len)
 	size_t	i;
 
 	i = 0;
-
 	while (i < len)
 	{
 		if (sorted_envp[i][0] != '_' && sorted_envp[i][1] != '=')
@@ -75,6 +74,7 @@ int	print_sorted_envp(char **envp)
 	int		result;
 	char	**sorted_envp;
 
+	sorted_envp = NULL;
 	len = get_str_len(envp);
 	result = output_sorted_envp(sorted_envp, len);
 	if (!envp)

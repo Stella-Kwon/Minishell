@@ -3,26 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_operator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:09:30 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/09 20:59:57 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:30:26 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void error_handling_in_middle_operator(t_For_tokenize *tokenize, int len, int *i)
+static void	error_handling_in_middle_operator(t_For_tokenize *tokenize, \
+												int len, int *i)
 {
-	if ((*(tokenize->start + len + *i) == '<' && *(tokenize->start + len + *i + 1) == '<' && *(tokenize->start + len + *i + 1) == '<'))
+	if ((*(tokenize->start + len + *i) == '<' && \
+		*(tokenize->start + len + *i + 1) == '<' && \
+		*(tokenize->start + len + *i + 1) == '<'))
 		*i += 3;
-	else if ((*(tokenize->start + len + *i) == '<' && *(tokenize->start + len + *i + 1) == '<'))
+	else if ((*(tokenize->start + len + *i) == '<' && \
+			*(tokenize->start + len + *i + 1) == '<'))
 		*i += 2;
-	else if ((*(tokenize->start + len + *i) == '>' && *(tokenize->start + len + *i + 1) == '>'))
+	else if ((*(tokenize->start + len + *i) == '>' && \
+			*(tokenize->start + len + *i + 1) == '>'))
 		*i += 2;
-	else if ((*(tokenize->start + len + *i) == '<') || (*(tokenize->start + len + *i) == '>'))
+	else if ((*(tokenize->start + len + *i) == '<') || \
+			(*(tokenize->start + len + *i) == '>'))
 		(*i)++;
-
 }
 
 int	handle_pipe_and_or(t_For_tokenize *tokenize)
@@ -42,7 +47,7 @@ int	handle_pipe_and_or(t_For_tokenize *tokenize)
 		if (check_operation_next(tokenize) == FAIL)
 			return (FAIL);
 	}
-	else 
+	else
 	{
 		error_handling_in_middle_operator(tokenize, len, &i);
 		if (redirect_operation_error(tokenize->start + len + i) != SUCCESS)

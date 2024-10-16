@@ -6,7 +6,7 @@
 /*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 19:18:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 02:59:40 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:31:30 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int	prepare_new_start(char **input, char **new_start, char **result)
 	return (SUCCESS);
 }
 
-void update_quotes_and_depth(int *single_quote, int *double_quote,
-							 int *depth, char c)
+void	update_quotes_and_depth(int *single_quote, int *double_quote, \
+							int *depth, char c)
 {
 	if (c == '\'' && !*double_quote)
 		*single_quote = !*single_quote;
@@ -48,14 +48,14 @@ void update_quotes_and_depth(int *single_quote, int *double_quote,
 	}
 }
 
-void check_set_iterate(t_Set *set, char **new_start)
+void	check_set_iterate(t_Set *set, char **new_start)
 {
 	while (**new_start)
 	{
-		update_quotes_and_depth(&set->single_quote,
+		update_quotes_and_depth(&set->single_quote, \
 								&set->double_quote, &set->depth, **new_start);
 		if (!set->single_quote && !set->double_quote && set->depth == 0)
-			break;
+			break ;
 		(*new_start)++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   log_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 12:50:33 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 18:42:53 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/08/03 12:50:33 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/16 10:12:26 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ int	handle_258_exitcode_print(char *msg)
 	return (2);
 }
 
-void check_specific_error(t_Command **command, char *path)
+void	check_specific_error(t_Command **command, char *path)
 {
 	if (errno == EACCES)
 	{
-		// 디렉터리일 경우를 정확히 처리
 		if (access(path, F_OK) == 0 && access(path, X_OK) == -1)
 			ft_putstr_fd("Permission denied\n", STDERR_FILENO);
 		else
@@ -58,7 +57,7 @@ void	handle_error(t_Command **command, char *path)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(path, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
-	if(path[len -1] == '/')
+	if (path[len -1] == '/')
 	{
 		ft_putstr_fd("Is a directory", STDERR_FILENO);
 		(*command)->exitcode = 126;
@@ -66,7 +65,6 @@ void	handle_error(t_Command **command, char *path)
 	}
 	check_specific_error(command, path);
 }
-
 
 int	log_errors(char *token, char *msg)
 {

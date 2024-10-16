@@ -6,7 +6,7 @@
 #    By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/15 22:04:29 by hlee-sun         ###   ########.fr        #
+#    Updated: 2024/10/16 10:05:14 by hlee-sun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,11 +122,11 @@ $(NAME): $(MAN_OBJS)
 $(LIBFT):
 	@make -C ./libft
 
-bonus: $(BONUS_OBJS)
+bonus: $(BONUS_OBJS) $(LIBFT)
 	@$(CC) $(FLAG) $(COMPILE_FLAG) -o $(NAME) $(BONUS_OBJS) $(LIBFT) $(LINK_FLAG) 
 	@echo "making minishell with bonus"
 
-bonus re : 
+bonus_re : 
 		make fclean
 		make bonus
 		@echo "rebuilding bonus"
@@ -144,4 +144,4 @@ fclean: clean
 re: fclean all
 	@echo "rebuilding"
 
-.PHONY: all re clean fclean
+.PHONY: all re clean fclean bonus bonus_re

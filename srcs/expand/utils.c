@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 19:57:00 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 22:38:46 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:43:13 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 void	expand_cmd_args(t_Command *command, int last_exitcode)
 {
 	int	i;
-	
-	if (find_dollar_signs(&(command->cmd), *(command->env), last_exitcode) == FAIL)
+
+	if (find_dollar_signs(&(command->cmd), *(command->env), \
+							last_exitcode) == FAIL)
 		log_errors("Command expansion failed", command->cmd);
 	i = 0;
 	while (command->args[i] != NULL)
 	{
-		if (find_dollar_signs(&(command->args[i]), *(command->env), last_exitcode) == FAIL)
+		if (find_dollar_signs(&(command->args[i]), *(command->env), \
+								last_exitcode) == FAIL)
 			log_errors("Argument expansion failed", command->args[i]);
 		i++;
 	}

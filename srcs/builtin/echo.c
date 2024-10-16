@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:30:54 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 04:35:42 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:40:23 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	echo(t_Command *command)
 	print_args(command->args, arg_index);
 	if (!n_option)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-
 	command->exitcode = SUCCESS;
 	return (command->exitcode);
 }

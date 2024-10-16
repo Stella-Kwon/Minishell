@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/13 19:33:06 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:33:06 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ char	**tokenize_input(char **input, int *last_exit_code)
 	buffsize = BUFFER_SIZE;
 	tokenize.tokens = initialize_tokenization(buffsize, &tokenize);
 	if (!tokenize.tokens)
-		return (NULL);
-	if (check_first_input(&tokenize) != SUCCESS)
 		return (NULL);
 	while (*tokenize.start)
 	{

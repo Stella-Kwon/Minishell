@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/16 13:26:48 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 19:28:32 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/08/16 13:26:48 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/16 11:32:51 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**ft_realloc_double(char **token, int position, int *bufsize)
 	return (token);
 }
 
-char *ft_realloc_single(char *token, int position, int *bufsize)
+char	*ft_realloc_single(char *token, int position, int *bufsize)
 {
 	char	*realloc_token;
 	int		i;

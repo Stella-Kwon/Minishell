@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   action_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:19:04 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 22:58:18 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/09/22 20:19:04 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/16 10:30:07 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void print_error_redirect(t_Redirection **redir, t_Command **cmd)
+static void	print_error_redirect(t_Redirection **redir, t_Command **cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd((*redir)->in_filename, 2);
@@ -20,8 +20,7 @@ static void print_error_redirect(t_Redirection **redir, t_Command **cmd)
 	ft_putstr_fd("No such file or directory\n", 2);
 	(*cmd)->exitcode = FAIL;
 	exit(FAIL);
-}	
-
+}
 
 int	common_pre_child(t_Redirection	**redir, t_Command **cmd)
 {

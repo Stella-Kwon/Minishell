@@ -3,77 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 16:57:20 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 22:33:45 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/10/10 16:57:20 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/16 11:19:42 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_Redirection *create_redirection(void)
+t_Redirection	*create_redirection(void)
 {
-    t_Redirection *redir;
+	t_Redirection	*redir;
 
-    redir = (t_Redirection *)ft_calloc(1, sizeof(t_Redirection));
-    if (!redir)
-    {
-        log_errors("Failed to ft_calloc redirection in create_redirection", "");
-        return (NULL);
-    }
-    redir->infile = -2;
-    redir->heredoc_infile = -2;
-    redir->outfile = -2;
-    redir->in_filename = NULL;
-    redir->out_filename = NULL;
-    redir->direction_type = -1;
-    redir->heredoc_limiter = NULL;
-    redir->heredoc_i = 0;
-    redir->herestring_str = NULL;
-    redir->heredoc_buffsize = BUFFER_SIZE;
-    return (redir);
+	redir = (t_Redirection *)ft_calloc(1, sizeof(t_Redirection));
+	if (!redir)
+	{
+		log_errors("Failed to ft_calloc redirection in create_redirection", "");
+		return (NULL);
+	}
+	redir->infile = -2;
+	redir->heredoc_infile = -2;
+	redir->outfile = -2;
+	redir->in_filename = NULL;
+	redir->out_filename = NULL;
+	redir->direction_type = -1;
+	redir->heredoc_limiter = NULL;
+	redir->heredoc_i = 0;
+	redir->herestring_str = NULL;
+	redir->heredoc_buffsize = BUFFER_SIZE;
+	return (redir);
 }
 
-int initialize_astnode(t_ASTNode **node, char ***tokens)
+int	initialize_astnode(t_ASTNode **node, char ***tokens)
 {
-    if (node && (*node))
-    {
-        (*node)->type = 0;
-        (*node)->command = NULL;
-        (*node)->pipeline = NULL;
-        (*node)->redir = NULL;
-        (*node)->left = NULL;
-        (*node)->right = NULL;
-    }
-    if (tokens && *tokens && **tokens && is_redirection(**tokens))
-    {
-        (*node)->redir = create_redirection();
-        if (!(*node)->redir)
-            return (FAIL);
-        if (parsing_others(tokens, &(*node)->redir, TRUE) == FAIL)
-        {
-            free_astnode(node);
-            return (FAIL);
-        }
-    }
-    return (SUCCESS);
+	if (node && (*node))
+	{
+		(*node)->type = 0;
+		(*node)->command = NULL;
+		(*node)->pipeline = NULL;
+		(*node)->redir = NULL;
+		(*node)->left = NULL;
+		(*node)->right = NULL;
+	}
+	if (tokens && *tokens && **tokens && is_redirection(**tokens))
+	{
+		(*node)->redir = create_redirection();
+		if (!(*node)->redir)
+			return (FAIL);
+		if (parsing_others(tokens, &(*node)->redir, TRUE) == FAIL)
+		{
+			free_astnode(node);
+			return (FAIL);
+		}
+	}
+	return (SUCCESS);
 }
 
-t_Pipeline *create_pipeline(void)
+t_Pipeline	*create_pipeline(void)
 {
-    t_Pipeline *pipeline;
+	t_Pipeline	*pipeline;
 
-    pipeline = (t_Pipeline *)ft_calloc(1, sizeof(t_Pipeline));
-    if (!pipeline)
-    {
-        log_errors("Failed to ft_calloc pipeline in create_pipeline", "");
-        return (NULL);
-    }
-    pipeline->fd[0] = -2;
-    pipeline->fd[1] = -2;
-    pipeline->pid = -2;
-    pipeline->left_pid = -2;
-    pipeline->right_pid = -2;
-    return (pipeline);
+	pipeline = (t_Pipeline *)ft_calloc(1, sizeof(t_Pipeline));
+	if (!pipeline)
+	{
+		log_errors("Failed to ft_calloc pipeline in create_pipeline", "");
+		return (NULL);
+	}
+	pipeline->fd[0] = -2;
+	pipeline->fd[1] = -2;
+	pipeline->pid = -2;
+	pipeline->left_pid = -2;
+	pipeline->right_pid = -2;
+	return (pipeline);
 }

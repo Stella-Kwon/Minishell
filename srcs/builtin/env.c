@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:09 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 04:36:01 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:40:08 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*get_env_value(const char *key, char **envp)
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], key, k_len) == 0 && envp[i][k_len] == '=')
-			return (ft_strchr(envp[i], '=') + 1); // = 이후의 값 반환
+			return (ft_strchr(envp[i], '=') + 1);
 		i++;
 	}
 	return (NULL);

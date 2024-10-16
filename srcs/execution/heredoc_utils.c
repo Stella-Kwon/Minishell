@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utils.c                                        :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 15:37:15 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 01:10:09 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/10/06 15:37:15 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/16 11:02:53 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int iterate_heredoc(t_ASTNode **node, int *i)
+static int	iterate_heredoc(t_ASTNode **node, int *i)
 {
-	int exitcode;
+	int	exitcode;
 
-	
 	if ((*node)->command)
 	{
-		(*node)->command->exitcode = here_doc(node, (*node)->redir->heredoc_limiter[*i]);
+		(*node)->command->exitcode = here_doc(node, \
+										(*node)->redir->heredoc_limiter[*i]);
 		exitcode = (*node)->command->exitcode;
 	}
 	else
@@ -44,7 +44,8 @@ int	heredoc_check(t_ASTNode	**node)
 	i = 0;
 	if ((*node)->redir->heredoc_limiter && (*node)->redir->heredoc_limiter[0])
 	{
-		while ((*node)->redir->heredoc_limiter[i] && i < (*node)->redir->heredoc_i)
+		while ((*node)->redir->heredoc_limiter[i] && \
+				i < (*node)->redir->heredoc_i)
 		{
 			if (iterate_heredoc(node, &i) != SUCCESS)
 				return (FAIL);
@@ -53,7 +54,6 @@ int	heredoc_check(t_ASTNode	**node)
 	}
 	return (SUCCESS);
 }
-
 
 int	dup_and_close(int oldfd, int newfd)
 {
