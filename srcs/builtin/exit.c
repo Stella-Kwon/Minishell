@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:15 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 04:49:19 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:37:45 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static int	handle_exit_arguments(t_Command *command, size_t *i)
 	}
 	if (command->args[1][*i] == '-' || command->args[1][*i] == '+')
 		(*i)++;
-
 	return (SUCCESS);
 }
 

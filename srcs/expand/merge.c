@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 03:54:19 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 04:48:08 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:54:50 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,15 @@ static char	*find_start_quote(char **args, int i, char *quote_char)
 
 	start_quote = NULL;
 	*quote_char = '\0';
-	if ((start_quote = ft_strchr(args[i], '"')) != NULL)
+	start_quote = ft_strchr(args[i], '"');
+	if (start_quote != NULL)
 		*quote_char = '"';
-	else if ((start_quote = ft_strchr(args[i], '\'')) != NULL)
-		*quote_char = '\'';
+	else
+	{
+		start_quote = ft_strchr(args[i], '\'');
+		if (start_quote != NULL)
+			*quote_char = '\'';
+	}
 	return (start_quote);
 }
 

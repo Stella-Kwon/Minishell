@@ -3,27 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 13:11:15 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/09 00:21:09 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/07/30 13:11:15 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/16 11:55:21 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# ifndef BUFFSIZE
-#  define BUFFSIZE 50
-# endif
-
-# define TRUE 1
-# define FALSE 0
-
-# define SUCCESS 0
-# define FAIL 1
-
-extern int g_received_signal;
 
 # include "../libft/libft.h"
 # include <fcntl.h>
@@ -49,5 +37,17 @@ extern int g_received_signal;
 # include "builtin.h"
 # include "expand.h"
 # include "execution.h"
+
+# ifndef BUFFSIZE
+#  define BUFFSIZE 50
+# endif
+
+# define TRUE 1
+# define FALSE 0
+
+# define SUCCESS 0
+# define FAIL 1
+
+extern int	g_received_signal;
 
 #endif

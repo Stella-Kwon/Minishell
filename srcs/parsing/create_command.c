@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/12 03:01:27 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:08:34 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int parsing(char ***tmp_args, t_Redirection **redirect, int start)
+int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (**tmp_args)
@@ -30,16 +30,16 @@ int parsing(char ***tmp_args, t_Redirection **redirect, int start)
 		else
 		{
 			if (!**tmp_args || is_redirection(**tmp_args) == FALSE)
-				break;
+				break ;
 		}
 	}
 	return (SUCCESS);
 }
 
-int parsing_others(char ***args, t_Redirection **redirect, int start)
+int	parsing_others(char ***args, t_Redirection **redirect, int start)
 {
-	int i;
-	char **tmp_args;
+	int		i;
+	char	**tmp_args;
 
 	i = 0;
 	if (!args || !*args || !**args)
@@ -64,8 +64,8 @@ int parsing_others(char ***args, t_Redirection **redirect, int start)
 	return (SUCCESS);
 }
 
-static int command_initialize(t_Command *res, char ***tokens,
-							  int buffersize, char ***env)
+static int	command_initialize(t_Command *res, char ***tokens, \
+							int buffersize, char ***env)
 {
 	res->cmd = ft_strdup(**tokens);
 	if (!res->cmd)
@@ -85,8 +85,8 @@ static int command_initialize(t_Command *res, char ***tokens,
 	return (SUCCESS);
 }
 
-static int create_command_args(t_Command *res, char ***tokens,
-							   int *buffersize, int *args_index)
+static int	create_command_args(t_Command *res, char ***tokens, \
+								int *buffersize, int *args_index)
 {
 	while (**tokens && !is_operator(*tokens))
 	{
@@ -112,11 +112,11 @@ static int create_command_args(t_Command *res, char ***tokens,
 	return (SUCCESS);
 }
 
-t_Command *create_command(char ***tokens, char ***env)
+t_Command	*create_command(char ***tokens, char ***env)
 {
-	t_Command *res;
-	int buffersize;
-	int args_index;
+	t_Command	*res;
+	int			buffersize;
+	int			args_index;
 
 	buffersize = BUFFER_SIZE;
 	args_index = 0;

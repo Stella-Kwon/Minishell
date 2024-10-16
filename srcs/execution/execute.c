@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 21:20:10 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/15 22:49:47 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/10/06 21:20:10 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/10/16 10:13:53 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char **find_env(char **envp)
+static char	**find_env(char **envp)
 {
-	char *path_var;
+	char	*path_var;
 
 	path_var = NULL;
 	if (*envp == NULL)
@@ -24,7 +24,7 @@ static char **find_env(char **envp)
 		if (ft_strncmp("PATH=", *envp, 5) == 0)
 		{
 			path_var = *envp + 5;
-			break;
+			break ;
 		}
 		envp++;
 	}
@@ -33,7 +33,7 @@ static char **find_env(char **envp)
 	return (ft_split(path_var, ':'));
 }
 
-static void free_path(char *tmp, char *path)
+static void	free_path(char *tmp, char *path)
 {
 	if (tmp)
 	{
@@ -45,10 +45,10 @@ static void free_path(char *tmp, char *path)
 	}
 }
 
-static char *get_path_in_loop(t_Command **command, char **env_path, char *path)
+static char	*get_path_in_loop(t_Command **command, char **env_path, char *path)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (env_path[i])
@@ -66,26 +66,26 @@ static char *get_path_in_loop(t_Command **command, char **env_path, char *path)
 			return (NULL);
 		}
 		if (access(path, F_OK) == 0)
-			break;
+			break ;
 		free_path(tmp, path);
 		i++;
 	}
 	return (path);
 }
 
-static char *get_path(t_Command **command, char **env_path)
+static char	*get_path(t_Command **command, char **env_path)
 {
-	char *path;
-	
+	char	*path;
+
 	path = NULL;
 	if (!env_path)
 		cmd_error(command, ": No such file or directory\n", 127);
 	return (get_path_in_loop(command, env_path, path));
 }
 
-int find_and_check_path(t_Command **command, char **path)
+int	find_and_check_path(t_Command **command, char **path)
 {
-	char **env_path;
+	char	**env_path;
 
 	if (ft_strrchr((*command)->cmd, '/') != NULL)
 	{
@@ -102,6 +102,3 @@ int find_and_check_path(t_Command **command, char **path)
 		return (cmd_error(command, ": command not found\n", 127));
 	return (check_path(*path, command));
 }
-
-
-

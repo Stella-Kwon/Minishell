@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   check_set.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/10 13:36:39 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/16 11:27:00 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *store_inside_set(char *tmp_start, char *tmp_end)
+char	*store_inside_set(char *tmp_start, char *tmp_end)
 {
-	char *tmp;
-	ptrdiff_t offset;
-	char *st;
-	char *end;
+	char		*tmp;
+	ptrdiff_t	offset;
+	char		*st;
+	char		*end;
 
 	if (!tmp_start || !tmp_end || tmp_start > tmp_end)
 	{
@@ -36,7 +36,7 @@ char *store_inside_set(char *tmp_start, char *tmp_end)
 	return (tmp);
 }
 
-void check_quotes_in_loop(t_Set *set, char ref, int *count)
+void	check_quotes_in_loop(t_Set *set, char ref, int *count)
 {
 	while (*set->tmp_end)
 	{
@@ -46,15 +46,16 @@ void check_quotes_in_loop(t_Set *set, char ref, int *count)
 		{
 			while (ft_isspace(*(set->tmp_end)) == FALSE && *set->tmp_end)
 				set->tmp_end++;
-			break;
+			break ;
 		}
 		set->tmp_end++;
 	}
 }
 
-static int check_quotes_and_depth(t_For_tokenize *tokenize, t_Set *set, char ref)
+static int	check_quotes_and_depth(t_For_tokenize *tokenize, \
+									t_Set *set, char ref)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (set->depth == 0 || !set->single_quote || !set->double_quote)
@@ -68,9 +69,9 @@ static int check_quotes_and_depth(t_For_tokenize *tokenize, t_Set *set, char ref
 	return (SUCCESS);
 }
 
-char *check_set(t_For_tokenize *tokenize, char ref)
+char	*check_set(t_For_tokenize *tokenize, char ref)
 {
-	t_Set set;
+	t_Set	set;
 
 	set.depth = 0;
 	set.single_quote = 0;
@@ -79,15 +80,15 @@ char *check_set(t_For_tokenize *tokenize, char ref)
 	set.tmp_end = NULL;
 	while (*set.tmp_start)
 	{
-		update_quotes_and_depth(&set.single_quote, &set.double_quote,
+		update_quotes_and_depth(&set.single_quote, &set.double_quote, \
 								&set.depth, *set.tmp_start);
 		set.tmp_start++;
 	}
 	set.tmp_start = tokenize->start;
 	if (check_quotes_and_depth(tokenize, &set, ref) == FAIL)
 		return (NULL);
-	tokenize->tokens[tokenize->token_count] = store_inside_set(set.tmp_start,
-															   set.tmp_end);
+	tokenize->tokens[tokenize->token_count] = store_inside_set(set.tmp_start, \
+																set.tmp_end);
 	if (!tokenize->tokens[tokenize->token_count])
 		return (NULL);
 	return (tokenize->tokens[tokenize->token_count]);

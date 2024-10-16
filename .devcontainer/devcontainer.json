@@ -3,14 +3,15 @@
     "dockerFile": "../Dockerfile",
     "workspaceFolder": "/app",
     "mounts": [
-	"source=${localEnv:HOME}/Desktop/min,target=/root/app,type=bind",
+	"source=${localEnv:HOME}/Desktop/Minishell,target=/root/app,type=bind",
     "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind",
     "source=${localEnv:HOME}/.ssh/config,target=/root/.ssh/config,type=bind" // SSH config 마운트
     ],
     "extensions": [
         "ms-azuretools.vscode-docker",
         "ms-python.python",
-        "ms-vscode.cpptools"
+        "ms-vscode.cpptools",
+        "evilcat.norminette-42"
     ],
     "postCreateCommand": "apt-get update && apt-get install -y gcc make gdb"
 }

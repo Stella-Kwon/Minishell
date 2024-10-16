@@ -1,43 +1,41 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:17:10 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/08 23:17:11 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/16 11:31:18 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *store_words(char **start)
+char	*store_words(char **start)
 {
-	char *word_start;
+	char	*word_start;
 
 	word_start = *start;
-	while (**start && !ft_isspace(**start) && **start != '(' && **start != ')' &&
-		   **start != '|' && **start != '&' && **start != '>' && **start != '<')// && **start != '$')
+	while (**start && !ft_isspace(**start) && **start != '(' && \
+			**start != ')' && **start != '|' && **start != '&' && \
+			**start != '>' && **start != '<')
 	{
 		(*start)++;
 	}
-
 	return (ft_strndup(word_start, *start - word_start));
 }
 
-int is_special_character(char c)
+int	is_special_character(char c)
 {
-	if (c == '\\' || c == ';' || c == '^' || c == '#' ||
+	if (c == '\\' || c == ';' || c == '^' || c == '#' || \
 		c == '@' || c == '!' || c == '*' || c == '%' || c == '(' || c == ')')
 		return (TRUE);
 	return (FALSE);
 }
 
-
 static int	check_input_loop(const char *input, int *in_single_quote, \
-int *in_double_quote)
+							int *in_double_quote)
 {
 	int	len;
 	int	i;

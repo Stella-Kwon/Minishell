@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   action_parents.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:19:05 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/13 21:59:17 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/09/22 20:19:05 by sukwon            #+#    #+#             */
+/*   Updated: 2024/10/16 10:29:48 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	action_parents(t_Redirection **redir, t_Pipeline **pipeline, t_Command **cmd)
+int	action_parents(t_Redirection **redir, t_Pipeline **pipeline, \
+					t_Command **cmd)
 {
 	int	wstatus;
-	
+
 	wstatus = -2;
 	if (waitpid((*pipeline)->pid, &wstatus, 0) == -1)
 	{
@@ -30,9 +31,9 @@ int	action_parents(t_Redirection **redir, t_Pipeline **pipeline, t_Command **cmd
 	return ((*cmd)->exitcode);
 }
 
-int prepare_cmd(t_Command **command, int last_exitcode)
+int	prepare_cmd(t_Command **command, int last_exitcode)
 {
-	int argc;
+	int	argc;
 
 	if (!command || !*command)
 		return (SUCCESS);
@@ -49,9 +50,9 @@ int prepare_cmd(t_Command **command, int last_exitcode)
 	return (SUCCESS);
 }
 
-int execute_cmd(t_Command **command)
+int	execute_cmd(t_Command **command)
 {
-	char *path;
+	char	*path;
 
 	if (builtin_with_output(*command) == SUCCESS)
 		return (SUCCESS);

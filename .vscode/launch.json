@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/suminkwon/Desktop/min",
-      "program": "/Users/suminkwon/Desktop/min/build/Debug/outDebug"
+      "cwd": "/Users/suminkwon/Desktop/Minishell",
+      "program": "/Users/suminkwon/Desktop/Minishell/build/Debug/outDebug"
     }
   ]
 }

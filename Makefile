@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+         #
+#    By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/15 23:57:26 by suminkwon        ###   ########.fr        #
+#    Updated: 2024/10/16 14:47:48 by skwon2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,16 +24,14 @@ FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
 
 # LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
-COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+ COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
-LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+ LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
 
 # COMPILE_FLAG = -I/usr/include/readline
 # LINK_FLAG = -L/usr/local/lib -lreadline
 
 # LINK_FLAG = -lreadline -lncurses -L/
-# utils/setting_display.c\
-
 
 SRCS_DIR = ./srcs/
 

@@ -3,41 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:42:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/13 22:59:10 by suminkwon        ###   ########.fr       */
+/*   Updated: 2024/10/16 11:20:29 by sukwon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int set_outfile(t_Redirection **redirect, char ***args, int direction_type)
+static int	set_outfile(t_Redirection **redirect, char ***args, \
+						int direction_type)
 {
 	if (direction_type == REDIRECT_OUTPUT)
 	{
-		if (rm_quote_filename(redirect, args, &(*redirect)->out_filename) != SUCCESS)
-			return (log_errors("Failed in rm_quote_filename in set_redirection", ""));
+		if (rm_quote_filename(redirect, args, &(*redirect)->out_filename) \
+								!= SUCCESS)
+			return (log_errors("Failed in rm_quote_filename in \
+								set_redirection", ""));
 		if ((*redirect)->outfile != -2)
 			close((*redirect)->outfile);
-		(*redirect)->outfile = open((*redirect)->out_filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		(*redirect)->outfile = open((*redirect)->out_filename, \
+									O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
 	else if (direction_type == REDIRECT_APPEND)
 	{
-		if (rm_quote_filename(redirect, args, &(*redirect)->out_filename) != SUCCESS)
-			return (log_errors("Failed in rm_quote_filename in set_redirection", ""));
-		if ((*redirect)->outfile != -2 )
+		if (rm_quote_filename(redirect, args, &(*redirect)->out_filename) \
+								!= SUCCESS)
+			return (log_errors("Failed in rm_quote_filename in \
+								set_redirection", ""));
+		if ((*redirect)->outfile != -2)
 			close((*redirect)->outfile);
-		(*redirect)->outfile = open((*redirect)->out_filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		(*redirect)->outfile = open((*redirect)->out_filename, \
+									O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	return (SUCCESS);
 }
 
-static int set_infile(t_Redirection **redirect, char ***args, int direction_type)
+static int	set_infile(t_Redirection **redirect, char ***args, \
+						int direction_type)
 {
 	if (direction_type == REDIRECT_INPUT)
 	{
-		if (put_last_open_infile(redirect, args, &(*redirect)->in_filename) != SUCCESS)
+		if (put_last_open_infile(redirect, args, &(*redirect)->in_filename) \
+								!= SUCCESS)
 			return (FAIL);
 		if ((*redirect)->heredoc_limiter && (*redirect)->heredoc_limiter[0])
 		{
@@ -54,7 +63,7 @@ static int set_infile(t_Redirection **redirect, char ***args, int direction_type
 	return (SUCCESS);
 }
 
-int set_redirection(t_Redirection **redirect, char ***args, int direction_type)
+int	set_redirection(t_Redirection **redirect, char ***args, int direction_type)
 {
 	if ((*redirect)->infile == -1 || (*redirect)->outfile == -1)
 		return (SUCCESS);
@@ -65,9 +74,9 @@ int set_redirection(t_Redirection **redirect, char ***args, int direction_type)
 	return (SUCCESS);
 }
 
-static int redirection_parsing_set(char ***args, t_Redirection **redirect)
+static int	redirection_parsing_set(char ***args, t_Redirection **redirect)
 {
-	int direction_type;
+	int	direction_type;
 
 	direction_type = get_direction_type(**args);
 	if (direction_type == INVALID)
@@ -79,12 +88,12 @@ static int redirection_parsing_set(char ***args, t_Redirection **redirect)
 	return (SUCCESS);
 }
 
-int redirection_parsing(char ***args, t_Redirection **redirect, int start)
+int	redirection_parsing(char ***args, t_Redirection **redirect, int start)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (ft_strcmp(**args, ">") == 0 || ft_strcmp(**args, ">>") == 0 ||
+	if (ft_strcmp(**args, ">") == 0 || ft_strcmp(**args, ">>") == 0 || \
 		ft_strcmp(**args, "<") == 0)
 	{
 		if (redirection_parsing_set(args, redirect) == FAIL)
