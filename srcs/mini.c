@@ -66,7 +66,11 @@ t_ASTNode	*parse_and_execute(char **tokens, char **env, int *last_exit_code)
 	if (tmp_tokens)
 		all_free(&tmp_tokens);
 	if (!root)
+	{
+		if (tmp_root)
+			free_astnode(&tmp_root);
 		return (NULL);
+	}
 	set_last_exitcode(&set_root, *last_exit_code);
 	ast_node_execution(&root);
 	get_last_exitcode(&get_root, last_exit_code);
