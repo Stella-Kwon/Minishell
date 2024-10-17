@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 15:43:31 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/17 13:47:39 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,16 @@ char	*get_user_input(void)
 	input = readline("minishell > ");
 	if (!input)
 	{
-		// ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
+		ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
 		rl_clear_history();
 		exit(0);
 	}
-	if (input[0] == '\0')
+	if (input[0] == '\0' || check_input(input) == FAIL)
 	{
 		free(input);
 		return (NULL);
 	}
 	add_history(input);
-	if (check_input(input) == FAIL)
-	{
-		free(input);
-		return (NULL);
-	}
 	return (input);
 }
 
@@ -55,7 +50,7 @@ char	**process_input_to_tokens(char *input, int *last_exit_code)
 	return (tokens);
 }
 
-t_ASTNode	*parse_and_execute(char **tokens, char ***env, int *last_exit_code)
+t_ASTNode	*parse_and_execute(char **tokens, char **env, int *last_exit_code)
 {
 	t_ASTNode	*root;
 	t_ASTNode	*tmp_root;
@@ -64,18 +59,14 @@ t_ASTNode	*parse_and_execute(char **tokens, char ***env, int *last_exit_code)
 	char		**tmp_tokens;
 
 	tmp_tokens = tokens;
-	root = parse_to_nodes(tokens, env);
+	root = parse_to_nodes(tokens, &env);
 	tmp_root = root;
 	set_root = root;
 	get_root = root;
 	if (tmp_tokens)
 		all_free(&tmp_tokens);
 	if (!root)
-	{
-		if (tmp_root)
-			free_astnode(&tmp_root);
 		return (NULL);
-	}
 	set_last_exitcode(&set_root, *last_exit_code);
 	ast_node_execution(&root);
 	get_last_exitcode(&get_root, last_exit_code);
@@ -103,7 +94,15 @@ int	main(int argc, char **argv, char **env)
 		tokens = process_input_to_tokens(input, &last_exit_code);
 		if (!tokens)
 			continue ;
-		parse_and_execute(tokens, &env, &last_exit_code);
+		parse_and_execute(tokens, env, &last_exit_code);
 	}
 	return (0);
 }
+
+// // 토큰 출력
+// for (int i = 0; tokens[i]; i++)
+// 	printf("tokens[%d] : %s\n", i, tokens[i]);
+
+// printf("\n\n----------print start----------\n\n");
+// print_astnode(root, 0); // AST 노드 출력
+// printf("\n\n=================================\n\n");

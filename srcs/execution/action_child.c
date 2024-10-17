@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   action_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:19:04 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 10:30:07 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/17 13:43:17 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void print_error_redirect(t_Command **cmd, char *filename)
+static void	print_error_redirect(t_Command **cmd, char *filename)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(filename, 2);

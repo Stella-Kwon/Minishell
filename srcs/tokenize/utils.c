@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:17:10 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:31:18 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/17 13:35:14 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ int	check_input(const char *input)
 		ft_putstr_fd("syntax error: unclosed quotes\n", 2);
 		return (FAIL);
 	}
-	
 	return (SUCCESS);
 }
