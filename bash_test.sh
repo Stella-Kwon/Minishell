@@ -196,7 +196,6 @@ echo "Test Case: cat <<HEREDOC" >> "$bash_output"
 HEREDOC
 } >> "$bash_output"
 
-
 echo "Test Case: cat <<HERE <<DOC" >> "$bash_output"
 {
     cat <<HERE
@@ -222,6 +221,38 @@ echo "Test Case: <<<string << here < out cat | grep \"word\" | wc -l" >> "$bash_
     <<<string
     cat < out
 } | grep "word" | wc -l >> "$bash_output"
+
+set +e
+
+echo "Test Case: echo hi |    |  < >>" >> "$bash_output"
+bash -c 'echo hi |    |  < >>' >> "$bash_output" 2>&1
+
+echo "Test Case: echo hi | < >> | |" >> "$bash_output"
+bash -c 'echo hi | < >> | |' >> "$bash_output" 2>&1
+
+echo "Test Case: <<<<" >> "$bash_output"
+bash -c '<<<<' >> "$bash_output" 2>&1
+
+echo "Test Case: <<<" >> "$bash_output"
+bash -c '<<<' >> "$bash_output" 2>&1
+
+set -e
+
+# set + e
+
+# echo "Test Case: echo hi |    |  < >>" >> "$bash_output"
+# { echo hi |    |  < >>; } >> "$bash_output"
+
+# echo "Test Case: echo hi | < >> | |" >> "$bash_output"
+# { echo hi | < >> | |;}  >> "$bash_output"
+
+# echo "Test Case: <<<<" >> "$bash_output"
+# { <<<<;} >> "$bash_output"
+
+# echo "Test Case: <<<" >> "$bash_output"
+# { <<<;} >> "$bash_output"
+
+# set - e
 
 echo "All bash tests completed." >> "$bash_output"
 }

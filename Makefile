@@ -6,7 +6,7 @@
 #    By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/17 13:45:35 by skwon2           ###   ########.fr        #
+#    Updated: 2024/10/17 14:50:25 by skwon2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ SRCS =	mini.c \
 		builtin/print_error.c\
 		builtin/pwd.c\
 		builtin/unset.c\
-#utils/print_function.c\
+		utils/print_function.c\
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)

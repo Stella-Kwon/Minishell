@@ -13,6 +13,9 @@ else
 		"pipes"
 		"redirects"
 		"extras"
+		"not_mandatory"
+		"mandatory"
+		"other_test"
 	)
 fi
 

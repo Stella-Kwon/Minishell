@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_set.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:27:00 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/17 21:59:27 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*store_inside_set(char *tmp_start, char *tmp_end)
 		return (NULL);
 	}
 	st = tmp_start;
-	end = tmp_end;
+	end = tmp_end - 1;
 	offset = end - st;
 	tmp = ft_strndup(tmp_start, offset + 1);
 	if (!tmp)
@@ -45,7 +45,9 @@ void	check_quotes_in_loop(t_Set *set, char ref, int *count)
 		if ((*count % 2) == 0 && *set->tmp_end == ref)
 		{
 			while (ft_isspace(*(set->tmp_end)) == FALSE && *set->tmp_end)
+			{
 				set->tmp_end++;
+			}
 			break ;
 		}
 		set->tmp_end++;

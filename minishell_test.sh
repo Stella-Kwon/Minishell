@@ -216,11 +216,43 @@ echo "Test Case: cat <<HERE | ls" >> "$minishell_output"
 HERE
 } | ls >> "$minishell_output"
 
-echo "Test Case: <<<string << here < out cat | grep "word" | wc -l" >> "$minishell_output"
+echo "Test Case: <<<string << here < out cat | grep \"word\" | wc -l" >> "$minishell_output"
 {
     <<<string
     cat < out
 } | grep "word" | wc -l >> "$minishell_output"
+
+set +e
+
+echo "Test Case: echo hi |    |  < >>" >> "$minishell_output"
+minishell -c 'echo hi |    |  < >>' >> "$minishell_output" 2>&1
+
+echo "Test Case: echo hi | < >> | |" >> "$minishell_output"
+minishell -c 'echo hi | < >> | |' >> "$minishell_output" 2>&1
+
+echo "Test Case: <<<<" >> "$minishell_output"
+minishell -c '<<<<' >> "$minishell_output" 2>&1
+
+echo "Test Case: <<<" >> "$minishell_output"
+minishell -c '<<<' >> "$minishell_output" 2>&1
+
+set -e
+
+# set + e
+
+# echo "Test Case: echo hi |    |  < >>" >> "$minishell_output"
+# { echo hi |    |  < >>; } >> "$minishell_output"
+
+# echo "Test Case: echo hi | < >> | |" >> "$minishell_output"
+# { echo hi | < >> | |;}  >> "$minishell_output"
+
+# echo "Test Case: <<<<" >> "$minishell_output"
+# { <<<<;} >> "$minishell_output"
+
+# echo "Test Case: <<<" >> "$minishell_output"
+# { <<<;} >> "$minishell_output"
+
+# set - e
 
 echo "All bash tests completed." >> "$minishell_output"
 }

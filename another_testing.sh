@@ -9,21 +9,21 @@ minishell_output="minishell_output.txt"
 
 rm -f "$bash_output" "$minishell_output"
 
-exec 2>/dev/null
+# exec 2>/dev/null
 
 source ./bash_test.sh
-source ./minishell_test.sh
+run_bash_test &
 
-run_bash_tests &
-./minishell && run_minishell_tests &
+source ./minishell_test.sh 
+./minishell && run_minishell_test &
+
 
 
 wait
 
-
 echo "Comparing results..."
-# diff "$bash_output" "$minishell_output" > diff_output.txt
-diff "$bash_output" "$minishell_output" | sed 's/^.*: //' > diff_output.txt
+diff "$bash_output" "$minishell_output" > diff_output.txt
+# diff "$bash_output" "$minishell_output" | sed 's/^.*: //' > diff_output.txt
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}ALL_PASSED${NC}"
@@ -36,4 +36,5 @@ else
 
 fi
 
-rm -f "3" "3.txt" "4.txt" 5.txt 7.txt 8.txt 13.txt 44.txt echo out args[0] command- "$bash_output" "$minishell_output" "diff_output.txt" 
+rm -f "3" "3.txt" "4.txt" 5.txt 7.txt 8.txt 13.txt 44.txt echo out args[0] command- "$bash_output" "$minishell_output" 
+# "diff_output.txt" 

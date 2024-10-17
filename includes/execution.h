@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 04:44:20 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:46:03 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/18 00:04:13 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ int		handle_redirection(t_Redirection *redir);
 int		find_and_check_path(t_Command **command, char **path);
 void	set_last_exitcode(t_ASTNode	**node, int last_exit_code);
 void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode);
-
+int		print_error_redirect(t_Command **cmd, char *filename);
 #endif

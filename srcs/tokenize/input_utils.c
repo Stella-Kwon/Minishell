@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:59:50 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 03:07:25 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/17 23:44:58 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	check_operation_next(t_For_tokenize *tokenize)
 	new_input = readline("> ");
 	if (!new_input)
 	{
-		log_errors("Failed to readline for additional input", "");
-		return (FAIL);
+		ft_putstr_fd("syntax error: unexpected end of file\n", 2);
+		return (2);
 	}
 	if (join_inputs(tokenize, new_input) == FAIL)
 		return (FAIL);

@@ -6,13 +6,13 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/17 13:47:39 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/18 01:30:53 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*get_user_input(void)
+char	*get_user_input(int *last_exit_code)
 {
 	char	*input;
 
@@ -20,16 +20,22 @@ char	*get_user_input(void)
 	input = readline("minishell > ");
 	if (!input)
 	{
-		ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
+		// ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
 		rl_clear_history();
 		exit(0);
 	}
-	if (input[0] == '\0' || check_input(input) == FAIL)
+	if (input[0] == '\0')
 	{
 		free(input);
 		return (NULL);
 	}
 	add_history(input);
+	if (check_input(input) == FAIL)
+	{
+		*last_exit_code = 2;
+		free(input);
+		return (NULL);
+	}
 	return (input);
 }
 
@@ -67,8 +73,17 @@ t_ASTNode	*parse_and_execute(char **tokens, char **env, int *last_exit_code)
 		all_free(&tmp_tokens);
 	if (!root)
 		return (NULL);
+	// printf("\n\n----------print start----------\n\n");
+	// print_astnode(root, 0); // AST 노드 출력
+	// printf("\n\n=================================\n\n");
 	set_last_exitcode(&set_root, *last_exit_code);
-	ast_node_execution(&root);
+	if (ast_node_execution(&root) == -1)
+	{
+		*last_exit_code = 1;
+		if (tmp_root)
+			free_astnode(&tmp_root);
+		return (root);
+	}
 	get_last_exitcode(&get_root, last_exit_code);
 	if (tmp_root)
 		free_astnode(&tmp_root);
@@ -88,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 	set_ehcoctl(1);
 	while (1)
 	{
-		input = get_user_input();
+		input = get_user_input(&last_exit_code);
 		if (!input)
 			continue ;
 		tokens = process_input_to_tokens(input, &last_exit_code);
