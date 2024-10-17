@@ -41,7 +41,6 @@ int	parsing_others(char ***args, t_Redirection **redirect, int start)
 	int		i;
 	char	**tmp_args;
 
-	i = 0;
 	if (!args || !*args || !**args)
 		return (SUCCESS);
 	if (start == FALSE)
@@ -82,6 +81,7 @@ static int	command_initialize(t_Command *res, char ***tokens, \
 		free_command(&res);
 		return (FAIL);
 	}
+	res->tmp_args = res->args;
 	return (SUCCESS);
 }
 

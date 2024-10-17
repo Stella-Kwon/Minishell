@@ -12,6 +12,17 @@
 
 #include "../../includes/minishell.h"
 
+void	remove_arg(char ***args, int index)
+{
+	free((*args)[index]);
+	while ((*args)[index])
+	{
+		(*args)[index] = (*args)[index + 1];
+		index++;
+	}
+	(*args)[index] = NULL;
+}
+
 void	free_command(t_Command **res)
 {
 	if (*res)
@@ -19,6 +30,8 @@ void	free_command(t_Command **res)
 		if ((*res)->cmd)
 			free_one((void **)&(*res)->cmd);
 		if ((*res)->args)
+			all_free(&(*res)->args);
+		if ((*res)->tmp_args)
 			all_free(&(*res)->args);
 		free_one((void **)&(*res));
 	}
@@ -49,10 +62,10 @@ void	free_astnode(t_ASTNode **node)
 			free_one((void **)&(*node)->pipeline);
 		if ((*node)->redir)
 			free_redirection(&(*node)->redir);
-		if ((*node)->right)
-			free_astnode(&(*node)->right);
 		if ((*node)->left)
 			free_astnode(&(*node)->left);
+		if ((*node)->right)
+			free_astnode(&(*node)->right);
 		free_one((void **)&(*node));
 	}
 }

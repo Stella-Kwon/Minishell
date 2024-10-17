@@ -111,7 +111,7 @@ int	operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
 		right_node->type = NODE_COMMAND;
 		if (!right_node)
 			return (log_errors("NULL in RIGHT NODE : | ", ""));
-		*left_node = create_astnode(tokens, *left_node, right_node, env);
+		*left_node = create_astnode(NULL, *left_node, right_node, env);
 		(*left_node)->type = NODE_PIPE;
 	}
 	else

@@ -20,16 +20,21 @@ char	*get_user_input(void)
 	input = readline("minishell > ");
 	if (!input)
 	{
-		ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
+		// ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
 		rl_clear_history();
 		exit(0);
 	}
-	if (input[0] == '\0' || check_input(input) == FAIL)
+	if (input[0] == '\0')
 	{
 		free(input);
 		return (NULL);
 	}
 	add_history(input);
+	if (check_input(input) == FAIL)
+	{
+		free(input);
+		return (NULL);
+	}
 	return (input);
 }
 
@@ -50,7 +55,7 @@ char	**process_input_to_tokens(char *input, int *last_exit_code)
 	return (tokens);
 }
 
-t_ASTNode	*parse_and_execute(char **tokens, char **env, int *last_exit_code)
+t_ASTNode	*parse_and_execute(char **tokens, char ***env, int *last_exit_code)
 {
 	t_ASTNode	*root;
 	t_ASTNode	*tmp_root;
@@ -59,7 +64,7 @@ t_ASTNode	*parse_and_execute(char **tokens, char **env, int *last_exit_code)
 	char		**tmp_tokens;
 
 	tmp_tokens = tokens;
-	root = parse_to_nodes(tokens, &env);
+	root = parse_to_nodes(tokens, env);
 	tmp_root = root;
 	set_root = root;
 	get_root = root;
@@ -98,7 +103,7 @@ int	main(int argc, char **argv, char **env)
 		tokens = process_input_to_tokens(input, &last_exit_code);
 		if (!tokens)
 			continue ;
-		parse_and_execute(tokens, env, &last_exit_code);
+		parse_and_execute(tokens, &env, &last_exit_code);
 	}
 	return (0);
 }

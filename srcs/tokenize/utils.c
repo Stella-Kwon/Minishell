@@ -48,6 +48,15 @@ static int	check_input_loop(const char *input, int *in_single_quote, \
 			*in_single_quote = !*in_single_quote;
 		else if (input[i] == '"' && !*in_single_quote)
 			*in_double_quote = !*in_double_quote;
+		if (!*in_single_quote && !*in_double_quote)
+		{
+			if (input[i] == ';' || input[i] == '\\')
+			{
+				ft_putstr_fd("minishell: ", 2);
+				ft_putstr_fd("syntax error: invalid input\n", 2);
+				return (FAIL);
+			}
+		}
 		i++;
 	}
 	return (SUCCESS);
@@ -68,5 +77,6 @@ int	check_input(const char *input)
 		ft_putstr_fd("syntax error: unclosed quotes\n", 2);
 		return (FAIL);
 	}
+	
 	return (SUCCESS);
 }

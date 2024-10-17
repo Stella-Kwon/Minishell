@@ -48,5 +48,5 @@ int				restore_new_args(char ***args, t_rm_args *rm);
 void			free_command(t_Command **res);
 void			free_astnode(t_ASTNode **node);
 void			print_astnode(t_ASTNode *node, int depth);
-
+void			remove_arg(char ***args, int index);
 #endif

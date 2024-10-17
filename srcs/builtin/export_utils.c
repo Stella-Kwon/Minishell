@@ -74,7 +74,7 @@ int	print_sorted_envp(char **envp)
 	int		result;
 	char	**sorted_envp;
 
-	sorted_envp = NULL;
+	sorted_envp = envp;
 	len = get_str_len(envp);
 	result = output_sorted_envp(sorted_envp, len);
 	if (!envp)

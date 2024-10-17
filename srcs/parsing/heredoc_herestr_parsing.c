@@ -45,20 +45,34 @@ int	set_herestring(t_Redirection **redirect, char *string)
 int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect, \
 								int start)
 {
-	(void)start;
+	int	index;
+
+	index = 0;
 	if (ft_strcmp(**args, "<<") == 0)
 	{
-		(*args)++;
+		if (start == TRUE)
+			remove_arg(args, index);
+		else
+			(*args)++;
 		if (set_heredoc(redirect, **args) == FAIL)
 			return (FAIL);
-		(*args)++;
+		if (start == TRUE)
+			remove_arg(args, index);
+		else
+			(*args)++;
 	}
 	else if (ft_strcmp(**args, "<<<") == 0)
 	{
-		(*args)++;
+		if (start == TRUE)
+			remove_arg(args, index);
+		else
+			(*args)++;
 		if (set_herestring(redirect, **args) == FAIL)
 			return (FAIL);
-		(*args)++;
+		if (start == TRUE)
+			remove_arg(args, index);
+		else
+			(*args)++;
 	}
 	return (SUCCESS);
 }

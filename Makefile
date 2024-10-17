@@ -98,7 +98,7 @@ SRCS =	mini.c \
 		builtin/print_error.c\
 		builtin/pwd.c\
 		builtin/unset.c\
-#utils/print_function.c\
+		utils/print_function.c\
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
