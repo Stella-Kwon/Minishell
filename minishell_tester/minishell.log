@@ -60080,3 +60080,17 @@ minishell: new_input readline(>) failed: Invalid argument:
 minishell: Failed to allocate memory in store_inside_set: Cannot allocate memory: 
 minishell: Failed to readline for additional input: Invalid argument: 
 minishell: new_input readline(>) failed: Invalid argument: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 

@@ -12,14 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-static void	print_exit_err_msg(char *arg)
-{
-	ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-	ft_putstr_fd(arg, STDERR_FILENO);
-	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-	exit(2);
-}
-
 static int	handle_exit_arguments(t_Command *command, size_t *i)
 {
 	if (!command->args[1])
@@ -45,8 +37,11 @@ static void	validate_exit_status(t_Command *command, size_t i)
 	{
 		if (!ft_isdigit(command->args[1][i]))
 		{
-			print_exit_err_msg(command->args[1]);
-			exit(1);
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd(command->args[1], STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+			all_free(command->env);
+			exit(2);
 		}
 		i++;
 	}
@@ -54,6 +49,7 @@ static void	validate_exit_status(t_Command *command, size_t i)
 	command->exitcode = exit_status % 256;
 	if (command->exitcode < 0)
 		command->exitcode += 256;
+	free(*(command->env));
 	exit(command->exitcode);
 }
 

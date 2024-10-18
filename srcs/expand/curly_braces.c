@@ -58,17 +58,19 @@ static int	exitcode_or_var(char *input, t_Dollar *dol, char **env, \
 int	for_curly_braces(char *input, t_Dollar *dol, char **env, \
 					int last_exitcode)
 {
+	char	*var;
+
 	dol->i++;
 	if (exitcode_or_var(input, dol, env, last_exitcode) == FAIL)
 		return (FAIL);
 	if (input[dol->i] == '}')
 	{
 		dol->var_len = dol->i - dol->var_start;
-		dol->var = ft_strndup(input + dol->var_start, dol->var_len);
-		if (!dol->var)
-			return (FAIL);
-		dol->var_value = get_env_value(dol->var, env);
-		free(dol->var);
+		var = ft_strndup(input + dol->var_start, dol->var_len);
+		if (!var)
+			return (log_errors("Failed strdup in for curly braces", ""));
+		dol->var_value = get_env_value(var, env);
+		free(var);
 		dol->i++;
 	}
 	return (SUCCESS);

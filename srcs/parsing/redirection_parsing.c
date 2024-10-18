@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:42:27 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:20:29 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/17 13:48:36 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,26 @@ int	set_redirection(t_Redirection **redirect, char ***args, int direction_type)
 	return (SUCCESS);
 }
 
-static int	redirection_parsing_set(char ***args, t_Redirection **redirect)
+static int	redirection_parsing_set(char ***args, \
+t_Redirection **redirect, int start)
 {
+	int	index;
 	int	direction_type;
 
+	index = 0;
 	direction_type = get_direction_type(**args);
 	if (direction_type == INVALID)
 		return (log_errors("Invalid redirection type", ""));
-	(*args)++;
+	if (start == TRUE)
+		remove_arg(args, index);
+	else
+		(*args)++;
 	if (set_redirection(redirect, args, direction_type) == FAIL)
 		return (FAIL);
-	(*args)++;
+	if (start == TRUE)
+		remove_arg(args, index);
+	else
+		(*args)++;
 	return (SUCCESS);
 }
 
@@ -96,7 +105,7 @@ int	redirection_parsing(char ***args, t_Redirection **redirect, int start)
 	if (ft_strcmp(**args, ">") == 0 || ft_strcmp(**args, ">>") == 0 || \
 		ft_strcmp(**args, "<") == 0)
 	{
-		if (redirection_parsing_set(args, redirect) == FAIL)
+		if (redirection_parsing_set(args, redirect, start) == FAIL)
 			return (FAIL);
 	}
 	else

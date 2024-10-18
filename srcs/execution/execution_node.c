@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   execution_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:04:05 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/18 04:24:48 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	node_command_without_cmd(t_ASTNode **node)
+{
+	if ((*node)->redir->infile == -1)
+		return (print_error_redirect(&(*node)->command, \
+		(*node)->redir->in_filename));
+	if ((*node)->redir->outfile != -1)
+		return (print_error_redirect(&(*node)->command, \
+		(*node)->redir->out_filename));
+	if (here_string(&(*node)->redir) != SUCCESS)
+		return (2);
+	return (SUCCESS);
+}
 
 int	ast_node_execution(t_ASTNode	**node)
 {
@@ -20,7 +33,10 @@ int	ast_node_execution(t_ASTNode	**node)
 	if (heredoc_check(node) == FAIL)
 		return (FAIL);
 	if ((*node)->type == NODE_COMMAND && !(*node)->command)
-		return (SUCCESS);
+	{
+		if (node_command_without_cmd(node) != SUCCESS)
+			return (-1);
+	}
 	if ((*node)->type == NODE_COMMAND)
 		return (cmdnode_exec(node));
 	if ((*node)->type == NODE_PIPE)

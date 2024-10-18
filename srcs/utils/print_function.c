@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_function.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:36:16 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/17 21:41:39 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ void	print_astnode(t_ASTNode *node, int depth)
 		while (*args)
 		{
 			printf("cmd->args : %s\n", *args);
+			size_t i = 0;
+			while (i < ft_strlen(*args))
+			{
+				printf("cmd->args[%zu] : %c*\n", i, (*args)[i]);
+				i++;
+			}
+			printf("length : %zu\n", ft_strlen(*args));
 			args++;
 		}
 	}

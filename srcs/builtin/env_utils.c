@@ -27,6 +27,25 @@ size_t	get_str_len(char **str_arr)
 	return (len);
 }
 
+// int	copy_envp(char **dest, char **src, size_t len)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		dest[i] = ft_strdup(src[i]);
+// 		if (!dest[i])
+// 		{
+// 			log_errors("Failed strdup in copy_envp", "");
+// 			delete_str_array(&dest);
+// 			return (FAIL);
+// 		}
+// 		i++;
+// 	}
+// 	return (SUCCESS);
+// }
+
 int	copy_envp(char **dest, char **src, size_t len)
 {
 	size_t	i;
@@ -38,7 +57,9 @@ int	copy_envp(char **dest, char **src, size_t len)
 		if (!dest[i])
 		{
 			log_errors("Failed strdup in copy_envp", "");
-			delete_str_array(&src);
+			while (i > 0)
+				free(dest[--i]);
+			free(dest);
 			return (FAIL);
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_herestr_parsing.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:35:17 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:11:00 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/17 13:39:19 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,45 @@ int	set_herestring(t_Redirection **redirect, char *string)
 	return (SUCCESS);
 }
 
+int	herestring_action(int index, char ***args, \
+t_Redirection **redirect, int start)
+{
+	if (start == TRUE)
+		remove_arg(args, index);
+	else
+		(*args)++;
+	if (set_herestring(redirect, **args) == FAIL)
+		return (FAIL);
+	if (start == TRUE)
+		remove_arg(args, index);
+	else
+		(*args)++;
+	return (SUCCESS);
+}
+
 int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect, \
 								int start)
 {
-	(void)start;
+	int	index;
+
+	index = 0;
 	if (ft_strcmp(**args, "<<") == 0)
 	{
-		(*args)++;
+		if (start == TRUE)
+			remove_arg(args, index);
+		else
+			(*args)++;
 		if (set_heredoc(redirect, **args) == FAIL)
 			return (FAIL);
-		(*args)++;
+		if (start == TRUE)
+			remove_arg(args, index);
+		else
+			(*args)++;
 	}
 	else if (ft_strcmp(**args, "<<<") == 0)
 	{
-		(*args)++;
-		if (set_herestring(redirect, **args) == FAIL)
+		if (herestring_action(index, args, redirect, start) != SUCCESS)
 			return (FAIL);
-		(*args)++;
 	}
 	return (SUCCESS);
 }

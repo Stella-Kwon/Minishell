@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+         #
+#    By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/16 10:05:14 by hlee-sun         ###   ########.fr        #
+#    Updated: 2024/10/17 14:50:25 by skwon2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
-
-# COMPILE_FLAG = -I/usr/local/opt/readline/include/
-
-# LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 
 # COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
@@ -32,8 +28,6 @@ FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -fsanitize=address
 # LINK_FLAG = -L/usr/local/lib -lreadline
 
 LINK_FLAG = -lreadline -lncurses -L/
-# utils/setting_display.c\
-
 
 SRCS_DIR = ./srcs/
 
@@ -100,7 +94,7 @@ SRCS =	mini.c \
 		builtin/print_error.c\
 		builtin/pwd.c\
 		builtin/unset.c\
-#utils/print_function.c\
+		utils/print_function.c\
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
@@ -123,8 +117,12 @@ $(LIBFT):
 	@make -C ./libft
 
 bonus: $(BONUS_OBJS) $(LIBFT)
-	@$(CC) $(FLAG) $(COMPILE_FLAG) -o $(NAME) $(BONUS_OBJS) $(LIBFT) $(LINK_FLAG) 
-	@echo "making minishell with bonus"
+	@if [ -f $(NAME) ]; then \
+		echo "make: Nothing to be done for 'bonus'."; \
+	else \
+		$(CC) $(FLAG) $(COMPILE_FLAG) -o $(NAME) $(BONUS_OBJS) $(LIBFT) $(LINK_FLAG); \
+		echo "making minishell with bonus"; \
+	fi
 
 bonus_re : 
 		make fclean

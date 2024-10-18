@@ -14,18 +14,26 @@
 
 static int	process_variable(char *input, t_Dollar *dol, char **env)
 {
+	char	*var;
+	char	*env_val;
+
 	dol->var_start = dol->i;
 	while (ft_isalnum(input[dol->i]) || input[dol->i] == '_')
 		dol->i++;
 	dol->var_len = dol->i - dol->var_start;
-	dol->var = ft_strndup(input + dol->var_start, dol->var_len);
-	if (!dol->var)
+	var = ft_strndup(input + dol->var_start, dol->var_len);
+	if (!var)
 		return (log_errors("Failed strndup in process_variable", ""));
-	dol->var_value = get_env_value(dol->var, env);
-	free(dol->var);
-	dol->var = NULL;
+	env_val = get_env_value(var, env);
+	free(var);
+	if (!env_val)
+	{
+		dol->var_value = NULL;
+		return (SUCCESS);
+	}
+	dol->var_value = ft_strdup(env_val);
 	if (!dol->var_value)
-		dol->var_value = ft_strdup("");
+		return (log_errors("Failed strndup in process_variable", ""));
 	return (SUCCESS);
 }
 

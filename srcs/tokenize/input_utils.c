@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:59:50 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 03:07:25 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/18 05:04:17 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int	check_first_input(t_For_tokenize *tokenize)
 	if (*tokenize->start == '|')
 	{
 		if (*(tokenize->start + 1) == '|')
-			handle_258_exitcode_print("'||'");
+			handle_258_exitcode_print("`||'");
 		else
-			handle_258_exitcode_print("'|'");
+			handle_258_exitcode_print("`|'");
 	}
 	else if (*tokenize->start == '&')
 	{
 		if (*(tokenize->start + 1) == '&')
-			handle_258_exitcode_print("'&&'");
+			handle_258_exitcode_print("`&&'");
 		else
-			handle_258_exitcode_print("'&'");
+			handle_258_exitcode_print("`&'");
 	}
 	else
 		return (SUCCESS);
@@ -63,12 +63,18 @@ int	check_operation_next(t_For_tokenize *tokenize)
 	char		*new_input;
 	ptrdiff_t	offset;
 
+	init_signal();
 	offset = tokenize->start - tokenize->input;
 	new_input = readline("> ");
 	if (!new_input)
 	{
-		log_errors("Failed to readline for additional input", "");
-		return (FAIL);
+		ft_putstr_fd("syntax error: unexpected end of file\n", 2);
+		return (2);
+	}
+	if (g_received_signal == 1)
+	{
+		free_one((void**)&new_input);
+		return (-1);
 	}
 	if (join_inputs(tokenize, new_input) == FAIL)
 		return (FAIL);

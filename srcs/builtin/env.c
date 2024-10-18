@@ -19,10 +19,19 @@ int	env(t_Command *command)
 		command->exitcode = FAIL;
 		return (command->exitcode);
 	}
+	if (command->args[1] != NULL && command->args[1][0] != '-')
+	{
+		ft_putstr_fd("minishell: env: '", STDERR_FILENO);
+		ft_putstr_fd(command->args[1], STDERR_FILENO);
+		ft_putstr_fd("': No such file or directory\n", STDERR_FILENO);
+		command->exitcode = 127;
+		return (command->exitcode);
+	}
 	if (command->args[1] != NULL && command->args[1][0] == '-')
 	{
-		ft_putstr_fd("minishell: env: invalid argument ", STDERR_FILENO);
+		ft_putstr_fd("minishell: env: invalid option '", STDERR_FILENO);
 		ft_putstr_fd(command->args[1], STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
 		command->exitcode = FAIL;
 		return (command->exitcode);
 	}
@@ -40,9 +49,11 @@ void	delete_str_array(char ***str_arr)
 		return ;
 	while ((*str_arr)[i] != NULL)
 	{
+		free((*str_arr)[i]);
 		(*str_arr)[i] = NULL;
 		i++;
 	}
+	free(*str_arr);
 	*str_arr = NULL;
 }
 
