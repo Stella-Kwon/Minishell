@@ -1,0 +1,14 @@
+env hello world 
+cd 
+cd ~
+export hello
+env | grep hello
+export | grep hello
+unset HOME
+cd ~
+echo $aa
+ls |
+<<<
+<<<<
+echo hi |    |  < >>
+echo hi |  < >>   |  |
