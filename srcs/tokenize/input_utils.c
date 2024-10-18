@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:59:50 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/17 23:44:58 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/18 02:31:22 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int	check_first_input(t_For_tokenize *tokenize)
 	if (*tokenize->start == '|')
 	{
 		if (*(tokenize->start + 1) == '|')
-			handle_258_exitcode_print("'||'");
+			handle_258_exitcode_print("`||'");
 		else
-			handle_258_exitcode_print("'|'");
+			handle_258_exitcode_print("`|'");
 	}
 	else if (*tokenize->start == '&')
 	{
 		if (*(tokenize->start + 1) == '&')
-			handle_258_exitcode_print("'&&'");
+			handle_258_exitcode_print("`&&'");
 		else
-			handle_258_exitcode_print("'&'");
+			handle_258_exitcode_print("`&'");
 	}
 	else
 		return (SUCCESS);
@@ -70,6 +70,8 @@ int	check_operation_next(t_For_tokenize *tokenize)
 		ft_putstr_fd("syntax error: unexpected end of file\n", 2);
 		return (2);
 	}
+	if (g_received_signal == 1)
+		return (-1);
 	if (join_inputs(tokenize, new_input) == FAIL)
 		return (FAIL);
 	tokenize->start = tokenize->input + offset;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_operator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:09:30 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:30:26 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/18 04:23:57 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	handle_pipe_and_or(t_For_tokenize *tokenize)
 		i++;
 	if (*(tokenize->start + len + i) == '\0')
 	{
-		if (check_operation_next(tokenize) == FAIL)
-			return (FAIL);
+		if (check_operation_next(tokenize) != SUCCESS)
+			return (2);
 	}
 	else
 	{
@@ -70,8 +70,8 @@ int	handle_and_and_background(t_For_tokenize *tokenize)
 		i++;
 	if (*(tokenize->start + len + i) == '\0')
 	{
-		if (check_operation_next(tokenize) == FAIL)
-			return (FAIL);
+		if (check_operation_next(tokenize) != SUCCESS)
+			return (2);
 	}
 	else
 	{

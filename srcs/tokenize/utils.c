@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 17:17:10 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/17 13:35:14 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/18 04:34:39 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ char	*store_words(char **start)
 		(*start)++;
 	}
 	return (ft_strndup(word_start, *start - word_start));
+}
+
+int	store_str(t_For_tokenize *tokenize, int *buffsize)
+{
+	if (!ft_isspace(*tokenize->start) && *tokenize->start != '\0')
+	{
+		tokenize->tokens[tokenize->token_count] = \
+		store_words(&tokenize->start);
+		if (!tokenize->tokens[tokenize->token_count])
+		{
+			all_free(&tokenize->tokens);
+			return (log_errors("Failed to store word", ""));
+		}
+		tokenize->token_count++;
+		tokenize->tokens = ft_realloc_double(tokenize->tokens, \
+		tokenize->token_count, buffsize);
+		if (!tokenize->tokens)
+			return (log_errors("Failed to \"reallocate\" \
+			memory for tokens", ""));
+	}
+	return (SUCCESS);
 }
 
 int	is_special_character(char c)

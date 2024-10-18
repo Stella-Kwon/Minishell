@@ -6,32 +6,11 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/17 21:59:42 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/18 04:35:03 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	store_str(t_For_tokenize *tokenize, int *buffsize)
-{
-	if (!ft_isspace(*tokenize->start) && *tokenize->start != '\0')
-	{
-		tokenize->tokens[tokenize->token_count] = \
-										store_words(&tokenize->start);
-		if (!tokenize->tokens[tokenize->token_count])
-		{
-			all_free(&tokenize->tokens);
-			return (log_errors("Failed to store word", ""));
-		}
-		tokenize->token_count++;
-		tokenize->tokens = ft_realloc_double(tokenize->tokens, \
-									tokenize->token_count, buffsize);
-		if (!tokenize->tokens)
-			return (log_errors("Failed to \"reallocate\" memory for tokens", \
-					""));
-	}
-	return (SUCCESS);
-}
 
 int	handle_whitespace(t_For_tokenize	*tokenize)
 {
@@ -79,11 +58,27 @@ char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
 	return (tokenize->tokens);
 }
 
+char	**exit_check(int *buffsize, t_For_tokenize *tokenize, \
+int *last_exit_code)
+{
+	int	exitcode;
+
+	exitcode = handle_special_tokens(buffsize, &tokenize);
+	if (exitcode != SUCCESS)
+	{
+		if (exitcode == 2)
+			*last_exit_code = 2;
+		else if (exitcode == -1)
+			*last_exit_code = 1;
+		all_free(tokenize->tokens);
+		return (NULL);
+	}
+}
+
 char	**tokenize_input(char **input, int *last_exit_code)
 {
 	int				buffsize;
 	t_For_tokenize	tokenize;
-	int				exitcode;
 
 	tokenize.input = *input;
 	tokenize.start = *input;
@@ -91,16 +86,15 @@ char	**tokenize_input(char **input, int *last_exit_code)
 	tokenize.tokens = initialize_tokenization(buffsize, &tokenize);
 	if (!tokenize.tokens)
 		return (NULL);
+	if (check_first_input(&tokenize) != SUCCESS)
+	{
+		*last_exit_code = 2;
+		return (NULL);
+	}
 	while (*tokenize.start)
 	{
-		exitcode = handle_special_tokens(&buffsize, &tokenize);
-		if (exitcode != SUCCESS)
-		{
-			if (exitcode == 2)
-				*last_exit_code = 2;
-			all_free(&tokenize.tokens);
+		if (exit_check(&buffsize, &tokenize, last_exit_code) == NULL)
 			return (NULL);
-		}
 	}
 	tokenize.tokens[tokenize.token_count] = NULL;
 	return (tokenize.tokens);

@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/18 01:30:53 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/18 04:44:40 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_user_input(int *last_exit_code)
 	input = readline("minishell > ");
 	if (!input)
 	{
-		// ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
+		ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
 		rl_clear_history();
 		exit(0);
 	}
@@ -56,37 +56,42 @@ char	**process_input_to_tokens(char *input, int *last_exit_code)
 	return (tokens);
 }
 
-t_ASTNode	*parse_and_execute(char **tokens, char **env, int *last_exit_code)
+t_ASTNode	*execute(int *last_exit_code, t_ASTNode **root)
 {
-	t_ASTNode	*root;
 	t_ASTNode	*tmp_root;
 	t_ASTNode	*set_root;
 	t_ASTNode	*get_root;
-	char		**tmp_tokens;
 
-	tmp_tokens = tokens;
-	root = parse_to_nodes(tokens, &env);
 	tmp_root = root;
 	set_root = root;
 	get_root = root;
-	if (tmp_tokens)
-		all_free(&tmp_tokens);
-	if (!root)
-		return (NULL);
-	// printf("\n\n----------print start----------\n\n");
-	// print_astnode(root, 0); // AST 노드 출력
-	// printf("\n\n=================================\n\n");
 	set_last_exitcode(&set_root, *last_exit_code);
-	if (ast_node_execution(&root) == -1)
+	if (ast_node_execution(root) == -1)
 	{
 		*last_exit_code = 1;
 		if (tmp_root)
 			free_astnode(&tmp_root);
-		return (root);
+		return (*root);
 	}
 	get_last_exitcode(&get_root, last_exit_code);
 	if (tmp_root)
 		free_astnode(&tmp_root);
+	return (*root);
+}
+
+t_ASTNode	*parse_and_execute(char **tokens, char **env, int *last_exit_code)
+{
+	t_ASTNode	*root;
+	char		**tmp_tokens;
+
+	tmp_tokens = tokens;
+	root = parse_to_nodes(tokens, &env);
+	if (tmp_tokens)
+		all_free(&tmp_tokens);
+	if (!root)
+		return (NULL);
+	if (execute(last_exit_code, &root) == NULL)
+		return (NULL);
 	return (root);
 }
 

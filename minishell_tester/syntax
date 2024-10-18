@@ -10,6 +10,8 @@
 <<
 echo hi <
 cat    <| ls
+cat    > | ls
+cat    < | ls
 echo hi | >
 echo hi | > >>
 echo hi | < |
