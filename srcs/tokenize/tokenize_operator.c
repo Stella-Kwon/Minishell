@@ -6,14 +6,14 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:09:30 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/18 04:23:57 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/18 22:57:02 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void	error_handling_in_middle_operator(t_For_tokenize *tokenize, \
-												int len, int *i)
+int len, int *i)
 {
 	if ((*(tokenize->start + len + *i) == '<' && \
 		*(tokenize->start + len + *i + 1) == '<' && \
@@ -45,7 +45,7 @@ int	handle_pipe_and_or(t_For_tokenize *tokenize)
 	if (*(tokenize->start + len + i) == '\0')
 	{
 		i = check_operation_next(tokenize);
-		if (i != SUCCESS) 
+		if (i != SUCCESS)
 			return (i);
 	}
 	else

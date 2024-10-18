@@ -6,7 +6,7 @@
 #    By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/18 16:27:32 by skwon2           ###   ########.fr        #
+#    Updated: 2024/10/18 23:24:34 by skwon2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
 SRCS_DIR = ./srcs/
 
 SRCS =	mini.c \
+		mini_utils.c \
 		utils/setting_display.c\
 		utils/ft_strcmp.c\
 		utils/ft_strndup.c\
@@ -53,6 +54,7 @@ SRCS =	mini.c \
 		tokenize/my_readline.c\
 		tokenize/input_utils.c\
 		signal/signal.c \
+		signal/readline_signal.c \
 		redirection/heredoc.c\
 		redirection/herestring.c\
 		parsing/create_astnode.c\

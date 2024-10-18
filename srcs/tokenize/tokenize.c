@@ -6,18 +6,11 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/18 16:56:02 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:09:32 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	handle_whitespace(t_For_tokenize	*tokenize)
-{
-	while (ft_isspace(*tokenize->start))
-		(tokenize->start)++;
-	return (SUCCESS);
-}
 
 int	handle_special_tokens(int *buffsize, t_For_tokenize *tokenize)
 {
@@ -58,6 +51,20 @@ char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
 	return (tokenize->tokens);
 }
 
+int	signal_error(t_For_tokenize *tokenize, int *last_exit_code)
+{
+	if (g_received_signal == 130)
+	{
+		*last_exit_code = 130;
+		g_received_signal = 0;
+		return (FAIL);
+	}
+	ft_putstr_fd("\nminishell: \
+	syntax error: unexpected end of file\nexit\n", 2);
+	all_free(&tokenize->tokens);
+	exit(2);
+}
+
 int	exit_check(int *buffsize, t_For_tokenize *tokenize, \
 int *last_exit_code)
 {
@@ -70,15 +77,8 @@ int *last_exit_code)
 			*last_exit_code = 2;
 		else if (exitcode == 3)
 		{
-			if (g_received_signal == 130)
-			{
-				*last_exit_code = 130;
-				g_received_signal = 0;
+			if (signal_error(tokenize, last_exit_code) != SUCCESS)
 				return (FAIL);
-			}
-			ft_putstr_fd("\nminishell: syntax error: unexpected end of file\nexit\n", 2);
-			all_free(&tokenize->tokens);
-			exit(2);
 		}
 		else if (exitcode == 130)
 			*last_exit_code = 1;
@@ -96,7 +96,8 @@ char	**tokenize_input(char **input, int *last_exit_code)
 	tokenize.input = *input;
 	tokenize.start = *input;
 	buffsize = BUFFER_SIZE;
-	tokenize.tokens = initialize_tokenization(buffsize, &tokenize);
+	tokenize.tokens = \
+	initialize_tokenization(buffsize, &tokenize);
 	if (!tokenize.tokens)
 		return (NULL);
 	if (check_first_input(&tokenize) != SUCCESS)

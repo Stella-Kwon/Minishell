@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:53:53 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:19:51 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,6 @@ typedef struct s_line
 	int		r_byte;
 	int		i;
 	int		buf_size;
-} t_line;
+}	t_line;
 
 #endif

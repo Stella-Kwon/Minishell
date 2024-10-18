@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_set.c                                        :+:      :+:    :+:   */
+/*   my_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/17 21:59:27 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:10:28 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_charjoin(char **line, t_line *readline)
+int	ft_charjoin(char **line, t_line *readline)
 {
 	char	*join;
 
@@ -35,7 +35,7 @@ int ft_charjoin(char **line, t_line *readline)
 	return (SUCCESS);
 }
 
-int handle_eof(char **line, t_line *readline)
+int	handle_eof(char **line, t_line *readline)
 {
 	if (readline->i == 0)
 	{
@@ -45,7 +45,7 @@ int handle_eof(char **line, t_line *readline)
 	return (SUCCESS);
 }
 
-int read_byte(char **line, t_line *readline)
+int	read_byte(char **line, t_line *readline)
 {
 	readline->r_byte = read(STDIN_FILENO, &readline->c, 1);
 	if (readline->r_byte == -1)
@@ -62,7 +62,7 @@ int read_byte(char **line, t_line *readline)
 	return (SUCCESS);
 }
 
-int read_input(char **line, t_line *readline, int *exit)
+int	read_input(char **line, t_line *readline, int *exit)
 {
 	while (1)
 	{
@@ -75,10 +75,10 @@ int read_input(char **line, t_line *readline, int *exit)
 		{
 			if (handle_eof(line, readline) == FAIL)
 				return (3);
-			break;
+			break ;
 		}
 		if (readline->c == '\n')
-			break;
+			break ;
 		if (ft_charjoin(line, readline) == -1)
 		{
 			free_one((void **)line);
@@ -89,7 +89,7 @@ int read_input(char **line, t_line *readline, int *exit)
 	return (SUCCESS);
 }
 
-int read_line(char **line)
+int	read_line(char **line)
 {
 	t_line	readline;
 	int		exit;

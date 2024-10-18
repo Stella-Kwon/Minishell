@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_signal.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:09:42 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/02 05:18:59 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:22:52 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
 
 void	init_signal(void);
 void	init_execution_signal(void);
-void    readline_signal(void);
+void	readline_signal(void);
 #endif

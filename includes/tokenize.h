@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 13:01:42 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:49:54 by sukwon           ###   ########.fr       */
+/*   Updated: 2024/10/18 23:09:03 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ char	**tokenize_input(char **input, int	*last_exit_code);
 void	update_quotes_and_depth(int *single_quote, int *double_quote, \
 								int *depth, char c);
 int		read_line(char **line);
+int		handle_whitespace(t_For_tokenize *tokenize);
 #endif
