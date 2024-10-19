@@ -67,7 +67,8 @@ int	exec_in_loop(char **env, int *last_exit_code)
 			free_one((void **)input);
 			continue ;
 		}
-		tokens = process_input_to_tokens(input, last_exit_code);
+		tokens = process_input_to_tokens(input, last_exit_code, \
+		&local_env);
 		if (!tokens)
 			continue ;
 		parse_and_execute(tokens, &local_env, last_exit_code);

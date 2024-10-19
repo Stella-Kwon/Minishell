@@ -119,6 +119,8 @@ typedef struct s_For_tokenize
 	char	*start;
 	char	**tokens;
 	int		token_count;
+	char	*tmp_input;
+	int		buffsize;
 }	t_For_tokenize;
 
 typedef struct s_line

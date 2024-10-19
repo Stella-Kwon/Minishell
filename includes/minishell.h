@@ -51,6 +51,7 @@
 extern int	g_received_signal;
 
 int		local_env_copy(char **env, char ***local_env);
-char	**process_input_to_tokens(char *input, int *last_exit_code);
+char	**process_input_to_tokens(char *input, int *last_exit_code, \
+char ***local_env);
 char	*get_user_input(int *last_exit_code);
 #endif

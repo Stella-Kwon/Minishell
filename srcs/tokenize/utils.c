@@ -26,7 +26,7 @@ char	*store_words(char **start)
 	return (ft_strndup(word_start, *start - word_start));
 }
 
-int	store_str(t_For_tokenize *tokenize, int *buffsize)
+int	store_str(t_For_tokenize *tokenize)
 {
 	if (!ft_isspace(*tokenize->start) && *tokenize->start != '\0')
 	{
@@ -39,7 +39,7 @@ int	store_str(t_For_tokenize *tokenize, int *buffsize)
 		}
 		tokenize->token_count++;
 		tokenize->tokens = ft_realloc_double(tokenize->tokens, \
-		tokenize->token_count, buffsize);
+		tokenize->token_count, &tokenize->buffsize);
 		if (!tokenize->tokens)
 			return (log_errors("Failed to \"reallocate\" \
 			memory for tokens", ""));
