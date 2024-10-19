@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 23:11:39 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 23:41:57 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/19 12:28:39 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_user_input(int *last_exit_code)
 	input = readline("minishell > ");
 	if (!input)
 	{
-		// ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
+		ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
 		rl_clear_history();
 		exit(0);
 	}

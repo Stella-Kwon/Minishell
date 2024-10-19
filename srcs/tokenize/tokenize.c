@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/18 23:09:32 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/19 12:29:00 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**initialize_tokenization(t_For_tokenize *tokenize)
 	return (tokenize->tokens);
 }
 
-int signal_error(t_For_tokenize *tokenize, int *last_exit_code, \
+int	signal_error(t_For_tokenize *tokenize, int *last_exit_code, \
 char ***local_env)
 {
 	if (g_received_signal == 130)
@@ -68,7 +68,7 @@ char ***local_env)
 	exit(2);
 }
 
-int exit_check(t_For_tokenize *tokenize, \
+int	exit_check(t_For_tokenize *tokenize, \
 int *last_exit_code, char ***local_env)
 {
 	int	exitcode;
