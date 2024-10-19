@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:19:05 by sukwon            #+#    #+#             */
+/*   Created: 2024/09/22 20:19:05 by skwon2            #+#    #+#             */
 /*   Updated: 2024/10/18 01:31:44 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -64,7 +64,6 @@ int	execute_cmd(t_Command **command)
 	{
 		handle_error(command, path);
 	}
-	if (path != (*command)->cmd)
-		free_one((void **)&path);
+	free_one((void **)&path);
 	return ((*command)->exitcode);
 }

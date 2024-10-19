@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 13:11:15 by sukwon            #+#    #+#             */
+/*   Created: 2024/07/30 13:11:15 by skwon2            #+#    #+#             */
 /*   Updated: 2024/10/18 23:24:04 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -51,6 +51,8 @@
 extern int	g_received_signal;
 
 int		local_env_copy(char **env, char ***local_env);
-char	**process_input_to_tokens(char *input, int *last_exit_code);
-char	*get_user_input(int *last_exit_code);
+char	**process_input_to_tokens(char *input, int *last_exit_code, \
+								char ***local_env);
+char	*get_user_input(int *last_exit_code, char ***local_env);
+
 #endif

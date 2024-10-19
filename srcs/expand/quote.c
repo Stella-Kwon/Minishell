@@ -14,19 +14,22 @@
 
 int	handle_single_quote(char *input, t_Dollar *dol)
 {
+	char	*tmp;
+
 	dol->i++;
 	while (input[dol->i] && input[dol->i] != '\'')
 	{
 		dol->tmp[dol->tmp_i++] = input[dol->i++];
 		if (dol->tmp_i >= dol->tmp_len - 1)
 		{
-			dol->tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
+			tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
 											(int *)&dol->tmp_len);
-			if (!dol->tmp)
+			if (!tmp)
 			{
 				log_errors("Failed realloc in quote", "");
 				return (FAIL);
 			}
+			dol->tmp = tmp;
 		}
 	}
 	if (input[dol->i] == '\'')

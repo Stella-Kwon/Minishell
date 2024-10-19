@@ -88,6 +88,7 @@ static int	change_directory(t_Command *command)
 			return (FAIL);
 		else
 		{
+			free(command->args[1]);
 			command->args[1] = new_dir;
 			export(command);
 		}

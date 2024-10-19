@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/31 13:01:42 by sukwon            #+#    #+#             */
+/*   Created: 2024/08/31 13:01:42 by skwon2            #+#    #+#             */
 /*   Updated: 2024/10/18 23:09:03 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -27,10 +27,11 @@ int		check_first_input(t_For_tokenize *tokenize);
 int		redirect_operation_error(char *start);
 int		is_special_character(char c);
 int		check_input(const char *input);
-int		store_str(t_For_tokenize *tokenize, int *buffsize);
+int		store_str(t_For_tokenize *tokenize);
 char	*store_words(char **start);
 char	*check_set(t_For_tokenize *tokenize, char ref);
-char	**tokenize_input(char **input, int	*last_exit_code);
+char	**tokenize_input(char **input, int *last_exit_code, \
+						char ***local_env);
 void	update_quotes_and_depth(int *single_quote, int *double_quote, \
 								int *depth, char c);
 int		read_line(char **line);

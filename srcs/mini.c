@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 19:21:10 by sukwon            #+#    #+#             */
+/*   Created: 2024/10/07 19:21:10 by skwon2            #+#    #+#             */
 /*   Updated: 2024/10/18 23:20:22 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@ t_ASTNode	*execute(int *last_exit_code, t_ASTNode **root)
 	tmp_root = *root;
 	set_root = *root;
 	get_root = *root;
-	set_last_exitcode(&set_root, *last_exit_code);
+	set_last_exitcode_and_root(&set_root, *last_exit_code, &set_root);
 	if (ast_node_execution(root) == -1)
 	{
 		*last_exit_code = 1;
@@ -57,17 +57,18 @@ int	exec_in_loop(char **env, int *last_exit_code)
 	char	*input;
 	char	**tokens;
 
+	if (local_env_copy(env, &local_env) == FAIL)
+		return (FAIL);
 	while (1)
 	{
-		if (local_env_copy(env, &local_env) == FAIL)
-			return (FAIL);
-		input = get_user_input(last_exit_code);
+		input = get_user_input(last_exit_code, &local_env);
 		if (!input)
 		{
 			free_one((void **)input);
 			continue ;
 		}
-		tokens = process_input_to_tokens(input, last_exit_code);
+		tokens = process_input_to_tokens(input, last_exit_code, \
+										&local_env);
 		if (!tokens)
 			continue ;
 		parse_and_execute(tokens, &local_env, last_exit_code);
@@ -88,11 +89,3 @@ int	main(int argc, char **argv, char **env)
 		return (FAIL);
 	return (0);
 }
-
-// // 토큰 출력
-// for (int i = 0; tokens[i]; i++)
-// 	printf("tokens[%d] : %s\n", i, tokens[i]);
-
-// printf("\n\n----------print start----------\n\n");
-// print_astnode(root, 0); // AST 노드 출력
-// printf("\n\n=================================\n\n");

@@ -31,7 +31,7 @@ int	local_env_copy(char **env, char ***local_env)
 	return (SUCCESS);
 }
 
-char	*get_user_input(int *last_exit_code)
+char	*get_user_input(int *last_exit_code, char ***local_env)
 {
 	char	*input;
 
@@ -39,8 +39,9 @@ char	*get_user_input(int *last_exit_code)
 	input = readline("minishell > ");
 	if (!input)
 	{
-		ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
+		// ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
 		rl_clear_history();
+		all_free(local_env);
 		exit(0);
 	}
 	if (input[0] == '\0')
@@ -54,13 +55,15 @@ char	*get_user_input(int *last_exit_code)
 	return (input);
 }
 
-char	**process_input_to_tokens(char *input, int *last_exit_code)
+char	**process_input_to_tokens(char *input, int *last_exit_code, \
+									char ***local_env_copy)
 {
 	char	**tokens;
 	char	*tmp_input;
 
 	tmp_input = input;
-	tokens = tokenize_input(&input, last_exit_code);
+	tokens = tokenize_input(&input, last_exit_code, \
+							local_env_copy);
 	if (tmp_input)
 	{
 		free(tmp_input);

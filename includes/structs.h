@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 15:42:52 by sukwon            #+#    #+#             */
+/*   Created: 2024/08/05 15:42:52 by skwon2            #+#    #+#             */
 /*   Updated: 2024/10/18 23:19:51 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -17,14 +17,17 @@
 # include <stdlib.h>
 # include <string.h>
 
+struct	s_astnode;
+
 typedef struct s_Command
 {
-	char	*cmd;
-	char	***env;
-	char	**args;
-	char	**tmp_args;
-	int		exitcode;
-	int		wstatus;
+	char				*cmd;
+	char				***env;
+	char				**args;
+	char				**tmp_args;
+	int					exitcode;
+	int					wstatus;
+	struct s_astnode	**root_node;
 }	t_Command;
 
 typedef struct s_Set
@@ -89,14 +92,14 @@ typedef struct s_Redirection
 	int		heredoc_buffsize;
 }	t_Redirection;
 
-typedef struct s_ASTNode
+typedef struct s_astnode
 {
 	t_NodeType			type;
 	t_Command			*command;
 	t_Redirection		*redir;
 	t_Pipeline			*pipeline;
-	struct s_ASTNode	*left;
-	struct s_ASTNode	*right;
+	struct s_astnode	*left;
+	struct s_astnode	*right;
 	int					last_exitcode;
 }	t_ASTNode;
 
@@ -119,6 +122,8 @@ typedef struct s_For_tokenize
 	char	*start;
 	char	**tokens;
 	int		token_count;
+	char	*tmp_input;
+	int		buffsize;
 }	t_For_tokenize;
 
 typedef struct s_line
