@@ -64,7 +64,6 @@ int	execute_cmd(t_Command **command)
 	{
 		handle_error(command, path);
 	}
-	if (path != (*command)->cmd)
-		free_one((void **)&path);
+	free_one((void **)&path);
 	return ((*command)->exitcode);
 }

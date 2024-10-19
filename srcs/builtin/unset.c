@@ -12,36 +12,45 @@
 
 #include "../../includes/minishell.h"
 
+static int	fill_new_env(char **new, t_Command *command, size_t i, size_t *j)
+{
+	size_t	equal_pos;
+	char	*var_name;
+
+	equal_pos = 0;
+	while ((*(command->env))[i][equal_pos] && \
+			(*(command->env))[i][equal_pos] != '=')
+		equal_pos++;
+	var_name = ft_strndup((*(command->env))[i], equal_pos);
+	if (!var_name)
+		return (log_errors("Failed strndup in remove_env_var", ""));
+	if (ft_strcmp(var_name, command->args[1]) != 0)
+	{
+		new[*j] = ft_strdup((*(command->env))[i]);
+		if (!(new[*j]))
+		{
+			free(var_name);
+			return (log_errors("Failed strndup in remove_env_var", ""));
+		}
+		(*j)++;
+	}
+	free(var_name);
+	return (SUCCESS);
+}
+
 static int	remove_env_var(t_Command *command, char **new)
 {
 	size_t	i;
 	size_t	j;
 	size_t	len;
-	size_t	equal_pos;
-	char	*var_name;
 
 	len = get_str_len(*(command->env));
 	i = 0;
 	j = 0;
 	while (i < len)
 	{
-		equal_pos = 0;
-		while ((*(command->env))[i][equal_pos] && (*(command->env))[i][equal_pos] != '=')
-			equal_pos++;
-		var_name = ft_strndup((*(command->env))[i], equal_pos);
-		if (!var_name)
-			return (log_errors("Failed strndup in remove_env_var", ""));
-		if (ft_strcmp(var_name, command->args[1]) != 0)
-		{
-			new[j] = ft_strdup((*(command->env))[i]);
-			if (!(new[j]))
-			{
-				free(var_name);
-				return (log_errors("Failed strndup in remove_env_var", ""));
-			}
-			j++;
-		}
-		free(var_name);
+		if (fill_new_env(new, command, i, &j) == FAIL)
+			return (FAIL);
 		i++;
 	}
 	return (SUCCESS);

@@ -12,13 +12,16 @@
 
 #include "../../includes/minishell.h"
 
-void	set_last_exitcode(t_ASTNode **node, int last_exitcode)
+void	set_last_exitcode_and_root(t_ASTNode **node, int last_exitcode, \
+									t_ASTNode **root)
 {
 	(*node)->last_exitcode = last_exitcode;
+	if ((*node)->command)
+		(*node)->command->root_node = root;
 	if ((*node)->left)
-		set_last_exitcode(&(*node)->left, last_exitcode);
+		set_last_exitcode_and_root(&(*node)->left, last_exitcode, root);
 	if ((*node)->right)
-		set_last_exitcode(&(*node)->right, last_exitcode);
+		set_last_exitcode_and_root(&(*node)->right, last_exitcode, root);
 }
 
 static void	read_exitcode(t_ASTNode **node, int *exitcode)

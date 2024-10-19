@@ -33,6 +33,8 @@ void	free_command(t_Command **res)
 			all_free(&(*res)->args);
 		if ((*res)->tmp_args)
 			all_free(&(*res)->args);
+		//if ((*res)->env)
+		//	all_free((*res)->env);
 		free_one((void **)&(*res));
 	}
 }

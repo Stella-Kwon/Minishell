@@ -135,7 +135,6 @@ int	find_dollar_signs(char **in_out, char **env, int last_exitcode)
 	}
 	dol.tmp[dol.tmp_i] = '\0';
 	free(*in_out);
-	*in_out = NULL;
 	*in_out = dol.tmp;
 	return (SUCCESS);
 }

@@ -12,13 +12,18 @@
 
 #include "../../includes/minishell.h"
 
+static void	free_and_exit(t_Command *command, int exitcode)
+{
+	all_free(command->env);
+	free_astnode(command->root_node);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	exit(exitcode);
+}
+
 static int	handle_exit_arguments(t_Command *command, size_t *i)
 {
 	if (!command->args[1])
-	{
-		command->exitcode = 0;
-		exit(command->exitcode);
-	}
+		free_and_exit(command, 0);
 	if (command->args[2] != NULL)
 	{
 		cmd_error(&command, ": too many arguments\n", 1);
@@ -40,17 +45,15 @@ static void	validate_exit_status(t_Command *command, size_t i)
 			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 			ft_putstr_fd(command->args[1], STDERR_FILENO);
 			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-			all_free(command->env);
-			exit(2);
+			free_and_exit(command, 2);
 		}
 		i++;
 	}
 	exit_status = ft_atoi(command->args[1]);
-	command->exitcode = exit_status % 256;
-	if (command->exitcode < 0)
-		command->exitcode += 256;
-	free(*(command->env));
-	exit(command->exitcode);
+	exit_status = exit_status % 256;
+	if (exit_status < 0)
+		exit_status += 256;
+	free_and_exit(command, exit_status);
 }
 
 int	mini_exit(t_Command *command)

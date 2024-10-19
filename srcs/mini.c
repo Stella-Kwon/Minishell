@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-char	*get_user_input(int *last_exit_code)
+char	*get_user_input(int *last_exit_code, char ***local_env)
 {
 	char	*input;
 
@@ -22,6 +22,7 @@ char	*get_user_input(int *last_exit_code)
 	{
 		// ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);
 		rl_clear_history();
+		all_free(local_env);
 		exit(0);
 	}
 	if (input[0] == '\0')
@@ -65,7 +66,7 @@ t_ASTNode	*execute(int *last_exit_code, t_ASTNode **root)
 	tmp_root = *root;
 	set_root = *root;
 	get_root = *root;
-	set_last_exitcode(&set_root, *last_exit_code);
+	set_last_exitcode_and_root(&set_root, *last_exit_code, &set_root);
 	if (ast_node_execution(root) == -1)
 	{
 		*last_exit_code = 1;
@@ -122,7 +123,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	while (1)
 	{
-		input = get_user_input(&last_exit_code);
+		input = get_user_input(&last_exit_code, &local_env);
 		if (!input)
 			continue ;
 		tokens = process_input_to_tokens(input, &last_exit_code);

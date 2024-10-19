@@ -33,19 +33,7 @@ static char	**find_env(char **envp)
 	return (ft_split(path_var, ':'));
 }
 
-static void	free_path(char *tmp, char *path)
-{
-	if (tmp)
-	{
-		free_one((void **)&tmp);
-	}
-	if (path)
-	{
-		free_one((void **)&path);
-	}
-}
-
-static char	*get_path_in_loop(t_Command **command, char **env_path, char *path)
+static char	*get_path(t_Command **command, char **env_path, char *path)
 {
 	int		i;
 	char	*tmp;
@@ -60,6 +48,7 @@ static char	*get_path_in_loop(t_Command **command, char **env_path, char *path)
 			return (NULL);
 		}
 		path = ft_strjoin(tmp, (*command)->cmd);
+		free_one((void **)&tmp);
 		if (!path)
 		{
 			log_errors("Failed strjoin in get_path, path", "");
@@ -67,20 +56,10 @@ static char	*get_path_in_loop(t_Command **command, char **env_path, char *path)
 		}
 		if (access(path, F_OK) == 0)
 			break ;
-		free_path(tmp, path);
+		free_one((void **)&path);
 		i++;
 	}
 	return (path);
-}
-
-static char	*get_path(t_Command **command, char **env_path)
-{
-	char	*path;
-
-	path = NULL;
-	if (!env_path)
-		cmd_error(command, ": No such file or directory\n", 127);
-	return (get_path_in_loop(command, env_path, path));
 }
 
 int	find_and_check_path(t_Command **command, char **path)
@@ -89,15 +68,14 @@ int	find_and_check_path(t_Command **command, char **path)
 
 	if (ft_strrchr((*command)->cmd, '/') != NULL)
 	{
-		*path = (*command)->cmd;
+		*path = ft_strdup((*command)->cmd);
 		return (check_path(*path, command));
 	}
 	env_path = find_env(*((*command)->env));
-	*path = get_path(command, env_path);
-	{
-		if (env_path != NULL)
-			all_free(&env_path);
-	}
+	if (!env_path)
+		return (cmd_error(command, ": No such file or directory\n", 127));
+	*path = get_path(command, env_path, *path);
+	all_free(&env_path);
 	if (!(*path))
 		return (cmd_error(command, ": command not found\n", 127));
 	return (check_path(*path, command));

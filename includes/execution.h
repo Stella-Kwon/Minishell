@@ -39,7 +39,8 @@ int		dup_and_close(int oldfd, int newfd);
 int		find_and_check_path(t_Command **command, char **path);
 int		handle_redirection(t_Redirection *redir);
 int		find_and_check_path(t_Command **command, char **path);
-void	set_last_exitcode(t_ASTNode	**node, int last_exit_code);
+void	set_last_exitcode_and_root(t_ASTNode **node, int last_exit_code, \
+									t_ASTNode **root);
 void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode);
 int		print_error_redirect(t_Command **cmd, char *filename);
 #endif

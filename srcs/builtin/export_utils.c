@@ -76,11 +76,11 @@ int	print_sorted_envp(char **envp)
 
 	sorted_envp = NULL;
 	len = get_str_len(envp);
-	result = output_sorted_envp(sorted_envp, len);
 	if (!envp)
 		return (FAIL);
 	if (initialize_sorted_envp(&sorted_envp, envp, len) == FAIL)
 		return (FAIL);
+	result = output_sorted_envp(sorted_envp, len);
 	delete_str_array(&sorted_envp);
 	return (result);
 }
