@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:09:30 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 22:57:02 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/20 16:12:30 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	handle_pipe_and_or(t_For_tokenize *tokenize)
 	return (handle_token(tokenize, len));
 }
 
-int	handle_and_and_background(t_For_tokenize *tokenize)
+int handle_and_and_background(t_For_tokenize *tokenize)
 {
 	int	len;
 	int	i;
@@ -71,8 +71,9 @@ int	handle_and_and_background(t_For_tokenize *tokenize)
 		i++;
 	if (*(tokenize->start + len + i) == '\0')
 	{
-		if (check_operation_next(tokenize) != SUCCESS)
-			return (2);
+		i = check_operation_next(tokenize);
+		if (i != SUCCESS)
+			return (i);
 	}
 	else
 	{
@@ -95,6 +96,10 @@ int	handle_token(t_For_tokenize *tokenize, int len)
 		return (FAIL);
 	}
 	tokenize->token_count++;
+	tokenize->tokens = ft_realloc_double(tokenize->tokens, \
+	tokenize->token_count, &tokenize->buffsize);
+	if (!tokenize->tokens)
+		return (log_errors("Failed to \"reallocate\" memory for tokens", ""));
 	tokenize->start += len;
 	return (SUCCESS);
 }
@@ -111,6 +116,10 @@ int	handle_set(t_For_tokenize *tokenize, char ref)
 		return (FAIL);
 	}
 	tokenize->token_count++;
+	tokenize->tokens = ft_realloc_double(tokenize->tokens, \
+	tokenize->token_count, &tokenize->buffsize);
+	if (!tokenize->tokens)
+		return (log_errors("Failed to \"reallocate\" memory for tokens", ""));
 	if (*tokenize->start == '(')
 	{
 		while (ft_isspace(*tokenize->start))

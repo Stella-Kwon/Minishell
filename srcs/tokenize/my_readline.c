@@ -6,32 +6,32 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 23:10:28 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/20 16:17:11 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_charjoin(char **line, t_line *readline)
+int ft_charjoin(char **line, t_line *readline)
 {
-	char	*join;
+	char *join;
 
 	join = NULL;
 	(*line)[readline->i] = readline->c;
-	readline->r_byte = read(STDIN_FILENO, &readline->c, 1);
-	if (readline->r_byte == -1)
-		return (FAIL);
-	readline->i++;
 	if (readline->i == readline->buf_size)
 	{
 		readline->buf_size *= 2;
 		join = (char *)ft_calloc(readline->buf_size, 1);
 		if (!(join))
 			return (FAIL);
-		ft_strlcpy(join, *line, readline->buf_size);
+		ft_strlcpy(join, *line, readline->i);
 		free(*line);
 		*line = join;
 	}
+	(*line)[readline->i + 1] = '\0';
+	readline->i++;
+	if (readline->i - 1 != 0 && readline->c == '\n')
+		return (END_OF_INPUT);
 	return (SUCCESS);
 }
 
@@ -77,14 +77,19 @@ int	read_input(char **line, t_line *readline, int *exit)
 				return (3);
 			break ;
 		}
-		if (readline->c == '\n')
-			break ;
-		if (ft_charjoin(line, readline) == -1)
+		if (readline->i == 0 && readline->c == '\n')
+		{
+			ft_putstr_fd("> ", 1);
+			continue;
+		}
+		*exit = ft_charjoin(line, readline);
+		if (*exit == FAIL)
 		{
 			free_one((void **)line);
 			return (FAIL);
 		}
-		ft_putstr_fd("> ", 1);
+		if (*exit == END_OF_INPUT)
+			break ;
 	}
 	return (SUCCESS);
 }

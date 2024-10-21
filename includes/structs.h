@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 23:19:51 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/20 16:16:55 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ typedef struct s_For_tokenize
 	char	*start;
 	char	**tokens;
 	int		token_count;
-	char	*tmp_input;
 	int		buffsize;
 }	t_For_tokenize;
 
@@ -134,4 +133,16 @@ typedef struct s_line
 	int		buf_size;
 }	t_line;
 
+typedef struct s_operation_next
+{
+	int			status;
+	pid_t		pid;
+	int			fd;
+	int			exitcode;
+	ptrdiff_t	offset;
+	ssize_t		bytes_read;
+	int			bufsize;
+	int			total_bytes;
+
+}	t_op_next;
 #endif

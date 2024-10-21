@@ -14,8 +14,6 @@
 
 int	here_string(t_Redirection **redir)
 {
-	if ((*redir)->infile == -1)
-		return (log_errors((*redir)->in_filename, ""));
 	(*redir)->infile = open(".herestring.tmp", \
 	O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*redir)->infile == -1)
@@ -27,8 +25,8 @@ int	here_string(t_Redirection **redir)
 	close((*redir)->infile);
 	(*redir)->infile = open(".herestring.tmp", O_RDONLY);
 	if ((*redir)->infile == -1)
-		return (log_errors("Failed to open file \
-		in here_string for reading", ".herestring.tmp"));
+		return (log_errors("Failed to open file in here_string for \
+		reading", ".herestring.tmp"));
 	if (unlink(".herestring.tmp") == -1)
 		return (log_errors("Failed to unlink in here_string", ""));
 	return (SUCCESS);

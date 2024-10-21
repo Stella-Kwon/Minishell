@@ -30,7 +30,7 @@ static void	print_redir_details(t_ASTNode *node)
 	{
 		while (i < node->redir->heredoc_i)
 		{
-			printf("heredoc_limiter: %s\n", node->redir->heredoc_limiter[i]);
+			printf("heredoc_limiter: %s*\n", node->redir->heredoc_limiter[i]);
 			i++;
 		}
 	}

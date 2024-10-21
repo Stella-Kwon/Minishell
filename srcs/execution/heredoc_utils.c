@@ -6,28 +6,29 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:37:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 11:02:53 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/20 16:48:40 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	iterate_heredoc(t_ASTNode **node, int *i)
+static int	iterate_heredoc(t_ASTNode **node, int i)
 {
 	int	exitcode;
 
 	if ((*node)->command)
 	{
 		(*node)->command->exitcode = here_doc(node, \
-										(*node)->redir->heredoc_limiter[*i]);
+										(*node)->redir->heredoc_limiter[i]);
 		exitcode = (*node)->command->exitcode;
 	}
 	else
 	{
-		exitcode = here_doc(node, (*node)->redir->heredoc_limiter[*i]);
+		exitcode = here_doc(node, (*node)->redir->heredoc_limiter[i]);
 	}
-	if (exitcode == FAIL)
-		return (log_errors("Failed here_doc in heredoc_check", ""));
+	// printf("exitcode:%d\n", exitcode);
+	if (exitcode != SUCCESS)
+		return (exitcode);
 	if ((*node)->redir->heredoc_infile != -2 && (*node)->redir->infile != -1)
 	{
 		if ((*node)->redir->infile >= 0)
@@ -40,15 +41,19 @@ static int	iterate_heredoc(t_ASTNode **node, int *i)
 int	heredoc_check(t_ASTNode	**node)
 {
 	int	i;
+	int	exit;
 
+	exit = 0;
 	i = 0;
 	if ((*node)->redir->heredoc_limiter && (*node)->redir->heredoc_limiter[0])
 	{
 		while ((*node)->redir->heredoc_limiter[i] && \
 				i < (*node)->redir->heredoc_i)
 		{
-			if (iterate_heredoc(node, &i) != SUCCESS)
-				return (FAIL);
+			exit = iterate_heredoc(node, i);
+			// printf("exit in :%d\n", exit);
+			if (exit != SUCCESS)
+				return (exit);
 			i++;
 		}
 	}

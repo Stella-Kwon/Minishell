@@ -1,0 +1,12 @@
+minishell: Failed here_doc in heredoc_check: Interrupted system call: 
+minishell: Failed here_doc in heredoc_check: Interrupted system call: 
+minishell: .heredoc.tmp: No such file or directory: Failed to open file in here_doc
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to readline for additional input: Success: 
+minishell: Failed to store word: Cannot allocate memory: 
+minishell: Failed to read from child: Bad file descriptor: 
+minishell: Failed to read from child: Bad file descriptor: 
+minishell: Failed to readline for additional input: Success: 
+minishell: Failed to readline for additional input: Success: 

@@ -12,7 +12,8 @@ RUN apt-get update && \
     libreadline-dev \
     libncurses-dev \
     git \
-    python3 
+    python3 \
+    pip
 
 # 소스 코드 복사  재 호스트의 디렉토리(.)의 모든 파일과 폴더를 컨테이너의 작업 디렉토리(/app)로 복사합니다
 COPY . /app

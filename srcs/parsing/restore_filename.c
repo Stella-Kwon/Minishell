@@ -61,7 +61,7 @@ int	rm_quote_filename(t_Redirection **redirect, char ***args, char **filename)
 	int		buffersize;
 
 	i = 0;
-	buffersize = BUFFER_SIZE;
+	buffersize = BUFFSIZE;
 	new_filename = NULL;
 	if (pre_action_rm_quote(redirect, args, filename) != SUCCESS)
 		return (FAIL);

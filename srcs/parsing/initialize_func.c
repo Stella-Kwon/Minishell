@@ -31,7 +31,7 @@ t_Redirection	*create_redirection(void)
 	redir->heredoc_limiter = NULL;
 	redir->heredoc_i = 0;
 	redir->herestring_str = NULL;
-	redir->heredoc_buffsize = BUFFER_SIZE;
+	redir->heredoc_buffsize = BUFFSIZE;
 	return (redir);
 }
 

@@ -17,14 +17,18 @@ t_ASTNode	*execute(int *last_exit_code, t_ASTNode **root)
 	t_ASTNode	*tmp_root;
 	t_ASTNode	*set_root;
 	t_ASTNode	*get_root;
+	int			exit;
 
 	tmp_root = *root;
 	set_root = *root;
 	get_root = *root;
 	set_last_exitcode_and_root(&set_root, *last_exit_code, &set_root);
-	if (ast_node_execution(root) == -1)
+	exit = ast_node_execution(root);
+	if (exit == -1 || exit == 130)
 	{
 		*last_exit_code = 1;
+		if (exit == 130)
+			*last_exit_code = 130;
 		if (tmp_root)
 			free_astnode(&tmp_root);
 		return (*root);
@@ -46,6 +50,9 @@ t_ASTNode	*parse_and_execute(char **tokens, char ***env, int *last_exit_code)
 		all_free(&tmp_tokens);
 	if (!root)
 		return (NULL);
+	// printf("\n\n----------print start----------\n\n");
+	// print_astnode(root, 0); // AST 노드 출력
+	// printf("\n\n=================================\n\n");
 	if (execute(last_exit_code, &root) == NULL)
 		return (NULL);
 	return (root);
@@ -87,5 +94,6 @@ int	main(int argc, char **argv, char **env)
 	set_ehcoctl(1);
 	if (exec_in_loop(env, &last_exit_code) != SUCCESS)
 		return (FAIL);
+	rl_clear_history();
 	return (0);
 }

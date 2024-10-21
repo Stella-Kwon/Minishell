@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:11:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 23:24:04 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/20 17:35:06 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <stddef.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <setjmp.h>
 # include "my_signal.h"
 # include "structs.h"
 # include "utils.h"
@@ -41,6 +42,10 @@
 # ifndef BUFFSIZE
 #  define BUFFSIZE 50
 # endif
+
+#ifndef R_BUFFSIZE
+#define R_BUFFSIZE 300
+#endif
 
 # define TRUE 1
 # define FALSE 0
