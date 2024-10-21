@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 23:11:39 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/20 16:00:24 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 22:07:05 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ char	*get_user_input(int *last_exit_code, char ***local_env)
 {
 	char	*input;
 
-	signal_set(signal_no_input, SIG_IGN, 1);
+	signal_set(signal_no_input, SIG_IGN, UNSET);
 	input = readline("minishell > ");
-	signal_set(SIG_DFL, SIG_DFL, 1);
+	signal_set(SIG_DFL, SIG_DFL, SET);
 	if (!input)
 	{
 		// ft_putstr_fd("\033[A\033[K\033[1Gminishell > exit\n", 2);

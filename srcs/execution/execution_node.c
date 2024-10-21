@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/21 15:46:11 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 22:52:20 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ int	cmdnode_exec(t_ASTNode	**node)
 		return (action_builtin(&(*node)->command, &(*node)->redir));
 	if (find_command_path(&(*node)->command) != SUCCESS)
 		return ((*node)->command->exitcode);
-	// signal_set(execution_sigint, execution_sigquit);
+	// signal_set(execution_sigint, execution_sigquit, SET);
 	(*node)->pipeline->pid = fork();
 	if ((*node)->pipeline->pid == -1)
 		return (log_errors("Failed to fork in cmdnode_exec", ""));
 	if ((*node)->pipeline->pid == 0)
 	{
-		signal_set(SIG_DFL, SIG_DFL);
+		signal_set(SIG_DFL, SIG_DFL, SET);
 		exit(action_child(&(*node)->command, &(*node)->redir));
 	}
 	return (action_parents(&(*node)->redir, &(*node)->pipeline, \

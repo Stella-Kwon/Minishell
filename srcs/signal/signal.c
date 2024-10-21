@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:04:06 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/20 18:37:29 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 22:30:10 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ void	signal_no_input(int signal)
 		rl_replace_line("", 0);
 		rl_redisplay();
 		g_received_signal = 1;
+	}
+}
+
+void signal_heredoc(int signal)
+{
+	if (signal == SIGINT)
+	{
+		printf("\n");
+		g_received_signal = 10;
 	}
 }
 
@@ -58,7 +67,7 @@ void signal_set(void (*sigint)(int), void (*sigquit)(int), int set_echoctl)
 	struct sigaction	ga;
 	sigset_t			block_mask;
 
-	set_display(set_echoctl);
+	set_termios(set_echoctl);
 	ft_memset(&sa, 0, sizeof(sa));
 	sigemptyset(&block_mask);
 	sigaddset(&block_mask, SIGINT);

@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:11:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 23:24:04 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 21:56:03 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # endif
 
 // for echoctl
-#define SET 1
+#define	SET	1
 #define UNSET 0
 
 # define TRUE 1

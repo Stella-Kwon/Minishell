@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 03:04:11 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 04:33:16 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 22:30:20 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,11 @@ int check_operation_next(t_For_tokenize *tokenize)
 
 
 	offset = tokenize->start - tokenize->input;
-	signal_set(SIG_DFL, SIG_IGN, 0);
+	signal_set(SIG_DFL, SIG_IGN, UNSET);
 	new_input = readline("> ");
-	signal_set(SIG_DFL, SIG_DFL, 1);
+	signal_set(SIG_DFL, SIG_DFL, SET);
+	if (g_received_signal == 10)
+		return (FAIL);
 	if (!new_input)
 		return (3);
 	cpy_input = ft_strdup(tokenize->input);
