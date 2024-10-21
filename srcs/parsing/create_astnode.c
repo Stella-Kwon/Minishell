@@ -112,7 +112,7 @@ int	operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
 		if (!right_node)
 			return (log_errors("NULL in RIGHT NODE : | ", ""));
 		*left_node = create_astnode(NULL, *left_node, right_node, env);
-		(*left_node)->command = create_stub_command(env);
+		(*left_node)->command = create_pipe_command(env);
 		(*left_node)->type = NODE_PIPE;
 	}
 	else

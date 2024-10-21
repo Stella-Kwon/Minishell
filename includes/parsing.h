@@ -21,7 +21,7 @@ t_ASTNode		*parse_to_nodes(char **tokens, char ***env);
 t_ASTNode		*create_astnode(char ***tokens, t_ASTNode *left, \
 								t_ASTNode *right, char ***env);
 t_Command		*create_command(char ***tokens, char ***env);
-t_Command		*create_stub_command(char ***env);
+t_Command		*create_pipe_command(char ***env);
 t_Pipeline		*create_pipeline(void);
 t_Redirection	*create_redirection(void);
 int				is_operator(char **tokens);

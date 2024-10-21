@@ -38,6 +38,7 @@ int		cmdnode_exec(t_ASTNode **node);
 int		pipenode_exec(t_ASTNode **node);
 int		dup_and_close(int oldfd, int newfd);
 int		find_and_check_path(t_Command **command, char **path);
+int		print_error_redirect(t_Command **cmd, char *filename);
 void	set_last_exitcode_and_root(t_ASTNode **node, int last_exit_code, \
 									t_ASTNode **root);
 void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode);

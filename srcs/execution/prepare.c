@@ -44,14 +44,14 @@ int	find_command_path(t_Command **command)
 	return (SUCCESS);
 }
 
-t_Command	*create_stub_command(char ***env)
+t_Command	*create_pipe_command(char ***env)
 {
 	t_Command	*res;
 
 	res = (t_Command *)malloc(sizeof(t_Command));
 	if (!res)
 	{
-		log_errors("Failed to malloc res in create_stub_command", "");
+		log_errors("Failed to malloc res in create_pipe_command", "");
 		return (NULL);
 	}
 	res->env = env;
