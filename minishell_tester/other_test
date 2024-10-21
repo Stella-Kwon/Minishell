@@ -1,0 +1,25 @@
+echo hi 
+echo hi >7.txt
+<1.txt cat
+<1.txt cat |  sort >3.txt
+< 1.txt /bin/cat | sort | uniq | wc -l  > 3
+< 1.txt /bin/cat | sort | uniq | wc > 13.txt
+< 1.txt /bin/cat | sort | uniq | wc > 13.txt >5.txt
+< 1.txt /bin/cat | sort | uniq | wc -l >> 13.txt
+cat 1.txt | sort | uniq > 8.txt
+<1.txt cat | grep pat123 | sort | uniq > 4.txt
+/bin/ls
+echo hi | echo by
+exit 20 | exit 30
+./minishell
+echo "cat 1.txt | cat > 3.txt"
+<1.txt >44.txt
+cd  .
+unset PATH
+unset HOME
+env
+pwd
+$?
+<' '
+<1.txt echo hi >77.txt
+<4.txt echo hi
