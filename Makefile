@@ -92,7 +92,6 @@ SRCS =	mini.c \
 		builtin/builtin.c\
 		builtin/cd.c\
 		builtin/cd_utils.c\
-		builtin/cd_utils_2.c\
 		builtin/echo.c\
 		builtin/env_utils.c\
 		builtin/env.c\
