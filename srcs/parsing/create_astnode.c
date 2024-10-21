@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_astnode.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 19:52:16 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:07:08 by sukwon           ###   ########.fr       */
+/*   Created: 2024/09/16 19:52:16 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/16 11:07:08 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int	operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
 		if (!right_node)
 			return (log_errors("NULL in RIGHT NODE : | ", ""));
 		*left_node = create_astnode(NULL, *left_node, right_node, env);
+		(*left_node)->command = create_stub_command(env);
 		(*left_node)->type = NODE_PIPE;
 	}
 	else

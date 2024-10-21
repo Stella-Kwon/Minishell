@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   log_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 12:50:33 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 10:12:26 by sukwon           ###   ########.fr       */
+/*   Created: 2024/08/03 12:50:33 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/16 10:12:26 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	handle_258_exitcode_print(char *msg)
 	return (2);
 }
 
-void	check_specific_error(t_Command **command, char *path)
+int	check_specific_error(char *path)
 {
 	if (errno == EACCES)
 	{
@@ -29,41 +29,39 @@ void	check_specific_error(t_Command **command, char *path)
 			ft_putstr_fd("Permission denied\n", STDERR_FILENO);
 		else
 			ft_putstr_fd("Is a directory\n", STDERR_FILENO);
-		(*command)->exitcode = 126;
+		return (126);
 	}
 	else if (errno == ENOENT)
 	{
 		ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
-		(*command)->exitcode = 127;
+		return (127);
 	}
 	else if (errno == EISDIR)
 	{
 		ft_putstr_fd("Is a directory\n", STDERR_FILENO);
-		(*command)->exitcode = 126;
+		return (126);
 	}
 	else
 	{
 		ft_putstr_fd("Unknown error\n", STDERR_FILENO);
-		(*command)->exitcode = 1;
+		return (1);
 	}
 }
 
-void	handle_error(t_Command **command, char *path)
+int	handle_error(char *path)
 {
 	int	len;
 
 	len = ft_strlen(path);
-	(*command)->exitcode = errno;
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(path, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	if (path[len -1] == '/')
 	{
 		ft_putstr_fd("Is a directory", STDERR_FILENO);
-		(*command)->exitcode = 126;
-		return ;
+		return (126);
 	}
-	check_specific_error(command, path);
+	return (check_specific_error(path));
 }
 
 int	log_errors(char *token, char *msg)

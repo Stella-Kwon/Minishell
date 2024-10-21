@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 17:17:10 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/18 04:34:39 by skwon2           ###   ########.fr       */
+/*   Created: 2024/09/14 17:17:10 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/18 23:10:34 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*store_words(char **start)
 	return (ft_strndup(word_start, *start - word_start));
 }
 
-int	store_str(t_For_tokenize *tokenize, int *buffsize)
+int	store_str(t_For_tokenize *tokenize)
 {
 	if (!ft_isspace(*tokenize->start) && *tokenize->start != '\0')
 	{
@@ -39,7 +39,7 @@ int	store_str(t_For_tokenize *tokenize, int *buffsize)
 		}
 		tokenize->token_count++;
 		tokenize->tokens = ft_realloc_double(tokenize->tokens, \
-		tokenize->token_count, buffsize);
+		tokenize->token_count, &tokenize->buffsize);
 		if (!tokenize->tokens)
 			return (log_errors("Failed to \"reallocate\" \
 			memory for tokens", ""));
@@ -55,48 +55,9 @@ int	is_special_character(char c)
 	return (FALSE);
 }
 
-static int	check_input_loop(const char *input, int *in_single_quote, \
-							int *in_double_quote)
+int	handle_whitespace(t_For_tokenize *tokenize)
 {
-	int	len;
-	int	i;
-
-	i = 0;
-	len = strlen(input);
-	while (i < len)
-	{
-		if (input[i] == '\'' && !*in_double_quote)
-			*in_single_quote = !*in_single_quote;
-		else if (input[i] == '"' && !*in_single_quote)
-			*in_double_quote = !*in_double_quote;
-		if (!*in_single_quote && !*in_double_quote)
-		{
-			if (input[i] == ';' || input[i] == '\\')
-			{
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd("syntax error: invalid input\n", 2);
-				return (FAIL);
-			}
-		}
-		i++;
-	}
-	return (SUCCESS);
-}
-
-int	check_input(const char *input)
-{
-	int	in_single_quote;
-	int	in_double_quote;
-
-	in_single_quote = 0;
-	in_double_quote = 0;
-	if (check_input_loop(input, &in_single_quote, &in_double_quote) == FAIL)
-		return (FAIL);
-	if (in_single_quote || in_double_quote)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd("syntax error: unclosed quotes\n", 2);
-		return (FAIL);
-	}
+	while (ft_isspace(*tokenize->start))
+		(tokenize->start)++;
 	return (SUCCESS);
 }

@@ -5,21 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/16 09:30:43 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/18 04:59:07 by skwon2           ###   ########.fr       */
+/*   Created: 2024/08/16 09:30:43 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/19 12:29:00 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	handle_whitespace(t_For_tokenize	*tokenize)
-{
-	while (ft_isspace(*tokenize->start))
-		(tokenize->start)++;
-	return (SUCCESS);
-}
-
-int	handle_special_tokens(int *buffsize, t_For_tokenize *tokenize)
+int	handle_special_tokens(t_For_tokenize *tokenize)
 {
 	if (*tokenize->start == '\'')
 		return (handle_set(tokenize, '\''));
@@ -39,16 +32,16 @@ int	handle_special_tokens(int *buffsize, t_For_tokenize *tokenize)
 		return (handle_whitespace(tokenize));
 	else
 	{
-		if (store_str(tokenize, buffsize) != SUCCESS)
+		if (store_str(tokenize) != SUCCESS)
 			return (FAIL);
 	}
 	return (SUCCESS);
 }
 
-char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
+char	**initialize_tokenization(t_For_tokenize *tokenize)
 {
 	tokenize->tokens = NULL;
-	tokenize->tokens = ft_calloc(buffsize, sizeof(char *));
+	tokenize->tokens = ft_calloc(tokenize->buffsize, sizeof(char *));
 	if (!tokenize->tokens)
 	{
 		log_errors("Failed to allocate memory for tokens", "");
@@ -58,17 +51,40 @@ char	**initialize_tokenization(int buffsize, t_For_tokenize *tokenize)
 	return (tokenize->tokens);
 }
 
-int	exit_check(int *buffsize, t_For_tokenize *tokenize, \
-int *last_exit_code)
+int	signal_error(t_For_tokenize *tokenize, int *last_exit_code, \
+char ***local_env)
+{
+	if (g_received_signal == 130)
+	{
+		*last_exit_code = 130;
+		g_received_signal = 0;
+		return (FAIL);
+	}
+	ft_putstr_fd("\nminishell: \
+	syntax error: unexpected end of file\nexit\n", 2);
+	all_free(local_env);
+	free_one((void **)&tokenize->tmp_input);
+	all_free(&tokenize->tokens);
+	exit(2);
+}
+
+int	exit_check(t_For_tokenize *tokenize, \
+int *last_exit_code, char ***local_env)
 {
 	int	exitcode;
 
-	exitcode = handle_special_tokens(buffsize, tokenize);
+	exitcode = handle_special_tokens(tokenize);
 	if (exitcode != SUCCESS)
 	{
 		if (exitcode == 2)
 			*last_exit_code = 2;
-		else if (exitcode == -1)
+		else if (exitcode == 3)
+		{
+			if (signal_error(tokenize, last_exit_code, \
+			local_env) != SUCCESS)
+				return (FAIL);
+		}
+		else if (exitcode == 130)
 			*last_exit_code = 1;
 		all_free(&tokenize->tokens);
 		return (FAIL);
@@ -76,25 +92,28 @@ int *last_exit_code)
 	return (SUCCESS);
 }
 
-char	**tokenize_input(char **input, int *last_exit_code)
+char	**tokenize_input(char **input, int *last_exit_code, \
+char ***local_env)
 {
-	int				buffsize;
 	t_For_tokenize	tokenize;
 
+	tokenize.tmp_input = *input;
 	tokenize.input = *input;
 	tokenize.start = *input;
-	buffsize = BUFFER_SIZE;
-	tokenize.tokens = initialize_tokenization(buffsize, &tokenize);
+	tokenize.buffsize = BUFFER_SIZE;
+	tokenize.tokens = initialize_tokenization(&tokenize);
 	if (!tokenize.tokens)
 		return (NULL);
 	if (check_first_input(&tokenize) != SUCCESS)
 	{
 		*last_exit_code = 2;
+		all_free(&tokenize.tokens);
 		return (NULL);
 	}
 	while (*tokenize.start)
 	{
-		if (exit_check(&buffsize, &tokenize, last_exit_code) == FAIL)
+		if (exit_check(&tokenize, last_exit_code, \
+		local_env) == FAIL)
 			return (NULL);
 	}
 	tokenize.tokens[tokenize.token_count] = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 03:40:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:08:34 by sukwon           ###   ########.fr       */
+/*   Created: 2024/09/18 03:40:24 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/18 17:38:02 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static int	command_initialize(t_Command *res, char ***tokens, \
 		free_command(&res);
 		return (FAIL);
 	}
-	res->tmp_args = res->args;
 	return (SUCCESS);
 }
 
@@ -134,5 +133,6 @@ t_Command	*create_command(char ***tokens, char ***env)
 		return (NULL);
 	res->exitcode = -1;
 	res->wstatus = 0;
+	res->root_node = NULL;
 	return (res);
 }

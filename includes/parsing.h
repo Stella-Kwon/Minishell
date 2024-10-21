@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/21 18:02:03 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:53:23 by sukwon           ###   ########.fr       */
+/*   Created: 2024/09/21 18:02:03 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/16 11:53:23 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_ASTNode		*parse_to_nodes(char **tokens, char ***env);
 t_ASTNode		*create_astnode(char ***tokens, t_ASTNode *left, \
 								t_ASTNode *right, char ***env);
 t_Command		*create_command(char ***tokens, char ***env);
+t_Command		*create_stub_command(char ***env);
 t_Pipeline		*create_pipeline(void);
 t_Redirection	*create_redirection(void);
 int				is_operator(char **tokens);
@@ -46,6 +47,7 @@ int				rm_quote_filename(t_Redirection **redirect, char ***args, \
 									char **filename);
 int				restore_new_args(char ***args, t_rm_args *rm);
 void			free_command(t_Command **res);
+void			free_redirection(t_Redirection **redir);
 void			free_astnode(t_ASTNode **node);
 void			print_astnode(t_ASTNode *node, int depth);
 void			remove_arg(char ***args, int index);

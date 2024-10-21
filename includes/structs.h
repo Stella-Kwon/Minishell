@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 15:42:52 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:53:53 by sukwon           ###   ########.fr       */
+/*   Created: 2024/08/05 15:42:52 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/18 23:19:51 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@
 # include <stdlib.h>
 # include <string.h>
 
-struct t_astnode;
+struct	s_astnode;
 
 typedef struct s_Command
 {
 	char				*cmd;
 	char				***env;
 	char				**args;
-	char				**tmp_args;
 	int					exitcode;
 	int					wstatus;
 	struct s_astnode	**root_node;
@@ -122,6 +121,16 @@ typedef struct s_For_tokenize
 	char	*start;
 	char	**tokens;
 	int		token_count;
+	char	*tmp_input;
+	int		buffsize;
 }	t_For_tokenize;
+
+typedef struct s_line
+{
+	char	c;
+	int		r_byte;
+	int		i;
+	int		buf_size;
+}	t_line;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 16:55:15 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/16 11:09:56 by sukwon           ###   ########.fr       */
+/*   Created: 2024/10/10 16:55:15 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/18 17:37:49 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,6 @@ void	free_command(t_Command **res)
 			free_one((void **)&(*res)->cmd);
 		if ((*res)->args)
 			all_free(&(*res)->args);
-		if ((*res)->tmp_args)
-			all_free(&(*res)->args);
-		//if ((*res)->env)
-		//	all_free((*res)->env);
 		free_one((void **)&(*res));
 	}
 }

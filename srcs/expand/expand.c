@@ -32,6 +32,7 @@ int	expand_value(t_Dollar *dol)
 	ft_strcpy(new_output, dol->tmp);
 	ft_strcpy(new_output + dol->tmp_i, dol->var_value);
 	free(dol->var_value);
+	dol->var_value = NULL;
 	free(dol->tmp);
 	dol->tmp = new_output;
 	dol->tmp_i += value_len;
@@ -122,10 +123,7 @@ int	find_dollar_signs(char **in_out, char **env, int last_exitcode)
 	dol.var_value = NULL;
 	dol.tmp = malloc((dol.tmp_len) * sizeof(char));
 	if (!dol.tmp)
-	{
-		log_errors("Failed malloc in expand", "");
-		return (FAIL);
-	}
+		return (log_errors("Failed malloc in expand", ""));
 	if (process_quotes(*in_out, &dol, env, last_exitcode) == FAIL)
 	{
 		free(dol.tmp);
@@ -136,5 +134,7 @@ int	find_dollar_signs(char **in_out, char **env, int last_exitcode)
 	dol.tmp[dol.tmp_i] = '\0';
 	free(*in_out);
 	*in_out = dol.tmp;
+	if (dol.var_value)
+		free(dol.var_value);
 	return (SUCCESS);
 }

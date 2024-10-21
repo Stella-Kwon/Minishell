@@ -6,7 +6,7 @@
 #    By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/17 14:50:25 by skwon2           ###   ########.fr        #
+#    Updated: 2024/10/18 23:24:34 by skwon2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,14 @@ FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 
 LINK_FLAG = -lreadline -lncurses -L/
 
+# COMPILE_FLAG = -I/usr/local/opt/readline/include/
+
+# LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
+
 SRCS_DIR = ./srcs/
 
 SRCS =	mini.c \
+		mini_utils.c \
 		utils/setting_display.c\
 		utils/ft_strcmp.c\
 		utils/ft_strndup.c\
@@ -50,11 +55,12 @@ SRCS =	mini.c \
 		tokenize/tokenize_operator.c\
 		tokenize/operation_error.c\
 		tokenize/operation_utils.c\
+		tokenize/my_readline.c\
 		tokenize/input_utils.c\
 		signal/signal.c \
+		signal/readline_signal.c \
 		redirection/heredoc.c\
 		redirection/herestring.c\
-		redirection/read_line.c\
 		parsing/create_astnode.c\
 		parsing/create_command.c\
 		parsing/initialize_func.c\

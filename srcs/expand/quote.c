@@ -14,14 +14,14 @@
 
 int	handle_single_quote(char *input, t_Dollar *dol)
 {
-	char *tmp;
+	char	*tmp;
+
 	dol->i++;
 	while (input[dol->i] && input[dol->i] != '\'')
 	{
 		dol->tmp[dol->tmp_i++] = input[dol->i++];
 		if (dol->tmp_i >= dol->tmp_len - 1)
 		{
-
 			tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
 											(int *)&dol->tmp_len);
 			if (!tmp)
@@ -46,6 +46,11 @@ static int	check_double_quote(char *input, t_Dollar *dol, char **env, \
 		{
 			if (for_dollar_sign(input, dol, env, last_exitcode) == FAIL)
 				return (FAIL);
+			if (dol->var_value)
+			{
+				if (expand_value(dol) == FAIL)
+					return (FAIL);
+			}
 		}
 		else
 		{
@@ -55,10 +60,7 @@ static int	check_double_quote(char *input, t_Dollar *dol, char **env, \
 				dol->tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
 												(int *)&dol->tmp_len);
 				if (!dol->tmp)
-				{
-					log_errors("Failed realloc in quote double", "");
-					return (FAIL);
-				}
+					return (log_errors("Failed realloc in quote double", ""));
 			}
 		}
 	}

@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 20:19:05 by sukwon            #+#    #+#             */
+/*   Created: 2024/09/22 20:19:05 by skwon2            #+#    #+#             */
 /*   Updated: 2024/10/18 01:31:44 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ int	prepare_cmd(t_Command **command, int last_exitcode)
 	int	argc;
 
 	if (!command || !*command)
-		return (SUCCESS);
+		return (0);
 	if (ft_strncmp((*command)->cmd, "export", 7) == 0)
 	{
 		argc = get_str_len((*command)->args);
@@ -50,20 +50,15 @@ int	prepare_cmd(t_Command **command, int last_exitcode)
 	return (SUCCESS);
 }
 
-int	execute_cmd(t_Command **command)
+int	find_command_path(t_Command **command)
 {
 	char	*path;
 
-	if (builtin_with_output(*command) == SUCCESS)
-		return (SUCCESS);
 	if (check_cmd_script(command) == FAIL || check_cmd_error(command) == FAIL)
 		return (FAIL);
 	if (find_and_check_path(command, &path) == FAIL)
 		return (FAIL);
-	if (execve(path, (*command)->args, *((*command)->env)) == -1)
-	{
-		handle_error(command, path);
-	}
-	free_one((void **)&path);
-	return ((*command)->exitcode);
+	free((*command)->cmd);
+	(*command)->cmd = path;
+	return (SUCCESS);
 }

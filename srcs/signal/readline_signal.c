@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   readline_signal.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 15:51:40 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/06 22:06:38 by skwon2           ###   ########.fr       */
+/*   Created: 2024/10/18 22:58:24 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/18 23:03:45 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+void	signal_readline(int signal)
 {
-	size_t	i;
-
-	i = 0;
-	while (src[i] != '\0')
+	if (signal == SIGINT)
 	{
-		dst[i] = src[i];
-		i++;
+		rl_replace_line("", 0);
+		rl_redisplay();
+		ft_putstr_fd("^C\n", 2);
+		g_received_signal = 130;
 	}
-	dst[i] = '\0';
-	return (dst);
+}
+
+void	readline_signal(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = signal_readline;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		perror("sigaction SIGINT");
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		perror("sigaction SIGQUIT");
 }
