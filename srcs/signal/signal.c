@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:04:06 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/21 22:30:10 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 23:10:46 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,38 @@ void	execution_sigquit(int signal)
 	}
 }
 
+void signal_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		printf("SIGINT received.\n");
+	}
+	else if (signal == SIGQUIT)
+	{
+		printf("SIGQUIT received.\n");
+	}
+}
+
 void signal_set(void (*sigint)(int), void (*sigquit)(int), int set_echoctl)
 {
-	struct sigaction	sa;
-	struct sigaction	ga;
-	sigset_t			block_mask;
+	struct sigaction sa;
+	struct sigaction ga;
 
 	set_termios(set_echoctl);
 	ft_memset(&sa, 0, sizeof(sa));
-	sigemptyset(&block_mask);
-	sigaddset(&block_mask, SIGINT);
+	ft_memset(&ga, 0, sizeof(ga));
 	sa.sa_handler = sigint;
-	sa.sa_mask = block_mask;
+	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
+	{
 		perror("sigaction SIGINT");
-
-	ft_memset(&ga, 0, sizeof(ga));
-	sigemptyset(&block_mask);
-	sigaddset(&block_mask, SIGQUIT);
+	}
 	ga.sa_handler = sigquit;
-	ga.sa_mask = block_mask;
+	sigemptyset(&ga.sa_mask);
 	ga.sa_flags = 0;
 	if (sigaction(SIGQUIT, &ga, NULL) == -1)
+	{
 		perror("sigaction SIGQUIT");
+	}
 }
-
