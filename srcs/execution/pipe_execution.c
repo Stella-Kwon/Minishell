@@ -79,22 +79,3 @@ int	pipenode_exec(t_ASTNode **node)
 	(*node)->last_exitcode = waitpid_status(status);
 	return ((*node)->last_exitcode);
 }
-
-t_Command	*create_stub_command(char ***env)
-{
-	t_Command	*res;
-
-	res = (t_Command *)malloc(sizeof(t_Command));
-	if (!res)
-	{
-		log_errors("Failed to malloc res in create_stub_command", "");
-		return (NULL);
-	}
-	res->env = env;
-	res->cmd = NULL;
-	res->args = NULL;
-	res->exitcode = -1;
-	res->wstatus = 0;
-	res->root_node = NULL;
-	return (res);
-}

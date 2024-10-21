@@ -73,7 +73,9 @@ SRCS =	mini.c \
 		parsing/redirection_parsing.c\
 		execution/action_child.c\
 		execution/action_parents.c\
+		execution/action_builtin.c\
 		execution/execute.c\
+		execution/prepare.c\
 		execution/heredoc_utils.c\
 		execution/exitcode_utils.c\
 		execution/utils.c\
