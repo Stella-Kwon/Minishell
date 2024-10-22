@@ -46,10 +46,10 @@ int ast_node_execution(t_ASTNode **node)
 	}
 	if ((*node)->type == NODE_COMMAND && !(*node)->command)
 	{
-		exitcode = node_command_without_cmd(node);
-		if (exitcode != SUCCESS)
+		// exitcode = node_command_without_cmd(node);
+		if (node_command_without_cmd(node) != SUCCESS)
 			return (-1);
-		else if (exitcode == SUCCESS)
+		if (node_command_without_cmd(node) == SUCCESS)
 			return (SUCCESS);
 	}
 	if ((*node)->type == NODE_COMMAND)

@@ -88,8 +88,6 @@ int	here_doc(t_ASTNode **node, char *limiter)
 	if (waitpid(pid, &status, 0) == -1)
 	{
 		exitcode = waitpid_status(status);
-		printf("exit :%d\n", exitcode);
-		// init_execution_signal();
 		return (exitcode);
 	}
 	close((*node)->redir->heredoc_infile);
@@ -99,12 +97,10 @@ int	here_doc(t_ASTNode **node, char *limiter)
 	if (unlink(".heredoc.tmp") == -1)
 		return (log_errors("Failed to unlink in here_doc", ""));
 	exitcode = waitpid_status(status);
-	// printf("exit :%d\n", exitcode);
 	if (exitcode == 3)
 	{
 		ft_putstr_fd("minishell: warning: unexpected end of here-document\n", 2);
 		exit(0);
 	}
-	// printf("heeelllo\n");
 	return (exitcode);
 }

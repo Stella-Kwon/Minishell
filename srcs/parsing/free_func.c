@@ -12,15 +12,48 @@
 
 #include "../../includes/minishell.h"
 
-void	remove_arg(char ***args, int index)
+// void	remove_arg(char ***args, int index)
+// {
+// 	if (!args || !*args || index < 0 || !(*args)[index])
+// 		return;
+// 	free((*args)[index]);
+// 	while ((*args)[index])
+// 	{
+// 		(*args)[index] = (*args)[index + 1];
+// 		index++;
+// 	}
+// 	(*args)[index] = NULL;
+// }
+
+
+void remove_arg(char ***args, int index)
 {
-	free((*args)[index]);
-	while ((*args)[index])
+	int count = 0;
+	char **new_args;
+	int i = 0;
+	int j = 0;
+
+	if (!args || !*args || index < 0 || !(*args)[index])
+		return; 
+	while ((*args)[count])
+		count++ ;
+	new_args = malloc((count - 1) * sizeof(char *));
+	if (!new_args)
+		return ;
+	while (i < count && (*args)[i])
 	{
-		(*args)[index] = (*args)[index + 1];
-		index++;
+		if (i != index)
+		{
+			new_args[j] = (*args)[i];
+			j++;
+		}
+		else
+			free((*args)[i]);
+		i++;
 	}
-	(*args)[index] = NULL;
+	new_args[j] = NULL;
+	free(*args);
+	*args = new_args;
 }
 
 void	free_command(t_Command **res)

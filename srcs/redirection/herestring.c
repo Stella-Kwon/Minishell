@@ -14,6 +14,7 @@
 
 int	here_string(t_Redirection **redir)
 {
+	printf("hi\n");
 	(*redir)->infile = open(".herestring.tmp", \
 	O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*redir)->infile == -1)
@@ -29,5 +30,6 @@ int	here_string(t_Redirection **redir)
 		reading", ".herestring.tmp"));
 	if (unlink(".herestring.tmp") == -1)
 		return (log_errors("Failed to unlink in here_string", ""));
+	printf("bye\n");
 	return (SUCCESS);
 }

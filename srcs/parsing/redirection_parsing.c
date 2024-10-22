@@ -80,6 +80,7 @@ t_Redirection **redirect, int start)
 	int	index;
 	int	direction_type;
 
+	(void)start;
 	index = 0;
 	direction_type = get_direction_type(**args);
 	if (direction_type == INVALID)
