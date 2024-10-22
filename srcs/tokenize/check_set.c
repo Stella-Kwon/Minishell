@@ -38,6 +38,7 @@ char	*store_inside_set(char *tmp_start, char *tmp_end)
 
 void	check_quotes_in_loop(t_Set *set, char ref, int *count)
 {
+
 	while (*set->tmp_end)
 	{
 		if (*set->tmp_end == ref)
@@ -54,7 +55,7 @@ void	check_quotes_in_loop(t_Set *set, char ref, int *count)
 	}
 }
 
-static int	check_quotes_and_depth(t_For_tokenize *tokenize, \
+int	check_quotes_and_depth(t_For_tokenize *tokenize, \
 									t_Set *set, char ref)
 {
 	int	count;
@@ -68,18 +69,25 @@ static int	check_quotes_and_depth(t_For_tokenize *tokenize, \
 		check_quotes_in_loop(set, ref, &count);
 		tokenize->start = set->tmp_end;
 	}
+	else
+		return (FAIL);
 	return (SUCCESS);
+}
+
+void initialize_set(t_For_tokenize *tokenize, t_Set *set)
+{
+	set->depth = 0;
+	set->single_quote = 0;
+	set->double_quote = 0;
+	set->tmp_start = tokenize->start;
+	set->tmp_end = NULL;
 }
 
 char	*check_set(t_For_tokenize *tokenize, char ref)
 {
 	t_Set	set;
 
-	set.depth = 0;
-	set.single_quote = 0;
-	set.double_quote = 0;
-	set.tmp_start = tokenize->start;
-	set.tmp_end = NULL;
+	initialize_set(tokenize, &set);
 	while (*set.tmp_start)
 	{
 		update_quotes_and_depth(&set.single_quote, &set.double_quote, \

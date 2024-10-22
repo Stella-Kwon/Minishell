@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 23:19:51 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:43:54 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_Command
 	char				*cmd;
 	char				***env;
 	char				**args;
+	char				**tmp_args;
 	int					exitcode;
 	int					wstatus;
 	struct s_astnode	**root_node;
@@ -121,7 +122,6 @@ typedef struct s_For_tokenize
 	char	*start;
 	char	**tokens;
 	int		token_count;
-	char	*tmp_input;
 	int		buffsize;
 }	t_For_tokenize;
 

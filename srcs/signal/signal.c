@@ -6,68 +6,36 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:04:06 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 23:01:19 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 23:10:46 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	g_received_signal = 0;
+extern int	g_interrupt_signal;
 
-void	signal_no_input(int signal)
+static void	ctrl_c_function(int signal)
 {
+	int	pid;
+
+	pid = waitpid(-1, NULL, WNOHANG);
+	g_interrupt_signal = TRUE;
 	if (signal == SIGINT)
 	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_received_signal = 1;
+		if (pid == -1)
+		{
+			rl_replace_line("", 1);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+			rl_on_new_line();
+			rl_redisplay();
+		}
+		else
+			ft_putstr_fd("\n", STDOUT_FILENO);
 	}
 }
 
-void	signal_execution_process(int signal)
+void	signal_setup(void)
 {
-	if (signal == SIGINT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_redisplay();
-		ft_putstr_fd("^C\n", 2);
-		g_received_signal = 130;
-	}
-	else if (signal == SIGQUIT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_redisplay();
-		ft_putstr_fd("^\\Quit: 3\n", 2);
-		g_received_signal = 131;
-	}
-}
-
-void	init_signal(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = signal_no_input;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		perror("sigaction SIGINT");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		perror("sigaction SIGQUIT");
-}
-
-void	init_execution_signal(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = signal_execution_process;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		perror("sigaction SIGINT");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		perror("sigaction SIGQUIT");
+	signal(SIGINT, ctrl_c_function);
+	signal(SIGQUIT, SIG_IGN);
 }

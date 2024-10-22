@@ -6,7 +6,7 @@
 #    By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/18 23:24:34 by skwon2           ###   ########.fr        #
+#    Updated: 2024/10/21 15:52:23 by skwon2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ SRCS_DIR = ./srcs/
 
 SRCS =	mini.c \
 		mini_utils.c \
-		utils/setting_display.c\
 		utils/ft_strcmp.c\
 		utils/ft_strndup.c\
 		utils/ft_realloc.c\
@@ -48,17 +47,18 @@ SRCS =	mini.c \
 		utils/ft_strcat.c\
 		utils/ft_strjoin3.c\
 		utils/waitpid_status.c\
-		tokenize/utils.c\
+		tokenize/store_words.c\
 		tokenize/readline_again.c\
 		tokenize/check_set.c\
 		tokenize/tokenize.c\
 		tokenize/tokenize_operator.c\
 		tokenize/operation_error.c\
-		tokenize/operation_utils.c\
-		tokenize/my_readline.c\
+		tokenize/operation_next.c\
+		tokenize/operation_next_utils.c\
+		tokenize/handle_tokens.c\
+		tokenize/handle_redirection.c\
 		tokenize/input_utils.c\
 		signal/signal.c \
-		signal/readline_signal.c \
 		redirection/heredoc.c\
 		redirection/herestring.c\
 		parsing/create_astnode.c\

@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:31:24 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 11:46:29 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/21 22:00:34 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "minishell.h"
 
-int		set_ehcoctl(int flag);
 int		ft_isspace(char c);
 int		waitpid_status(int wstatus);
 int		ft_strcmp(const char *line, const char *limiter);

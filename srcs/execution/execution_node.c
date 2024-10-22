@@ -6,20 +6,22 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 04:24:48 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/21 22:52:20 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+extern int g_interrupt_signal;
+
 int	node_command_without_cmd(t_ASTNode **node)
 {
 	if ((*node)->redir->infile == -1)
 		return (print_error_redirect(&(*node)->command, \
-		(*node)->redir->in_filename));
+									(*node)->redir->in_filename));
 	if ((*node)->redir->outfile == -1)
 		return (print_error_redirect(&(*node)->command, \
-		(*node)->redir->out_filename));
+									(*node)->redir->out_filename));
 	if ((*node)->redir->herestring_str)
 	{
 		if (here_string(&(*node)->redir) != SUCCESS)
@@ -28,18 +30,28 @@ int	node_command_without_cmd(t_ASTNode **node)
 	return (SUCCESS);
 }
 
-int	ast_node_execution(t_ASTNode	**node)
+int	ast_node_execution(t_ASTNode **node)
 {
-	init_execution_signal();
+	int	exitcode;
+
 	if (node == NULL || *node == NULL)
 		return (log_errors("AST node is NULL", ""));
-	if (heredoc_check(node) == FAIL)
+	exitcode = heredoc_check(node);
+	if (exitcode == FAIL)
 		return (FAIL);
+	if (exitcode == 130)
+		return (130);
+	if (exitcode == 3)
+	{
+		ft_putstr_fd("minishell: warning: unexpected end of here-document\n", 2);
+		return (0);
+	}
 	if ((*node)->type == NODE_COMMAND && !(*node)->command)
 	{
-		if (node_command_without_cmd(node) != SUCCESS)
+		exitcode = node_command_without_cmd(node);
+		if (exitcode != SUCCESS)
 			return (-1);
-		if (node_command_without_cmd(node) == SUCCESS)
+		else if (exitcode == SUCCESS)
 			return (SUCCESS);
 	}
 	if ((*node)->type == NODE_COMMAND)
@@ -55,6 +67,9 @@ int	ast_node_execution(t_ASTNode	**node)
 
 int	cmdnode_exec(t_ASTNode	**node)
 {
+	if (g_interrupt_signal == TRUE)
+		(*node)->last_exitcode = 130;
+	g_interrupt_signal = FALSE;
 	(*node)->command->exitcode = (*node)->last_exitcode;
 	if (prepare_cmd(&(*node)->command, (*node)->last_exitcode) == FAIL)
 		return (FAIL);

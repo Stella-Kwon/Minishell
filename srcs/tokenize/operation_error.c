@@ -18,7 +18,7 @@ static int	operation_error_rest(char *start)
 	{
 		if (*(start + 1) == '<')
 			return (handle_258_exitcode_print("`<<'"));
-		else if (*(start + 2) == '<')
+		else if (*(start + 2) && * (start + 2) == '<')
 			return (handle_258_exitcode_print("`<<<'"));
 		else
 			return (handle_258_exitcode_print("`<'"));
@@ -56,4 +56,28 @@ int	redirect_operation_error(char *start)
 	else if (operation_error_rest(start) != SUCCESS)
 		return (2);
 	return (SUCCESS);
+}
+
+char *rm_quotes(char *str)
+{
+	int		i;
+	int		j;
+	char	*result;
+
+	i = 0;
+	j = 0;
+	result = (char *)malloc(sizeof(char) * (strlen(str) + 1));
+	if (!result)
+		return NULL;
+	while (str[i] != '\0')
+	{
+		if (str[i] != '"' && str[i] != '\'')
+		{
+			result[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	result[j] = '\0';
+	return (result);
 }
