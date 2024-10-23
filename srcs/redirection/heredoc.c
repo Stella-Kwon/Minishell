@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:36:33 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/22 21:50:55 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:06:27 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	check_empty_input_and_dollar_sign(char **new_input, t_ASTNode **node, char 
 		exit(3);
 	}
 	*copy_new = ft_strdup(*new_input);
+	if (!*copy_new)
+		log_errors ("Failed to copy_new ft_strdup", *copy_new);
 	if ((*node)->command)
 	{
 		if (find_dollar_signs(new_input, *((*node)->command->env), (*node)->last_exitcode) == FAIL)
@@ -54,7 +56,6 @@ void handle_input(int fd, char *limiter, char **new_input, t_ASTNode **node)
 			free_exit(&(*node)->command, SUCCESS);
 		}
 		check_empty_input_and_dollar_sign(new_input, node, &copy_new);
-
 		if (ft_strcmp(copy_new, limiter) == 0)
 		{
 			free_one((void **)&copy_new);
@@ -104,8 +105,18 @@ int	parent_heredoc(t_ASTNode **node, pid_t pid)
 	int	status;
 	int	exitcode;
 
+	printf("tnals\n\n\n\n\n\n");
+	if (g_interrupt_signal == TRUE)
+	{
+		free_exit(&(*node)->command, SUCCESS);
+	}
 	if (waitpid(pid, &status, 0) == -1)
 	{
+		printf("tnals\n\n\n\n\n\n");
+		if (g_interrupt_signal == TRUE)
+		{
+			free_exit(&(*node)->command, SUCCESS);
+		}
 		exitcode = waitpid_status(status);
 		return (exitcode);
 	}

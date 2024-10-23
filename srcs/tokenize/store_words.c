@@ -13,13 +13,31 @@
 
 #include "../../includes/minishell.h"
 
+void    set_ref(char *start, char *ref)
+{
+    int i;
+
+    i = 0;
+    *ref = '\0';
+    while (start[i]) 
+    {
+        if (start[i] == '"') 
+        {
+            *ref = '"';
+            break;
+        } 
+        else if (start[i] == '\'')
+        {
+            *ref = '\'';
+            break;
+        }
+        i++;
+    }
+}
+
 void set_ref_and_tmp_start(char *start, t_Set *set, char *ref)
 {
-    *ref = '\0';
-    if (*start == '"')
-        *ref = '"';
-    else if (*start == '\'')
-        *ref = '\'';
+    set_ref(start, ref);
     while (*set->tmp_start)
     {
         update_quotes_and_depth(&set->single_quote, &set->double_quote,
@@ -28,6 +46,7 @@ void set_ref_and_tmp_start(char *start, t_Set *set, char *ref)
     }
     set->tmp_start = start;
 }
+
 
 char *store_words(t_For_tokenize *tokenize)
 {
