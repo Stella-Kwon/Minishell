@@ -20,8 +20,6 @@ void	free_command(t_Command **res)
 			free_one((void **)&(*res)->cmd);
 		if ((*res)->args)
 			all_free(&(*res)->args);
-		// if ((*res)->env)
-		// 	all_free((*res)->env);
 		free_one((void **)&(*res));
 	}
 }
@@ -38,8 +36,6 @@ void	free_redirection(t_Redirection **redir)
 		all_free(&(*redir)->heredoc_limiter);
 	if ((*redir)->herestring_str)
 		free_one((void **)&(*redir)->herestring_str);
-	if ((*redir)->env)
-		all_free((*redir)->env);
 	free_one((void **)&(*redir));
 }
 

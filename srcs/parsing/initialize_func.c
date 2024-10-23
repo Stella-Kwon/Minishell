@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-t_Redirection	*create_redirection(char ***env)
+t_Redirection	*create_redirection(void)
 {
 	t_Redirection	*redir;
 
@@ -32,11 +32,10 @@ t_Redirection	*create_redirection(char ***env)
 	redir->heredoc_i = 0;
 	redir->herestring_str = NULL;
 	redir->heredoc_buffsize = BUFFER_SIZE;
-	redir->env = env;
 	return (redir);
 }
 
-int	initialize_astnode(t_ASTNode **node, char ***tokens, char ***env)
+int	initialize_astnode(t_ASTNode **node, char ***tokens)
 {
 	if (node && (*node))
 	{
@@ -49,7 +48,7 @@ int	initialize_astnode(t_ASTNode **node, char ***tokens, char ***env)
 	}
 	if (tokens && *tokens && **tokens && is_redirection(**tokens))
 	{
-		(*node)->redir = create_redirection(env);
+		(*node)->redir = create_redirection();
 		if (!(*node)->redir)
 			return (FAIL);
 		if (parsing_others(tokens, &(*node)->redir, TRUE) == FAIL)

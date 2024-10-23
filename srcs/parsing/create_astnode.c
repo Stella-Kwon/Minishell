@@ -25,7 +25,7 @@ static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
 		return (FAIL);
 	if (ast->redir == NULL)
 	{
-		ast->redir = create_redirection(env);
+		ast->redir = create_redirection();
 		if (!ast->redir)
 			return (FAIL);
 	}
@@ -51,7 +51,7 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 		log_errors("Failed to malloc node in create_astnode", "");
 		return (NULL);
 	}
-	if (initialize_astnode(&ast, tokens, env) == FAIL)
+	if (initialize_astnode(&ast, tokens) == FAIL)
 	{
 		free(ast);
 		return (NULL);

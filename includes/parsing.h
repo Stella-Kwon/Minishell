@@ -23,7 +23,7 @@ t_ASTNode		*create_astnode(char ***tokens, t_ASTNode *left, \
 t_Command		*create_command(char ***tokens, char ***env);
 t_Command		*create_pipe_command(char ***env);
 t_Pipeline		*create_pipeline(void);
-t_Redirection	*create_redirection(char ***env);
+t_Redirection	*create_redirection(void);
 int				is_operator(char **tokens);
 int				operation_parsing(char ***tokens, t_ASTNode **left_node, \
 									char ***env);
@@ -36,7 +36,7 @@ int				heredoc_herestring_parsing(char ***args, \
 										t_Redirection **redirect);
 int				parsing_others(char ***args, \
 								t_Redirection **redirect, int start);
-int				initialize_astnode(t_ASTNode **node, char ***tokens, char ***env);
+int				initialize_astnode(t_ASTNode **node, char ***tokens);
 int				get_direction_type(char *token);
 int				remove_args_after_redirection(char ***args);
 int				is_redirection(char *token);

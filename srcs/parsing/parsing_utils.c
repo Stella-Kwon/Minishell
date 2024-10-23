@@ -32,30 +32,69 @@ int	get_direction_type(char *token)
 	return (INVALID);
 }
 
+// int put_last_open_infile(t_Redirection **redirect, char ***args, char **filename)
+// {
+// 	char *start;
+// 	int exit = FALSE;
+
+// 	start = **args;
+// 	while (**args && is_redirection(**args) == FALSE)
+// 	{
+// 		if (access(start, F_OK) != 0 || (exit && access(**args, X_OK) == 0))
+// 			break;
+
+// 		if (access(**args, F_OK) == 0)
+// 			exit = TRUE;
+
+// 		(*args)++;
+// 		if (**args == NULL)
+// 		{
+// 			(*args)--;
+// 			break;
+// 		}
+// 	}
+
+// 	if (rm_quote_filename(redirect, args, filename) != SUCCESS)
+// 		return (log_errors("Failed in rm_quote_filename in set_redirection", ""));
+// 	return (SUCCESS);
+// }
+
 int	put_last_open_infile(t_Redirection **redirect, char ***args, \
 						char **filename)
 {
 	char	*start;
 	int		exit;
 
+	exit = FALSE;
 	start = **args;
 	while (**args && is_redirection(**args) == FALSE)
 	{
 		if (access(start, F_OK) != 0)
 			break ;
-		else
+		if (access(**args, F_OK) == 0)
 		{
 			exit = TRUE;
+			// printf("args in : %s\n", (**args));
 			(*args)++;
+			// printf("args in : %s\n", (**args));
 		}
-		if (access(**args, F_OK) != 0 || \
+		if (**args == NULL || access(**args, F_OK) != 0 || \
 		(access(**args, X_OK) == 0 && exit == TRUE))
 		{
 			(*args)--;
 			break ;
 		}
-		(*args)++;
+		else
+		{
+			(*args)++;
+			if (**args == NULL)
+			{
+				(*args)--;
+				break;
+			}
+		}
 	}
+	// printf("args out : %s\n", (**args));
 	if (rm_quote_filename(redirect, args, filename) != SUCCESS)
 		return (log_errors("Failed in rm_quote_filename \
 							in set_redirection", ""));

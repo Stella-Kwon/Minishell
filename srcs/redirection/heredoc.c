@@ -37,7 +37,7 @@ void	check_empty_input_and_dollar_sign(char **new_input, t_ASTNode **node, char 
 		log_errors ("Failed to copy_new ft_strdup", *copy_new);
 	if ((*node)->command)
 	{
-		if (find_dollar_signs(new_input, *((*node)->redir->env), (*node)->last_exitcode) == FAIL)
+		if (find_dollar_signs(new_input, *((*node)->command->env), (*node)->last_exitcode) == FAIL)
 			log_errors("Command expansion failed", *new_input);
 	}
 }

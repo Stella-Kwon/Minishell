@@ -92,7 +92,6 @@ typedef struct s_Redirection
 	int		heredoc_buffsize;
 	int		errno_in;
 	int		errno_out;
-	char	***env;
 }	t_Redirection;
 
 typedef struct s_astnode
