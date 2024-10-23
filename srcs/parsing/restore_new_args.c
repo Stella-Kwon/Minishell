@@ -68,19 +68,16 @@ static void	loop_for_each(char ***args, int *origin_i)
 		// 	strcmp((*args)[*origin_i], "<") == 0)
 		// 	infile_in_row(args, origin_i);
 		if (!(*args)[*origin_i])
-		{
-			printf("null\n");
 			break ;
-		}
 		check_order(args, origin_i);
 		if (!(*args)[*origin_i])
 			break ;
 		if (access((*args)[*origin_i], F_OK) != 0)
 		{
-			if (strcmp((*args)[*origin_i], "<<<") == 0 || \
-				strcmp((*args)[*origin_i], "<") == 0 || \
-				strcmp((*args)[*origin_i], "<<") == 0 || \
-				strcmp((*args)[*origin_i], ">") == 0 || \
+			if (strcmp((*args)[*origin_i], "<<<") == 0 ||
+				strcmp((*args)[*origin_i], "<") == 0 ||
+				strcmp((*args)[*origin_i], "<<") == 0 ||
+				strcmp((*args)[*origin_i], ">") == 0 ||
 				strcmp((*args)[*origin_i], ">>") == 0)
 				continue ;
 			else
