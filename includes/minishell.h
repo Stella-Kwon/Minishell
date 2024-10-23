@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:11:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/21 21:56:03 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 21:56:07 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@
 #  define BUFFSIZE 50
 # endif
 
-// for echoctl
-#define	SET	1
-#define UNSET 0
+extern int g_interrupt_signal;
 
 # define TRUE 1
 # define FALSE 0
@@ -56,5 +54,6 @@ char	**process_input_to_tokens(char *input, int *last_exit_code, \
 								char ***local_env);
 char	*get_user_input(int *last_exit_code, char ***local_env);
 void	signal_setup(void);
+void	signal_set_exec(void);
 
 #endif

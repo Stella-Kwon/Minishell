@@ -3,29 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   action_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:19:04 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 00:03:54 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 20:39:46 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	print_error_redirect(t_Command **cmd, char *filename)
+
+int	print_error_redirect(t_Command **cmd, char *filename, int redir_errno)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(filename, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putstr_fd("No such file or directory\n", 2);
+	check_specific_error(filename, redir_errno);
 	if (*cmd)
 	{
 		(*cmd)->exitcode = FAIL;
-		exit(FAIL);
+		free_exit(cmd, FAIL);
+		exit (FAIL);
 	}
 	else
 		return (2);
 }
+
 
 int	common_pre_child(t_Redirection	**redir, t_Command **cmd)
 {
@@ -33,7 +36,8 @@ int	common_pre_child(t_Redirection	**redir, t_Command **cmd)
 	{
 		if ((*redir)->infile == -1)
 		{
-			print_error_redirect(cmd, (*redir)->in_filename);
+			print_error_redirect(cmd, (*redir)->in_filename, \
+								(*redir)->errno_in);
 		}
 		if (dup_and_close((*redir)->infile, STDIN_FILENO) == FAIL)
 		{
@@ -59,20 +63,24 @@ int	common_pre_child(t_Redirection	**redir, t_Command **cmd)
 int	action_child(t_Command **cmd, t_Redirection **redir)
 {
 	if (common_pre_child(redir, cmd) == FAIL)
-		exit(FAIL);
+		free_exit(cmd, FAIL);
 	if ((*redir)->outfile != -2)
 	{
 		if ((*redir)->outfile == -1)
-			print_error_redirect(cmd, (*redir)->out_filename);
+		{
+			print_error_redirect(cmd, (*redir)->out_filename, \
+								(*redir)->errno_out);
+		}
 		if (dup_and_close((*redir)->outfile, STDOUT_FILENO) == FAIL)
 		{
 			log_errors("Failed to redirect outfile in child process", \
 						strerror(errno));
-			(*cmd)->exitcode = FAIL;
-			exit(FAIL);
+			free_exit(cmd, FAIL);
 		}
 	}
 	if (execve((*cmd)->cmd, (*cmd)->args, *((*cmd)->env)) == -1)
-		exit(handle_error((*cmd)->cmd));
+		free_exit(cmd, handle_error((*cmd)->cmd));
+	if ((*redir)->herestring_str)
+		free_exit(cmd, 0);
 	exit(0);
 }

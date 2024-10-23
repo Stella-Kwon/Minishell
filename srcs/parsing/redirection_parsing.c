@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:42:27 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/17 13:48:36 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 20:44:29 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static int	set_outfile(t_Redirection **redirect, char ***args, \
 		(*redirect)->outfile = open((*redirect)->out_filename, \
 									O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
+	(*redirect)->errno_out = errno;
+	// printf("(*redirect)->errno_out :%d\n", (*redirect)->errno_out);
 	return (SUCCESS);
 }
 
@@ -60,6 +62,7 @@ static int	set_infile(t_Redirection **redirect, char ***args, \
 			close((*redirect)->infile);
 		(*redirect)->infile = open((*redirect)->in_filename, O_RDONLY);
 	}
+	(*redirect)->errno_in = errno;
 	return (SUCCESS);
 }
 
@@ -75,29 +78,21 @@ int	set_redirection(t_Redirection **redirect, char ***args, int direction_type)
 }
 
 static int	redirection_parsing_set(char ***args, \
-t_Redirection **redirect, int start)
+t_Redirection **redirect)
 {
-	int	index;
 	int	direction_type;
 
-	index = 0;
 	direction_type = get_direction_type(**args);
 	if (direction_type == INVALID)
 		return (log_errors("Invalid redirection type", ""));
-	if (start == TRUE)
-		remove_arg(args, index);
-	else
-		(*args)++;
+	(*args)++;
 	if (set_redirection(redirect, args, direction_type) == FAIL)
 		return (FAIL);
-	if (start == TRUE)
-		remove_arg(args, index);
-	else
-		(*args)++;
+	(*args)++;
 	return (SUCCESS);
 }
 
-int	redirection_parsing(char ***args, t_Redirection **redirect, int start)
+int	redirection_parsing(char ***args, t_Redirection **redirect)
 {
 	int	i;
 
@@ -105,12 +100,12 @@ int	redirection_parsing(char ***args, t_Redirection **redirect, int start)
 	if (ft_strcmp(**args, ">") == 0 || ft_strcmp(**args, ">>") == 0 || \
 		ft_strcmp(**args, "<") == 0)
 	{
-		if (redirection_parsing_set(args, redirect, start) == FAIL)
+		if (redirection_parsing_set(args, redirect) == FAIL)
 			return (FAIL);
 	}
 	else
 	{
-		i = heredoc_herestring_parsing(args, redirect, start);
+		i = heredoc_herestring_parsing(args, redirect);
 		if (i == FAIL)
 			return (FAIL);
 	}

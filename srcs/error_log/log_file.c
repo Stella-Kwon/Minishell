@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   log_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:50:33 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 10:12:26 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 20:43:52 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	handle_258_exitcode_print(char *msg)
 	return (2);
 }
 
-int	check_specific_error(char *path)
+int	check_specific_error(char *path, int ernbr)
 {
-	if (errno == EACCES)
+	if (ernbr == EACCES)
 	{
 		if (access(path, F_OK) == 0 && access(path, X_OK) == -1)
 			ft_putstr_fd("Permission denied\n", STDERR_FILENO);
@@ -31,12 +31,13 @@ int	check_specific_error(char *path)
 			ft_putstr_fd("Is a directory\n", STDERR_FILENO);
 		return (126);
 	}
-	else if (errno == ENOENT)
+	else if (ernbr == ENOENT)
 	{
+		//ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 		ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 		return (127);
 	}
-	else if (errno == EISDIR)
+	else if (ernbr == EISDIR)
 	{
 		ft_putstr_fd("Is a directory\n", STDERR_FILENO);
 		return (126);
@@ -61,7 +62,7 @@ int	handle_error(char *path)
 		ft_putstr_fd("Is a directory", STDERR_FILENO);
 		return (126);
 	}
-	return (check_specific_error(path));
+	return (check_specific_error(path, errno));
 }
 
 int	log_errors(char *token, char *msg)

@@ -58,26 +58,58 @@ int	redirect_operation_error(char *start)
 	return (SUCCESS);
 }
 
-char *rm_quotes(char *str)
+void rm_store_str(t_Set *set, char ref, char **result, int len)
 {
-	int		i;
-	int		j;
-	char	*result;
+	int i;
+	int j;
+	char *str;
 
 	i = 0;
 	j = 0;
-	result = (char *)malloc(sizeof(char) * (strlen(str) + 1));
-	if (!result)
-		return NULL;
-	while (str[i] != '\0')
-	{
-		if (str[i] != '"' && str[i] != '\'')
-		{
-			result[j] = str[i];
-			j++;
-		}
+	str = set->tmp_start;
+	if (str[i] == ref)
 		i++;
+	while (str[--len] != ref && len > i)
+		;
+	while (i < len)
+		(*result)[j++] = str[i++];
+	while (str[++len])
+		(*result)[j++] = str[len];
+	(*result)[j] = '\0';
+}
+
+char	*check_quote_store(t_Set *set, char ref)
+{
+	int	len;
+	char *result;
+
+	result = NULL;
+	if (set->depth == 0 || !set->single_quote || !set->double_quote)
+	{
+		len = ft_strlen(set->tmp_start);
+		result = (char *)malloc(sizeof(char) * (len + 1));
+		if (!result)
+			return NULL;
+		rm_store_str(set, ref, &result, len);
 	}
-	result[j] = '\0';
+	else
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("syntax error: unclosed quotes\n", 2);
+	}
+	return (result);
+}
+
+char *rm_quotes(char *str)
+{
+	t_Set	set;
+	char	ref;
+	char	*result;
+
+	initialize_set(str, &set);
+	set_ref_and_tmp_start(str, &set, &ref);
+	result = check_quote_store(&set, ref);
+	if (!result)
+		return (NULL);
 	return (result);
 }

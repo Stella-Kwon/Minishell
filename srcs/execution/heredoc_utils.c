@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:37:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/21 15:45:41 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 22:00:40 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,12 @@ int	dup_and_close(int oldfd, int newfd)
 	}
 	close(oldfd);
 	return (SUCCESS);
+}
+int	check_heredoc(t_ASTNode **node, int exitcode)
+{
+
+	if (node == NULL || *node == NULL)
+		return (log_errors("AST node is NULL", ""));
+	exitcode = heredoc_check(node);
+	return (exitcode);
 }

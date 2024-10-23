@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:55:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 17:37:49 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 22:10:34 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	remove_arg(char ***args, int index)
-{
-	free((*args)[index]);
-	while ((*args)[index])
-	{
-		(*args)[index] = (*args)[index + 1];
-		index++;
-	}
-	(*args)[index] = NULL;
-}
 
 void	free_command(t_Command **res)
 {
@@ -86,4 +75,11 @@ void	free_astnode(t_ASTNode **node)
 		free_one((void **)&(*node));
 		// printf("----------free whole node----------\n");
 	}
+}
+
+void	free_exit(t_Command **command, int exitcode)
+{
+	all_free((*command)->env);
+	free_astnode((*command)->root_node);
+	exit(exitcode);
 }

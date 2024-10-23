@@ -42,44 +42,28 @@ int	set_herestring(t_Redirection **redirect, char *string)
 	return (SUCCESS);
 }
 
-int	herestring_action(int index, char ***args, \
-t_Redirection **redirect, int start)
+int	herestring_action(char ***args, \
+t_Redirection **redirect)
 {
-	if (start == TRUE)
-		remove_arg(args, index);
-	else
-		(*args)++;
+	(*args)++;
 	if (set_herestring(redirect, **args) == FAIL)
 		return (FAIL);
-	if (start == TRUE)
-		remove_arg(args, index);
-	else
-		(*args)++;
+	(*args)++;
 	return (SUCCESS);
 }
 
-int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect, \
-								int start)
+int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect)
 {
-	int	index;
-
-	index = 0;
 	if (ft_strcmp(**args, "<<") == 0)
 	{
-		if (start == TRUE)
-			remove_arg(args, index);
-		else
-			(*args)++;
+		(*args)++;
 		if (set_heredoc(redirect, **args) == FAIL)
 			return (FAIL);
-		if (start == TRUE)
-			remove_arg(args, index);
-		else
-			(*args)++;
+		(*args)++;
 	}
 	else if (ft_strcmp(**args, "<<<") == 0)
 	{
-		if (herestring_action(index, args, redirect, start) != SUCCESS)
+		if (herestring_action(args, redirect) != SUCCESS)
 			return (FAIL);
 	}
 	return (SUCCESS);

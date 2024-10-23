@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 04:44:20 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 00:04:13 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 22:00:45 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ int		cmdnode_exec(t_ASTNode **node);
 int		pipenode_exec(t_ASTNode **node);
 int		dup_and_close(int oldfd, int newfd);
 int		find_and_check_path(t_Command **command, char **path);
-int		print_error_redirect(t_Command **cmd, char *filename);
+int		print_error_redirect(t_Command **cmd, char *filename, int redir_errno);
 void	set_last_exitcode_and_root(t_ASTNode **node, int last_exit_code, \
 									t_ASTNode **root);
 void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode);
-int		print_error_redirect(t_Command **cmd, char *filename);
-
+int		check_heredoc(t_ASTNode **node, int exitcode);
 #endif

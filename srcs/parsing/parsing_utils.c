@@ -36,6 +36,7 @@ int	put_last_open_infile(t_Redirection **redirect, char ***args, \
 						char **filename)
 {
 	char	*start;
+	int		exit;
 
 	start = **args;
 	while (**args && is_redirection(**args) == FALSE)
@@ -43,8 +44,12 @@ int	put_last_open_infile(t_Redirection **redirect, char ***args, \
 		if (access(start, F_OK) != 0)
 			break ;
 		else
+		{
+			exit = TRUE;
 			(*args)++;
-		if (access(**args, F_OK) != 0)
+		}
+		if (access(**args, F_OK) != 0 || \
+		(access(**args, X_OK) == 0 && exit == TRUE))
 		{
 			(*args)--;
 			break ;
@@ -52,7 +57,7 @@ int	put_last_open_infile(t_Redirection **redirect, char ***args, \
 		(*args)++;
 	}
 	if (rm_quote_filename(redirect, args, filename) != SUCCESS)
-		return (log_errors("Failed in rm_quote_filename in \
-							set_redirection", ""));
+		return (log_errors("Failed in rm_quote_filename \
+							in set_redirection", ""));
 	return (SUCCESS);
 }

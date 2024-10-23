@@ -60094,3 +60094,1005 @@ minishell: Failed to readline for additional input: Undefined error: 0:
 minishell: Failed to readline for additional input: Undefined error: 0: 
 minishell: Failed to readline for additional input: Undefined error: 0: 
 minishell: Failed to readline for additional input: Undefined error: 0: 
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect outfile in child process: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument
+minishell: Failed to dup2 in action_child: Invalid argument: 
+minishell: Failed to redirect infile: Invalid argument: Invalid argument

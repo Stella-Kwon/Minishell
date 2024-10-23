@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:52:09 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 10:57:35 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/22 21:59:31 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_cmd_error(t_Command **command)
 		{
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd((*command)->cmd, STDERR_FILENO);
-			return (error_exitcode(command, " Is a directory", 126));
+			return (error_exitcode(command, ": Is a directory", 126));
 		}
 		if (access((*command)->cmd, F_OK) == -1)
 			return (cmd_error(command, ": No such file or directory\n", 127));

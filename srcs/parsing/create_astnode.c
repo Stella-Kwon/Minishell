@@ -57,11 +57,17 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 		return (NULL);
 	}
 	if (create_astnode_content(ast, tokens, env) == FAIL)
+	{
+		free_astnode(&ast);
 		return (NULL);
+	}
 	if (ast->command && ast->command->args)
 	{
 		if (remove_args_after_redirection(&ast->command->args) != SUCCESS)
+		{
+			free_astnode(&ast);
 			return (NULL);
+		}
 	}
 	ast->left = left;
 	ast->right = right;

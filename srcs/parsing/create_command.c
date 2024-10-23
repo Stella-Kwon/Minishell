@@ -19,7 +19,7 @@ int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
 	i = 0;
 	while (**tmp_args)
 	{
-		i = redirection_parsing(tmp_args, redirect, start);
+		i = redirection_parsing(tmp_args, redirect);
 		if (i == FAIL)
 			return (FAIL);
 		if (start == false)

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:04:06 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/21 23:10:46 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 21:55:43 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_interrupt_signal;
 
 static void	ctrl_c_function(int signal)
 {
@@ -38,4 +36,10 @@ void	signal_setup(void)
 {
 	signal(SIGINT, ctrl_c_function);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	signal_set_exec(void)
+{
+	signal(SIGINT, ctrl_c_function);
+	signal(SIGQUIT, SIG_DFL);
 }

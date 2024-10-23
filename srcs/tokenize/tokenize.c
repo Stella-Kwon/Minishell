@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/20 16:16:39 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/22 21:54:21 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_interrupt_signal;
 
 char	**initialize_tokenization(t_For_tokenize *tokenize)
 {
@@ -39,7 +37,7 @@ char ***local_env, char **tmp_input)
 		g_interrupt_signal = FALSE;
 		return (FAIL);
 	}
-	ft_putstr_fd("minishell: syntax error: unexpected end of file\nexit\n", 2);
+	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
 	all_free(local_env);
 	*tmp_input = tokenize->input;
 	all_free(&tokenize->tokens);

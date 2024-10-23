@@ -74,12 +74,12 @@ int	check_quotes_and_depth(t_For_tokenize *tokenize, \
 	return (SUCCESS);
 }
 
-void initialize_set(t_For_tokenize *tokenize, t_Set *set)
+void initialize_set(char *start, t_Set *set)
 {
 	set->depth = 0;
 	set->single_quote = 0;
 	set->double_quote = 0;
-	set->tmp_start = tokenize->start;
+	set->tmp_start = start;
 	set->tmp_end = NULL;
 }
 
@@ -87,7 +87,7 @@ char	*check_set(t_For_tokenize *tokenize, char ref)
 {
 	t_Set	set;
 
-	initialize_set(tokenize, &set);
+	initialize_set(tokenize->start, &set);
 	while (*set.tmp_start)
 	{
 		update_quotes_and_depth(&set.single_quote, &set.double_quote, \

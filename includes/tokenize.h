@@ -34,7 +34,7 @@ char	**tokenize_input(char **input, int *last_exit_code, \
 char ***local_env, char **tmp_input);
 int		read_line(char **line);
 int		handle_whitespace(t_For_tokenize *tokenize);
-void	initialize_set(t_For_tokenize *tokenize, t_Set *set);
+void	initialize_set(char *start, t_Set *set);
 void	update_quotes_and_depth(int *single_quote, int *double_quote, \
 int *depth, char c);
 int		check_quotes_and_depth(t_For_tokenize *tokenize, \
@@ -44,5 +44,5 @@ char	*rm_quotes(char *str);
 int		handle_special_tokens(t_For_tokenize *tokenize);
 int		rm_quote_buffer(t_For_tokenize *tokenize, char **buffer, char **cp_input);
 int		join_inputs(char **tokenize_input, char **new_input);
-void	set_ref_and_tmp_start(t_For_tokenize *tokenize, t_Set *set, char *ref);
+void	set_ref_and_tmp_start(char *start, t_Set *set, char *ref);
 #endif

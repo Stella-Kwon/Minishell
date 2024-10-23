@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 01:07:03 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 03:28:03 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:07:06 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	change_directory(t_Command *command)
 	else
 	{
 		if (errno == ENOTDIR)
-			cmd_error(&command, ": Not a directory\n", 1);
+			print_error_cd(command, ": Not a directory\n", 1);
 		else if (errno == ENOENT)
 			print_error_cd(command, ": No such file or directory\n", 1);
 		else

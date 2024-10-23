@@ -13,11 +13,12 @@
 
 #include "../../includes/minishell.h"
 
-void set_ref_and_tmp_start(t_For_tokenize *tokenize, t_Set *set, char *ref)
+void set_ref_and_tmp_start(char *start, t_Set *set, char *ref)
 {
-    if (*tokenize->start == '"')
+    *ref = '\0';
+    if (*start == '"')
         *ref = '"';
-    else if (*tokenize->start == '\'')
+    else if (*start == '\'')
         *ref = '\'';
     while (*set->tmp_start)
     {
@@ -25,23 +26,24 @@ void set_ref_and_tmp_start(t_For_tokenize *tokenize, t_Set *set, char *ref)
                                 &set->depth, *set->tmp_start);
         set->tmp_start++;
     }
-    set->tmp_start = tokenize->start;
+    set->tmp_start = start;
 }
 
 char *store_words(t_For_tokenize *tokenize)
 {
     t_Set set;
     char ref;
-    char *start = tokenize->start;
-
-    initialize_set(tokenize, &set);
+    char *start;
+    
+    start = tokenize->start;
+    initialize_set(tokenize->start, &set);
     while (*tokenize->start && !ft_isspace(*tokenize->start) && *tokenize->start != '(' &&
            *tokenize->start != ')' && *tokenize->start != '|' && *tokenize->start != '&' &&
            *tokenize->start != '>' && *tokenize->start != '<')
     {
         if (*tokenize->start == '"' || *tokenize->start == '\'')
         {
-            set_ref_and_tmp_start(tokenize, &set, &ref);
+            set_ref_and_tmp_start(tokenize->start, &set, &ref);
             if (check_quotes_and_depth(tokenize, &set, ref) == SUCCESS)
             {
                 tokenize->start = set.tmp_end;
