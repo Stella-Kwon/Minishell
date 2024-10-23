@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:57:20 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 20:15:13 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:45:57 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_Redirection	*create_redirection(void)
+t_Redirection	*create_redirection(char ***env)
 {
 	t_Redirection	*redir;
 
@@ -32,10 +32,11 @@ t_Redirection	*create_redirection(void)
 	redir->heredoc_i = 0;
 	redir->herestring_str = NULL;
 	redir->heredoc_buffsize = BUFFER_SIZE;
+	redir->env = env;
 	return (redir);
 }
 
-int	initialize_astnode(t_ASTNode **node, char ***tokens)
+int	initialize_astnode(t_ASTNode **node, char ***tokens, char ***env)
 {
 	if (node && (*node))
 	{
@@ -48,7 +49,7 @@ int	initialize_astnode(t_ASTNode **node, char ***tokens)
 	}
 	if (tokens && *tokens && **tokens && is_redirection(**tokens))
 	{
-		(*node)->redir = create_redirection();
+		(*node)->redir = create_redirection(env);
 		if (!(*node)->redir)
 			return (FAIL);
 		if (parsing_others(tokens, &(*node)->redir, TRUE) == FAIL)

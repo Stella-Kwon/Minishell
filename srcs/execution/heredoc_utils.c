@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:37:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 22:00:40 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:18:43 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	iterate_heredoc(t_ASTNode **node, int i)
 	{
 		exitcode = here_doc(node, (*node)->redir->heredoc_limiter[i]);
 	}
+	printf("exit : %d\n", exitcode);
 	if (exitcode != SUCCESS)
 		return (exitcode);
 	if ((*node)->redir->heredoc_infile != -2 && (*node)->redir->infile != -1)

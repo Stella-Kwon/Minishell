@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 21:59:10 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:38:31 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ int	node_command_without_cmd(t_ASTNode **node)
 	if ((*node)->redir->herestring_str)
 	{
 		if (here_string(&(*node)->redir) != SUCCESS)
+		{
+			// free_astnode(node);
 			return (FAIL);
+		}
 	}
+	// free_astnode(node);
 	return (SUCCESS);
 }
 
@@ -61,8 +65,7 @@ int	cmdnode_exec(t_ASTNode	**node)
 {
 	signal_set_exec();
 	if (g_interrupt_signal == TRUE)
-		(*node)->last_exitcode = 130;
-	g_interrupt_signal = FALSE;
+		g_interrupt_signal = FALSE;
 	(*node)->command->exitcode = (*node)->last_exitcode;
 	if (prepare_cmd(&(*node)->command, (*node)->last_exitcode) == FAIL)
 		return (FAIL);

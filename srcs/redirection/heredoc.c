@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:36:33 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/23 18:06:27 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/23 22:57:32 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int append_newline_and_free(char **input)
 
 void	check_empty_input_and_dollar_sign(char **new_input, t_ASTNode **node, char **copy_new)
 {
+	(void)node;
 	if (!*new_input)
 	{
 		free_one((void **)new_input);
@@ -36,7 +37,7 @@ void	check_empty_input_and_dollar_sign(char **new_input, t_ASTNode **node, char 
 		log_errors ("Failed to copy_new ft_strdup", *copy_new);
 	if ((*node)->command)
 	{
-		if (find_dollar_signs(new_input, *((*node)->command->env), (*node)->last_exitcode) == FAIL)
+		if (find_dollar_signs(new_input, *((*node)->redir->env), (*node)->last_exitcode) == FAIL)
 			log_errors("Command expansion failed", *new_input);
 	}
 }
@@ -93,10 +94,12 @@ int	heredoc_child(int fd, char *limiter, char **new_input, t_ASTNode **node)
 		exit(log_errors("Failed to rm_quotes in hereodc_child", ""));
 	}
 	handle_input(fd, rm_limiter, new_input, node);
-	free_one((void **)new_input);
+	if (new_input && *new_input)
+		free_one((void **)new_input);
 	free_one((void **)&rm_limiter);
+	if ((*node)->command)
+		free_exit(&(*node)->command, SUCCESS);
 	close(fd);
-	free_exit(&(*node)->command, SUCCESS);
 	exit(SUCCESS);
 }
 
@@ -105,18 +108,8 @@ int	parent_heredoc(t_ASTNode **node, pid_t pid)
 	int	status;
 	int	exitcode;
 
-	printf("tnals\n\n\n\n\n\n");
-	if (g_interrupt_signal == TRUE)
-	{
-		free_exit(&(*node)->command, SUCCESS);
-	}
 	if (waitpid(pid, &status, 0) == -1)
 	{
-		printf("tnals\n\n\n\n\n\n");
-		if (g_interrupt_signal == TRUE)
-		{
-			free_exit(&(*node)->command, SUCCESS);
-		}
 		exitcode = waitpid_status(status);
 		return (exitcode);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   restore_new_args.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:42:27 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/12 00:57:56 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/23 20:26:12 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,16 @@ static void	infile_in_row(char ***args, int *origin_i)
 		else if (access((*args)[*origin_i], F_OK) != 0)
 			break ;
 		else if (access((*args)[*origin_i], F_OK) == 0)
+		{
 			(*origin_i)++;
+			printf("we : %s\n", (*args)[*origin_i]);
+		}
+		if (!(*args)[*origin_i])
+		{
+			printf("null\n");
+			break ;
+		}
+		printf("we : %s\n", (*args)[*origin_i]);
 	}
 }
 
@@ -55,7 +64,10 @@ static void	loop_for_each(char ***args, int *origin_i)
 			strcmp((*args)[*origin_i], "<") == 0)
 			infile_in_row(args, origin_i);
 		if (!(*args)[*origin_i])
+		{
+			printf("null\n");
 			break ;
+		}
 		check_order(args, origin_i);
 		if (!(*args)[*origin_i])
 			break ;
@@ -70,6 +82,8 @@ static void	loop_for_each(char ***args, int *origin_i)
 			else
 				break ;
 		}
+		else
+			break;
 	}
 }
 

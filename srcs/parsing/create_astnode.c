@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_astnode.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 11:07:08 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/23 22:46:40 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
 		return (FAIL);
 	if (ast->redir == NULL)
 	{
-		ast->redir = create_redirection();
+		ast->redir = create_redirection(env);
 		if (!ast->redir)
 			return (FAIL);
 	}
@@ -51,7 +51,7 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 		log_errors("Failed to malloc node in create_astnode", "");
 		return (NULL);
 	}
-	if (initialize_astnode(&ast, tokens) == FAIL)
+	if (initialize_astnode(&ast, tokens, env) == FAIL)
 	{
 		free(ast);
 		return (NULL);

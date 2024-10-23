@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:55:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 22:10:34 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:55:19 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_command(t_Command **res)
 			free_one((void **)&(*res)->cmd);
 		if ((*res)->args)
 			all_free(&(*res)->args);
+		// if ((*res)->env)
+		// 	all_free((*res)->env);
 		free_one((void **)&(*res));
 	}
 }
@@ -36,6 +38,8 @@ void	free_redirection(t_Redirection **redir)
 		all_free(&(*redir)->heredoc_limiter);
 	if ((*redir)->herestring_str)
 		free_one((void **)&(*redir)->herestring_str);
+	if ((*redir)->env)
+		all_free((*redir)->env);
 	free_one((void **)&(*redir));
 }
 

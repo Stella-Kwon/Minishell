@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 18:02:03 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 11:53:23 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/23 22:46:11 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_ASTNode		*create_astnode(char ***tokens, t_ASTNode *left, \
 t_Command		*create_command(char ***tokens, char ***env);
 t_Command		*create_pipe_command(char ***env);
 t_Pipeline		*create_pipeline(void);
-t_Redirection	*create_redirection(void);
+t_Redirection	*create_redirection(char ***env);
 int				is_operator(char **tokens);
 int				operation_parsing(char ***tokens, t_ASTNode **left_node, \
 									char ***env);
@@ -36,7 +36,7 @@ int				heredoc_herestring_parsing(char ***args, \
 										t_Redirection **redirect);
 int				parsing_others(char ***args, \
 								t_Redirection **redirect, int start);
-int				initialize_astnode(t_ASTNode **node, char ***tokens);
+int				initialize_astnode(t_ASTNode **node, char ***tokens, char ***env);
 int				get_direction_type(char *token);
 int				remove_args_after_redirection(char ***args);
 int				is_redirection(char *token);

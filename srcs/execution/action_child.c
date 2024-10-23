@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:19:04 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 20:39:46 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:06:41 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,5 @@ int	action_child(t_Command **cmd, t_Redirection **redir)
 	}
 	if (execve((*cmd)->cmd, (*cmd)->args, *((*cmd)->env)) == -1)
 		free_exit(cmd, handle_error((*cmd)->cmd));
-	if ((*redir)->herestring_str)
-		free_exit(cmd, 0);
 	exit(0);
 }
