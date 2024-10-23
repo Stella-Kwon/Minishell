@@ -20,11 +20,11 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -g -fsanitize=address
 
-COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+#COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
-LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+#LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
 
-#LINK_FLAG = -lreadline -lncurses -L/
+LINK_FLAG = -lreadline -lncurses -L/
 
 
 SRCS_DIR = ./srcs/
