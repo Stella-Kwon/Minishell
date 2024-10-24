@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/23 22:07:18 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/24 22:17:29 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ t_ASTNode	*parse_and_execute(char **tokens, char ***env, int *last_exit_code)
 	}
 	if (!root)
 		return (NULL);
+	// printf("\n\n----------print start----------\n\n");
+	// print_astnode(root, 0); // AST 노드 출력
+	// printf("\n\n=================================\n\n");
 	if (execute(last_exit_code, &root) == NULL)
 		return (NULL);
 	return (root);

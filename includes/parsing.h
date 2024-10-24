@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 18:02:03 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/23 22:46:11 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/24 22:55:51 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_Command		*create_command(char ***tokens, char ***env);
 t_Command		*create_pipe_command(char ***env);
 t_Pipeline		*create_pipeline(void);
 t_Redirection	*create_redirection(void);
-int				is_operator(char **tokens);
+int				is_operator(char *tokens);
 int				operation_parsing(char ***tokens, t_ASTNode **left_node, \
 									char ***env);
 int				set_redirection(t_Redirection **redirect, char ***args, \

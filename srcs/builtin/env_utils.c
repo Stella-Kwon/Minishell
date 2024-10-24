@@ -74,7 +74,7 @@ void	print_strs(char **str_arr)
 	i = 0;
 	while (str_arr[i] != NULL)
 	{
-		if (ft_strchr(str_arr[i], '=') == 0)
+		if (ft_strchr(str_arr[i], '=') == NULL)
 		{
 			i++;
 			continue ;

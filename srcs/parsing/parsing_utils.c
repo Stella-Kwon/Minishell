@@ -6,17 +6,17 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 00:14:46 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/24 23:09:22 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_operator(char **tokens)
+int	is_operator(char *tokens)
 {
-	if (ft_strcmp(*tokens, "&&") == 0 || ft_strcmp(*tokens, "&") == 0 || \
-		ft_strcmp(*tokens, "||") == 0 || ft_strcmp(*tokens, "|") == 0 || \
-		ft_strcmp(*tokens, "(") == 0)
+	if (ft_strcmp(tokens, "&&") == 0 || ft_strcmp(tokens, "&") == 0 || \
+		ft_strcmp(tokens, "||") == 0 || ft_strcmp(tokens, "|") == 0 || \
+		ft_strcmp(tokens, "(") == 0)
 		return (1);
 	return (0);
 }

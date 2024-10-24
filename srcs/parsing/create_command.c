@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/24 18:15:46 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:22:06 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
 			if (!**tmp_args || is_redirection(**tmp_args) == FALSE)
 				break ;
 		}
-		// if (is_operator(*tmp_args) == 1)
-		// 	break;
 	}
 	return (SUCCESS);
 }
@@ -89,7 +87,7 @@ static int	command_initialize(t_Command *res, char ***tokens, \
 static int	create_command_args(t_Command *res, char ***tokens, \
 								int *buffersize, int *args_index)
 {
-	while (**tokens && !is_operator(*tokens))
+	while (**tokens && !is_operator(**tokens))
 	{
 		res->args[*args_index] = ft_strdup(**tokens);
 		if (!res->args[*args_index])
