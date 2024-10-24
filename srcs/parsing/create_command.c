@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:40:24 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 17:38:02 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/24 18:15:46 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
 			if (!**tmp_args || is_redirection(**tmp_args) == FALSE)
 				break ;
 		}
+		// if (is_operator(*tmp_args) == 1)
+		// 	break;
 	}
 	return (SUCCESS);
 }

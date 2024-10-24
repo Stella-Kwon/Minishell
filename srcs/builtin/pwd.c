@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:35 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/15 03:16:30 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:45:54 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	pwd(t_Command *command)
 	}
 	if (!getcwd(buf, MAXPATHLEN))
 	{
-		log_errors("Failed getcwd in pwd", "");
+		// log_errors("Failed getcwd in pwd", "");
 		free(buf);
 		command->exitcode = FAIL;
 		return (command->exitcode);

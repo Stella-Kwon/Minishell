@@ -74,6 +74,11 @@ void	print_strs(char **str_arr)
 	i = 0;
 	while (str_arr[i] != NULL)
 	{
+		if (ft_strchr(str_arr[i], '=') == 0)
+		{
+			i++;
+			continue ;
+		}
 		ft_putstr_fd(str_arr[i], STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		i++;

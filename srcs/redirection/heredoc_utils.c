@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 03:35:30 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/24 05:41:24 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/24 18:47:34 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ static int	append_newline_and_free(char **input)
 static void	check_empty_input_and_dollar_sign(char **new_input, \
 											t_ASTNode **node, char **copy_new)
 {
-	(void)node;
-	if (!*new_input)
-	{
-		free_one((void **)new_input);
-		exit(3);
-	}
 	*copy_new = ft_strdup(*new_input);
 	if (!*copy_new)
 		log_errors ("Failed to copy_new ft_strdup", *copy_new);
@@ -60,7 +54,7 @@ void	handle_input(int fd, char *limiter, char **new_input, t_ASTNode **node)
 	{
 		*new_input = readline("> ");
 		if (!(*new_input))
-			free3_exit(&copy_new, new_input, &limiter, (*node)->command);
+			exit(3);
 		check_empty_input_and_dollar_sign(new_input, node, &copy_new);
 		if (ft_strcmp(copy_new, limiter) == 0)
 		{

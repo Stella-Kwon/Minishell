@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 22:23:43 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/16 10:37:30 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:14:09 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*get_current_dir(char *prefix)
 	}
 	if (!getcwd(buf, MAXPATHLEN))
 	{
-		log_errors("Failed getcwd in cd utils2", "");
+		// log_errors("Failed getcwd in cd utils2", "");
 		free(buf);
 		return (NULL);
 	}

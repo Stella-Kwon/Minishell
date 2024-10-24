@@ -64,13 +64,13 @@ int	pipenode_exec(t_ASTNode **node)
 		return (log_errors("Failed to create pipe", strerror(errno)));
 	pipenode_left_exec_child(node, &exitcode);
 	close((*node)->pipeline->fd[1]);
+	pipenode_right_exec_child(node, &exitcode);
+	close((*node)->pipeline->fd[0]);
 	if (waitpid((*node)->pipeline->left_pid, &status, 0) == -1)
 	{
 		(*node)->last_exitcode = waitpid_status(status);
 		return ((*node)->last_exitcode);
 	}
-	pipenode_right_exec_child(node, &exitcode);
-	close((*node)->pipeline->fd[0]);
 	if (waitpid((*node)->pipeline->right_pid, &status, 0) == -1)
 	{
 		(*node)->last_exitcode = waitpid_status(status);
