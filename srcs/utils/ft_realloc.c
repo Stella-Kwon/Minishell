@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 13:26:48 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 11:32:51 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/24 23:41:52 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ char	**ft_realloc_double(char **token, int position, int *bufsize)
 				realloc_token[i] = token[i];
 				i++;
 			}
-			all_free(&token);
+			// all_free(&token);
+			free(token);
+			token = NULL;
 			token = realloc_token;
 		}
 	}

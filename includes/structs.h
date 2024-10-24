@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 15:42:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/23 22:40:08 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/24 21:59:39 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_astnode
 	struct s_astnode	*left;
 	struct s_astnode	*right;
 	int					last_exitcode;
+	int					pipecmd;
 }	t_ASTNode;
 
 typedef struct s_Dollar

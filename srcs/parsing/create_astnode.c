@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/23 22:46:40 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 00:42:22 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
 {
 	if (tokens && *tokens && **tokens)
 	{
+		if (is_operator(**tokens))
+			return (SUCCESS);
 		ast->command = create_command(tokens, env);
 		if (!ast->command)
 			return (FAIL);
@@ -70,74 +72,141 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 	return (ast);
 }
 
-static int	operation_and_or(char ***tokens, t_ASTNode **left_node, char ***env)
-{
-	t_ASTNode	*right_node;
+// static int	operation_and_or(char ***tokens, t_ASTNode **left_node, char ***env)
+// {
+// 	t_ASTNode	*right_node;
 
-	if (ft_strcmp(**tokens, "&&") == 0)
+// 	if (ft_strcmp(**tokens, "&&") == 0)
+// 	{
+// 		(*tokens)++;
+// 		right_node = create_astnode(tokens, NULL, NULL, env);
+// 		right_node->type = NODE_COMMAND;
+// 		if (!right_node)
+// 			return (log_errors("NULL in RIGHT NODE : &&", ""));
+// 		*left_node = create_astnode(NULL, *left_node, right_node, env);
+// 		(*left_node)->type = NODE_AND;
+// 	}
+// 	else if (ft_strcmp(**tokens, "||") == 0)
+// 	{
+// 		(*tokens)++;
+// 		right_node = create_astnode(tokens, NULL, NULL, env);
+// 		right_node->type = NODE_COMMAND;
+// 		if (!right_node)
+// 			return (log_errors("NULL in RIGHT NODE : ||", ""));
+// 		*left_node = create_astnode(NULL, *left_node, right_node, env);
+// 		(*left_node)->type = NODE_OR;
+// 	}
+// 	return (SUCCESS);
+// }
+
+// int	operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
+// {
+// 	t_ASTNode	*right_node;
+
+// 	if (ft_strcmp(**tokens, "&&") == 0 || ft_strcmp(**tokens, "||") == 0)
+// 	{
+// 		if (operation_and_or(tokens, left_node, env) == FAIL)
+// 			return (FAIL);
+// 	}
+// 	else if (ft_strcmp(**tokens, "|") == 0)
+// 	{
+// 		(*tokens)++;
+// 		right_node = create_astnode(tokens, NULL, NULL, env);
+// 		right_node->type = NODE_COMMAND;
+// 		if (!right_node)
+// 			return (log_errors("NULL in RIGHT NODE : | ", ""));
+// 		*left_node = create_astnode(NULL, *left_node, right_node, env);
+// 		(*left_node)->command = create_pipe_command(env);
+// 		(*left_node)->type = NODE_PIPE;
+// 	}
+// 	else
+// 		(*tokens)++;
+// 	return (SUCCESS);
+// }
+
+// t_ASTNode	*parse_to_nodes(char **tokens, char ***env)
+// {
+// 	t_ASTNode	*left_node;
+
+// 	if (!tokens || !*tokens)
+// 		return (NULL);
+// 	if (*tokens)
+// 	{
+// 		left_node = create_astnode(&tokens, NULL, NULL, env);
+// 		if (!left_node)
+// 			return (NULL);
+// 		left_node->type = NODE_COMMAND;
+// 	}
+// 	int i;
+// 	i = 0;
+// 	(void)i;
+// 	while (*tokens)
+// 	{
+// 		if (operation_parsing(&tokens, &left_node, env) == FAIL)
+// 			return (NULL);
+// 	}
+// 	return (left_node);
+// }
+
+t_ASTNode *parse_pipe_operations(char ***tokens, char ***env)
+{
+	t_ASTNode *left_node;
+
+	if (!tokens || !*tokens || !**tokens)
+		return (NULL);
+
+	left_node = create_astnode(tokens, NULL, NULL, env);
+	if (!left_node)
+		return (NULL);
+	left_node->type = NODE_COMMAND;
+	while (*tokens && **tokens && ft_strcmp(**tokens, "|") == 0)
 	{
 		(*tokens)++;
-		right_node = create_astnode(tokens, NULL, NULL, env);
-		right_node->type = NODE_COMMAND;
+		t_ASTNode *right_node = create_astnode(tokens, NULL, NULL, env);
 		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : &&", ""));
-		*left_node = create_astnode(NULL, *left_node, right_node, env);
-		(*left_node)->type = NODE_AND;
-	}
-	else if (ft_strcmp(**tokens, "||") == 0)
-	{
-		(*tokens)++;
-		right_node = create_astnode(tokens, NULL, NULL, env);
+			return (NULL);
 		right_node->type = NODE_COMMAND;
-		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : ||", ""));
-		*left_node = create_astnode(NULL, *left_node, right_node, env);
-		(*left_node)->type = NODE_OR;
+		left_node = create_astnode(NULL, left_node, right_node, env);
+		left_node->type = NODE_PIPE;
 	}
-	return (SUCCESS);
+	return (left_node);
 }
 
-int	operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
+int and_or_operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
 {
 	t_ASTNode	*right_node;
-
+	int			node_type;
+	
+	if (!tokens || !*tokens || !**tokens)
+		return (FAIL);
 	if (ft_strcmp(**tokens, "&&") == 0 || ft_strcmp(**tokens, "||") == 0)
 	{
-		if (operation_and_or(tokens, left_node, env) == FAIL)
-			return (FAIL);
-	}
-	else if (ft_strcmp(**tokens, "|") == 0)
-	{
+		if (ft_strcmp(**tokens, "&&") == 0)
+			node_type = NODE_AND;
+		else if (ft_strcmp(**tokens, "||") == 0)
+			node_type = NODE_OR;
 		(*tokens)++;
-		right_node = create_astnode(tokens, NULL, NULL, env);
-		right_node->type = NODE_COMMAND;
+		right_node = parse_pipe_operations(tokens, env);
 		if (!right_node)
-			return (log_errors("NULL in RIGHT NODE : | ", ""));
+			return (log_errors("NULL in RIGHT NODE", ""));
 		*left_node = create_astnode(NULL, *left_node, right_node, env);
-		(*left_node)->command = create_pipe_command(env);
-		(*left_node)->type = NODE_PIPE;
+		(*left_node)->type = node_type;
 	}
-	else
-		(*tokens)++;
 	return (SUCCESS);
 }
 
-t_ASTNode	*parse_to_nodes(char **tokens, char ***env)
+t_ASTNode *parse_to_nodes(char **tokens, char ***env)
 {
-	t_ASTNode	*left_node;
+	t_ASTNode *left_node;
 
 	if (!tokens || !*tokens)
 		return (NULL);
-	if (*tokens)
-	{
-		left_node = create_astnode(&tokens, NULL, NULL, env);
-		if (!left_node)
-			return (NULL);
-		left_node->type = NODE_COMMAND;
-	}
+	left_node = parse_pipe_operations(&tokens, env);
+	if (!left_node)
+		return (NULL);
 	while (*tokens)
 	{
-		if (operation_parsing(&tokens, &left_node, env) == FAIL)
+		if (and_or_operation_parsing(&tokens, &left_node, env) == FAIL)
 			return (NULL);
 	}
 	return (left_node);
