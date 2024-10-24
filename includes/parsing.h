@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/21 18:02:03 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/06 21:16:36 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/09/21 18:02:03 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/24 22:55:51 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,40 @@
 
 # define INVALID -100
 
-t_ASTNode		*parse_to_nodes(char **tokens, char **env);
+t_ASTNode		*parse_to_nodes(char **tokens, char ***env);
 t_ASTNode		*create_astnode(char ***tokens, t_ASTNode *left, \
-t_ASTNode *right, char **env);
-t_Command		*create_command(char ***tokens, char **env);
+								t_ASTNode *right, char ***env);
+t_Command		*create_command(char ***tokens, char ***env);
+t_Command		*create_pipe_command(char ***env);
 t_Pipeline		*create_pipeline(void);
 t_Redirection	*create_redirection(void);
-int				is_operator(char **tokens);
+int				is_operator(char *tokens);
 int				operation_parsing(char ***tokens, t_ASTNode **left_node, \
-char **env);
-int				set_redirection(t_Redirection **redirect, char *filename, \
-int direction_type);
+									char ***env);
+int				set_redirection(t_Redirection **redirect, char ***args, \
+								int direction_type);
 int				set_heredoc(t_Redirection **redirect, char *limiter);
+void			handle_input(int fd, char *limiter, char **new_input, \
+								t_ASTNode **node);
 int				set_herestring(t_Redirection **redirect, char *string);
-int				redirection_parsing(char ***args, t_Redirection **redirect, \
-int start);
+int				redirection_parsing(char ***args, t_Redirection **redirect);
 int				heredoc_herestring_parsing(char ***args, \
-t_Redirection **redirect, int start);
+										t_Redirection **redirect);
 int				parsing_others(char ***args, \
-t_Redirection **redirect, int start);
-void			free_command(t_Command **res);
-void			free_astnode(t_ASTNode **node);
-void			print_astnode(t_ASTNode *node, int depth);
+								t_Redirection **redirect, int start);
 int				initialize_astnode(t_ASTNode **node, char ***tokens);
 int				get_direction_type(char *token);
-void			remove_args_after_redirection(char ***args);
-int				is_redirection(char **token);
+int				remove_args_after_redirection(char ***args);
+int				is_redirection(char *token);
+int				put_last_open_infile(t_Redirection **redirect, char ***args, \
+									char **filename);
+int				rm_quote_filename(t_Redirection **redirect, char ***args, \
+									char **filename);
+int				restore_new_args(char ***args, t_rm_args *rm);
+void			free_command(t_Command **res);
+void			free_redirection(t_Redirection **redir);
+void			free_astnode(t_ASTNode **node);
+void			free_exit(t_Command **command, int exitcode);
+void			print_astnode(t_ASTNode *node, int depth);
+
 #endif

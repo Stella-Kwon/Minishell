@@ -5,193 +5,123 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 17:30:46 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/09 17:30:47 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/10/10 01:07:03 by hlee-sun          #+#    #+#             */
+/*   Updated: 2024/10/22 22:07:06 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_and_set_path(char **args, char ***envp_ptr)
+static char	**init_args_new(void)
 {
-	char	*path;
-	char	*home;
+	char	**args_new;
 
-	home = NULL;
-	path = NULL;
-	if (args[1][0] == '-' && args[1][1] == '\0')
+	args_new = ft_calloc(3, sizeof(*args_new));
+	if (!args_new)
 	{
-		// free(args[1]);
-		path = get_env_value("OLDPWD", *envp_ptr);
-		if (path == NULL)
-		{
-			perror("Error: OLDPWD not set");
-			return ;
-		}
-		args[1] = ft_strdup(path);
-		if (args[1] == NULL)
-		{
-			perror("Error: strdup failed");
-			return ;
-		}
+		log_errors("Failed calloc in cd", "");
+		return (NULL);
 	}
-	else if (args[1][0] == '~' && (args[1][1] == '\0' || \
-			args[1][1] == '/'))
+	args_new[0] = ft_strdup("export");
+	if (!args_new[0])
 	{
-		path = get_env_value("HOME", *envp_ptr);
-		if (path == NULL)
-		{
-			perror("Error: HOME not set");
-			return ;
-		}
-		home = ft_strjoin(home, args[1] + 1);
-		if (home == NULL)
-		{
-			perror("Error: strjoin failed");
-			return ;
-		}
-		args[1] = home;
+		log_errors("Failed strdup in cd", "");
+		free(args_new);
+		return (NULL);
 	}
+	return (args_new);
 }
 
-static void	currdir_to_old_pwd(char **args, char ***envp_ptr)
+static void	export_paths_and_free(t_Command *command, char **args_new, \
+									char *path_old, char *path_new)
 {
-	char	*here;
-	char	*path;
-	char	*tmp;
+	char	**args_old;
 
-	here = ft_calloc(1, MAXPATHLEN);
-	if (here == NULL)
-	{
-		perror("Error: calloc failed");
-		return ;
-	}
-	if (getcwd(here, MAXPATHLEN) == NULL)
-	{
-		perror("Error: getcwd failed");
-		free(here);
-		return ;
-	}
-	path = ft_strjoin("OLDPWD=", here);
-	free(here);
-	if (path == NULL)
-	{
-		perror("Error: strjoin failed");
-		return ;
-	}
-	tmp = args[1];
-	args[1] = path;
-	export(args, envp_ptr);
-	free(path);
-	args[1] = tmp; // 원래 args[1] 복원
+	args_new[1] = path_old;
+	args_old = command->args;
+	command->args = args_new;
+	export(command);
+	free(args_new[1]);
+	args_new[1] = path_new;
+	export(command);
+	command->args = args_old;
+	free(args_new[0]);
+	free(args_new[1]);
+	free(args_new);
 }
 
-static void	go_home(char ***envp_ptr)
+static void	go_home(t_Command *command)
 {
 	char	*path_old;
 	char	*path_new;
 	char	**args_new;
 
-	if (chdir(get_env_value("HOME", *envp_ptr)) == SUCCESS)
+	path_old = get_current_dir("OLDPWD=");
+	if (!path_old)
+		return ;
+	if (chdir(get_env_value("HOME", *(command->env))) == SUCCESS)
 	{
-		args_new = ft_calloc(3, sizeof(*args_new));
-		if (args_new == NULL)
-		{
-			perror("Error: calloc failed");
+		args_new = init_args_new();
+		if (!args_new)
 			return ;
-		}
-		args_new[0] = ft_strdup("export");
-		if (args_new[0] == NULL)
+		path_new = ft_strjoin("PWD=", get_env_value("HOME", *(command->env)));
+		if (!path_new)
 		{
-			perror("Error: strdup failed");
-			free(args_new);
-			return ;
-		}
-		path_old = ft_strjoin("PWD=", get_env_value("HOME", *envp_ptr));
-		if (path_old == NULL)
-		{
-			perror("Error: strjoin failed");
-			free(args_new[0]);
-			free(args_new);
-			return ;
-		}
-		path_new = ft_strjoin("OLDPWD=", get_env_value("HOME", *envp_ptr));
-		if (path_new == NULL)
-		{
-			perror("Error: strjoin failed");
+			log_errors("Failed strjoin in cd, go home", "");
 			free(path_old);
 			free(args_new[0]);
 			free(args_new);
 			return ;
 		}
-		args_new[1] = path_old;
-		export(args_new, envp_ptr);
-		free(args_new[1]);
-		args_new[1] = path_new;
-		export(args_new, envp_ptr);
-		free(args_new[0]);
-		free(args_new[1]);
-		free(args_new);
+		export_paths_and_free(command, args_new, path_old, path_new);
 	}
 }
 
-static char	*get_current_dir(void)
+static int	change_directory(t_Command *command)
 {
-	char	*path;
-	char	*buf;
+	char	*new_dir;
 
-	buf = ft_calloc(1, MAXPATHLEN);
-	if (buf == NULL)
+	if (chdir(command->args[1]) == SUCCESS)
 	{
-		perror("Error: calloc failed");
-		return (NULL);
-	}
-	if (getcwd(buf, MAXPATHLEN) == NULL)
-	{
-		perror("Error: getcwd failed");
-		free(buf);
-		return (NULL);
-	}
-	path = ft_strjoin("PWD=", buf);
-	free(buf);
-	if (path == NULL)
-	{
-		perror("Error: strjoin failed");
-		return (NULL);
-	}
-	return (path);
-}
-
-int	cd(char **args, char ***envp_ptr)
-{
-	int		status;
-	char 	*new_dir;
-
-	status = SUCCESS;
-	if (args[1] == NULL)
-		go_home(envp_ptr);
-	else
-	{
-		if (args[1][0] == '-' || args[1][0] == '~')
-			check_and_set_path(args, envp_ptr);
-		currdir_to_old_pwd(args, envp_ptr);
-		if (chdir(args[1]) == SUCCESS)
-		{
-			new_dir = get_current_dir();
-			if (new_dir == NULL)
-				status = FAIL;
-			else
-			{
-				//free(args[1]);
-				args[1] = new_dir;
-				export(args, envp_ptr);
-			}
-		}
+		new_dir = get_current_dir("PWD=");
+		if (!new_dir)
+			return (FAIL);
 		else
 		{
-			print_error_cd(args[1]);
-			status = FAIL;
+			free(command->args[1]);
+			command->args[1] = new_dir;
+			export(command);
 		}
 	}
-	return (status);
+	else
+	{
+		if (errno == ENOTDIR)
+			print_error_cd(command, ": Not a directory\n", 1);
+		else if (errno == ENOENT)
+			print_error_cd(command, ": No such file or directory\n", 1);
+		else
+			cmd_error(&command, ": cd failed\n", 1);
+		return (FAIL);
+	}
+	return (SUCCESS);
+}
+
+int	cd(t_Command *command)
+{
+	if (command->args[1] == NULL || command->args[1][0] == '\0')
+		go_home(command);
+	else if (command->args[2] != NULL)
+		return (cmd_error(&command, ": too many arguments\n", 1));
+	else
+	{
+		if (command->args[1][0] == '-' || command->args[1][0] == '~')
+		{
+			if (check_and_set_path(command) == FAIL)
+				return (FAIL);
+		}
+		currdir_to_old_pwd(command);
+		if (change_directory(command) == FAIL)
+			return (FAIL);
+	}
+	return (SUCCESS);
 }

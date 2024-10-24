@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/24 04:44:20 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/09 17:11:40 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/09/24 04:44:20 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/22 22:00:45 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,26 @@ int		error_exitcode(t_Command **command, char *s, int error_nb);
 int		cmd_error(t_Command **command, char *s, int error_nb);
 int		check_path(char *path, t_Command **command);
 int		check_cmd_script(t_Command **command);
-int 	prepare_cmd(t_Command **command, int last_exit_code);
-int		execute_cmd(t_Command **command);
+int		prepare_cmd(t_Command **command, int last_exit_code);
+int		find_command_path(t_Command **command);
 int		check_cmd_error(t_Command **command);
-int		action_parents(t_Redirection **redir, t_Pipeline **pipeline);
+int		action_parents(t_Redirection **redir, t_Pipeline **pipeline, \
+						t_Command **cmd);
 int		action_child(t_Command **cmd, t_Redirection **redir);
-int		common_pre_child(t_Redirection **redir);
+int		action_builtin(t_Command **cmd, t_Redirection **redir);
+int		common_pre_child(t_Redirection **redir, t_Command **cmd);
 int		heredoc_check(t_ASTNode **node);
 int		ast_node_execution(t_ASTNode **node);
 int		andnode_exec(t_ASTNode **node);
 int		ornode_exec(t_ASTNode **node);
 int		cmdnode_exec(t_ASTNode **node);
-int		pipe_action_parents(t_Command *cmd, t_Pipeline *pipeline);
-int		pipe_execute_command(t_ASTNode **node);
 int		pipenode_exec(t_ASTNode **node);
-int		execute_node(t_ASTNode **node);
-int		check_null_cmd(t_Command *command);
-void	set_last_exitcode(t_ASTNode	**node, int last_exit_code);
-char	*ft_strcpy(char *dst, const char *src);
 int		dup_and_close(int oldfd, int newfd);
+int		find_and_check_path(t_Command **command, char **path);
+int		print_error_redir(t_Command **cmd, char *filename, int redir_errno);
+void	set_last_exitcode_and_root(t_ASTNode **node, int last_exit_code, \
+									t_ASTNode **root);
+void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode);
+int		check_heredoc(t_ASTNode **node, int exitcode);
 
 #endif
-

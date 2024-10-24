@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:30:54 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/09 17:30:56 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:40:23 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,27 @@ static void	print_args(char **args, size_t i)
 	}
 }
 
-int	echo(char **args, char ***envp_ptr)
+int	echo(t_Command *command)
 {
 	int		n_option;
+	size_t	arg_index;
 
-	(void)envp_ptr;
 	n_option = false;
-	if (args[1] != NULL)
+	if (command->args == NULL || command->args[1] == NULL)
 	{
-		if (is_n(args[1]) == true)
-			n_option = true;
-		print_args(args, 1 + n_option);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		command->exitcode = SUCCESS;
+		return (command->exitcode);
 	}
+	arg_index = 1;
+	if (is_n(command->args[1]) == true)
+	{
+		n_option = true;
+		arg_index = 2;
+	}
+	print_args(command->args, arg_index);
 	if (!n_option)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (SUCCESS);
+	command->exitcode = SUCCESS;
+	return (command->exitcode);
 }
-
-char* process_quotes(char *input) {
-    size_t len = strlen(input);
-    char *result = malloc(len + 1);
-    if (!result) return NULL;
-
-    size_t j = 0;
-    for (size_t i = 0; i < len; i++) {
-        if (input[i] != '\'' && input[i] != '\"') {
-            result[j++] = input[i];  // 따옴표가 아니면 복사
-        }
-    }
-    result[j] = '\0';
-    return result;
-}
-

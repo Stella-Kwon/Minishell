@@ -1,7 +1,0 @@
-version: '2'
-syncs:
-  myapp-sync:  # 이 이름이 Docker Compose에서 사용되는 이름과 일치해야 합니다.
-    src: './'  # 호스트에서 동기화할 경로 (현재 디렉토리)
-    sync_host_port: 10860  # 호스트 포트 설정
-    sync_strategy: 'rsync'  # 동기화 전략
-    sync_excludes: ['.git']  # 동기화에서 제외할 파일/디렉토리

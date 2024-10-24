@@ -13,6 +13,11 @@ else
 		"pipes"
 		"redirects"
 		"extras"
+		"not_mandatory"
+		"mandatory"
+		"other_test"
+		"syntax"
+		"syntax_error"
 	)
 fi
 
@@ -112,6 +117,7 @@ chmod 666 ./test_files/invalid_permission
 rm -rf ./outfiles
 rm -rf ./mini_outfiles
 rm -rf ./bash_outfiles
+rm "3" "3.txt" "4.txt" 5.txt 7.txt 8.txt 13.txt 44.txt echo out .heredoc.tmp outfile tnals
 
 printf $PURPLE
 printf $BOLD

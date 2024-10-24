@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 03:40:24 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/07 22:23:28 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/09/18 03:40:24 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/24 23:22:06 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,19 @@ int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
 	i = 0;
 	while (**tmp_args)
 	{
-		i = redirection_parsing(tmp_args, redirect, start);
+		i = redirection_parsing(tmp_args, redirect);
 		if (i == FAIL)
 			return (FAIL);
-		if (i == 2)
-			return (SUCCESS);
+		if (start == false)
+		{
+			while (**tmp_args && is_redirection(**tmp_args) == FALSE)
+				(*tmp_args)++;
+		}
+		else
+		{
+			if (!**tmp_args || is_redirection(**tmp_args) == FALSE)
+				break ;
+		}
 	}
 	return (SUCCESS);
 }
@@ -33,13 +41,12 @@ int	parsing_others(char ***args, t_Redirection **redirect, int start)
 	int		i;
 	char	**tmp_args;
 
-	i = 0;
 	if (!args || !*args || !**args)
 		return (SUCCESS);
 	if (start == FALSE)
 	{
 		tmp_args = *args;
-		while (tmp_args && *tmp_args && is_redirection(tmp_args) == FALSE)
+		while (tmp_args && *tmp_args && is_redirection(*tmp_args) == FALSE)
 			tmp_args++;
 		if (!tmp_args || !*tmp_args)
 			return (SUCCESS);
@@ -57,7 +64,7 @@ int	parsing_others(char ***args, t_Redirection **redirect, int start)
 }
 
 static int	command_initialize(t_Command *res, char ***tokens, \
-int buffersize, char **env)
+							int buffersize, char ***env)
 {
 	res->cmd = ft_strdup(**tokens);
 	if (!res->cmd)
@@ -78,9 +85,9 @@ int buffersize, char **env)
 }
 
 static int	create_command_args(t_Command *res, char ***tokens, \
-int *buffersize, int *args_index)
+								int *buffersize, int *args_index)
 {
-	while (**tokens && !is_operator(*tokens))
+	while (**tokens && !is_operator(**tokens))
 	{
 		res->args[*args_index] = ft_strdup(**tokens);
 		if (!res->args[*args_index])
@@ -92,7 +99,7 @@ int *buffersize, int *args_index)
 		}
 		(*tokens)++;
 		(*args_index)++;
-		res->args = ft_realloc(res->args, *args_index, buffersize);
+		res->args = ft_realloc_double(res->args, *args_index, buffersize);
 		if (!res->args)
 		{
 			log_errors("Failed to realloc res->args in create_command", "");
@@ -104,7 +111,7 @@ int *buffersize, int *args_index)
 	return (SUCCESS);
 }
 
-t_Command	*create_command(char ***tokens, char **env)
+t_Command	*create_command(char ***tokens, char ***env)
 {
 	t_Command	*res;
 	int			buffersize;
@@ -126,5 +133,6 @@ t_Command	*create_command(char ***tokens, char **env)
 		return (NULL);
 	res->exitcode = -1;
 	res->wstatus = 0;
+	res->root_node = NULL;
 	return (res);
 }

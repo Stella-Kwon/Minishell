@@ -6,32 +6,33 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:35 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/09 17:31:37 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:45:54 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	pwd(char **args, char ***envp_ptr)
+int	pwd(t_Command *command)
 {
 	char	*buf;
 
-	(void)args;
-	(void)envp_ptr;
 	buf = ft_calloc(1, MAXPATHLEN);
-	if (buf == NULL)
+	if (!buf)
 	{
-		perror("Error: malloc failed");
-		return (FAIL);
+		log_errors("Failed calloc in pwd", "");
+		command->exitcode = FAIL;
+		return (command->exitcode);
 	}
-	if (getcwd(buf, MAXPATHLEN) == NULL)
+	if (!getcwd(buf, MAXPATHLEN))
 	{
-		perror("Error: getcwd failed");
+		// log_errors("Failed getcwd in pwd", "");
 		free(buf);
-		return (FAIL);
+		command->exitcode = FAIL;
+		return (command->exitcode);
 	}
 	ft_putstr_fd(buf, STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	free(buf);
-	return (SUCCESS);
+	command->exitcode = SUCCESS;
+	return (command->exitcode);
 }

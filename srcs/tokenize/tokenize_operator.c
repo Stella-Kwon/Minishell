@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_operator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suminkwon <suminkwon@student.42.fr>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/14 18:09:30 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/08 01:06:59 by suminkwon        ###   ########.fr       */
+/*   Created: 2024/09/14 18:09:30 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/20 16:12:30 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	error_handling_in_middle_operator(t_For_tokenize *tokenize, \
+int len, int *i)
+{
+	if ((*(tokenize->start + len + *i) == '<' && \
+		*(tokenize->start + len + *i + 1) == '<' && \
+		*(tokenize->start + len + *i + 1) == '<'))
+		*i += 3;
+	else if ((*(tokenize->start + len + *i) == '<' && \
+			*(tokenize->start + len + *i + 1) == '<'))
+		*i += 2;
+	else if ((*(tokenize->start + len + *i) == '>' && \
+			*(tokenize->start + len + *i + 1) == '>'))
+		*i += 2;
+	else if ((*(tokenize->start + len + *i) == '<') || \
+			(*(tokenize->start + len + *i) == '>'))
+		(*i)++;
+}
 
 int	handle_pipe_and_or(t_For_tokenize *tokenize)
 {
@@ -22,12 +40,19 @@ int	handle_pipe_and_or(t_For_tokenize *tokenize)
 		len = 2;
 	else
 		len = 1;
-	while (ft_isspace(*(tokenize->start + (++i))))
-		;
-	if (*(tokenize->start + len + i - 1) == '\0')
+	while (ft_isspace(*(tokenize->start + len + i)))
+		i++;
+	if (*(tokenize->start + len + i) == '\0')
 	{
-		if (check_operation_next(tokenize, 0) == FAIL)
-			return (FAIL);
+		i = check_operation_next(tokenize);
+		if (i != SUCCESS)
+			return (i);
+	}
+	else
+	{
+		error_handling_in_middle_operator(tokenize, len, &i);
+		if (redirect_operation_error(tokenize->start + len + i) != SUCCESS)
+			return (2);
 	}
 	return (handle_token(tokenize, len));
 }
@@ -42,12 +67,19 @@ int	handle_and_and_background(t_For_tokenize *tokenize)
 		len = 2;
 	else
 		len = 1;
-	while (ft_isspace(*(tokenize->start + (++i))))
-		;
+	while (ft_isspace(*(tokenize->start + len + i)))
+		i++;
 	if (*(tokenize->start + len + i) == '\0')
 	{
-		if (check_operation_next(tokenize, 0) == FAIL)
-			return (FAIL);
+		i = check_operation_next(tokenize);
+		if (i != SUCCESS)
+			return (i);
+	}
+	else
+	{
+		error_handling_in_middle_operator(tokenize, len, &i);
+		if (redirect_operation_error(tokenize->start + len + i) != SUCCESS)
+			return (2);
 	}
 	return (handle_token(tokenize, len));
 }
@@ -64,6 +96,10 @@ int	handle_token(t_For_tokenize *tokenize, int len)
 		return (FAIL);
 	}
 	tokenize->token_count++;
+	tokenize->tokens = ft_realloc_double(tokenize->tokens, \
+	tokenize->token_count, &tokenize->buffsize);
+	if (!tokenize->tokens)
+		return (log_errors("Failed to \"reallocate\" memory for tokens", ""));
 	tokenize->start += len;
 	return (SUCCESS);
 }
@@ -80,6 +116,10 @@ int	handle_set(t_For_tokenize *tokenize, char ref)
 		return (FAIL);
 	}
 	tokenize->token_count++;
+	tokenize->tokens = ft_realloc_double(tokenize->tokens, \
+	tokenize->token_count, &tokenize->buffsize);
+	if (!tokenize->tokens)
+		return (log_errors("Failed to \"reallocate\" memory for tokens", ""));
 	if (*tokenize->start == '(')
 	{
 		while (ft_isspace(*tokenize->start))

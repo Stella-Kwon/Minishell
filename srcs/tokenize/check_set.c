@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_set.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sukwon <sukwon@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 22:11:48 by sukwon            #+#    #+#             */
-/*   Updated: 2024/10/05 08:42:19 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/09/13 22:11:48 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/17 21:59:27 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*store_inside_set(char *tmp_start, char *tmp_end)
 		return (NULL);
 	}
 	st = tmp_start;
-	end = tmp_end;
+	end = tmp_end - 1;
 	offset = end - st;
 	tmp = ft_strndup(tmp_start, offset + 1);
 	if (!tmp)
@@ -36,79 +36,66 @@ char	*store_inside_set(char *tmp_start, char *tmp_end)
 	return (tmp);
 }
 
-void	update_quotes_and_depth(int *single_quote, int *double_quote,
-	int *depth, char c)
+void	check_quotes_in_loop(t_Set *set, char ref, int *count)
 {
-	if (c == '\'' && !*double_quote)
-		*single_quote = !*single_quote;
-	else if (c == '"' && !*single_quote)
-		*double_quote = !*double_quote;
-	else if (!*single_quote && !*double_quote)
+	while (*set->tmp_end)
 	{
-		if (c == '(')
-			(*depth)++;
-		else if (c == ')')
-			(*depth)--;
+		if (*set->tmp_end == ref)
+			(*count)++;
+		if ((*count % 2) == 0 && *set->tmp_end == ref)
+		{
+			while (ft_isspace(*(set->tmp_end)) == FALSE && *set->tmp_end)
+			{
+				set->tmp_end++;
+			}
+			break ;
+		}
+		set->tmp_end++;
 	}
 }
 
-static int	check_quotes_and_depth(t_For_tokenize *tokenize, t_Set *set, \
-									char ref)
+int	check_quotes_and_depth(t_For_tokenize *tokenize, \
+									t_Set *set, char ref)
 {
-	if (set->depth > 0 || set->single_quote || set->double_quote)
+	int	count;
+
+	count = 0;
+	if (set->depth == 0 || !set->single_quote || !set->double_quote)
 	{
-		readline_again(tokenize, set);
-		if (!tokenize->input)
-			return (FAIL);
-		tokenize->start = tokenize->input + strlen(tokenize->input);
+		if (*set->tmp_start == ref)
+			count++;
+		set->tmp_end = tokenize->start + 1;
+		check_quotes_in_loop(set, ref, &count);
+		tokenize->start = set->tmp_end;
 	}
 	else
-	{
-		set->tmp_end = tokenize->start + 1;
-		while (*set->tmp_end && * set->tmp_end != ref)
-			set->tmp_end++;
-		while (*set->tmp_end)
-		{
-			set->tmp_end++;
-			if (ft_isspace(*set->tmp_end))
-				break;
-		}
-		tokenize->start = set->tmp_end + 1;
-	}
+		return (FAIL);
 	return (SUCCESS);
 }
 
-static void	check_set_start(t_Set *set, t_For_tokenize *tokenize)
+void	initialize_set(char *start, t_Set *set)
 {
-	if (*set->tmp_start == '(' || *set->tmp_end == ')')
-	{
-		tokenize->tokens[tokenize->token_count] = ft_strdup("(");
-		tokenize->tokens[tokenize->token_count + 1] = ft_strdup(")");
-		tokenize->token_count += 2;
-		set->tmp_start += 1;
-		set->tmp_end -= 1;
-	}
+	set->depth = 0;
+	set->single_quote = 0;
+	set->double_quote = 0;
+	set->tmp_start = start;
+	set->tmp_end = NULL;
 }
 
 char	*check_set(t_For_tokenize *tokenize, char ref)
 {
 	t_Set	set;
 
-	set.depth = 0;
-	set.single_quote = 0;
-	set.double_quote = 0;
-	set.tmp_start = tokenize->start;
-	set.tmp_end = NULL;
+	initialize_set(tokenize->start, &set);
 	while (*set.tmp_start)
 	{
-		update_quotes_and_depth(&set.single_quote, &set.double_quote,
-			&set.depth, *set.tmp_start);
+		update_quotes_and_depth(&set.single_quote, &set.double_quote, \
+								&set.depth, *set.tmp_start);
 		set.tmp_start++;
 	}
 	set.tmp_start = tokenize->start;
 	if (check_quotes_and_depth(tokenize, &set, ref) == FAIL)
 		return (NULL);
-	check_set_start(&set, tokenize);
 	tokenize->tokens[tokenize->token_count] = store_inside_set(set.tmp_start, \
 																set.tmp_end);
 	if (!tokenize->tokens[tokenize->token_count])

@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 10:15:52 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/09 01:39:23 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:04:53 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 # define LIBFT_H
 
 # include <unistd.h>
-# include <string.h>
 # include <stdint.h>
+# include <string.h>
 # include <stdlib.h>
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 50
 # endif
-
-#ifndef OPEN_MAX
-#define OPEN_MAX 1024
-#endif
 
 typedef struct s_list
 {

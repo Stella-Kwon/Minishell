@@ -6,65 +6,94 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:41 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/09 17:31:43 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/15 03:17:17 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void remove_env_var(char **args, char **new, char ***envp_ptr)
+static int	fill_new_env(char **new, t_Command *command, size_t i, size_t *j)
 {
-	size_t i;
-	size_t j;
-	size_t len;
-	char **var_name;
+	size_t	equal_pos;
+	char	*var_name;
 
-	len = get_str_len(*envp_ptr);
+	equal_pos = 0;
+	while ((*(command->env))[i][equal_pos] && \
+			(*(command->env))[i][equal_pos] != '=')
+		equal_pos++;
+	var_name = ft_strndup((*(command->env))[i], equal_pos);
+	if (!var_name)
+		return (log_errors("Failed strndup in remove_env_var", ""));
+	if (ft_strcmp(var_name, command->args[1]) != 0)
+	{
+		new[*j] = ft_strdup((*(command->env))[i]);
+		if (!(new[*j]))
+		{
+			free(var_name);
+			return (log_errors("Failed strndup in remove_env_var", ""));
+		}
+		(*j)++;
+	}
+	free(var_name);
+	return (SUCCESS);
+}
+
+static int	remove_env_var(t_Command *command, char **new)
+{
+	size_t	i;
+	size_t	j;
+	size_t	len;
+
+	len = get_str_len(*(command->env));
 	i = 0;
 	j = 0;
 	while (i < len)
 	{
-		var_name = ft_split((*envp_ptr)[i], '=');
-		if (ft_strncmp(var_name[0], args[1], ft_strlen(var_name[0]) + 1) != 0)
-		{
-			new[j] = (*envp_ptr)[i];
-			j++;
-		}
-		else
-		{
-			//free((*envp_ptr)[i]);
-		}
-		delete_str_array(&var_name);
+		if (fill_new_env(new, command, i, &j) == FAIL)
+			return (FAIL);
 		i++;
 	}
-	new[j] = NULL;  // 새로운 배열의 끝을 NULL로 설정합니다.
+	return (SUCCESS);
 }
 
-int	unset(char **args, char ***envp_ptr)
+static int	process_unset_args(t_Command *command)
 {
-	char **new_envp;
-	size_t len;
+	size_t	len;
+	char	**new_envp;
 
-	if (args[1] != NULL && args[1][0] == '-')
+	len = get_str_len(*(command->env));
+	new_envp = ft_calloc(len + 1, sizeof(*new_envp));
+	if (new_envp == NULL)
 	{
-		ft_putstr_fd("Error: unset, invalid option", STDERR_FILENO);
-		ft_putstr_fd(args[1], STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
+		log_errors("Failed calloc in unset, process unset", "");
+		command->exitcode = FAIL;
+		return (command->exitcode);
+	}
+	if (remove_env_var(command, new_envp) == FAIL)
+	{
+		delete_str_array(&new_envp);
 		return (FAIL);
 	}
-
-	if (args[1] != NULL)
-	{
-		len = get_str_len(*envp_ptr);  // 현재 환경 변수 배열의 길이 계산
-		new_envp = ft_calloc(len + 1, sizeof(*new_envp));
-		if (new_envp == NULL)
-		{
-			perror("Error: malloc failed");
-			return (FAIL);
-		}
-		remove_env_var(args, new_envp, envp_ptr);  // 환경 변수 제거 및 새로운 배열 생성
-		//free(*envp_ptr);  // 기존 환경 변수 배열 메모리 해제
-		*envp_ptr = new_envp;  // 포인터를 새 배열로 업데이트
-	}
+	delete_str_array(command->env);
+	*(command->env) = new_envp;
 	return (SUCCESS);
+}
+
+int	unset(t_Command *command)
+{
+	if (command->args[1] != NULL && command->args[1][0] == '-')
+	{
+		ft_putstr_fd("unset: invalid option", STDERR_FILENO);
+		ft_putstr_fd(command->args[1], STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		command->exitcode = FAIL;
+		return (command->exitcode);
+	}
+	if (command->args[1] != NULL)
+	{
+		if (process_unset_args(command) == FAIL)
+			return (command->exitcode);
+	}
+	command->exitcode = SUCCESS;
+	return (command->exitcode);
 }

@@ -3,21 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   execution_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 16:53:52 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/09 17:28:47 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/09/19 16:53:52 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/25 00:32:53 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ast_node_execution(t_ASTNode	**node)
+int	node_command_without_cmd(t_ASTNode **node)
 {
-	if (node == NULL || *node == NULL)
-		return (log_errors("AST node is NULL", ""));
-	if (heredoc_check(node) == FAIL)
-		return (FAIL);
+	if ((*node)->redir->infile == -1)
+		return (print_error_redir(&(*node)->command, \
+									(*node)->redir->in_filename, \
+									(*node)->redir->errno_in));
+	if ((*node)->redir->outfile == -1)
+		return (print_error_redir(&(*node)->command, \
+									(*node)->redir->out_filename, \
+									(*node)->redir->errno_out));
+	if ((*node)->redir->herestring_str)
+	{
+		if (here_string(&(*node)->redir) != SUCCESS)
+		{
+			return (FAIL);
+		}
+	}
+	return (SUCCESS);
+}
+
+int	ast_node_execution(t_ASTNode **node)
+{
+	int	exitcode;
+
+	exitcode = 0;
+	exitcode = check_heredoc(node, exitcode);
+	if (exitcode != SUCCESS)
+		return (exitcode);
+	if ((*node)->type == NODE_COMMAND && !(*node)->command)
+	{
+		exitcode = node_command_without_cmd(node);
+		if (exitcode != SUCCESS)
+			return (-1);
+		else if (exitcode == SUCCESS)
+			return (SUCCESS);
+	}
 	if ((*node)->type == NODE_COMMAND)
 		return (cmdnode_exec(node));
 	if ((*node)->type == NODE_PIPE)
@@ -31,44 +61,33 @@ int	ast_node_execution(t_ASTNode	**node)
 
 int	cmdnode_exec(t_ASTNode	**node)
 {
-	int	last_exit_code;
-	int	wstatus;
-
-	last_exit_code = (*node)->last_exit_code;
-	if (prepare_cmd(&(*node)->command, last_exit_code) == FAIL)
+	signal_set_exec();
+	if (g_interrupt_signal == TRUE)
+		g_interrupt_signal = FALSE;
+	(*node)->command->exitcode = (*node)->last_exitcode;
+	if (prepare_cmd(&(*node)->command, (*node)->last_exitcode) == FAIL)
 		return (FAIL);
-	if (builtin_filesystem((*node)->command) == SUCCESS)
-	{
-		if (common_pre_child(&(*node)->redir) == FAIL)
-			return (FAIL);
-		(*node)->last_exit_code = 0;
-		return (SUCCESS);
-	}
+	if (check_builtin((*node)->command) == TRUE)
+		return (action_builtin(&(*node)->command, &(*node)->redir));
+	if (find_command_path(&(*node)->command) != SUCCESS)
+		return ((*node)->command->exitcode);
 	(*node)->pipeline->pid = fork();
-    if ((*node)->pipeline->pid == -1)
-        return (log_errors("Failed to fork in cmdnode_exec", ""));
-    if ((*node)->pipeline->pid == 0) 
+	if ((*node)->pipeline->pid == -1)
+		return (log_errors("Failed to fork in cmdnode_exec", ""));
+	if ((*node)->pipeline->pid == 0)
 	{
-        if (common_pre_child(&(*node)->redir) == FAIL)
-            exit(EXIT_FAILURE);
-        exit(action_child(&(*node)->command, &(*node)->redir));
+		exit(action_child(&(*node)->command, &(*node)->redir));
 	}
-    if (waitpid((*node)->pipeline->pid, &wstatus, 0) == -1)
-	{
-		return (log_errors("waitpid failed", ""));
-	}
-	last_exit_code = waitpid_status(wstatus);
-    (*node)->last_exit_code = last_exit_code; // 마지막 종료 코드 저장
-    return (SUCCESS);
+	return (action_parents(&(*node)->redir, &(*node)->pipeline, \
+								&(*node)->command));
 }
-
 
 int	andnode_exec(t_ASTNode	**node)
 {
 	if ((*node)->left && ast_node_execution(&(*node)->left) == SUCCESS)
 	{
 		if ((*node)->right)
-			return (cmdnode_exec(&(*node)->right));
+			return (ast_node_execution(&(*node)->right));
 	}
 	return (SUCCESS);
 }
@@ -78,7 +97,7 @@ int	ornode_exec(t_ASTNode	**node)
 	if ((*node)->left && ast_node_execution(&(*node)->left) != SUCCESS)
 	{
 		if ((*node)->right)
-			return (cmdnode_exec(&(*node)->right));
+			return (ast_node_execution(&(*node)->right));
 	}
 	return (SUCCESS);
 }

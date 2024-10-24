@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 15:52:09 by suminkwon         #+#    #+#             */
-/*   Updated: 2024/10/09 14:38:56 by hlee-sun         ###   ########.fr       */
+/*   Created: 2024/10/06 15:52:09 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/22 21:59:31 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	check_cmd_script(t_Command **command)
 			cmd_error(command, ": command not found\n", 127);
 			return (FAIL);
 		}
-		check_path((*command)->cmd, command);
+		if (check_path((*command)->cmd, command) == FAIL)
+			return (FAIL);
 	}
 	return (SUCCESS);
 }
@@ -59,16 +60,14 @@ int	check_cmd_error(t_Command **command)
 {
 	int	len;
 
-	if ((*command)->cmd == NULL)
-		return (cmd_error(command, ": (*command) not found\n", 127));
+	len = ft_strlen((*command)->cmd);
 	if ((*command)->cmd[0] == '.' || (*command)->cmd[0] == '/')
 	{
-		len = ft_strlen((*command)->cmd);
 		if ((*command)->cmd[len - 1] == '/')
 		{
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd((*command)->cmd, STDERR_FILENO);
-			return (error_exitcode(command, " is a directory", 126));
+			return (error_exitcode(command, ": Is a directory", 126));
 		}
 		if (access((*command)->cmd, F_OK) == -1)
 			return (cmd_error(command, ": No such file or directory\n", 127));
