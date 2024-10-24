@@ -12,35 +12,35 @@
 
 #include "../../includes/minishell.h"
 
-int join_inputs(char **tokenize_input, char **new_input)
+int	join_inputs(char **tokenize_input, char **new_input)
 {
-    char *tmp;
+	char	*tmp;
 
-    tmp = ft_strjoin(" ", *new_input);
-    free_one((void **)new_input);
-    if (!tmp)
-    {
-        log_errors("Failed to join inputs", "");
-        return (FAIL);
-    }
-    *new_input = ft_strjoin(*tokenize_input, tmp);
+	tmp = ft_strjoin(" ", *new_input);
+	free_one((void **)new_input);
+	if (!tmp)
+	{
+		log_errors("Failed to join inputs", "");
+		return (FAIL);
+	}
+	*new_input = ft_strjoin(*tokenize_input, tmp);
 	free_one((void **)tokenize_input);
-    free_one((void **)&tmp);
-    if (!*new_input)
-    {
-        log_errors("Failed to join inputs", "");
-        return (FAIL);
-    }
-    *tokenize_input = *new_input;
-    return (SUCCESS);
+	free_one((void **)&tmp);
+	if (!*new_input)
+	{
+		log_errors("Failed to join inputs", "");
+		return (FAIL);
+	}
+	*tokenize_input = *new_input;
+	return (SUCCESS);
 }
 
-int check_operation_next(t_For_tokenize *tokenize)
+int	check_operation_next(t_For_tokenize *tokenize)
 {
-	char *new_input;
-	ptrdiff_t offset;
-	char *cpy_input;
-	char *cpy_new_input;
+	char		*new_input;
+	ptrdiff_t	offset;
+	char		*cpy_input;
+	char		*cpy_new_input;
 
 	offset = tokenize->start - tokenize->input;
 	new_input = readline("> ");

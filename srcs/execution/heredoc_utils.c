@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:37:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 22:00:40 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:18:43 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	iterate_heredoc(t_ASTNode **node, int i)
 
 	if ((*node)->command)
 	{
-		(*node)->command->exitcode = here_doc(node,
-								(*node)->redir->heredoc_limiter[i]);
+		(*node)->command->exitcode = here_doc(node, \
+											(*node)->redir->heredoc_limiter[i]);
 		exitcode = (*node)->command->exitcode;
 	}
 	else
@@ -68,9 +68,9 @@ int	dup_and_close(int oldfd, int newfd)
 	close(oldfd);
 	return (SUCCESS);
 }
+
 int	check_heredoc(t_ASTNode **node, int exitcode)
 {
-
 	if (node == NULL || *node == NULL)
 		return (log_errors("AST node is NULL", ""));
 	exitcode = heredoc_check(node);

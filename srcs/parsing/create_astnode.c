@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 11:07:08 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/23 22:46:40 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,10 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 		log_errors("Failed to malloc node in create_astnode", "");
 		return (NULL);
 	}
-	if (initialize_astnode(&ast, tokens) == FAIL)
+	if (initialize_astnode(&ast, tokens) == FAIL || \
+		create_astnode_content(ast, tokens, env) == FAIL)
 	{
 		free(ast);
-		return (NULL);
-	}
-	if (create_astnode_content(ast, tokens, env) == FAIL)
-	{
-		free_astnode(&ast);
 		return (NULL);
 	}
 	if (ast->command && ast->command->args)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+         #
+#    By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/07/30 12:38:40 by suminkwon         #+#    #+#              #
-#    Updated: 2024/10/22 19:33:58 by hlee-sun         ###   ########.fr        #
+#    Created: 2024/07/30 12:38:40 by skwon2            #+#    #+#              #
+#    Updated: 2024/10/24 00:32:01 by skwon2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,18 +20,12 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -g -fsanitize=address
 
-# COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+#COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
-# LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
-
-# COMPILE_FLAG = -I/usr/include/readline
-# LINK_FLAG = -L/usr/local/lib -lreadline
+#LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
 
 LINK_FLAG = -lreadline -lncurses -L/
 
-# COMPILE_FLAG = -I/usr/local/opt/readline/include/
-
-# LINK_FLAG = -lreadline -lncurses -L/usr/local/opt/readline/lib
 
 SRCS_DIR = ./srcs/
 
@@ -58,8 +52,9 @@ SRCS =	mini.c \
 		tokenize/handle_tokens.c\
 		tokenize/handle_redirection.c\
 		tokenize/input_utils.c\
-		signal/signal.c \
+		signal/signal.c\
 		redirection/heredoc.c\
+		redirection/heredoc_utils.c\
 		redirection/herestring.c\
 		parsing/create_astnode.c\
 		parsing/create_command.c\
@@ -100,9 +95,9 @@ SRCS =	mini.c \
 		builtin/export_utils.c\
 		builtin/print_error.c\
 		builtin/pwd.c\
-		builtin/unset.c\
-		utils/print_function.c\
+		builtin/unset.c
 
+# utils/print_function.c
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
 
@@ -110,7 +105,6 @@ BONUS_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 BONUS_OBJS = $(MAN_SRCS:.c=.o)
 
 vpath %.c $(SRCS_DIR)
-#vpath %.c src라는 라인은 %.c 패턴에 맞는 모든 C 소스 파일을 src 디렉터리에서 찾으라는 의미
 
 all: $(LIBFT) $(NAME)
 
@@ -119,7 +113,19 @@ all: $(LIBFT) $(NAME)
 $(NAME): $(MAN_OBJS)
 	@$(CC) $(FLAG) $(COMPILE_FLAG) -o $@ $(MAN_OBJS) $(LIBFT) $(LINK_FLAG) 
 	@echo "making minishell"
-
+	@echo "\033[1;33m"
+	@echo "                __"
+	@echo "     __/~~\\-''- _ |"
+	@echo "__- - {            \\"
+	@echo "     /             \\"
+	@echo "    /        o    o }"
+	@echo "    |              ;"
+	@echo "                   '"
+	@echo "       \\_       (..)"
+	@echo "         ''-_ _ _ /"
+	@echo "           /"
+	@echo "          /"			MINISHELL..
+	@echo "\033[0m"
 $(LIBFT):
 	@make -C ./libft
 
@@ -140,6 +146,19 @@ clean:
 	@$(RM) $(MAN_OBJS)
 	@make clean -C ./libft
 	@echo "cleaning"
+	@echo "\033[1;33m"
+	@echo "                __"
+	@echo "     __/~~\\-''- _ |"
+	@echo "__- - {            \\"
+	@echo "     /             \\"
+	@echo "    /        __    _}"
+	@echo "    |              ;"
+	@echo "                   '"
+	@echo "       \\_       (..)"
+	@echo "         ''-_ _ _ /"
+	@echo "           /"
+	@echo "          /" HMM..
+	@echo "\033[0m"
 
 fclean: clean
 	@$(RM) $(NAME)

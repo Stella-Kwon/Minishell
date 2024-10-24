@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 22:27:46 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:07:18 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	exec_in_loop(char **env, int *last_exit_code)
 		return (FAIL);
 	while (1)
 	{
+		signal_setup();
 		input = get_user_input(last_exit_code, &local_env);
 		if (!input)
 		{
@@ -71,10 +72,7 @@ int	exec_in_loop(char **env, int *last_exit_code)
 			continue ;
 		parse_and_execute(tokens, &local_env, last_exit_code);
 	}
-	if (tokens)
-		all_free(&tokens);
 	all_free(&local_env);
-	// free_astnode((*cmd)->root_node);
 	return (SUCCESS);
 }
 

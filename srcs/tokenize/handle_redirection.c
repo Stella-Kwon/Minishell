@@ -16,7 +16,7 @@ static int	handle_input_way(char *start, int *len)
 {
 	if (*(start + 1) == '<')
 	{
-		if (*(start + 2) && * (start + 2) == '<')
+		if (*(start + 2) && *(start + 2) == '<')
 		{
 			*len = 3;
 			if (redirect_operation_error(start + 3) != SUCCESS)

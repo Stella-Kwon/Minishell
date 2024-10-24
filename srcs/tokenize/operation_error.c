@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 03:04:11 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/18 04:33:16 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/23 16:55:04 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	operation_error_rest(char *start)
 	{
 		if (*(start + 1) == '<')
 			return (handle_258_exitcode_print("`<<'"));
-		else if (*(start + 2) && * (start + 2) == '<')
+		else if (*(start + 2) && *(start + 2) == '<')
 			return (handle_258_exitcode_print("`<<<'"));
 		else
 			return (handle_258_exitcode_print("`<'"));
@@ -58,15 +58,17 @@ int	redirect_operation_error(char *start)
 	return (SUCCESS);
 }
 
-void rm_store_str(t_Set *set, char ref, char **result, int len)
+void	rm_store_str(t_Set *set, char ref, char **result, int len)
 {
-	int i;
-	int j;
-	char *str;
+	int		i;
+	int		j;
+	char	*str;
 
 	i = 0;
 	j = 0;
 	str = set->tmp_start;
+	while (str[i] != ref)
+		(*result)[j++] = str[i++];
 	if (str[i] == ref)
 		i++;
 	while (str[--len] != ref && len > i)
@@ -80,8 +82,8 @@ void rm_store_str(t_Set *set, char ref, char **result, int len)
 
 char	*check_quote_store(t_Set *set, char ref)
 {
-	int	len;
-	char *result;
+	int		len;
+	char	*result;
 
 	result = NULL;
 	if (set->depth == 0 || !set->single_quote || !set->double_quote)
@@ -89,7 +91,7 @@ char	*check_quote_store(t_Set *set, char ref)
 		len = ft_strlen(set->tmp_start);
 		result = (char *)malloc(sizeof(char) * (len + 1));
 		if (!result)
-			return NULL;
+			return (NULL);
 		rm_store_str(set, ref, &result, len);
 	}
 	else
@@ -100,7 +102,7 @@ char	*check_quote_store(t_Set *set, char ref)
 	return (result);
 }
 
-char *rm_quotes(char *str)
+char	*rm_quotes(char *str)
 {
 	t_Set	set;
 	char	ref;

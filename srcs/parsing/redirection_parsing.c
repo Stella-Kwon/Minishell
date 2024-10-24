@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_parsing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 03:42:27 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 20:44:29 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:44:29 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int	set_outfile(t_Redirection **redirect, char ***args, \
 									O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	(*redirect)->errno_out = errno;
-	// printf("(*redirect)->errno_out :%d\n", (*redirect)->errno_out);
 	return (SUCCESS);
 }
 
@@ -47,9 +46,10 @@ static int	set_infile(t_Redirection **redirect, char ***args, \
 {
 	if (direction_type == REDIRECT_INPUT)
 	{
-		if (put_last_open_infile(redirect, args, &(*redirect)->in_filename) \
+		if (rm_quote_filename(redirect, args, &(*redirect)->in_filename) \
 								!= SUCCESS)
-			return (FAIL);
+			return (log_errors("Failed in rm_quote_filename in \
+								set_redirection", ""));
 		if ((*redirect)->heredoc_limiter && (*redirect)->heredoc_limiter[0])
 		{
 			if ((*redirect)->heredoc_infile != -2)

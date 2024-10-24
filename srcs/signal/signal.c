@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:04:06 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 21:55:43 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:03:57 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ static void	ctrl_c_function(int signal)
 	}
 }
 
+static void	sigquit_function(int signal)
+{
+	if (signal == SIGQUIT)
+		ft_putstr_fd("Quit\n", STDOUT_FILENO);
+}
+
 void	signal_setup(void)
 {
 	signal(SIGINT, ctrl_c_function);
@@ -41,5 +47,5 @@ void	signal_setup(void)
 void	signal_set_exec(void)
 {
 	signal(SIGINT, ctrl_c_function);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, sigquit_function);
 }

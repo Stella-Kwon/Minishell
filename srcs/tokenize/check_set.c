@@ -38,7 +38,6 @@ char	*store_inside_set(char *tmp_start, char *tmp_end)
 
 void	check_quotes_in_loop(t_Set *set, char ref, int *count)
 {
-
 	while (*set->tmp_end)
 	{
 		if (*set->tmp_end == ref)
@@ -74,7 +73,7 @@ int	check_quotes_and_depth(t_For_tokenize *tokenize, \
 	return (SUCCESS);
 }
 
-void initialize_set(char *start, t_Set *set)
+void	initialize_set(char *start, t_Set *set)
 {
 	set->depth = 0;
 	set->single_quote = 0;

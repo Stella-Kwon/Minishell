@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   log_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:50:33 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 20:43:52 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:43:52 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	check_specific_error(char *path, int ernbr)
 	}
 	else if (ernbr == ENOENT)
 	{
-		//ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 		ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 		return (127);
 	}

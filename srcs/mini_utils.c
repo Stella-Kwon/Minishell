@@ -25,7 +25,6 @@ int	local_env_copy(char **env, char ***local_env)
 	}
 	if (copy_envp(*local_env, env, env_len) == FAIL)
 	{
-		// delete_str_array(local_env);
 		all_free(local_env);
 		return (FAIL);
 	}

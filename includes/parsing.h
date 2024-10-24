@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 18:02:03 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/16 11:53:23 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/23 22:46:11 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int				operation_parsing(char ***tokens, t_ASTNode **left_node, \
 int				set_redirection(t_Redirection **redirect, char ***args, \
 								int direction_type);
 int				set_heredoc(t_Redirection **redirect, char *limiter);
+void			handle_input(int fd, char *limiter, char **new_input, \
+								t_ASTNode **node);
 int				set_herestring(t_Redirection **redirect, char *string);
 int				redirection_parsing(char ***args, t_Redirection **redirect);
 int				heredoc_herestring_parsing(char ***args, \
@@ -50,4 +52,5 @@ void			free_redirection(t_Redirection **redir);
 void			free_astnode(t_ASTNode **node);
 void			free_exit(t_Command **command, int exitcode);
 void			print_astnode(t_ASTNode *node, int depth);
+
 #endif

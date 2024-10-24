@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:55:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 22:10:34 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:55:19 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,16 @@ void	free_astnode(t_ASTNode **node)
 	if (*node)
 	{
 		if ((*node)->command)
-		{
 			free_command(&(*node)->command);
-			// printf("freed cmd\n");
-		}
 		if ((*node)->pipeline)
-		{
 			free_one((void **)&(*node)->pipeline);
-			// printf("freed pipe\n");
-		}
-
 		if ((*node)->redir)
-		{
 			free_redirection(&(*node)->redir);
-			// printf("freed redir\n");
-		}
-
 		if ((*node)->left)
-		{
 			free_astnode(&(*node)->left);
-			// printf("freed left\n");
-		}
-			
 		if ((*node)->right)
-		{
 			free_astnode(&(*node)->right);
-			// printf("freed right\n");
-		}
-			
 		free_one((void **)&(*node));
-		// printf("----------free whole node----------\n");
 	}
 }
 

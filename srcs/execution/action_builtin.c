@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   action_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 22:14:08 by hlee-sun          #+#    #+#             */
 /*   Updated: 2024/10/22 20:26:28 by hlee-sun         ###   ########.fr       */
@@ -45,7 +45,8 @@ int	action_builtin(t_Command **cmd, t_Redirection **redir)
 	if ((*redir)->outfile != -2)
 	{
 		if ((*redir)->outfile == -1)
-			print_error_redirect(cmd, (*redir)->out_filename, (*redir)->errno_out);
+			return (print_error_redir(cmd, (*redir)->out_filename, \
+										(*redir)->errno_out));
 		if (dup_and_close((*redir)->outfile, STDOUT_FILENO) == FAIL)
 		{
 			log_errors("Failed to redirect outfile in child process", \

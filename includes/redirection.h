@@ -17,6 +17,5 @@
 
 int		here_doc(t_ASTNode **node, char *limiter);
 int		here_string(t_Redirection **redir);
-int		read_line_heredoc(char **line);
 
 #endif

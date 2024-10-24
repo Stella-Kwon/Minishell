@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:30:43 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 21:54:21 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/22 21:54:21 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int *last_exit_code, char ***local_env, char **tmp_input)
 	return (SUCCESS);
 }
 
-char **tokenize_input(char **input, int *last_exit_code, \
-char ***local_env, char **tmp_input)
+char	**tokenize_input(char **input, int *last_exit_code, \
+						char ***local_env, char **tmp_input)
 {
 	t_For_tokenize	tokenize;
 

@@ -31,33 +31,3 @@ int	get_direction_type(char *token)
 		return (REDIRECT_INPUT);
 	return (INVALID);
 }
-
-int	put_last_open_infile(t_Redirection **redirect, char ***args, \
-						char **filename)
-{
-	char	*start;
-	int		exit;
-
-	start = **args;
-	while (**args && is_redirection(**args) == FALSE)
-	{
-		if (access(start, F_OK) != 0)
-			break ;
-		else
-		{
-			exit = TRUE;
-			(*args)++;
-		}
-		if (access(**args, F_OK) != 0 || \
-		(access(**args, X_OK) == 0 && exit == TRUE))
-		{
-			(*args)--;
-			break ;
-		}
-		(*args)++;
-	}
-	if (rm_quote_filename(redirect, args, filename) != SUCCESS)
-		return (log_errors("Failed in rm_quote_filename \
-							in set_redirection", ""));
-	return (SUCCESS);
-}

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+// #include "../includes/minishell.h"
 
 // static void	print_redir_details(t_ASTNode *node)
 // {

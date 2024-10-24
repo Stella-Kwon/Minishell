@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:11:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/22 21:56:07 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/22 21:56:07 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@
 #  define BUFFSIZE 50
 # endif
 
-extern int g_interrupt_signal;
-
 # define TRUE 1
 # define FALSE 0
 
 # define SUCCESS 0
 # define FAIL 1
+
+extern int	g_interrupt_signal;
 
 int		local_env_copy(char **env, char ***local_env);
 char	**process_input_to_tokens(char *input, int *last_exit_code, \
