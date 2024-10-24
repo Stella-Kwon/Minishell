@@ -26,7 +26,6 @@ static int	iterate_heredoc(t_ASTNode **node, int i)
 	{
 		exitcode = here_doc(node, (*node)->redir->heredoc_limiter[i]);
 	}
-	printf("exit : %d\n", exitcode);
 	if (exitcode != SUCCESS)
 		return (exitcode);
 	if ((*node)->redir->heredoc_infile != -2 && (*node)->redir->infile != -1)

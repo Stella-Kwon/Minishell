@@ -38,7 +38,6 @@ static int	set_outfile(t_Redirection **redirect, char ***args, \
 									O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	(*redirect)->errno_out = errno;
-	// printf("(*redirect)->errno_out :%d\n", (*redirect)->errno_out);
 	return (SUCCESS);
 }
 
@@ -47,8 +46,6 @@ static int	set_infile(t_Redirection **redirect, char ***args, \
 {
 	if (direction_type == REDIRECT_INPUT)
 	{
-		// if (put_last_open_infile(redirect, args, &(*redirect)->in_filename) != SUCCESS)
-		// 	return (FAIL);
 		if (rm_quote_filename(redirect, args, &(*redirect)->in_filename) != SUCCESS)
 			return (log_errors("Failed in rm_quote_filename in set_redirection", ""));
 		if ((*redirect)->heredoc_limiter && (*redirect)->heredoc_limiter[0])

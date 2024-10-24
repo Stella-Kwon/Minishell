@@ -26,11 +26,9 @@ int	node_command_without_cmd(t_ASTNode **node)
 	{
 		if (here_string(&(*node)->redir) != SUCCESS)
 		{
-			// free_astnode(node);
 			return (FAIL);
 		}
 	}
-	// free_astnode(node);
 	return (SUCCESS);
 }
 

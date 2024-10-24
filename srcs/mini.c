@@ -42,9 +42,6 @@ t_ASTNode	*parse_and_execute(char **tokens, char ***env, int *last_exit_code)
 	{
 		all_free(&tokens);
 	}
-	// printf("\n\n----------print start----------\n\n");
-	// print_astnode(root, 0); // AST 노드 출력
-	// printf("\n\n=================================\n\n");
 	if (!root)
 		return (NULL);
 	if (execute(last_exit_code, &root) == NULL)
@@ -75,10 +72,7 @@ int	exec_in_loop(char **env, int *last_exit_code)
 			continue ;
 		parse_and_execute(tokens, &local_env, last_exit_code);
 	}
-	// if (tokens)
-	// 	all_free(&tokens);
 	all_free(&local_env);
-	// free_astnode((*cmd)->root_node);
 	return (SUCCESS);
 }
 

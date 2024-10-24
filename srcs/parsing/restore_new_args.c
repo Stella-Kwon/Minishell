@@ -12,34 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-// static void	infile_in_row(char ***args, int *origin_i)
-// {
-// 	while ((*args)[*origin_i])
-// 	{
-// 		printf("getin : %s\n", (*args)[*origin_i]);
-// 		if (strcmp((*args)[*origin_i - 1], "<") == 0 && (*args)[*origin_i])
-// 		{
-// 			(*origin_i)++;
-// 		}
-// 		else if (strcmp((*args)[*origin_i], "<") == 0 && (*args)[*origin_i + 1])
-// 			(*origin_i) += 2;
-// 		else if (access((*args)[*origin_i], F_OK) != 0)
-// 			break ;
-// 		else if (access((*args)[*origin_i], F_OK) == 0)
-// 		{
-// 			printf("we : %s\n", (*args)[*origin_i]);
-// 			(*origin_i)++;
-
-// 		}
-// 		if ((*args)[*origin_i] == NULL)
-// 		{
-// 			printf("null\n");
-// 			break ;
-// 		}
-		
-// 	}
-// }
-
 static void	check_order(char ***args, int *origin_i)
 {
 	if (strcmp((*args)[*origin_i - 1], "<<<") == 0 || \
@@ -64,11 +36,6 @@ static void	loop_for_each(char ***args, int *origin_i)
 {
 	while ((*args)[*origin_i])
 	{
-		// if (strcmp((*args)[*origin_i - 1], "<") == 0 ||
-		// 	strcmp((*args)[*origin_i], "<") == 0)
-		// 	infile_in_row(args, origin_i);
-		// if (!(*args)[*origin_i])
-		// 	break ;
 		check_order(args, origin_i);
 		if (!(*args)[*origin_i])
 			break ;
