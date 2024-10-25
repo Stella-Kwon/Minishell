@@ -58,7 +58,7 @@ static int	output_sorted_envp(char **sorted_envp, size_t len)
 	i = 0;
 	while (i < len)
 	{
-		if (sorted_envp[i][0] != '_' && sorted_envp[i][1] != '=')
+		if (sorted_envp[i][0] != '_' || sorted_envp[i][1] != '=')
 		{
 			if (print_env_var(sorted_envp[i]) == FAIL)
 				return (FAIL);
@@ -76,8 +76,8 @@ int	print_sorted_envp(char **envp)
 
 	sorted_envp = NULL;
 	len = get_str_len(envp);
-	if (!envp)
-		return (FAIL);
+	if (!envp || !*envp)
+		return (SUCCESS);
 	if (initialize_sorted_envp(&sorted_envp, envp, len) == FAIL)
 		return (FAIL);
 	result = output_sorted_envp(sorted_envp, len);

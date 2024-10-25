@@ -55,5 +55,5 @@ char	**process_input_to_tokens(char *input, int *last_exit_code, \
 char	*get_user_input(int *last_exit_code, char ***local_env);
 void	signal_setup(void);
 void	signal_set_exec(void);
-void	signal_set_rl(void);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:04:06 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 18:44:52 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:03:57 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,4 @@ void	signal_set_exec(void)
 {
 	signal(SIGINT, ctrl_c_function);
 	signal(SIGQUIT, sigquit_function);
-}
-
-void	signal_set_rl(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
 }

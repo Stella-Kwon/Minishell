@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 22:23:43 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/25 18:33:03 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:14:09 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	check_and_set_path(t_Command *command)
 	{
 		return (handle_oldpwd(command));
 	}
-	else if (command->args[1][0] == '~' && (command->args[1][1] == '\0' \
-			|| command->args[1][1] == '/'))
+	else if (command->args[1][0] == '~' && (command->args[1][1] == '\0'
+										|| command->args[1][1] == '/'))
 	{
 		return (handle_home(command));
 	}

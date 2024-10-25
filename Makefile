@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+         #
+#    By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/30 12:38:40 by skwon2            #+#    #+#              #
-#    Updated: 2024/10/25 18:45:26 by hlee-sun         ###   ########.fr        #
+#    Updated: 2024/10/24 22:17:38 by skwon2           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,13 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -g -fsanitize=address
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 
-LINK_FLAG = -lreadline -lncurses -L/
+COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
+
+LINK_FLAG = -lreadline -lncurses -L/opt/homebrew/opt/readline/lib
+
+#LINK_FLAG = -lreadline -lncurses -L/
 
 
 SRCS_DIR = ./srcs/
@@ -75,7 +79,6 @@ SRCS =	mini.c \
 		error_log/log_file.c\
 		expand/expand.c\
 		expand/curly_braces.c\
-		expand/merge.c\
 		expand/quote.c\
 		expand/exit_code.c\
 		expand/dollar_sign.c\
@@ -92,6 +95,8 @@ SRCS =	mini.c \
 		builtin/print_error.c\
 		builtin/pwd.c\
 		builtin/unset.c\
+
+# utils/print_function.c
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)

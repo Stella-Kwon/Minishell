@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:36:33 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 18:44:05 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:57:32 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	heredoc_child(int fd, char *limiter, char **new_input, \
-						t_ASTNode **node)
+static int heredoc_child(int fd, char *limiter, char **new_input, \
+							t_ASTNode **node)
 {
-	char	*rm_limiter;
+	char *rm_limiter;
 
 	*new_input = NULL;
 	if (dup2((*node)->term_stdin, STDIN_FILENO) == -1)
@@ -74,7 +74,7 @@ int	here_doc(t_ASTNode **node, char *limiter)
 	{
 		signal(SIGINT, SIG_DFL);
 		heredoc_child((*node)->redir->heredoc_infile, limiter, \
-					&new_input, node);
+						&new_input, node);
 	}
 	return (parent_heredoc(node, pid));
 }

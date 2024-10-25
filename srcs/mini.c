@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:21:10 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 18:47:27 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/24 22:17:29 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@ t_ASTNode	*execute(int *last_exit_code, t_ASTNode **root)
 
 	set_last_exitcode_and_root(root, *last_exit_code, root);
 	exit = ast_node_execution(root);
-	*last_exit_code = exit;
+	if (exit == -1)
+	{
+		*last_exit_code = 1;
+		if (*root)
+			free_astnode(root);
+		return (*root);
+	}
 	get_last_exitcode(root, last_exit_code);
 	if (*root)
 		free_astnode(root);
@@ -38,7 +44,7 @@ t_ASTNode	*parse_and_execute(char **tokens, char ***env, int *last_exit_code)
 	}
 	if (!root)
 		return (NULL);
-	if (execute (last_exit_code, &root) == NULL)
+	if (execute(last_exit_code, &root) == NULL)
 		return (NULL);
 	return (root);
 }

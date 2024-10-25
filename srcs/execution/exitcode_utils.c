@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:03:01 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/25 18:37:30 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:03:04 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,25 @@ void	set_last_exitcode_and_root(t_ASTNode **node, int last_exitcode, \
 		set_last_exitcode_and_root(&(*node)->right, last_exitcode, root);
 }
 
-static void	read_exitcode(t_ASTNode **node, int *exitcode, int last_exitcode)
+static void	read_exitcode(t_ASTNode **node, int *exitcode)
 {
 	if (*node)
 	{
 		if ((*node)->left)
-			read_exitcode(&(*node)->left, exitcode, last_exitcode);
+			read_exitcode(&(*node)->left, exitcode);
 		if ((*node)->right)
-			read_exitcode(&(*node)->right, exitcode, last_exitcode);
+			read_exitcode(&(*node)->right, exitcode);
 		if ((*node)->type == NODE_COMMAND && !(*node)->command)
 		{
-			*exitcode = last_exitcode;
+			*exitcode = 0;
 		}
-		if ((*node)->command && (*node)->command->exitcode != -1)
+		else if ((*node)->command && (*node)->command->exitcode != -1)
 		{
 			*exitcode = (*node)->command->exitcode;
+		}
+		else if ((*node)->type == NODE_PIPE)
+		{
+			*exitcode = (*node)->last_exitcode;
 		}
 	}
 }
@@ -47,22 +51,7 @@ void	get_last_exitcode(t_ASTNode **node, int *last_exitcode)
 {
 	int	exitcode;
 
-	exitcode = 0;
-	read_exitcode(node, &exitcode, *last_exitcode);
+	exitcode = -1;
+	read_exitcode(node, &exitcode);
 	*last_exitcode = exitcode;
-}
-
-int	heredoc_exec(t_ASTNode **node)
-{
-	int	exitcode;
-
-	exitcode = heredoc_check(node);
-	if (exitcode != SUCCESS)
-		return (exitcode);
-	if ((*node)->type == NODE_COMMAND && !(*node)->command)
-	{
-		exitcode = node_command_without_cmd(node);
-		return (exitcode);
-	}
-	return (SUCCESS);
 }

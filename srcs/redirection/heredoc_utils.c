@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 03:35:30 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 18:44:29 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:47:34 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	handle_input(int fd, char *limiter, char **new_input, t_ASTNode **node)
 	{
 		*new_input = readline("> ");
 		if (!(*new_input))
-			exit(0);
+			exit(3);
 		check_empty_input_and_dollar_sign(new_input, node, &copy_new);
 		if (ft_strcmp(copy_new, limiter) == 0)
 		{
