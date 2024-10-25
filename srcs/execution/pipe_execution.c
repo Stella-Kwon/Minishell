@@ -12,12 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-static void	pipenode_left_exec_child(t_ASTNode **node, int *exitcode)
+static void	pipenode_left_exec_child(t_ASTNode **node, int *exitcode, \
+										int redirect)
 {
 	(*node)->pipeline->left_pid = fork();
 	if ((*node)->pipeline->left_pid == 0)
 	{
 		close((*node)->pipeline->fd[0]);
+		if (redirect == FALSE)
+			close((*node)->pipeline->fd[1]);
 		if (dup_and_close((*node)->pipeline->fd[1], STDOUT_FILENO) != SUCCESS)
 		{
 			(*node)->last_exitcode = EXIT_FAILURE;
@@ -54,7 +57,7 @@ static void	pipenode_right_exec_child(t_ASTNode **node, int *exitcode)
 	}
 }
 
-int	pipenode_exec(t_ASTNode **node)
+static int	pipenode_exec_normal(t_ASTNode **node)
 {
 	int	status;
 	int	exitcode;
@@ -62,7 +65,7 @@ int	pipenode_exec(t_ASTNode **node)
 	exitcode = 0;
 	if (pipe((*node)->pipeline->fd) == -1)
 		return (log_errors("Failed to create pipe", strerror(errno)));
-	pipenode_left_exec_child(node, &exitcode);
+	pipenode_left_exec_child(node, &exitcode, TRUE);
 	close((*node)->pipeline->fd[1]);
 	pipenode_right_exec_child(node, &exitcode);
 	close((*node)->pipeline->fd[0]);
@@ -78,4 +81,38 @@ int	pipenode_exec(t_ASTNode **node)
 	}
 	(*node)->last_exitcode = waitpid_status(status);
 	return ((*node)->last_exitcode);
+}
+
+static int	pipenode_exec_heredoc(t_ASTNode **node)
+{
+	int	status;
+	int	exitcode;
+
+	exitcode = 0;
+	if (pipe((*node)->pipeline->fd) == -1)
+		return (log_errors("Failed to create pipe", strerror(errno)));
+	pipenode_left_exec_child(node, &exitcode, TRUE);
+	close((*node)->pipeline->fd[1]);
+	if (waitpid((*node)->pipeline->left_pid, &status, 0) == -1)
+	{
+		(*node)->last_exitcode = waitpid_status(status);
+		return ((*node)->last_exitcode);
+	}
+	pipenode_right_exec_child(node, &exitcode);
+	close((*node)->pipeline->fd[0]);
+	if (waitpid((*node)->pipeline->right_pid, &status, 0) == -1)
+	{
+		(*node)->last_exitcode = waitpid_status(status);
+		return ((*node)->last_exitcode);
+	}
+	(*node)->last_exitcode = waitpid_status(status);
+	return ((*node)->last_exitcode);
+}
+
+int	pipenode_exec(t_ASTNode **node)
+{
+	if ((*node)->left->redir && (*node)->left->redir->heredoc_limiter != NULL)
+		return (pipenode_exec_heredoc(node));
+	else
+		return (pipenode_exec_normal(node));
 }

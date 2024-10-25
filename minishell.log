@@ -1,1 +1,2 @@
 minishell: Failed to strcmp in heredoc child: Success: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
