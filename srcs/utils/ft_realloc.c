@@ -31,7 +31,6 @@ char	**ft_realloc_double(char **token, int position, int *bufsize)
 				realloc_token[i] = token[i];
 				i++;
 			}
-			// all_free(&token);
 			free(token);
 			token = NULL;
 			token = realloc_token;

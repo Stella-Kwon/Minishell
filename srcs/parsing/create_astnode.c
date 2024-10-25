@@ -31,13 +31,11 @@ static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
 		if (!ast->redir)
 			return (FAIL);
 	}
-	if (ast->command)
+	if (ast->command && \
+		(parsing_others(&ast->command->args, &ast->redir, FALSE) == FAIL))
 	{
-		if (parsing_others(&ast->command->args, &ast->redir, FALSE) == FAIL)
-		{
-			free_astnode(&ast);
-			return (FAIL);
-		}
+		free_astnode(&ast);
+		return (FAIL);
 	}
 	return (SUCCESS);
 }
@@ -72,13 +70,13 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
 	return (ast);
 }
 
-t_ASTNode *parse_pipe_operations(char ***tokens, char ***env)
+t_ASTNode	*parse_pipe_operations(char ***tokens, char ***env)
 {
-	t_ASTNode *left_node;
+	t_ASTNode	*left_node;
+	t_ASTNode	*right_node;
 
 	if (!tokens || !*tokens || !**tokens)
 		return (NULL);
-
 	left_node = create_astnode(tokens, NULL, NULL, env);
 	if (!left_node)
 		return (NULL);
@@ -86,7 +84,7 @@ t_ASTNode *parse_pipe_operations(char ***tokens, char ***env)
 	while (*tokens && **tokens && ft_strcmp(**tokens, "|") == 0)
 	{
 		(*tokens)++;
-		t_ASTNode *right_node = create_astnode(tokens, NULL, NULL, env);
+		right_node = create_astnode(tokens, NULL, NULL, env);
 		if (!right_node)
 			return (NULL);
 		right_node->type = NODE_COMMAND;
@@ -97,11 +95,11 @@ t_ASTNode *parse_pipe_operations(char ***tokens, char ***env)
 	return (left_node);
 }
 
-int and_or_operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
+int	and_or_operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
 {
 	t_ASTNode	*right_node;
 	int			node_type;
-	
+
 	if (!tokens || !*tokens || !**tokens)
 		return (FAIL);
 	if (ft_strcmp(**tokens, "&&") == 0 || ft_strcmp(**tokens, "||") == 0)
@@ -120,9 +118,9 @@ int and_or_operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
 	return (SUCCESS);
 }
 
-t_ASTNode *parse_to_nodes(char **tokens, char ***env)
+t_ASTNode	*parse_to_nodes(char **tokens, char ***env)
 {
-	t_ASTNode *left_node;
+	t_ASTNode	*left_node;
 
 	if (!tokens || !*tokens)
 		return (NULL);

@@ -18,7 +18,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -g -fsanitize=address
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 
 COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
@@ -95,7 +95,9 @@ SRCS =	mini.c \
 		builtin/print_error.c\
 		builtin/pwd.c\
 		builtin/unset.c\
-		utils/print_function.c
+
+# utils/print_function.c
+
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
 

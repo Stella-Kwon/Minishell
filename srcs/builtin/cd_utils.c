@@ -98,7 +98,6 @@ char	*get_current_dir(char *prefix)
 	}
 	if (!getcwd(buf, MAXPATHLEN))
 	{
-		// log_errors("Failed getcwd in cd utils2", "");
 		free(buf);
 		return (NULL);
 	}
