@@ -21,10 +21,9 @@ int	print_error_redir(t_Command **cmd, char *filename, int redir_errno)
 	if (cmd && *cmd)
 	{
 		(*cmd)->exitcode = FAIL;
-		return (FAIL);
+		
 	}
-	else
-		return (2);
+	return (FAIL);
 }
 
 int	common_pre_child(t_Redirection	**redir, t_Command **cmd)

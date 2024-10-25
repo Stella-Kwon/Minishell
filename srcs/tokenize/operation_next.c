@@ -43,15 +43,17 @@ int	check_operation_next(t_For_tokenize *tokenize)
 	char		*cpy_new_input;
 
 	offset = tokenize->start - tokenize->input;
+	signal_set_rl();
 	new_input = readline("> ");
 	if (!new_input)
 		return (3);
+	signal_setup();
 	cpy_input = ft_strdup(tokenize->input);
 	if (!cpy_input)
-		return (log_errors("Failed to strdup:tok from op_next_parents", ""));
+		return (log_errors("Failed to strdup: tok from op_next_parents", ""));
 	cpy_new_input = ft_strdup(new_input);
 	if (!cpy_new_input)
-		return (log_errors("Failed to strdup:new from op_next_parents", ""));
+		return (log_errors("Failed to strdup: new from op_next_parents", ""));
 	if (join_inputs(&tokenize->input, &new_input) == FAIL)
 		return (FAIL);
 	add_history(tokenize->input);

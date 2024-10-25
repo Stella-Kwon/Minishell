@@ -18,7 +18,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -g -fsanitize=address
 
 COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
@@ -79,6 +79,7 @@ SRCS =	mini.c \
 		error_log/log_file.c\
 		expand/expand.c\
 		expand/curly_braces.c\
+		expand/merge.c\
 		expand/quote.c\
 		expand/exit_code.c\
 		expand/dollar_sign.c\
@@ -95,9 +96,7 @@ SRCS =	mini.c \
 		builtin/print_error.c\
 		builtin/pwd.c\
 		builtin/unset.c\
-
-# utils/print_function.c
-
+		utils/print_function.c
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
 

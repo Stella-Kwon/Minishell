@@ -1,2 +1,9 @@
 minishell: Failed to strcmp in heredoc child: Success: 
+minishell: .heredoc.tmp: No such file or directory: Failed to open file in here_doc
+minishell: .heredoc.tmp: No such file or directory: Failed to open file in here_doc
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
+minishell: Failed to dup2 in action_child: Bad file descriptor: 
 minishell: Failed to dup2 in action_child: Bad file descriptor: 

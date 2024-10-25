@@ -49,3 +49,9 @@ void	signal_set_exec(void)
 	signal(SIGINT, ctrl_c_function);
 	signal(SIGQUIT, sigquit_function);
 }
+
+void signal_set_rl(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+}

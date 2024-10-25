@@ -54,7 +54,7 @@ void	handle_input(int fd, char *limiter, char **new_input, t_ASTNode **node)
 	{
 		*new_input = readline("> ");
 		if (!(*new_input))
-			exit(3);
+			exit(0);
 		check_empty_input_and_dollar_sign(new_input, node, &copy_new);
 		if (ft_strcmp(copy_new, limiter) == 0)
 		{

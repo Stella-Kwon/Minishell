@@ -24,26 +24,26 @@ void	set_last_exitcode_and_root(t_ASTNode **node, int last_exitcode, \
 		set_last_exitcode_and_root(&(*node)->right, last_exitcode, root);
 }
 
-static void	read_exitcode(t_ASTNode **node, int *exitcode)
+static void	read_exitcode(t_ASTNode **node, int *exitcode, int last_exitcode)
 {
 	if (*node)
 	{
 		if ((*node)->left)
-			read_exitcode(&(*node)->left, exitcode);
+			read_exitcode(&(*node)->left, exitcode, last_exitcode);
 		if ((*node)->right)
-			read_exitcode(&(*node)->right, exitcode);
+			read_exitcode(&(*node)->right, exitcode, last_exitcode);
 		if ((*node)->type == NODE_COMMAND && !(*node)->command)
 		{
-			*exitcode = 0;
+			*exitcode = last_exitcode;
 		}
-		else if ((*node)->command && (*node)->command->exitcode != -1)
+		if ((*node)->command && (*node)->command->exitcode != -1)
 		{
 			*exitcode = (*node)->command->exitcode;
 		}
-		else if ((*node)->type == NODE_PIPE)
-		{
-			*exitcode = (*node)->last_exitcode;
-		}
+		// else if ((*node)->type == NODE_PIPE)
+		// {
+		// 	*exitcode = (*node)->last_exitcode;
+		// }
 	}
 }
 
@@ -51,7 +51,7 @@ void	get_last_exitcode(t_ASTNode **node, int *last_exitcode)
 {
 	int	exitcode;
 
-	exitcode = -1;
-	read_exitcode(node, &exitcode);
+	exitcode = 0;
+	read_exitcode(node, &exitcode, *last_exitcode);
 	*last_exitcode = exitcode;
 }

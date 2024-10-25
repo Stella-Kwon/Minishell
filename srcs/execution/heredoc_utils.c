@@ -69,10 +69,11 @@ int	dup_and_close(int oldfd, int newfd)
 	return (SUCCESS);
 }
 
-int	check_heredoc(t_ASTNode **node, int exitcode)
-{
-	if (node == NULL || *node == NULL)
-		return (log_errors("AST node is NULL", ""));
-	exitcode = heredoc_check(node);
-	return (exitcode);
-}
+// int	check_heredoc(t_ASTNode **node)//, int exitcode)
+// {
+// 	// if (node == NULL || *node == NULL)
+// 	// 	return (log_errors("AST node is NULL", ""));
+// 	// exitcode = heredoc_check(node);
+// 	// return (exitcode);
+// 	return (heredoc_check(node));
+// }

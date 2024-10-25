@@ -45,6 +45,8 @@ int	initialize_astnode(t_ASTNode **node, char ***tokens)
 		(*node)->redir = NULL;
 		(*node)->left = NULL;
 		(*node)->right = NULL;
+		(*node)->term_stdin = dup(STDIN_FILENO);
+		(*node)->term_stdout = dup(STDOUT_FILENO);
 	}
 	if (tokens && *tokens && **tokens && is_redirection(**tokens))
 	{

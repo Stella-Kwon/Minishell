@@ -104,6 +104,8 @@ typedef struct s_astnode
 	struct s_astnode	*right;
 	int					last_exitcode;
 	int					pipecmd;
+	int					term_stdin;
+	int					term_stdout;
 }	t_ASTNode;
 
 typedef struct s_Dollar

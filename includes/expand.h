@@ -27,6 +27,7 @@ int		for_curly_braces(char *input, t_Dollar *dol, char **env, \
 					int last_exitcode);
 int		for_dollar_sign(char *input, t_Dollar *dol, char **env, \
 						int last_exitcode);
+void	merge_quoted_args(char **args, int *argc);
 char	*remove_quotes(char *s);
 int		find_dollar_signs(char **in_out, char **env, int last_exitcode);
 void	expand_cmd_args(t_Command *command, int last_exitcode);
