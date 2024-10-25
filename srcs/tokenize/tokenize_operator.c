@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_operator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:09:30 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/20 16:12:30 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 17:13:59 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	handle_pipe_and_or(t_For_tokenize *tokenize)
 	else
 	{
 		error_handling_in_middle_operator(tokenize, len, &i);
-		if (redirect_operation_error(tokenize->start + len + i) != SUCCESS)
+		if (redirect_operation_error(tokenize->start + len + i - 1) != SUCCESS)
 			return (2);
 	}
 	return (handle_token(tokenize, len));
@@ -78,7 +78,7 @@ int	handle_and_and_background(t_For_tokenize *tokenize)
 	else
 	{
 		error_handling_in_middle_operator(tokenize, len, &i);
-		if (redirect_operation_error(tokenize->start + len + i) != SUCCESS)
+		if (redirect_operation_error(tokenize->start + len + i - 1) != SUCCESS)
 			return (2);
 	}
 	return (handle_token(tokenize, len));

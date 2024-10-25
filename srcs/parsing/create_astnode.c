@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_astnode.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:52:16 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 00:42:22 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 18:42:27 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
 		if (!ast->redir)
 			return (FAIL);
 	}
-	if (ast->command &&
+	if (ast->command && \
 		(parsing_others(&ast->command->args, &ast->redir, FALSE) == FAIL))
 	{
 		free_astnode(&ast);
@@ -40,8 +40,8 @@ static int	create_astnode_content(t_ASTNode *ast, char ***tokens, char ***env)
 	return (SUCCESS);
 }
 
-t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left,
-						  t_ASTNode *right, char ***env)
+t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left, \
+							t_ASTNode *right, char ***env)
 {
 	t_ASTNode	*ast;
 
@@ -51,7 +51,7 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left,
 		log_errors("Failed to malloc node in create_astnode", "");
 		return (NULL);
 	}
-	if (initialize_astnode(&ast, tokens) == FAIL ||
+	if (initialize_astnode(&ast, tokens) == FAIL || \
 		create_astnode_content(ast, tokens, env) == FAIL)
 	{
 		free(ast);
@@ -70,7 +70,7 @@ t_ASTNode	*create_astnode(char ***tokens, t_ASTNode *left,
 	return (ast);
 }
 
-t_ASTNode *parse_pipe_operations(char ***tokens, char ***env)
+t_ASTNode	*parse_pipe_operations(char ***tokens, char ***env)
 {
 	t_ASTNode	*left_node;
 	t_ASTNode	*right_node;
@@ -95,7 +95,7 @@ t_ASTNode *parse_pipe_operations(char ***tokens, char ***env)
 	return (left_node);
 }
 
-int and_or_operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
+int	and_or_operation_parsing(char ***tokens, t_ASTNode **left_node, char ***env)
 {
 	t_ASTNode	*right_node;
 	int			node_type;

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:36:33 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/23 22:57:32 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 18:44:05 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int heredoc_child(int fd, char *limiter, char **new_input, \
-							t_ASTNode **node)
+static int	heredoc_child(int fd, char *limiter, char **new_input, \
+						t_ASTNode **node)
 {
-	char *rm_limiter;
+	char	*rm_limiter;
 
 	*new_input = NULL;
 	if (dup2((*node)->term_stdin, STDIN_FILENO) == -1)
@@ -38,10 +38,10 @@ static int heredoc_child(int fd, char *limiter, char **new_input, \
 	exit(SUCCESS);
 }
 
-static int parent_heredoc(t_ASTNode **node, pid_t pid)
+static int	parent_heredoc(t_ASTNode **node, pid_t pid)
 {
-	int status;
-	int exitcode;
+	int	status;
+	int	exitcode;
 
 	if (waitpid(pid, &status, 0) == -1)
 	{
@@ -58,22 +58,23 @@ static int parent_heredoc(t_ASTNode **node, pid_t pid)
 	return (exitcode);
 }
 
-int here_doc(t_ASTNode **node, char *limiter)
+int	here_doc(t_ASTNode **node, char *limiter)
 {
-	pid_t pid;
-	char *new_input;
+	pid_t	pid;
+	char	*new_input;
 
 	pid = fork();
 	if (pid == -1)
 		return (log_errors("Failed to fork in heredoc", ""));
-	(*node)->redir->heredoc_infile = open(".heredoc.tmp",
-										  O_WRONLY | O_CREAT | O_APPEND, 0644);
+	(*node)->redir->heredoc_infile = open(".heredoc.tmp", \
+										O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*node)->redir->heredoc_infile == -1)
 		return (log_errors(".heredoc.tmp", "Failed to open file in here_doc"));
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		heredoc_child((*node)->redir->heredoc_infile, limiter, &new_input, node);
+		heredoc_child((*node)->redir->heredoc_infile, limiter, \
+					&new_input, node);
 	}
 	return (parent_heredoc(node, pid));
 }

@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 11:03:01 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/16 11:03:04 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:37:30 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ static void	read_exitcode(t_ASTNode **node, int *exitcode, int last_exitcode)
 		{
 			*exitcode = (*node)->command->exitcode;
 		}
-		// else if ((*node)->type == NODE_PIPE)
-		// {
-		// 	*exitcode = (*node)->last_exitcode;
-		// }
 	}
 }
 
@@ -54,4 +50,19 @@ void	get_last_exitcode(t_ASTNode **node, int *last_exitcode)
 	exitcode = 0;
 	read_exitcode(node, &exitcode, *last_exitcode);
 	*last_exitcode = exitcode;
+}
+
+int	heredoc_exec(t_ASTNode **node)
+{
+	int	exitcode;
+
+	exitcode = heredoc_check(node);
+	if (exitcode != SUCCESS)
+		return (exitcode);
+	if ((*node)->type == NODE_COMMAND && !(*node)->command)
+	{
+		exitcode = node_command_without_cmd(node);
+		return (exitcode);
+	}
+	return (SUCCESS);
 }

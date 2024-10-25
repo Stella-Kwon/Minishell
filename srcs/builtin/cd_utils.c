@@ -6,15 +6,15 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 22:23:43 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/24 16:14:09 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:33:03 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int handle_oldpwd(t_Command *command)
+static int	handle_oldpwd(t_Command *command)
 {
-	char *path;
+	char	*path;
 
 	path = get_env_value("OLDPWD", *(command->env));
 	if (!path)
@@ -34,10 +34,10 @@ static int handle_oldpwd(t_Command *command)
 	return (SUCCESS);
 }
 
-static int handle_home(t_Command *command)
+static int	handle_home(t_Command *command)
 {
-	char *path;
-	char *home;
+	char	*path;
+	char	*home;
 
 	path = get_env_value("HOME", *(command->env));
 	home = ft_strjoin(path, command->args[1] + 1);
@@ -56,27 +56,28 @@ static int handle_home(t_Command *command)
 	return (SUCCESS);
 }
 
-int check_and_set_path(t_Command *command)
+int	check_and_set_path(t_Command *command)
 {
 	if (command->args[1][0] == '-' && command->args[1][1] == '\0')
 	{
 		return (handle_oldpwd(command));
 	}
-	else if (command->args[1][0] == '~' && (command->args[1][1] == '\0' || command->args[1][1] == '/'))
+	else if (command->args[1][0] == '~' && (command->args[1][1] == '\0' \
+			|| command->args[1][1] == '/'))
 	{
 		return (handle_home(command));
 	}
 	return (SUCCESS);
 }
 
-void currdir_to_old_pwd(t_Command *command)
+void	currdir_to_old_pwd(t_Command *command)
 {
-	char *path;
-	char *tmp;
+	char	*path;
+	char	*tmp;
 
 	path = get_current_dir("OLDPWD=");
 	if (!path)
-		return;
+		return ;
 	tmp = command->args[1];
 	command->args[1] = path;
 	export(command);
@@ -84,10 +85,10 @@ void currdir_to_old_pwd(t_Command *command)
 	free(path);
 }
 
-char *get_current_dir(char *prefix)
+char	*get_current_dir(char *prefix)
 {
-	char *path;
-	char *buf;
+	char	*path;
+	char	*buf;
 
 	buf = ft_calloc(1, MAXPATHLEN);
 	if (!buf)

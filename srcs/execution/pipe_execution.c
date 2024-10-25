@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:18:11 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 00:41:19 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 18:40:08 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void pipenode_left_exec_child(t_ASTNode **node, int *exitcode,
-									 int redirect)
+static void	pipenode_left_exec_child(t_ASTNode **node, int *exitcode, \
+									int redirect)
 {
 	(*node)->pipeline->left_pid = fork();
 	if ((*node)->pipeline->left_pid == 0)
@@ -36,7 +36,7 @@ static void pipenode_left_exec_child(t_ASTNode **node, int *exitcode,
 	}
 }
 
-static void pipenode_right_exec_child(t_ASTNode **node, int *exitcode)
+static void	pipenode_right_exec_child(t_ASTNode **node, int *exitcode)
 {
 	(*node)->pipeline->right_pid = fork();
 	if ((*node)->pipeline->right_pid == 0)
@@ -57,10 +57,10 @@ static void pipenode_right_exec_child(t_ASTNode **node, int *exitcode)
 	}
 }
 
-static int pipenode_exec_normal(t_ASTNode **node)
+static int	pipenode_exec_normal(t_ASTNode **node)
 {
-	int status;
-	int exitcode;
+	int	status;
+	int	exitcode;
 
 	exitcode = 0;
 	if (pipe((*node)->pipeline->fd) == -1)
@@ -83,10 +83,10 @@ static int pipenode_exec_normal(t_ASTNode **node)
 	return ((*node)->command->exitcode);
 }
 
-static int pipenode_exec_heredoc(t_ASTNode **node)
+static int	pipenode_exec_heredoc(t_ASTNode **node)
 {
-	int status;
-	int exitcode;
+	int	status;
+	int	exitcode;
 
 	exitcode = 0;
 	if (pipe((*node)->pipeline->fd) == -1)
@@ -109,7 +109,7 @@ static int pipenode_exec_heredoc(t_ASTNode **node)
 	return ((*node)->command->exitcode);
 }
 
-int pipenode_exec(t_ASTNode **node)
+int	pipenode_exec(t_ASTNode **node)
 {
 	if ((*node)->left->redir && (*node)->left->redir->heredoc_limiter != NULL)
 		return (pipenode_exec_heredoc(node));

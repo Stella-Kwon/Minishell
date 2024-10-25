@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:19:04 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/23 21:06:41 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 18:33:52 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	print_error_redir(t_Command **cmd, char *filename, int redir_errno)
 	if (cmd && *cmd)
 	{
 		(*cmd)->exitcode = FAIL;
-		
 	}
 	return (FAIL);
 }

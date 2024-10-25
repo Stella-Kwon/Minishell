@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 00:32:53 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 18:37:19 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,7 @@ int	node_command_without_cmd(t_ASTNode **node)
 	return (SUCCESS);
 }
 
-int heredoc_exec(t_ASTNode **node)
-{
-	int exitcode;
-
-	exitcode = heredoc_check(node);
-	if (exitcode != SUCCESS)
-		return (exitcode);
-	if ((*node)->type == NODE_COMMAND && !(*node)->command)
-	{
-		exitcode = node_command_without_cmd(node);
-		// printf("exitcode : %d\n", exitcode);
-		return (exitcode);
-		// if (exitcode != SUCCESS)
-		// 	return (-1);
-		// else if (exitcode == SUCCESS)
-		// 	return (SUCCESS);
-	}
-	return (SUCCESS);
-}
-
-int cmdnode_exec(t_ASTNode **node)
+int	cmdnode_exec(t_ASTNode **node)
 {
 	signal_set_exec();
 	if (g_interrupt_signal == TRUE)
@@ -67,20 +47,16 @@ int cmdnode_exec(t_ASTNode **node)
 	{
 		exit(action_child(&(*node)->command, &(*node)->redir));
 	}
-	return (action_parents(&(*node)->redir, &(*node)->pipeline,
-						   &(*node)->command));
+	return (action_parents(&(*node)->redir, &(*node)->pipeline, \
+							&(*node)->command));
 }
 
 int	ast_node_execution(t_ASTNode **node)
 {
-	int	exitcode;
-
-	exitcode = 0;
 	if (node == NULL || *node == NULL)
 		return (log_errors("AST node is NULL", ""));
-	exitcode = heredoc_exec(node);
-	if (exitcode != SUCCESS)
-		return (exitcode);
+	if ((*node)->redir && (*node)-> redir->heredoc_limiter)
+		return (heredoc_exec(node));
 	if ((*node)->type == NODE_COMMAND)
 		return (cmdnode_exec(node));
 	if ((*node)->type == NODE_PIPE)

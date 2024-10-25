@@ -6,13 +6,13 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:30:12 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/22 20:12:06 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:40:53 by hlee-sun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int prepare_cmd(t_Command **command, int last_exitcode)
+int	prepare_cmd(t_Command **command, int last_exitcode)
 {
 	if (!command || !*command)
 		return (0);
@@ -24,9 +24,9 @@ int prepare_cmd(t_Command **command, int last_exitcode)
 	return (SUCCESS);
 }
 
-int find_command_path(t_Command **command)
+int	find_command_path(t_Command **command)
 {
-	char *path;
+	char	*path;
 
 	if (check_cmd_script(command) == FAIL || check_cmd_error(command) == FAIL)
 		return (FAIL);
@@ -37,9 +37,9 @@ int find_command_path(t_Command **command)
 	return (SUCCESS);
 }
 
-t_Command *create_pipe_command(char ***env)
+t_Command	*create_pipe_command(char ***env)
 {
-	t_Command *res;
+	t_Command	*res;
 
 	res = (t_Command *)malloc(sizeof(t_Command));
 	if (!res)
