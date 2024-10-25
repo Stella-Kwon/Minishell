@@ -20,13 +20,16 @@ t_ASTNode	*execute(int *last_exit_code, t_ASTNode **root)
 
 	set_last_exitcode_and_root(root, *last_exit_code, root);
 	exit = ast_node_execution(root);
-	if (exit == -1)
-	{
-		*last_exit_code = 1;
-		if (*root)
-			free_astnode(root);
-		return (*root);
-	}
+	// if (exit == -1 )
+	// {
+	// 	*last_exit_code = 1;
+	// 	*last_exit_code = 1;
+	// 	if (*root)
+	// 		free_astnode(root);
+	// 	return (*root);
+	// }
+	// printf("exit main : %d\n", exit);
+	*last_exit_code = exit;
 	get_last_exitcode(root, last_exit_code);
 	if (*root)
 		free_astnode(root);

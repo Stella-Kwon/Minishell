@@ -23,6 +23,8 @@ int	waitpid_status(int wstatus)
 	}
 	else if (WIFSIGNALED(wstatus))
 	{
+		if (g_interrupt_signal == TRUE)
+			g_interrupt_signal = FALSE;
 		return (128 + WTERMSIG(wstatus));
 	}
 	else if (WIFSTOPPED(wstatus))

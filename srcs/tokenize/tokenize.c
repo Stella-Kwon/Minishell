@@ -37,7 +37,7 @@ char ***local_env, char **tmp_input)
 		g_interrupt_signal = FALSE;
 		return (FAIL);
 	}
-	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
+	ft_putstr_fd("minishell: syntax error: unexpected end of file\nexit\n", 2);
 	all_free(local_env);
 	*tmp_input = tokenize->input;
 	all_free(&tokenize->tokens);

@@ -42,6 +42,7 @@ static int	parent_heredoc(t_ASTNode **node, pid_t pid)
 	if (waitpid(pid, &status, 0) == -1)
 	{
 		exitcode = waitpid_status(status);
+		// printf("exitcode : %d\n", exitcode);
 		return (exitcode);
 	}
 	close((*node)->redir->heredoc_infile);
@@ -51,6 +52,7 @@ static int	parent_heredoc(t_ASTNode **node, pid_t pid)
 	if (unlink(".heredoc.tmp") == -1)
 		return (log_errors("Failed to unlink in here_doc", ""));
 	exitcode = waitpid_status(status);
+	// printf("exitcode out : %d\n", exitcode);
 	return (exitcode);
 }
 

@@ -18,7 +18,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -g -fsanitize=address
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) #-g -fsanitize=address
 
 COMPILE_FLAG = -I/opt/homebrew/opt/readline/include/
 
