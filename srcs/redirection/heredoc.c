@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-static int heredoc_child(int fd, char *limiter, char **new_input, \
+static int	heredoc_child(int fd, char *limiter, char **new_input, \
 							t_ASTNode **node)
 {
-	char *rm_limiter;
+	char	*rm_limiter;
 
 	*new_input = NULL;
 	if (dup2((*node)->term_stdin, STDIN_FILENO) == -1)
