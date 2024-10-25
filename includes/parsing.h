@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 18:02:03 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/24 22:55:51 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 21:16:44 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int				operation_parsing(char ***tokens, t_ASTNode **left_node, \
 int				set_redirection(t_Redirection **redirect, char ***args, \
 								int direction_type);
 int				set_heredoc(t_Redirection **redirect, char *limiter);
-void			handle_input(int fd, char *limiter, char **new_input, \
-								t_ASTNode **node);
+void			handle_input(char *limiter, char **new_input, \
+								t_ASTNode **node, int check);
 int				set_herestring(t_Redirection **redirect, char *string);
 int				redirection_parsing(char ***args, t_Redirection **redirect);
 int				heredoc_herestring_parsing(char ***args, \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:36:33 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/23 22:57:32 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 21:17:25 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@ static int	heredoc_child(int fd, char *limiter, char **new_input, \
 							t_ASTNode **node)
 {
 	char	*rm_limiter;
+	int		check;
 
+	check = 0;
 	*new_input = NULL;
 	if (dup2((*node)->term_stdin, STDIN_FILENO) == -1)
 		exit(log_errors("Failed to redirect stdin in heredoc_child", ""));
 	if (dup2((*node)->term_stdout, STDOUT_FILENO) == -1)
 		exit(log_errors("Failed to redirect stdout in heredoc_child", ""));
-	rm_limiter = rm_quotes(limiter);
+	rm_limiter = rm_quotes(limiter, &check);
 	if (!rm_limiter)
 	{
 		free_one((void **)new_input);
 		exit(log_errors("Failed to rm_quotes in heredoc_child", ""));
 	}
-	handle_input(fd, rm_limiter, new_input, node);
+	handle_input(rm_limiter, new_input, node, check);
 	if (new_input && *new_input)
 		free_one((void **)new_input);
 	free_one((void **)&rm_limiter);

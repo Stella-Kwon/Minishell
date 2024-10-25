@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 13:01:42 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/21 15:50:35 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 20:50:08 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	update_quotes_and_depth(int *single_quote, int *double_quote, \
 int		check_quotes_and_depth(t_For_tokenize *tokenize, \
 								t_Set *set, char ref);
 void	check_quotes_in_loop(t_Set *set, char ref, int *count);
-char	*rm_quotes(char *str);
+char	*rm_quotes(char *str, int *check);
 int		handle_special_tokens(t_For_tokenize *tokenize);
 int		rm_quote_buffer(t_For_tokenize *tokenize, char **buffer, \
 						char **cp_input);

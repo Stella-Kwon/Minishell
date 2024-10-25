@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 03:04:11 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/23 16:55:04 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 21:21:31 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*check_quote_store(t_Set *set, char ref)
 	return (result);
 }
 
-char	*rm_quotes(char *str)
+char	*rm_quotes(char *str, int *check)
 {
 	t_Set	set;
 	char	ref;
@@ -110,6 +110,8 @@ char	*rm_quotes(char *str)
 
 	initialize_set(str, &set);
 	set_ref_and_tmp_start(str, &set, &ref);
+	if (ref == '"' || ref == '\'')
+		*check = TRUE;
 	result = check_quote_store(&set, ref);
 	if (!result)
 		return (NULL);

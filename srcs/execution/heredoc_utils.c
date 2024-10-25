@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 15:37:15 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/24 21:46:22 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 21:24:07 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	heredoc_check(t_ASTNode **node)
 
 	exit = 0;
 	i = 0;
-	if ((*node)->redir->heredoc_limiter && (*node)->redir->heredoc_limiter[0])
+	if ((*node)->redir->heredoc_limiter && \
+	(*node)->redir->heredoc_limiter[0])
 	{
 		while ((*node)->redir->heredoc_limiter[i] && \
 				i < (*node)->redir->heredoc_i)

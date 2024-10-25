@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 00:32:53 by skwon2           ###   ########.fr       */
+/*   Updated: 2024/10/25 21:24:28 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,22 +82,32 @@ int	cmdnode_exec(t_ASTNode	**node)
 								&(*node)->command));
 }
 
-int	andnode_exec(t_ASTNode	**node)
+int	andnode_exec(t_ASTNode **node)
 {
-	if ((*node)->left && ast_node_execution(&(*node)->left) == SUCCESS)
+	int	left_result;
+
+	if ((*node)->left)
 	{
-		if ((*node)->right)
-			return (ast_node_execution(&(*node)->right));
+		left_result = ast_node_execution(&(*node)->left);
+		if (left_result != SUCCESS)
+			return (left_result);
 	}
+	if ((*node)->right)
+		return (ast_node_execution(&(*node)->right));
 	return (SUCCESS);
 }
 
-int	ornode_exec(t_ASTNode	**node)
+int	ornode_exec(t_ASTNode **node)
 {
-	if ((*node)->left && ast_node_execution(&(*node)->left) != SUCCESS)
+	int	left_result;
+
+	if ((*node)->left)
 	{
-		if ((*node)->right)
-			return (ast_node_execution(&(*node)->right));
+		left_result = ast_node_execution(&(*node)->left);
+		if (left_result == SUCCESS)
+			return (SUCCESS);
 	}
-	return (SUCCESS);
+	if ((*node)->right)
+		return (ast_node_execution(&(*node)->right));
+	return (FAIL);
 }
