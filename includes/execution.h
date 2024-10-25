@@ -42,7 +42,7 @@ int		print_error_redir(t_Command **cmd, char *filename, int redir_errno);
 void	set_last_exitcode_and_root(t_ASTNode **node, int last_exit_code, \
 									t_ASTNode **root);
 void	get_last_exitcode(t_ASTNode	**node, int *last_exitcode);
-// int		check_heredoc(t_ASTNode **node, int exitcode);
+int		check_heredoc(t_ASTNode **node, int exitcode);
 int		heredoc_check(t_ASTNode **node);
 int		node_command_without_cmd(t_ASTNode **node);
 #endif

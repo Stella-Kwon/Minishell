@@ -25,7 +25,6 @@ int	pwd(t_Command *command)
 	}
 	if (!getcwd(buf, MAXPATHLEN))
 	{
-		// log_errors("Failed getcwd in pwd", "");
 		free(buf);
 		command->exitcode = FAIL;
 		return (command->exitcode);

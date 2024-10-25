@@ -14,7 +14,7 @@
 
 void	all_free(char ***res)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (*res && **res)
@@ -25,6 +25,11 @@ void	all_free(char ***res)
 			(*res)[i] = NULL;
 			i++;
 		}
+		free(*res);
+		*res = NULL;
+	}
+	if (*res)
+	{
 		free(*res);
 		*res = NULL;
 	}
