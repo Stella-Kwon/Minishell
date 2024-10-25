@@ -30,7 +30,6 @@ char ***local_env, char **tmp_input)
 {
 	if (g_interrupt_signal == TRUE)
 	{
-		all_free(local_env);
 		all_free(&tokenize->tokens);
 		*tmp_input = tokenize->input;
 		*last_exit_code = 130;

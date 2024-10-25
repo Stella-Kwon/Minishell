@@ -28,4 +28,9 @@ void	all_free(char ***res)
 		free(*res);
 		*res = NULL;
 	}
+	if (*res)
+	{
+		free(*res);
+		*res = NULL;
+	}
 }

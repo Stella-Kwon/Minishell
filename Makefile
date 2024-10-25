@@ -79,7 +79,6 @@ SRCS =	mini.c \
 		error_log/log_file.c\
 		expand/expand.c\
 		expand/curly_braces.c\
-		expand/merge.c\
 		expand/quote.c\
 		expand/exit_code.c\
 		expand/dollar_sign.c\

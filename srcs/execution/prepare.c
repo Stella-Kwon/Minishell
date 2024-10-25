@@ -14,15 +14,8 @@
 
 int	prepare_cmd(t_Command **command, int last_exitcode)
 {
-	int	argc;
-
 	if (!command || !*command)
 		return (0);
-	if (ft_strncmp((*command)->cmd, "export", 7) == 0)
-	{
-		argc = get_str_len((*command)->args);
-		merge_quoted_args((*command)->args, &argc);
-	}
 	expand_cmd_args(*command, last_exitcode);
 	if (!(*command)->cmd)
 		return (cmd_error(command, ": command not found\n", 127));
