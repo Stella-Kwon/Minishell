@@ -69,23 +69,18 @@ The following additional features are optional but can enhance your shell implem
 To compile the Minishell program, use the following command:
 
 ```bash
-make```
+make
 
 For a complete cleanup, including the removal of the minishell binary, use:
-
-```bash
-make fclean```
-
+make fclean
 
 To re-compile everything from the scratch:
+make re
+```
 
-```bash
-make re```
-
-
-## Compilation
 ## Known Issues & Limitations
 
 The program does not fix memory leaks in readline().
 The behavior of special characters like backslashes and semicolons is intentionally limited.
 Only a single signal number is available globally for signal handling.
+There are some issues stay on the parenthesis and Heredoc at the moment.
