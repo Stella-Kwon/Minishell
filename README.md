@@ -3,7 +3,7 @@
 
 ## Demo
 
-[![asciinema demo]( https://asciinema.org/connect/f8e5df4b-25b0-4837-b3d6-ef399a21afc6.svg)]( https://asciinema.org/connect/f8e5df4b-25b0-4837-b3d6-ef399a21afc6)
+[![asciinema demo]( https://asciinema.org/a/f8e5df4b-25b0-4837-b3d6-ef399a21afc6.svg)]( https://asciinema.org/a/f8e5df4b-25b0-4837-b3d6-ef399a21afc6)
 
 
 ---
