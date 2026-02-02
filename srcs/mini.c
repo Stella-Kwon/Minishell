@@ -12,7 +12,9 @@
 
 #include "../includes/minishell.h"
 
-int	g_interrupt_signal = FALSE;
+volatile sig_atomic_t	g_interrupt_signal = FALSE;
+volatile sig_atomic_t	g_no_child = TRUE;
+volatile sig_atomic_t	g_child_count = 0;
 
 t_ASTNode	*execute(int *last_exit_code, t_ASTNode **root)
 {
@@ -30,15 +32,22 @@ t_ASTNode	*execute(int *last_exit_code, t_ASTNode **root)
 t_ASTNode	*parse_and_execute(char **tokens, char ***env, int *last_exit_code)
 {
 	t_ASTNode	*root;
+	int			ret;
 
 	root = parse_to_nodes(tokens, env);
 	if (tokens)
-	{
 		all_free(&tokens);
-	}
 	if (!root)
 		return (NULL);
-	if (execute (last_exit_code, &root) == NULL)
+	ret = heredoc_preprocess(&root, *env, *last_exit_code);
+	if (ret != SUCCESS)
+	{
+		if (ret == 1)
+			*last_exit_code = 1;
+		free_astnode(&root);
+		return (NULL);
+	}
+	if (execute(last_exit_code, &root) == NULL)
 		return (NULL);
 	return (root);
 }
@@ -56,10 +65,7 @@ int	exec_in_loop(char **env, int *last_exit_code)
 		signal_setup();
 		input = get_user_input(last_exit_code, &local_env);
 		if (!input)
-		{
-			free_one((void **)input);
 			continue ;
-		}
 		tokens = process_input_to_tokens(input, last_exit_code, \
 										&local_env);
 		if (!tokens)
@@ -78,6 +84,7 @@ int	main(int argc, char **argv, char **env)
 	last_exit_code = 0;
 	if (argc != 1)
 		return (1);
+	setup_terminal();
 	signal_setup();
 	if (exec_in_loop(env, &last_exit_code) != SUCCESS)
 		return (FAIL);
