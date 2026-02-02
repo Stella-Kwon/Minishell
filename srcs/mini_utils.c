@@ -12,9 +12,9 @@
 
 #include "../includes/minishell.h"
 
-int	local_env_copy(char **env, char ***local_env)
+int local_env_copy(char **env, char ***local_env)
 {
-	int	env_len;
+	int env_len;
 
 	env_len = get_str_len(env);
 	*local_env = ft_calloc(env_len + 1, sizeof(char *));
@@ -31,37 +31,44 @@ int	local_env_copy(char **env, char ***local_env)
 	return (SUCCESS);
 }
 
-char	*get_user_input(int *last_exit_code, char ***local_env)
+char *get_user_input(int *last_exit_code, char ***local_env)
 {
-	char	*input;
+	char *input;
 
-	input = readline("minishell > ");
-	if (!input)
+	input = read_line_safe("minishell > ");
+	if (!input || input == (char *)-1)
 	{
-		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		rl_clear_history();
+		if (input == (char *)-1)
+			return (NULL);
+		if (isatty(STDIN_FILENO))
+		{
+			// ft_putstr_fd("exit\n", STDOUT_FILENO);
+			rl_clear_history();
+		}
 		all_free(local_env);
 		exit(0);
 	}
 	if (input[0] == '\0')
 		return (NULL);
-	add_history(input);
+	if (isatty(STDIN_FILENO))
+		add_history(input);
 	if (check_input(input) == FAIL)
 	{
 		*last_exit_code = 2;
+		free(input);
 		return (NULL);
 	}
 	return (input);
 }
 
-char	**process_input_to_tokens(char *input, int *last_exit_code, \
-									char ***local_env_copy)
+char **process_input_to_tokens(char *input, int *last_exit_code,
+							   char ***local_env_copy)
 {
-	char	**tokens;
-	char	*tmp_input;
+	char **tokens;
+	char *tmp_input;
 
 	tmp_input = input;
-	tokens = tokenize_input(&input, last_exit_code, \
+	tokens = tokenize_input(&input, last_exit_code,
 							local_env_copy, &tmp_input);
 	if (tmp_input)
 		free_one((void **)&tmp_input);
