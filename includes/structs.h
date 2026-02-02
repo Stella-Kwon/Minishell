@@ -68,15 +68,15 @@ typedef enum e_nodetype
 	NODE_PIPE,
 	NODE_AND,
 	NODE_OR
-}	t_NodeType;
+} t_NodeType;
 
 typedef struct s_remove_args
 {
-	char	**new_args;
-	int		i;
-	int		origin_i;
-	int		buffersize;
-}	t_rm_args;
+	char **new_args;
+	int i;
+	int origin_i;
+	int buffersize;
+} t_rm_args;
 
 typedef struct s_Redirection
 {
@@ -87,55 +87,58 @@ typedef struct s_Redirection
 	char	*out_filename;
 	int		direction_type;
 	char	**heredoc_limiter;
-	int		heredoc_i;
+	char 	***heredoc_body;
+	int 	heredoc_i;
 	char	*herestring_str;
 	int		heredoc_buffsize;
-	int		errno_in;
+	int 	last_stdin_type;
+	int errno_in;
 	int		errno_out;
 }	t_Redirection;
 
 typedef struct s_astnode
 {
-	t_NodeType			type;
-	t_Command			*command;
-	t_Redirection		*redir;
-	t_Pipeline			*pipeline;
-	struct s_astnode	*left;
-	struct s_astnode	*right;
-	int					last_exitcode;
-	int					pipecmd;
-	int					term_stdin;
-	int					term_stdout;
-}	t_ASTNode;
+	t_NodeType type;
+	t_Command *command;
+	t_Redirection *redir;
+	t_Pipeline *pipeline;
+	struct s_astnode *left;
+	struct s_astnode *right;
+	int last_exitcode;
+	int pipecmd;
+	int term_stdin;
+	int term_stdout;
+} t_ASTNode;
 
 typedef struct s_Dollar
 {
-	size_t	len;
-	size_t	tmp_len;
-	char	*tmp;
-	size_t	i;
-	size_t	tmp_i;
-	size_t	var_len;
-	size_t	var_start;
-	char	*var;
-	char	*var_value;
-}	t_Dollar;
+	size_t len;
+	size_t tmp_len;
+	char *tmp;
+	size_t i;
+	size_t tmp_i;
+	size_t var_len;
+	size_t var_start;
+	char *var;
+	char *var_value;
+} t_Dollar;
 
 typedef struct s_For_tokenize
 {
-	char	*input;
-	char	*start;
-	char	**tokens;
-	int		token_count;
-	int		buffsize;
-}	t_For_tokenize;
+	char *input;
+	char *start;
+	char **tokens;
+	int token_count;
+	int buffsize;
+	int error_code;
+} t_For_tokenize;
 
 typedef struct s_line
 {
-	char	c;
-	int		r_byte;
-	int		i;
-	int		buf_size;
-}	t_line;
+	char c;
+	int r_byte;
+	int i;
+	int buf_size;
+} t_line;
 
 #endif

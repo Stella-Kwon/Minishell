@@ -11,49 +11,56 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define MINISHELL_H
+#define MINISHELL_H
 
-# include "../libft/libft.h"
-# include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
-# include <signal.h>
-# include <errno.h>
-# include <stdbool.h>
-# include <sys/param.h>
-# include <sys/wait.h>
-# include <termios.h>
-# include <readline/readline.h>
-# include <stddef.h>
-# include <readline/history.h>
-# include <signal.h>
-# include "structs.h"
-# include "utils.h"
-# include "errors.h"
-# include "tokenize.h"
-# include "redirection.h"
-# include "parsing.h"
-# include "builtin.h"
-# include "expand.h"
-# include "execution.h"
+#include "../libft/libft.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
+#include <signal.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <sys/param.h>
+#include <sys/wait.h>
+#include <termios.h>
+#include <readline/readline.h>
+#include <stddef.h>
+#include <readline/history.h>
+#include <signal.h>
+#include "structs.h"
+#include "utils.h"
+#include "errors.h"
+#include "tokenize.h"
+#include "redirection.h"
+#include "parsing.h"
+#include "builtin.h"
+#include "expand.h"
+#include "execution.h"
+#include "stdarg.h"
+#include <setjmp.h>
 
-# ifndef BUFFSIZE
-#  define BUFFSIZE 50
-# endif
+#ifndef BUFFSIZE
+#define BUFFSIZE 50
+#endif
 
-# define TRUE 1
-# define FALSE 0
+#define TRUE 1
+#define FALSE 0
 
-# define SUCCESS 0
-# define FAIL 1
+#define SUCCESS 0
+#define FAIL 1
 
-extern int	g_interrupt_signal;
+extern volatile sig_atomic_t g_interrupt_signal;
+extern volatile sig_atomic_t g_no_child;
+extern volatile sig_atomic_t g_child_count;
+extern sigjmp_buf g_readline_jmp_buf;
+extern volatile sig_atomic_t g_readline_jmp_active;
 
-int		local_env_copy(char **env, char ***local_env);
-char	**process_input_to_tokens(char *input, int *last_exit_code, \
-								char ***local_env);
-char	*get_user_input(int *last_exit_code, char ***local_env);
-void	signal_setup(void);
-void	signal_set_exec(void);
-void	signal_set_rl(void);
+int local_env_copy(char **env, char ***local_env);
+char **process_input_to_tokens(char *input, int *last_exit_code,
+							   char ***local_env);
+char *get_user_input(int *last_exit_code, char ***local_env);
+void signal_setup(void);
+void signal_set_exec(void);
+void signal_set_rl(void);
+void setup_terminal(void);
 #endif

@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef REDIRECTION_H
-# define REDIRECTION_H
+#define REDIRECTION_H
 
-# include "minishell.h"
+#include "minishell.h"
 
-int		here_doc(t_ASTNode **node, char *limiter);
-int		here_string(t_Redirection **redir);
+int here_doc_write(t_Redirection *redir, int heredoc_index);
+int here_string(t_Redirection **redir);
 
 #endif
