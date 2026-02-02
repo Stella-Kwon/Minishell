@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static void	pipenode_left_exec_child(t_ASTNode **node, int *exitcode, \
+static void pipenode_left_exec_child(t_ASTNode **node, int *exitcode,
 									int redirect)
 {
 	(*node)->pipeline->left_pid = fork();
@@ -34,9 +34,11 @@ static void	pipenode_left_exec_child(t_ASTNode **node, int *exitcode, \
 		free_astnode((*node)->command->root_node);
 		exit(*exitcode);
 	}
+	if ((*node)->pipeline->left_pid > 0)
+		child_spawned();
 }
 
-static void	pipenode_right_exec_child(t_ASTNode **node, int *exitcode)
+static void pipenode_right_exec_child(t_ASTNode **node, int *exitcode)
 {
 	(*node)->pipeline->right_pid = fork();
 	if ((*node)->pipeline->right_pid == 0)
@@ -55,12 +57,14 @@ static void	pipenode_right_exec_child(t_ASTNode **node, int *exitcode)
 		free_astnode((*node)->command->root_node);
 		exit(*exitcode);
 	}
+	if ((*node)->pipeline->right_pid > 0)
+		child_spawned();
 }
 
-static int	pipenode_exec_normal(t_ASTNode **node)
+static int pipenode_exec_normal(t_ASTNode **node)
 {
-	int	status;
-	int	exitcode;
+	int status;
+	int exitcode;
 
 	exitcode = 0;
 	if (pipe((*node)->pipeline->fd) == -1)
@@ -74,19 +78,21 @@ static int	pipenode_exec_normal(t_ASTNode **node)
 		(*node)->command->exitcode = waitpid_status(status);
 		return ((*node)->command->exitcode);
 	}
+	child_reaped();
 	if (waitpid((*node)->pipeline->right_pid, &status, 0) == -1)
 	{
 		(*node)->command->exitcode = waitpid_status(status);
 		return ((*node)->command->exitcode);
 	}
+	child_reaped();
 	(*node)->command->exitcode = waitpid_status(status);
 	return ((*node)->command->exitcode);
 }
 
-static int	pipenode_exec_heredoc(t_ASTNode **node)
+static int pipenode_exec_heredoc(t_ASTNode **node)
 {
-	int	status;
-	int	exitcode;
+	int status;
+	int exitcode;
 
 	exitcode = 0;
 	if (pipe((*node)->pipeline->fd) == -1)
@@ -98,6 +104,7 @@ static int	pipenode_exec_heredoc(t_ASTNode **node)
 		(*node)->command->exitcode = waitpid_status(status);
 		return ((*node)->command->exitcode);
 	}
+	child_reaped();
 	pipenode_right_exec_child(node, &exitcode);
 	close((*node)->pipeline->fd[0]);
 	if (waitpid((*node)->pipeline->right_pid, &status, 0) == -1)
@@ -105,11 +112,12 @@ static int	pipenode_exec_heredoc(t_ASTNode **node)
 		(*node)->command->exitcode = waitpid_status(status);
 		return ((*node)->command->exitcode);
 	}
+	child_reaped();
 	(*node)->command->exitcode = waitpid_status(status);
 	return ((*node)->command->exitcode);
 }
 
-int	pipenode_exec(t_ASTNode **node)
+int pipenode_exec(t_ASTNode **node)
 {
 	if ((*node)->left->redir && (*node)->left->redir->heredoc_limiter != NULL)
 		return (pipenode_exec_heredoc(node));

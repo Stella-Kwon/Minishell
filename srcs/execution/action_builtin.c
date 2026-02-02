@@ -40,21 +40,10 @@ int	action_builtin(t_Command **cmd, t_Redirection **redir)
 
 	prev_stdout = dup(STDOUT_FILENO);
 	prev_stdin = dup(STDIN_FILENO);
-	if (common_pre_child(redir, cmd) == FAIL)
+	if (redirect_infile_to_stdin(redir, cmd) == FAIL)
 		return (FAIL);
-	if ((*redir)->outfile != -2)
-	{
-		if ((*redir)->outfile == -1)
-			return (print_error_redir(cmd, (*redir)->out_filename, \
-										(*redir)->errno_out));
-		if (dup_and_close((*redir)->outfile, STDOUT_FILENO) == FAIL)
-		{
-			log_errors("Failed to redirect outfile in child process", \
-						strerror(errno));
-			(*cmd)->exitcode = FAIL;
-			return (FAIL);
-		}
-	}
+	if (redirect_outfile_to_stdout(redir, cmd) == FAIL)
+		return (FAIL);
 	status = builtin(*cmd);
 	restore_previous_fd(prev_stdout, prev_stdin);
 	return (status);

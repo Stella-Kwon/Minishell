@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-int	expand_value(t_Dollar *dol)
+int expand_value(t_Dollar *dol)
 {
-	size_t	value_len;
-	char	*new_output;
+	size_t value_len;
+	char *new_output;
 
 	if (!dol->var_value || !dol->tmp)
 		return (SUCCESS);
@@ -40,7 +40,7 @@ int	expand_value(t_Dollar *dol)
 	return (SUCCESS);
 }
 
-static int	handle_special_character(char *input, t_Dollar *dol, char **env, \
+static int handle_special_character(char *input, t_Dollar *dol, char **env,
 									int last_exitcode)
 {
 	if (input[dol->i] == '\'')
@@ -64,10 +64,10 @@ static int	handle_special_character(char *input, t_Dollar *dol, char **env, \
 	return (SUCCESS);
 }
 
-static int	process_character(char *input, t_Dollar *dol, char **env, \
-							int last_exitcode)
+static int process_character(char *input, t_Dollar *dol, char **env,
+							 int last_exitcode)
 {
-	char	*tmp;
+	char *tmp;
 
 	if (handle_special_character(input, dol, env, last_exitcode) == FAIL)
 		return (FAIL);
@@ -85,8 +85,8 @@ static int	process_character(char *input, t_Dollar *dol, char **env, \
 	return (SUCCESS);
 }
 
-static int	process_quotes(char *input, t_Dollar *dol, char **env, \
-							int last_exitcode)
+static int process_quotes(char *input, t_Dollar *dol, char **env,
+						  int last_exitcode)
 {
 	while (dol->i < dol->len)
 	{
@@ -110,9 +110,9 @@ static int	process_quotes(char *input, t_Dollar *dol, char **env, \
 	return (SUCCESS);
 }
 
-int	find_dollar_signs(char **in_out, char **env, int last_exitcode)
+int find_dollar_signs(char **in_out, char **env, int last_exitcode)
 {
-	t_Dollar	dol;
+	t_Dollar dol;
 
 	if (!in_out || !(*in_out))
 		return (FAIL);

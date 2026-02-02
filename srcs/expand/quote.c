@@ -12,9 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-int	handle_single_quote(char *input, t_Dollar *dol)
+int handle_single_quote(char *input, t_Dollar *dol)
 {
-	char	*tmp;
+	char *tmp;
 
 	dol->i++;
 	while (input[dol->i] && input[dol->i] != '\'')
@@ -22,8 +22,8 @@ int	handle_single_quote(char *input, t_Dollar *dol)
 		dol->tmp[dol->tmp_i++] = input[dol->i++];
 		if (dol->tmp_i >= dol->tmp_len - 1)
 		{
-			tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
-											(int *)&dol->tmp_len);
+			tmp = ft_realloc_single(dol->tmp, dol->tmp_i,
+									(int *)&dol->tmp_len);
 			if (!tmp)
 			{
 				log_errors("Failed realloc in quote", "");
@@ -37,8 +37,8 @@ int	handle_single_quote(char *input, t_Dollar *dol)
 	return (SUCCESS);
 }
 
-static int	check_double_quote(char *input, t_Dollar *dol, char **env, \
-								int last_exitcode)
+static int check_double_quote(char *input, t_Dollar *dol, char **env,
+							  int last_exitcode)
 {
 	while (input[dol->i] && input[dol->i] != '\"')
 	{
@@ -57,8 +57,8 @@ static int	check_double_quote(char *input, t_Dollar *dol, char **env, \
 			dol->tmp[dol->tmp_i++] = input[dol->i++];
 			if (dol->tmp_i >= dol->tmp_len - 1)
 			{
-				dol->tmp = ft_realloc_single(dol->tmp, dol->tmp_i, \
-												(int *)&dol->tmp_len);
+				dol->tmp = ft_realloc_single(dol->tmp, dol->tmp_i,
+											 (int *)&dol->tmp_len);
 				if (!dol->tmp)
 					return (log_errors("Failed realloc in quote double", ""));
 			}
@@ -67,7 +67,7 @@ static int	check_double_quote(char *input, t_Dollar *dol, char **env, \
 	return (SUCCESS);
 }
 
-int	handle_double_quote(char *input, t_Dollar *dol, char **env, \
+int handle_double_quote(char *input, t_Dollar *dol, char **env,
 						int last_exitcode)
 {
 	dol->i++;
@@ -78,14 +78,13 @@ int	handle_double_quote(char *input, t_Dollar *dol, char **env, \
 	return (SUCCESS);
 }
 
-char	*remove_quotes(char *s)
+char *remove_quotes(char *s)
 {
-	int		len;
-	char	*new_s;
+	int len;
+	char *new_s;
 
 	len = ft_strlen(s);
-	if ((s[0] == '"' && s[len - 1] == '"')
-		|| (s[0] == '\'' && s[len - 1] == '\''))
+	if ((s[0] == '"' && s[len - 1] == '"') || (s[0] == '\'' && s[len - 1] == '\''))
 	{
 		new_s = malloc((len - 1) * sizeof(char));
 		if (!new_s)

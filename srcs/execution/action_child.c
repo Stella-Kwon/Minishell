@@ -25,7 +25,7 @@ int	print_error_redir(t_Command **cmd, char *filename, int redir_errno)
 	return (FAIL);
 }
 
-int	common_pre_child(t_Redirection	**redir, t_Command **cmd)
+int	redirect_infile_to_stdin(t_Redirection **redir, t_Command **cmd)
 {
 	if ((*redir)->infile != -2)
 	{
@@ -38,15 +38,19 @@ int	common_pre_child(t_Redirection	**redir, t_Command **cmd)
 			return (FAIL);
 		}
 	}
-	if ((*redir)->herestring_str)
+	return (SUCCESS);
+}
+
+int	redirect_outfile_to_stdout(t_Redirection **redir, t_Command **cmd)
+{
+	if ((*redir)->outfile != -2)
 	{
-		if (here_string(redir) != SUCCESS)
-			return (FAIL);
-		if ((*redir)->infile != -2 && \
-			dup_and_close((*redir)->infile, STDIN_FILENO) == FAIL)
+		if ((*redir)->outfile == -1)
+			return (print_error_redir(cmd, (*redir)->out_filename, \
+										(*redir)->errno_out));
+		if (dup_and_close((*redir)->outfile, STDOUT_FILENO) == FAIL)
 		{
-			log_errors("Failed to redirect infile after herestring", \
-						strerror(errno));
+			log_errors("Failed to redirect outfile", strerror(errno));
 			return (FAIL);
 		}
 	}
@@ -55,23 +59,10 @@ int	common_pre_child(t_Redirection	**redir, t_Command **cmd)
 
 int	action_child(t_Command **cmd, t_Redirection **redir)
 {
-	if (common_pre_child(redir, cmd) == FAIL)
+	if (redirect_infile_to_stdin(redir, cmd) == FAIL)
 		free_exit(cmd, FAIL);
-	if ((*redir)->outfile != -2)
-	{
-		if ((*redir)->outfile == -1)
-		{
-			if (print_error_redir(cmd, (*redir)->out_filename, \
-									(*redir)->errno_out) == FAIL)
-				free_exit(cmd, FAIL);
-		}
-		if (dup_and_close((*redir)->outfile, STDOUT_FILENO) == FAIL)
-		{
-			log_errors("Failed to redirect outfile in child process", \
-						strerror(errno));
-			free_exit(cmd, FAIL);
-		}
-	}
+	if (redirect_outfile_to_stdout(redir, cmd) == FAIL)
+		free_exit(cmd, FAIL);
 	if (execve((*cmd)->cmd, (*cmd)->args, *((*cmd)->env)) == -1)
 		free_exit(cmd, handle_error((*cmd)->cmd));
 	exit(0);

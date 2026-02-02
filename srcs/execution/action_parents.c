@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-int	action_parents(t_Redirection **redir, t_Pipeline **pipeline, \
-					t_Command **cmd)
+int action_parents(t_Redirection **redir, t_Pipeline **pipeline,
+				   t_Command **cmd)
 {
-	int	wstatus;
+	int wstatus;
 
 	wstatus = -2;
 	if (waitpid((*pipeline)->pid, &wstatus, 0) == -1)
@@ -23,6 +23,7 @@ int	action_parents(t_Redirection **redir, t_Pipeline **pipeline, \
 		(*cmd)->exitcode = waitpid_status(wstatus);
 		return ((*cmd)->exitcode);
 	}
+	child_reaped();
 	if ((*redir)->outfile >= 0)
 		close((*redir)->outfile);
 	if ((*redir)->infile >= 0)
