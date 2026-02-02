@@ -20,7 +20,18 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR) # -g -fsanitize=address
 
-LINK_FLAG = -lreadline -lncurses -L/
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+READLINE_DIR := $(shell brew --prefix readline 2>/dev/null)
+ifneq ($(READLINE_DIR),)
+FLAG += -I$(READLINE_DIR)/include
+LINK_FLAG = -L$(READLINE_DIR)/lib -lreadline -lncurses
+else #no readline path
+LINK_FLAG = -lreadline -lncurses
+endif
+else #linux
+LINK_FLAG = -lreadline -lncurses
+endif
 
 
 SRCS_DIR = ./srcs/
@@ -37,27 +48,31 @@ SRCS =	mini.c \
 		utils/ft_strcat.c\
 		utils/ft_strjoin3.c\
 		utils/waitpid_status.c\
+		utils/read_line.c\
+		utils/fd_utils.c\
+		utils/child_state.c\
 		tokenize/store_words.c\
 		tokenize/readline_again.c\
 		tokenize/check_set.c\
 		tokenize/tokenize.c\
 		tokenize/tokenize_operator.c\
 		tokenize/operation_error.c\
-		tokenize/operation_next.c\
-		tokenize/operation_next_utils.c\
 		tokenize/handle_tokens.c\
 		tokenize/handle_redirection.c\
 		tokenize/input_utils.c\
 		signal/signal.c\
-		redirection/heredoc.c\
-		redirection/heredoc_utils.c\
-		redirection/herestring.c\
+		signal/terminal_settings.c\
+		heredoc_string/herestring.c\
+		heredoc_string/herestring_parsing.c\
+		heredoc_string/heredoc_read.c\
+		heredoc_string/heredoc_write.c\
+		heredoc_string/heredoc_parsing.c\
+		heredoc_string/preprocess.c\
 		parsing/create_astnode.c\
 		parsing/create_command.c\
 		parsing/initialize_func.c\
 		parsing/free_func.c\
 		parsing/astnode_utils.c\
-		parsing/heredoc_herestr_parsing.c\
 		parsing/parsing_utils.c\
 		parsing/restore_new_args.c\
 		parsing/restore_filename.c\
@@ -67,7 +82,6 @@ SRCS =	mini.c \
 		execution/action_builtin.c\
 		execution/execute.c\
 		execution/prepare.c\
-		execution/heredoc_utils.c\
 		execution/exitcode_utils.c\
 		execution/utils.c\
 		execution/pipe_execution.c\

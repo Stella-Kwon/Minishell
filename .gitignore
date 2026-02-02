@@ -1,0 +1,24 @@
+# .gitignore 파일 생성
+cat > .gitignore << 'EOF'
+# Object files
+*.o
+*.a
+
+# Binary
+minishell
+
+# Build artifacts
+libft/*.o
+libft/libft.a
+
+# Logs
+*.log
+minishell.log
+
+# IDE
+.vscode/
+.idea/
+
+# Old directory
+old/
+EOF

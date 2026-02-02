@@ -1,86 +1,94 @@
-# Minishell
 
-## Description
+#### MINISHELL
 
-Minishell is a simple shell implementation that mimics the behavior of a Unix shell. It features basic functionalities such as handling commands, redirections, pipes, environment variables, and built-ins. It also supports custom signal handling for interactive sessions, and implements several fundamental shell operations like `echo`, `cd`, `pwd`, `export`, `unset`, `env`, and `exit`.
+## Supported Features
 
-## Mandatory Requirements
+- Built-in commands: `echo`, `cd`, `pwd`, `export`, `unset`, `env`, `exit`
+- Unlimited pipelines: `cmd1 | cmd2 | cmd3 ...`
+- Logical operators: `&&`, `||` with short-circuit evaluation
+- Redirections: `<`, `>`, `>>`, `<<` (heredoc), `<<<` (herestring)
+- Quote-aware parsing (single & double quotes)
+- Variable expansion: `$VAR`, `$?`
+- Context-aware signal handling (`Ctrl+C`, `Ctrl+D`, `Ctrl+\`)
+- Correct stdin precedence when combining heredoc and herestring
 
-### Features
+---
 
-- **Prompt & History**: The shell should display a prompt when waiting for new commands. It also has a history feature, where commands can be recalled.
-  
-- **Search & Launch**: The shell must search for executables based on the `$PATH` variable or use relative/absolute paths to launch programs.
+## How It Works
 
-- **Signal Handling**: Avoid using global variables for signal handling. Only use a global variable to store the signal number, without accessing other data structures.
+Input is tokenized, expanded, and transformed into an **Abstract Syntax Tree (AST)**.  
+Commands are executed through recursive tree traversal, which naturally enforces
+operator precedence (`|` > `&&` > `||`) and correct short-circuit behavior.
 
-- **Quoting & Special Characters**:
-  - Single quotes (`'`) prevent the interpretation of metacharacters inside the quotes.
-  - Double quotes (`"`) prevent interpretation except for the dollar sign (`$`).
-  - Unclosed quotes or unnecessary special characters (e.g., semicolons or backslashes) should be ignored.
+Stdin sources are explicitly tracked to resolve precedence between `<`, `<<`, and
+`<<<`, matching Bash behavior in complex redirection scenarios.
 
-- **Redirection**:
-  - `<`: Redirects input.
-  - `>`: Redirects output.
-  - `<<`: Reads input until a line containing the delimiter is seen.
-  - `>>`: Appends output to a file.
+---
 
-- **Pipes**: The `|` operator connects the output of one command to the input of the next command.
+## Code Structure
 
-- **Environment Variables**: Expand variables like `$VAR` to their corresponding values from the environment. Handle the special case of `$?` for the exit status of the last executed foreground process.
+srcs/
+├── tokenize/ # Lexical analysis
+├── parsing/ # AST construction
+├── execution/ # fork/exec, pipelines, FD control
+├── builtin/ # Built-in commands
+├── expand/ # Variable & quote expansion
+├── heredoc_string/ # Heredoc & herestring handling
+├── signal/ # Signal configuration
+├── error_log/ # Error handling
+└── utils/ # Memory-safe utilities
 
-- **Built-ins**:
-  - `echo` with the `-n` option.
-  - `cd` for navigating directories (supports relative/absolute paths).
-  - `pwd` for printing the current directory.
-  - `export` to set environment variables.
-  - `unset` to remove environment variables.
-  - `env` to display environment variables.
-  - `exit` to terminate the shell with no options.
+---
 
-- **Signal Handling**: Handle `Ctrl-C`, `Ctrl-D`, and `Ctrl-\` as follows:
-  - `Ctrl-C` displays a new prompt on a new line.
-  - `Ctrl-D` exits the shell.
-  - `Ctrl-\` has no effect.
-
-### External Functions Used
-Your implementation should use the following external functions:
-- `readline`, `rl_clear_history`, `add_history`, `printf`, `malloc`, `free`, `write`, `access`, `open`, `close`, `fork`, `execve`, `signal`, `kill`, `chdir`, `getcwd`, `stat`, `lstat`, `fstat`, `unlink`, `dup`, `dup2`, `pipe`, `opendir`, `readdir`, `closedir`, `getenv`, `tcsetattr`, `tcgetattr`, and others for terminal management and system calls.
-
-### Libft
-You are authorized to use your own `libft` for auxiliary functions like string manipulation, memory management, and others.
-
-## Bonus Requirements
-
-The following additional features are optional but can enhance your shell implementation:
-
-- **Logical Operators**:
-  - `&&`: Executes the second command only if the first command succeeds (exit status 0).
-  - `||`: Executes the second command only if the first command fails (non-zero exit status).
-
-## Files to Submit
-
-- **Makefile**: Must include targets: `NAME`, `all`, `clean`, `fclean`, and `re`.
-- **Source Files**: All your `.c` files that make up the shell implementation.
-- **Header Files**: All your `.h` header files.
-
-## Compilation
-
-To compile the Minishell program, use the following command:
-
+### Run All Tests
 ```bash
-make
-
-For a complete cleanup, including the removal of the minishell binary, use:
-make fclean
-
-To re-compile everything from the scratch:
-make re
+bash tests/tester_cases.sh      # Functional tests (stdout/stderr)
+bash tests/tester_exitcode.sh    # Exit code validation
+bash tests/tester_fd.sh          # File descriptor leak check
+bash test/valgrind.sh           # Memory-leak check
 ```
+---
 
-## Known Issues & Limitations
+## 📋 Test Cases
 
-The program does not fix memory leaks in readline().
-The behavior of special characters like backslashes and semicolons is intentionally limited.
-Only a single signal number is available globally for signal handling.
-There are some issues stay on the parenthesis and Heredoc at the moment.
+| File                  | Description                                         |   |    |
+| --------------------- | --------------------------------------------------- | - | -- |
+| `01_basic.ms`         | Basic commands (`echo`, `pwd`, `env`)               |   |    |
+| `02_builtins.ms`      | Built-in commands (`cd`, `export`, `unset`, `exit`) |   |    |
+| `03_quotes.ms`        | Single, double, and multiline quotes                |   |    |
+| `04_redirections.ms`  | Input/output/append redirections                    |   |    |
+| `05_pipes.ms`         | Pipe chains (2–10 stages)                           |   |    |
+| `06_heredoc.ms`       | Heredoc with variable expansion                     |   |    |
+| `07_herestring.ms`    | Herestring (`<<<`)                                  |   |    |
+| `08_logic_ops.ms`     | Logical operators (`&&`, `                          |   | `) |
+| `09_exit_codes.ms`    | Exit code propagation                               |   |    |
+| `10_edge_cases.ms`    | Error handling and edge cases                       |   |    |
+| `11_comprehensive.ms` | Full integration test                               |   |    |
+| `fd_management.ms`    | File descriptor management                          |   |    |
+
+---
+
+## Recent Improvements
+
+- Fixed variable expansion in double-quoted herestrings
+- Refactored heredoc and herestring handling to run in the main process  
+  (removed unnecessary `fork()` usage)
+- Corrected stdin precedence between heredoc and herestring  
+  (e.g. `cat << LIMITER <<< "hi"`)
+- Fixed exit code propagation for `exit` without arguments
+- Added dual input handling to support both interactive and non-interactive modes  
+  (`readline()` for TTY input, `getline()` for static file / tester input)
+- Reworked signal handling after removing `fork()` by using `sigsetjmp` / `siglongjmp`  
+  to restore execution state and safely abort the current command within a single process
+
+---
+
+## Authors
+
+**skwon2** — Hive Helsinki (42 Network)
+
+**hlee-sun** — Hive Helsinki (42 Network)
+
+---
+
+Developed as part of the 42 Network curriculum at Hive Helsinki.
