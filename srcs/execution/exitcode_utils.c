@@ -51,18 +51,3 @@ void	get_last_exitcode(t_ASTNode **node, int *last_exitcode)
 	read_exitcode(node, &exitcode, *last_exitcode);
 	*last_exitcode = exitcode;
 }
-
-int	heredoc_exec(t_ASTNode **node)
-{
-	int	exitcode;
-
-	exitcode = heredoc_check(node);
-	if (exitcode != SUCCESS)
-		return (exitcode);
-	if ((*node)->type == NODE_COMMAND && !(*node)->command)
-	{
-		exitcode = node_command_without_cmd(node);
-		return (exitcode);
-	}
-	return (SUCCESS);
-}

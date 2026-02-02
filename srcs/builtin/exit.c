@@ -23,7 +23,7 @@ static void	free_and_exit(t_Command *command, int exitcode)
 static int	handle_exit_arguments(t_Command *command, size_t *i)
 {
 	if (!command->args[1])
-		free_and_exit(command, 0);
+		free_and_exit(command, command->exitcode);
 	if (command->args[2] != NULL)
 	{
 		cmd_error(&command, ": too many arguments\n", 1);
@@ -31,7 +31,7 @@ static int	handle_exit_arguments(t_Command *command, size_t *i)
 	}
 	if (command->args[1][*i] == '-' || command->args[1][*i] == '+')
 		(*i)++;
-	return (SUCCESS);
+	return (command->exitcode);
 }
 
 static void	validate_exit_status(t_Command *command, size_t i)
