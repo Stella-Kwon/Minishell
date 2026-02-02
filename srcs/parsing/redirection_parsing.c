@@ -61,6 +61,7 @@ static int	set_infile(t_Redirection **redirect, char ***args, \
 		if ((*redirect)->infile != -2)
 			close((*redirect)->infile);
 		(*redirect)->infile = open((*redirect)->in_filename, O_RDONLY);
+		(*redirect)->last_stdin_type = 1;
 	}
 	(*redirect)->errno_in = errno;
 	return (SUCCESS);

@@ -12,38 +12,38 @@
 
 #include "../../includes/minishell.h"
 
-int	set_heredoc(t_Redirection **redirect, char *limiter)
+int set_heredoc(t_Redirection **redirect, char *limiter)
 {
 	if (!(*redirect)->heredoc_limiter)
 	{
-		(*redirect)->heredoc_limiter = ft_calloc((*redirect)->heredoc_buffsize, \
-												sizeof(char *));
+		(*redirect)->heredoc_limiter = ft_calloc((*redirect)->heredoc_buffsize,
+												 sizeof(char *));
 		if (!(*redirect)->heredoc_limiter)
 			return (log_errors("Failed malloc in set_heredoc", ""));
 	}
-	ft_realloc_double((*redirect)->heredoc_limiter, (*redirect)->heredoc_i, \
-					&(*redirect)->heredoc_buffsize);
+	ft_realloc_double((*redirect)->heredoc_limiter, (*redirect)->heredoc_i,
+					  &(*redirect)->heredoc_buffsize);
 	(*redirect)->heredoc_limiter[(*redirect)->heredoc_i] = ft_strdup(limiter);
 	if (!(*redirect)->heredoc_limiter[(*redirect)->heredoc_i])
 		return (log_errors("Failed malloc [(*redirect)->heredoc_i++] in \
-							set_heredoc", ""));
-	(*redirect)->heredoc_i ++;
+							set_heredoc",
+						   ""));
+	(*redirect)->heredoc_i++;
 	return (SUCCESS);
 }
 
-int	set_herestring(t_Redirection **redirect, char *string)
+int set_herestring(t_Redirection **redirect, char *string)
 {
-	char	*str;
+	char *str;
 
-	str = ft_strjoin(string, "\n");
-	(*redirect)->herestring_str = str;
-	if (!(*redirect)->herestring_str)
+	str = ft_strdup(string);
+	if (!str)
 		return (log_errors("Failed malloc in set_herestring", ""));
+	(*redirect)->herestring_str = str;
 	return (SUCCESS);
 }
 
-int	herestring_action(char ***args, \
-t_Redirection **redirect)
+int herestring_action(char ***args, t_Redirection **redirect)
 {
 	(*args)++;
 	if (set_herestring(redirect, **args) == FAIL)
@@ -52,7 +52,7 @@ t_Redirection **redirect)
 	return (SUCCESS);
 }
 
-int	heredoc_herestring_parsing(char ***args, t_Redirection **redirect)
+int heredoc_herestring_parsing(char ***args, t_Redirection **redirect)
 {
 	if (ft_strcmp(**args, "<<") == 0)
 	{

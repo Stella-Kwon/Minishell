@@ -12,9 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-t_Redirection	*create_redirection(void)
+t_Redirection *create_redirection(void)
 {
-	t_Redirection	*redir;
+	t_Redirection *redir;
 
 	redir = (t_Redirection *)ft_calloc(1, sizeof(t_Redirection));
 	if (!redir)
@@ -29,13 +29,15 @@ t_Redirection	*create_redirection(void)
 	redir->out_filename = NULL;
 	redir->direction_type = -1;
 	redir->heredoc_limiter = NULL;
+	redir->heredoc_body = NULL;
 	redir->heredoc_i = 0;
 	redir->herestring_str = NULL;
 	redir->heredoc_buffsize = BUFFER_SIZE;
+	redir->last_stdin_type = 0;
 	return (redir);
 }
 
-int	initialize_astnode(t_ASTNode **node, char ***tokens)
+int initialize_astnode(t_ASTNode **node, char ***tokens)
 {
 	if (node && (*node))
 	{
@@ -62,9 +64,9 @@ int	initialize_astnode(t_ASTNode **node, char ***tokens)
 	return (SUCCESS);
 }
 
-t_Pipeline	*create_pipeline(void)
+t_Pipeline *create_pipeline(void)
 {
-	t_Pipeline	*pipeline;
+	t_Pipeline *pipeline;
 
 	pipeline = (t_Pipeline *)ft_calloc(1, sizeof(t_Pipeline));
 	if (!pipeline)
