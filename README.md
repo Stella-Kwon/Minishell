@@ -3,8 +3,9 @@
 
 ## Demo
 
-[![asciinema demo](https://asciinema.org/a/1WY066ZiBwrpoHLr.svg)](https://asciinema.org/a/1WY066ZiBwrpoHLr)
+![minishell demo](demo.gif)
 
+▶ Full terminal recording: https://asciinema.org/a/1WY066ZiBwrpoHLr
 
 ---
 
