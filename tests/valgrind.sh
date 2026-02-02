@@ -10,3 +10,4 @@ echo "Running Valgrind..."
 echo "======================================"
 docker run -it --rm minishell-valgrind
 
+

@@ -96,3 +96,4 @@ echo "Report: $REPORT"
 
 [ "$fail" -eq 0 ] || exit 1
 
+

@@ -25,7 +25,7 @@ TIMEOUT: no
 hello
 hello world
 
-/Users/suminkwon/Minishell/tests
+/Users/suminkwon/Minishell
 USER=suminkwon
 first
 second
@@ -38,7 +38,7 @@ third
 hello
 hello world
 
-/Users/suminkwon/Minishell/tests
+/Users/suminkwon/Minishell
 USER=suminkwon
 first
 second
@@ -78,12 +78,12 @@ TIMEOUT: no
 hello world
 hello world
 hello world
-/Users/suminkwon/Minishell/tests
+/Users/suminkwon/Minishell
 123
 123 456
 
 456
-/Users/suminkwon/Minishell/tests
+/Users/suminkwon/Minishell
 /usr
 /Users/suminkwon
 /Users/suminkwon
@@ -95,12 +95,12 @@ hello world
 hello world
 hello world
 hello world
-/Users/suminkwon/Minishell/tests
+/Users/suminkwon/Minishell
 123
 123 456
 
 456
-/Users/suminkwon/Minishell/tests
+/Users/suminkwon/Minishell
 /usr
 /Users/suminkwon
 /Users/suminkwon
@@ -512,6 +512,7 @@ TIMEOUT: no
     17	cat <<< hello < /etc/hostname
     18	exit
     19	
+    20	
 
 
 [minishell stdout]

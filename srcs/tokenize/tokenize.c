@@ -35,10 +35,7 @@ int process_token_and_check_error(t_For_tokenize *tokenize,
 	if (error_code != SUCCESS)
 	{
 		if (error_code == 2)
-		{
-			// ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
 			*last_exit_code = 2;
-		}
 		else if (error_code == 3)
 			*last_exit_code = 1;
 		all_free(&tokenize->tokens);

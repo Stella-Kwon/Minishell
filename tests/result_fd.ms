@@ -242,6 +242,7 @@ RESULT: PASS
     17	cat <<< hello < /etc/hostname
     18	exit
     19	
+    20	
 
 ----------------------------------------
 

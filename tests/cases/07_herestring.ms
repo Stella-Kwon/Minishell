@@ -17,3 +17,4 @@ cat <<< "hello" <<< "world"
 cat <<< hello < /etc/hostname
 exit
 
+
