@@ -12,25 +12,26 @@
 
 #include "../../includes/minishell.h"
 
-int	handle_whitespace(t_For_tokenize *tokenize)
+int handle_whitespace(t_For_tokenize *tokenize)
 {
 	while (ft_isspace(*tokenize->start))
 		(tokenize->start)++;
 	return (SUCCESS);
 }
 
-int	handle_special_tokens(t_For_tokenize *tokenize)
+int handle_special_tokens(t_For_tokenize *tokenize)
 {
 	if (*tokenize->start == '\'')
 		return (handle_set(tokenize, '\''));
 	else if (*tokenize->start == '"')
 		return (handle_set(tokenize, '"'));
 	else if (*tokenize->start == '(' || *tokenize->start == ')')
-		return (handle_set(tokenize, ')'));
+		return (handle_token(tokenize, 1));
 	else if (*tokenize->start == '|')
 		return (handle_pipe_and_or(tokenize));
 	else if (*tokenize->start == '&')
-		return (handle_and_and_background(tokenize));
+		// return (handle_and_and_background(tokenize));
+		return (handle_and(tokenize));
 	else if (*tokenize->start == '<')
 		return (handle_input_redirection(tokenize));
 	else if (*tokenize->start == '>')

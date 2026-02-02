@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	free_command(t_Command **res)
+void free_command(t_Command **res)
 {
 	if (*res)
 	{
@@ -24,22 +24,34 @@ void	free_command(t_Command **res)
 	}
 }
 
-void	free_redirection(t_Redirection **redir)
+void free_redirection(t_Redirection **redir)
 {
+	int i;
+
 	if (!(*redir))
-		return ;
+		return;
 	if ((*redir)->in_filename)
 		free_one((void **)&(*redir)->in_filename);
 	if ((*redir)->out_filename)
 		free_one((void **)&(*redir)->out_filename);
 	if ((*redir)->heredoc_limiter)
 		all_free(&(*redir)->heredoc_limiter);
+	if ((*redir)->heredoc_body)
+	{
+		i = 0;
+		while (i < (*redir)->heredoc_i && (*redir)->heredoc_body[i])
+		{
+			all_free(&(*redir)->heredoc_body[i]);
+			i++;
+		}
+		free((*redir)->heredoc_body);
+	}
 	if ((*redir)->herestring_str)
 		free_one((void **)&(*redir)->herestring_str);
 	free_one((void **)&(*redir));
 }
 
-void	free_astnode(t_ASTNode **node)
+void free_astnode(t_ASTNode **node)
 {
 	if (*node)
 	{
@@ -57,7 +69,7 @@ void	free_astnode(t_ASTNode **node)
 	}
 }
 
-void	free_exit(t_Command **command, int exitcode)
+void free_exit(t_Command **command, int exitcode)
 {
 	all_free((*command)->env);
 	free_astnode((*command)->root_node);

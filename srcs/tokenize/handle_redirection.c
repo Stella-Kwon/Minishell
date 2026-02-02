@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static int	handle_input_way(char *start, int *len)
+static int handle_input_way(char *start, int *len)
 {
 	if (*(start + 1) == '<')
 	{
@@ -34,10 +34,10 @@ static int	handle_input_way(char *start, int *len)
 	return (SUCCESS);
 }
 
-int	handle_input_redirection(t_For_tokenize *tokenize)
+int handle_input_redirection(t_For_tokenize *tokenize)
 {
-	int	len;
-	int	i;
+	int len;
+	int i;
 
 	len = 0;
 	i = 1;
@@ -59,7 +59,7 @@ int	handle_input_redirection(t_For_tokenize *tokenize)
 	return (handle_token(tokenize, len));
 }
 
-static int	handle_output_way(char *start, int *len)
+static int handle_output_way(char *start, int *len)
 {
 	if (*(start + 1) == '>')
 	{
@@ -76,10 +76,10 @@ static int	handle_output_way(char *start, int *len)
 	return (SUCCESS);
 }
 
-int	handle_output_redirection(t_For_tokenize *tokenize)
+int handle_output_redirection(t_For_tokenize *tokenize)
 {
-	int	len;
-	int	i;
+	int len;
+	int i;
 
 	i = 1;
 	while (ft_isspace(*(tokenize->start + i)))

@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	check_first_input(t_For_tokenize *tokenize)
+int check_first_input(t_For_tokenize *tokenize)
 {
 	while (ft_isspace(*tokenize->start))
 		tokenize->start++;
@@ -35,11 +35,11 @@ int	check_first_input(t_For_tokenize *tokenize)
 	return (FAIL);
 }
 
-static int	check_input_loop(const char *input, int *in_single_quote,
+static int check_input_loop(const char *input, int *in_single_quote,
 							int *in_double_quote)
 {
-	int	len;
-	int	i;
+	int len;
+	int i;
 
 	i = 0;
 	len = strlen(input);
@@ -63,20 +63,14 @@ static int	check_input_loop(const char *input, int *in_single_quote,
 	return (SUCCESS);
 }
 
-int	check_input(const char *input)
+int check_input(const char *input)
 {
-	int	in_single_quote;
-	int	in_double_quote;
+	int in_single_quote;
+	int in_double_quote;
 
 	in_single_quote = 0;
 	in_double_quote = 0;
 	if (check_input_loop(input, &in_single_quote, &in_double_quote) == FAIL)
 		return (FAIL);
-	if (in_single_quote || in_double_quote)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd("syntax error: unclosed quotes\n", 2);
-		return (FAIL);
-	}
 	return (SUCCESS);
 }
