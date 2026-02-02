@@ -12,12 +12,12 @@
 
 #include "../../includes/minishell.h"
 
-char	*store_inside_set(char *tmp_start, char *tmp_end)
+char *store_inside_set(char *tmp_start, char *tmp_end)
 {
-	char		*tmp;
-	ptrdiff_t	offset;
-	char		*st;
-	char		*end;
+	char *tmp;
+	ptrdiff_t offset;
+	char *st;
+	char *end;
 
 	if (!tmp_start || !tmp_end || tmp_start > tmp_end)
 	{
@@ -36,7 +36,7 @@ char	*store_inside_set(char *tmp_start, char *tmp_end)
 	return (tmp);
 }
 
-void	check_quotes_in_loop(t_Set *set, char ref, int *count)
+void check_quotes_in_loop(t_Set *set, char ref, int *count)
 {
 	while (*set->tmp_end)
 	{
@@ -48,19 +48,20 @@ void	check_quotes_in_loop(t_Set *set, char ref, int *count)
 			{
 				set->tmp_end++;
 			}
-			break ;
+			break;
 		}
 		set->tmp_end++;
 	}
 }
 
-int	check_quotes_and_depth(t_For_tokenize *tokenize, \
-									t_Set *set, char ref)
+int check_quotes_and_depth(t_For_tokenize *tokenize,
+						   t_Set *set, char ref)
 {
-	int	count;
+	int count;
+	int ret;
 
 	count = 0;
-	if (set->depth == 0 || !set->single_quote || !set->double_quote)
+	if (set->depth == 0 && !set->single_quote && !set->double_quote)
 	{
 		if (*set->tmp_start == ref)
 			count++;
@@ -69,11 +70,15 @@ int	check_quotes_and_depth(t_For_tokenize *tokenize, \
 		tokenize->start = set->tmp_end;
 	}
 	else
-		return (FAIL);
+	{
+		ret = readline_again(tokenize, set);
+		if (ret != SUCCESS)
+			return (ret);
+	}
 	return (SUCCESS);
 }
 
-void	initialize_set(char *start, t_Set *set)
+void initialize_set(char *start, t_Set *set)
 {
 	set->depth = 0;
 	set->single_quote = 0;
@@ -82,22 +87,36 @@ void	initialize_set(char *start, t_Set *set)
 	set->tmp_end = NULL;
 }
 
-char	*check_set(t_For_tokenize *tokenize, char ref)
+char *check_set(t_For_tokenize *tokenize, char ref)
 {
-	t_Set	set;
+	t_Set set;
+	char *original_input;
+	ptrdiff_t start_offset;
+	int ret;
 
+	original_input = tokenize->input;
+	start_offset = tokenize->start - tokenize->input;
 	initialize_set(tokenize->start, &set);
 	while (*set.tmp_start)
 	{
-		update_quotes_and_depth(&set.single_quote, &set.double_quote, \
+		update_quotes_and_depth(&set.single_quote, &set.double_quote,
 								&set.depth, *set.tmp_start);
 		set.tmp_start++;
 	}
 	set.tmp_start = tokenize->start;
-	if (check_quotes_and_depth(tokenize, &set, ref) == FAIL)
+	ret = check_quotes_and_depth(tokenize, &set, ref);
+	if (ret != SUCCESS)
+	{
+		tokenize->error_code = ret;
 		return (NULL);
-	tokenize->tokens[tokenize->token_count] = store_inside_set(set.tmp_start, \
-																set.tmp_end);
+	}
+	if (tokenize->input != original_input)
+	{
+		tokenize->start = tokenize->input + start_offset;
+		return (check_set(tokenize, ref));
+	}
+	tokenize->tokens[tokenize->token_count] = store_inside_set(set.tmp_start,
+															   set.tmp_end);
 	if (!tokenize->tokens[tokenize->token_count])
 		return (NULL);
 	return (tokenize->tokens[tokenize->token_count]);
