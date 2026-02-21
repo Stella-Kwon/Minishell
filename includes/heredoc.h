@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child_state.c                                      :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/29 21:00:00 by skwon2            #+#    #+#             */
-/*   Updated: 2026/01/29 21:00:00 by skwon2           ###   ########.fr       */
+/*   Created: 2024/09/24 04:44:20 by skwon2            #+#    #+#             */
+/*   Updated: 2024/10/22 22:00:45 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#ifndef HEREDOC_H
+#define HEREDOC_H
 
+#include "structs.h"
 
-void child_spawned(void)
-{
-    g_child_count++;
-    g_no_child = (g_child_count == 0);
-}
+int heredoc_check(t_ASTNode **node);
+int prepare_heredoc_herestring(t_ASTNode **node, char **env, int last_exit_code);
+int process_herestring(t_ASTNode **node, char **env, int last_exit_code);
 
-void child_reaped(void)
-{
-    if (g_child_count > 0)
-        g_child_count--;
-    g_no_child = (g_child_count == 0);
-}
+#endif

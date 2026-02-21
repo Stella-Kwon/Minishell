@@ -30,5 +30,6 @@ void child_spawned(void);
 void child_reaped(void);
 char *read_line_safe(const char *prompt);
 int dup_and_close(int oldfd, int newfd);
+void setup_terminal(void);
 
 #endif

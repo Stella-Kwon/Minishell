@@ -12,14 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
+int parsing(char ***tmp_args, t_Redirection *redirect, int start, t_TokenizeResult *result)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (**tmp_args)
 	{
-		i = redirection_parsing(tmp_args, redirect);
+		i = redirection_parsing(tmp_args, redirect, result);
 		if (i == FAIL)
 			return (FAIL);
 		if (start == false)
@@ -30,16 +30,16 @@ int	parsing(char ***tmp_args, t_Redirection **redirect, int start)
 		else
 		{
 			if (!**tmp_args || is_redirection(**tmp_args) == FALSE)
-				break ;
+				break;
 		}
 	}
 	return (SUCCESS);
 }
 
-int	parsing_others(char ***args, t_Redirection **redirect, int start)
+int parsing_others(char ***args, t_Redirection *redirect, int start, t_TokenizeResult *result)
 {
-	int		i;
-	char	**tmp_args;
+	int i;
+	char **tmp_args;
 
 	if (!args || !*args || !**args)
 		return (SUCCESS);
@@ -50,21 +50,21 @@ int	parsing_others(char ***args, t_Redirection **redirect, int start)
 			tmp_args++;
 		if (!tmp_args || !*tmp_args)
 			return (SUCCESS);
-		i = parsing(&tmp_args, redirect, start);
+		i = parsing(&tmp_args, redirect, start, result);
 		if (i == FAIL)
 			return (FAIL);
 	}
 	else
 	{
-		i = parsing(args, redirect, start);
+		i = parsing(args, redirect, start, result);
 		if (i == FAIL)
 			return (FAIL);
 	}
 	return (SUCCESS);
 }
 
-static int	command_initialize(t_Command *res, char ***tokens, \
-							int buffersize, char ***env)
+static int command_initialize(t_Command *res, char ***tokens,
+							  int buffersize, char ***env)
 {
 	res->cmd = ft_strdup(**tokens);
 	if (!res->cmd)
@@ -84,8 +84,8 @@ static int	command_initialize(t_Command *res, char ***tokens, \
 	return (SUCCESS);
 }
 
-static int	create_command_args(t_Command *res, char ***tokens, \
-								int *buffersize, int *args_index)
+static int create_command_args(t_Command *res, char ***tokens,
+							   int *buffersize, int *args_index)
 {
 	while (**tokens && !is_operator(**tokens))
 	{
@@ -93,7 +93,8 @@ static int	create_command_args(t_Command *res, char ***tokens, \
 		if (!res->args[*args_index])
 		{
 			log_errors("Failed to malloc res->args[args_index] \
-			in create_command", "");
+			in create_command",
+					   "");
 			free_command(&res);
 			return (FAIL);
 		}
@@ -111,11 +112,11 @@ static int	create_command_args(t_Command *res, char ***tokens, \
 	return (SUCCESS);
 }
 
-t_Command	*create_command(char ***tokens, char ***env)
+t_Command *create_command(char ***tokens, char ***env)
 {
-	t_Command	*res;
-	int			buffersize;
-	int			args_index;
+	t_Command *res;
+	int buffersize;
+	int args_index;
 
 	buffersize = BUFFER_SIZE;
 	args_index = 0;

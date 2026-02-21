@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	filename_restore(int *i, char ***args, char **new_filename, int *buffersize)
 {
@@ -61,7 +61,7 @@ int	rm_quote_filename(t_Redirection **redirect, char ***args, char **filename)
 	int		buffersize;
 
 	i = 0;
-	buffersize = BUFFSIZE;
+	buffersize = BUFFER_SIZE;
 	new_filename = NULL;
 	if (pre_action_rm_quote(redirect, args, filename) != SUCCESS)
 		return (FAIL);

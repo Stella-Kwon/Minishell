@@ -12,100 +12,193 @@
 
 #include "../../includes/minishell.h"
 
-int read_prompt_line(char **line)
+int check_input_set(const char *input, char ref)
 {
-	int was_interrupt;
-	int exitnum = SUCCESS;
-
-	if (isatty(STDIN_FILENO))
-		signal_set_rl();
-	*line = read_line_safe("> ");
-	if (!*line || *line == (char *)-1)
+	int i = 0;
+	while (input[i])
 	{
-		was_interrupt = (*line == (char *)-1);
-
-		if (was_interrupt)
-			exitnum = 3;
-		exitnum = 2;
+		if (input[i] == ref)
+			return SUCCESS;
+		i++;
 	}
-	if (isatty(STDIN_FILENO))
-		signal_setup();
-	return (exitnum);
+	return FAIL;
 }
 
-void update_quotes_and_depth(int *single_quote, int *double_quote,
-							 int *depth, char c)
+int readline_again_for_quotes(t_For_tokenize *tokenize, t_Set *set, char ref)
 {
-	if (c == '\'' && !*double_quote)
-		*single_quote = !*single_quote;
-	else if (c == '"' && !*single_quote)
-		*double_quote = !*double_quote;
-	else if (!*single_quote && !*double_quote)
-	{
-		if (c == '(')
-			(*depth)++;
-		else if (c == ')')
-			(*depth)--;
-	}
-}
-
-void check_set_iterate(t_Set *set, char **new_start)
-{
-	while (**new_start)
-	{
-		update_quotes_and_depth(&set->single_quote,
-								&set->double_quote, &set->depth, **new_start);
-		if (ft_isspace(**new_start))
-		{
-		 	if(!set->single_quote && !set->double_quote && set->depth == 0)
-				break;
-		}
-		(*new_start)++;
-	}
-}
-
-static int prepare_new_start(char **input, char **new_start, char **result)
-{
-	char *new_input;
-	char *tmp;
+	char *result;
+	char *input;
 	int ret;
+	char *tmp;
+	char *original_input;
+	ptrdiff_t offset;
 
-	ret = read_prompt_line(&new_input);
-	if (ret != SUCCESS)
-		return (ret);
-	tmp = ft_strjoin("\n", new_input);
-	free(new_input);
-	if (!tmp)
-		return (log_errors("Fail to add new line before add readline", ""));
-	*result = ft_strjoin(*input, tmp);
-	free(tmp);
-	if (!*result)
-		return (log_errors("Fail to strjoin in \"readline_again\"", ""));
-	*new_start = *result + ft_strlen(*input);
+	original_input = tokenize->input;
+	offset = tokenize->start - original_input;
+	while (set->single_quote || set->double_quote || set->parenthesis > 0)
+	{
+		input = read_line_safe("> ");
+		if (!input || input == (char *)-1)
+		{
+			if (input == (char *)-1)
+				return (FAIL);
+			return (2);
+		}
+		ret = check_input_set((const char *)input, ref);
+		tmp = ft_strjoin("\n", input);
+		free_one((void **)&input);
+		if (!tmp)
+		{
+			log_errors("ft_strjoin has failed in tmp:readline_again_for_quotes", "");
+			return (FAIL);
+		}
+		result = ft_strjoin(tokenize->input, tmp);
+		free_one((void **)&tmp);
+		if (!result)
+		{
+			log_errors("ft_strjoin has failed in result:readline_again_for_quotes", "");
+			return (FAIL);
+		}
+		free_one((void **)&tokenize->input);
+		tokenize->input = result;
+		if (offset >= 0)
+			tokenize->start = tokenize->input + offset;
+		if (isatty(STDIN_FILENO))
+			add_history(tokenize->input);
+		if (ret == SUCCESS)
+			break;
+	}
 	return (SUCCESS);
 }
 
-int readline_again(t_For_tokenize *tokenize, t_Set *set)
+char *rm_quotes(char *str)
 {
-	char *new_start;
+	int i;
+	int j;
+	int len;
+	char *tmp;
 	char *result;
-	ptrdiff_t offset;
-	int ret;
+	char ref;
 
-	while (set->single_quote || set->double_quote || set->depth > 0)
+	if (!str || !*str)
+		return (ft_strdup(""));
+
+	i = 0;
+	j = 0;
+	ref = '\0';
+	while (str[i])
 	{
-		offset = tokenize->start - tokenize->input;
-		ret = prepare_new_start(&tokenize->input, &new_start, &result);
-		if (ret != SUCCESS)
-			return (ret);
-		check_set_iterate(set, &new_start);
-		free_one((void **)&tokenize->input);
-		tokenize->input = result;
-		tokenize->start = tokenize->input + offset;
-		set->tmp_start = tokenize->start;
-		set->tmp_end = new_start;
-		if (isatty(STDIN_FILENO))
-			add_history(tokenize->input);
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			ref = str[i];
+			break;
+		}
+		i++;
+	}
+	if (!ref)
+		return (ft_strdup(str));
+	len = ft_strlen(str);
+	tmp = (char *)malloc(sizeof(char) * (len + 1));
+	if (!tmp)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ref)
+		{
+
+			(tmp)[j] = str[i];
+			// printf("tmp[%d] : %c\n", j, tmp[j]);
+			j++;
+			i++;
+		}
+		else
+			i++;
+	}
+	(tmp)[j] = '\0';
+	result = ft_strdup(tmp);
+	free_one((void **)&tmp);
+	return (result);
+}
+
+int readline_again_after_operator(t_For_tokenize *tokenize)
+{
+	char *input;
+	char *tmp;
+	char *result;
+
+	input = read_line_safe("> ");
+	if (!input || input == (char *)-1)
+	{
+		if (input == (char *)-1)
+			return (FAIL);
+		return (2);
+	}
+	tmp = ft_strjoin("\n", input);
+	free_one((void **)&input);
+	if (!tmp)
+		return (FAIL);
+	result = ft_strjoin(tokenize->input, tmp);
+	free_one((void **)&tmp);
+	if (!result)
+		return (FAIL);
+
+	free_one((void **)&tokenize->input);
+	tokenize->input = result;
+	if (isatty(STDIN_FILENO))
+		add_history(tokenize->input);
+
+	return (SUCCESS);
+}
+
+int readline_again_for_heredoc(t_For_tokenize *tokenize)
+{
+	char *tmp;
+	int should_expand;
+	const char *limiter;
+
+	limiter = tokenize->heredoc_limiters[tokenize->heredoc_count];
+	should_expand = !tokenize->heredoc_quoted[tokenize->heredoc_count];
+	while (1)
+	{
+		tmp = read_line_safe("> ");
+		if (!tmp || tmp == (char *)-1)
+		{
+			if (tmp == (char *)-1)
+				return (FAIL);
+			return 2;
+		}
+		if (ft_strcmp(tmp, limiter) == 0)
+		{
+			free_one((void **)&tmp);
+			break;
+		}
+		if (should_expand && find_dollar_signs(&tmp, *tokenize->env, *tokenize->last_exit_code) == FAIL)
+		{
+			free_one((void **)&tmp);
+			return (log_errors("find_dollar_signs has failed in readline_again_for_heredoc", ""));
+		}
+		if (tokenize->heredoc_bodies[tokenize->heredoc_count])
+		{
+			tokenize->heredoc_bodies[tokenize->heredoc_count] = ft_strjoin3(
+				tokenize->heredoc_bodies[tokenize->heredoc_count], tmp, "\n");
+			free_one((void **)&tmp);
+			if (!tokenize->heredoc_bodies[tokenize->heredoc_count])
+				return (log_errors("ft_strjoin3 has failed in readline_again_for_heredoc", ""));
+		}
+		else
+		{
+			tokenize->heredoc_bodies[tokenize->heredoc_count] = ft_strjoin(tmp, "\n");
+			free_one((void **)&tmp);
+			if (!tokenize->heredoc_bodies[tokenize->heredoc_count])
+				return (log_errors("ft_strjoin has failed in readline_again_for_heredoc", ""));
+		}
+	}
+	if (!tokenize->heredoc_bodies[tokenize->heredoc_count])
+	{
+		tokenize->heredoc_bodies[tokenize->heredoc_count] = ft_strdup("");
+		if (!tokenize->heredoc_bodies[tokenize->heredoc_count])
+			return (log_errors("Failed to allocate empty heredoc body", ""));
 	}
 	return (SUCCESS);
 }

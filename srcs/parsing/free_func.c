@@ -26,8 +26,6 @@ void free_command(t_Command **res)
 
 void free_redirection(t_Redirection **redir)
 {
-	int i;
-
 	if (!(*redir))
 		return;
 	if ((*redir)->in_filename)
@@ -38,12 +36,9 @@ void free_redirection(t_Redirection **redir)
 		all_free(&(*redir)->heredoc_limiter);
 	if ((*redir)->heredoc_body)
 	{
-		i = 0;
-		while (i < (*redir)->heredoc_i && (*redir)->heredoc_body[i])
-		{
-			all_free(&(*redir)->heredoc_body[i]);
-			i++;
-		}
+		// heredoc_body 배열 자체는 set_heredoc에서 할당했으므로 free해야 함
+		// 하지만 heredoc_body[i]의 각 요소는 result->heredoc_bodies[j]의 포인터를
+		// 복사한 것이므로, 실제 문자열은 tokenize에서 해제되므로 free하면 안 됨
 		free((*redir)->heredoc_body);
 	}
 	if ((*redir)->herestring_str)

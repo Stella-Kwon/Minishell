@@ -17,7 +17,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
-#include <signal.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <sys/param.h>
@@ -26,21 +25,26 @@
 #include <readline/readline.h>
 #include <stddef.h>
 #include <readline/history.h>
-#include <signal.h>
+#include <sys/stat.h>
+
 #include "structs.h"
+#include "signal.h"
+#include "heredoc.h"
+#include "execution.h"
+#include "parsing.h"
+#include "tokenize.h"
 #include "utils.h"
 #include "errors.h"
-#include "tokenize.h"
-#include "redirection.h"
-#include "parsing.h"
 #include "builtin.h"
+#include "redirection.h"
 #include "expand.h"
-#include "execution.h"
-#include "stdarg.h"
-#include <setjmp.h>
 
-#ifndef BUFFSIZE
-#define BUFFSIZE 50
+#define LOG_FILE "minishell.log"
+
+#define HEREDOC_BUFFSIZE 10
+
+#ifndef TOKEN_BUFFSIZE
+#define TOKEN_BUFFSIZE 50
 #endif
 
 #define TRUE 1
@@ -49,18 +53,9 @@
 #define SUCCESS 0
 #define FAIL 1
 
-extern volatile sig_atomic_t g_interrupt_signal;
-extern volatile sig_atomic_t g_no_child;
-extern volatile sig_atomic_t g_child_count;
-extern sigjmp_buf g_readline_jmp_buf;
-extern volatile sig_atomic_t g_readline_jmp_active;
-
 int local_env_copy(char **env, char ***local_env);
-char **process_input_to_tokens(char *input, int *last_exit_code,
-							   char ***local_env);
-char *get_user_input(int *last_exit_code, char ***local_env);
-void signal_setup(void);
-void signal_set_exec(void);
-void signal_set_rl(void);
-void setup_terminal(void);
+t_TokenizeResult process_input_to_tokens(const char *input, char ***env,
+										 int *last_exit_code);
+const char *get_user_input(void);
+
 #endif

@@ -94,7 +94,6 @@ static int process_quotes(char *input, t_Dollar *dol, char **env,
 		{
 			if (handle_single_quote(input, dol) == FAIL)
 				return (FAIL);
-			dol->i++;
 		}
 		else if (input[dol->i] == '\"')
 		{

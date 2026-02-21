@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-int handle_whitespace(t_For_tokenize *tokenize)
+static int handle_whitespace(char **start)
 {
-	while (ft_isspace(*tokenize->start))
-		(tokenize->start)++;
+	while (ft_isspace(**start))
+		(*start)++;
 	return (SUCCESS);
 }
 
@@ -25,19 +25,22 @@ int handle_special_tokens(t_For_tokenize *tokenize)
 		return (handle_set(tokenize, '\''));
 	else if (*tokenize->start == '"')
 		return (handle_set(tokenize, '"'));
-	else if (*tokenize->start == '(' || *tokenize->start == ')')
-		return (handle_token(tokenize, 1));
+	else if (*tokenize->start == '(')
+		return (handle_set(tokenize, '('));
+	else if (*tokenize->start == '<')
+		return (handle_input_redirection(tokenize));
+	else if (*tokenize->start == '>')
+		return (handle_output_redirection(tokenize));
 	else if (*tokenize->start == '|')
 		return (handle_pipe_and_or(tokenize));
 	else if (*tokenize->start == '&')
 		// return (handle_and_and_background(tokenize));
 		return (handle_and(tokenize));
-	else if (*tokenize->start == '<')
-		return (handle_input_redirection(tokenize));
-	else if (*tokenize->start == '>')
-		return (handle_output_redirection(tokenize));
 	else if (ft_isspace(*(tokenize->start)))
-		return (handle_whitespace(tokenize));
+	{
+		handle_whitespace(&tokenize->start);
+		return (SUCCESS);
+	}
 	else
 	{
 		if (store_str(tokenize) != SUCCESS)

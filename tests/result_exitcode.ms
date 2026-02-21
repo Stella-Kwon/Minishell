@@ -83,24 +83,25 @@ RESULT: PASS
      2	echo '$USER'
      3	echo 'pipe | inside'
      4	echo "hello world"
-     5	echo "$USER"
-     6	echo "Current user: $USER"
-     7	echo "pipe | inside quotes"
-     8	echo "redirect > inside"
-     9	echo 'redirect > inside'
-    10	echo 'line 1
-    11	line 2
-    12	line 3'
-    13	echo "line 1
-    14	line 2
-    15	line 3"
-    16	echo "Hello $USER
-    17	on multiple
-    18	lines"
-    19	echo ""
-    20	echo ''
-    21	echo "double" 'single' "double again"
-    22	exit
+     5	echo  sdf'sfsdss'sfds
+     6	echo "$USER"
+     7	echo "Current user: $USER"
+     8	echo "pipe | inside quotes"
+     9	echo "redirect > inside"
+    10	echo 'redirect > inside'
+    11	echo 'line 1
+    12	line 2
+    13	line 3'
+    14	echo "line 1
+    15	line 2
+    16	line 3"
+    17	echo "Hello $USER
+    18	on multiple
+    19	lines"
+    20	echo ""
+    21	echo ''
+    22	echo "double" 'single' "double again"
+    23	exit
 
 [exitcodes]
 #1 bash: 0   mini: 0
@@ -118,6 +119,7 @@ RESULT: PASS
 #13 bash: 0   mini: 0
 #14 bash: 0   mini: 0
 #15 bash: 0   mini: 0
+#16 bash: 0   mini: 0
 
 ----------------------------------------
 

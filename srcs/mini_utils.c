@@ -31,48 +31,32 @@ int local_env_copy(char **env, char ***local_env)
 	return (SUCCESS);
 }
 
-char *get_user_input(int *last_exit_code, char ***local_env)
+const char *get_user_input(void)
 {
-	char *input;
+	const char *input;
 
 	input = read_line_safe("minishell > ");
 	if (!input || input == (char *)-1)
 	{
 		if (input == (char *)-1)
-			return (NULL);
-		if (isatty(STDIN_FILENO))
-		{
-			// ft_putstr_fd("exit\n", STDOUT_FILENO);
-			rl_clear_history();
-		}
-		all_free(local_env);
-		exit(0);
-	}
-	if (input[0] == '\0')
+			return ((const char *)-1);
 		return (NULL);
+	}
 	if (isatty(STDIN_FILENO))
 		add_history(input);
-	if (check_input(input) == FAIL)
-	{
-		*last_exit_code = 2;
-		free(input);
-		return (NULL);
-	}
 	return (input);
 }
 
-char **process_input_to_tokens(char *input, int *last_exit_code,
-							   char ***local_env_copy)
+t_TokenizeResult process_input_to_tokens(const char *input, char ***env,
+										 int *last_exit_code)
 {
+	static t_TokenizeResult result;
 	char **tokens;
 	char *tmp_input;
 
-	tmp_input = input;
-	tokens = tokenize_input(&input, last_exit_code,
-							local_env_copy, &tmp_input);
-	if (tmp_input)
-		free_one((void **)&tmp_input);
+	tmp_input = (char *)input;
+	tokens = tokenize_input(&tmp_input, &result, env, last_exit_code);
 	if (!tokens)
-		return (NULL);
-	return (tokens);
+		return (result);
+	return (result);
 }

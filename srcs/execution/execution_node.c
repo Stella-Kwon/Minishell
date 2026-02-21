@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:53:52 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 18:37:19 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:37:19 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	node_command_without_cmd(t_ASTNode **node)
 int cmdnode_exec(t_ASTNode **node)
 {
 	signal_set_exec();
-	if (g_interrupt_signal == TRUE)
-		g_interrupt_signal = FALSE;
 	(*node)->command->exitcode = (*node)->last_exitcode;
 	if (prepare_cmd(&(*node)->command, (*node)->last_exitcode) == FAIL)
 		return (FAIL);

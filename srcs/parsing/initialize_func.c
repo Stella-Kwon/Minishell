@@ -23,7 +23,6 @@ t_Redirection *create_redirection(void)
 		return (NULL);
 	}
 	redir->infile = -2;
-	redir->heredoc_infile = -2;
 	redir->outfile = -2;
 	redir->in_filename = NULL;
 	redir->out_filename = NULL;
@@ -31,13 +30,13 @@ t_Redirection *create_redirection(void)
 	redir->heredoc_limiter = NULL;
 	redir->heredoc_body = NULL;
 	redir->heredoc_i = 0;
+	redir->heredoc_buffsize = HEREDOC_BUFFSIZE;
 	redir->herestring_str = NULL;
-	redir->heredoc_buffsize = BUFFER_SIZE;
 	redir->last_stdin_type = 0;
 	return (redir);
 }
 
-int initialize_astnode(t_ASTNode **node, char ***tokens)
+int initialize_astnode(t_ASTNode **node, char ***tokens, t_TokenizeResult *result)
 {
 	if (node && (*node))
 	{
@@ -47,15 +46,13 @@ int initialize_astnode(t_ASTNode **node, char ***tokens)
 		(*node)->redir = NULL;
 		(*node)->left = NULL;
 		(*node)->right = NULL;
-		(*node)->term_stdin = dup(STDIN_FILENO);
-		(*node)->term_stdout = dup(STDOUT_FILENO);
 	}
 	if (tokens && *tokens && **tokens && is_redirection(**tokens))
 	{
 		(*node)->redir = create_redirection();
 		if (!(*node)->redir)
 			return (FAIL);
-		if (parsing_others(tokens, &(*node)->redir, TRUE) == FAIL)
+		if (parsing_others(tokens, (*node)->redir, TRUE, result) == FAIL)
 		{
 			free_astnode(node);
 			return (FAIL);

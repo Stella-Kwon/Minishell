@@ -12,8 +12,11 @@
 
 #include "../../includes/minishell.h"
 
-static int handle_input_way(char *start, int *len)
+static int handle_input_way(t_For_tokenize *tokenize, int *len)
 {
+	char	*start;
+
+	start = tokenize->start;
 	if (*(start + 1) == '<')
 	{
 		if (*(start + 2) && *(start + 2) == '<')
@@ -30,7 +33,11 @@ static int handle_input_way(char *start, int *len)
 		}
 	}
 	else
+	{
 		*len = 1;
+		if (redirect_operation_error(start + 1) != SUCCESS)
+			return (2);
+	}
 	return (SUCCESS);
 }
 
@@ -45,16 +52,9 @@ int handle_input_redirection(t_For_tokenize *tokenize)
 		i++;
 	if (!*(tokenize->start + i))
 		return (handle_258_exitcode_print("`newline'"));
-	if (*(tokenize->start + 1) == '&' || *(tokenize->start + 1) == '|')
-	{
-		if (!*(tokenize->start + 2))
-			return (handle_258_exitcode_print("`newline'"));
-		else if (redirect_operation_error(tokenize->start + 1) != SUCCESS)
-			return (2);
-	}
-	if (handle_input_way(tokenize->start, &len) != SUCCESS)
-		return (2);
-	if (redirect_operation_error(tokenize->start + len) != SUCCESS)
+	if (*(tokenize->start + 1) == '&' && !*(tokenize->start + 2))
+		return (handle_258_exitcode_print("`newline'"));
+	if (handle_input_way(tokenize, &len) != SUCCESS)
 		return (2);
 	return (handle_token(tokenize, len));
 }
@@ -90,8 +90,6 @@ int handle_output_redirection(t_For_tokenize *tokenize)
 	{
 		if (!*((tokenize->start) + 2))
 			return (handle_258_exitcode_print("`newline'"));
-		else if (redirect_operation_error(tokenize->start + 2) != SUCCESS)
-			return (2);
 	}
 	if (handle_output_way(tokenize->start, &len) != SUCCESS)
 		return (2);

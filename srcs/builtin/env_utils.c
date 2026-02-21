@@ -6,7 +6,7 @@
 /*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:31:02 by hlee-sun          #+#    #+#             */
-/*   Updated: 2024/10/14 23:58:01 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/14 23:58:01 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,6 @@ size_t	get_str_len(char **str_arr)
 	}
 	return (len);
 }
-
-// int	copy_envp(char **dest, char **src, size_t len)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		dest[i] = ft_strdup(src[i]);
-// 		if (!dest[i])
-// 		{
-// 			log_errors("Failed strdup in copy_envp", "");
-// 			delete_str_array(&dest);
-// 			return (FAIL);
-// 		}
-// 		i++;
-// 	}
-// 	return (SUCCESS);
-// }
 
 int	copy_envp(char **dest, char **src, size_t len)
 {
