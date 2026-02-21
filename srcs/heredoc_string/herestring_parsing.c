@@ -12,19 +12,19 @@
 
 #include "../../includes/minishell.h"
 
-int	set_herestring(t_Redirection **redirect, char *string)
+int set_herestring(t_Redirection *redirect, char *string)
 {
-	char	*str;
+	char *str;
 
 	str = ft_strdup(string);
 	if (!str)
 		return (log_errors("Failed malloc in set_herestring", ""));
-	(*redirect)->herestring_str = str;
-	(*redirect)->last_stdin_type = 3;
+	redirect->herestring_str = str;
+	redirect->last_stdin_type = 3;
 	return (SUCCESS);
 }
 
-int	herestring_action(char ***args, t_Redirection **redirect)
+int herestring_action(char ***args, t_Redirection *redirect)
 {
 	(*args)++;
 	if (set_herestring(redirect, **args) == FAIL)

@@ -15,8 +15,7 @@
 int	is_operator(char *tokens)
 {
 	if (ft_strcmp(tokens, "&&") == 0 || ft_strcmp(tokens, "&") == 0 || \
-		ft_strcmp(tokens, "||") == 0 || ft_strcmp(tokens, "|") == 0 || \
-		ft_strcmp(tokens, "(") == 0)
+		ft_strcmp(tokens, "||") == 0 || ft_strcmp(tokens, "|") == 0)
 		return (1);
 	return (0);
 }

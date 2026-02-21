@@ -51,6 +51,7 @@ SRCS =	mini.c \
 		utils/read_line.c\
 		utils/fd_utils.c\
 		utils/child_state.c\
+		utils/terminal_settings.c\
 		tokenize/store_words.c\
 		tokenize/readline_again.c\
 		tokenize/check_set.c\
@@ -59,15 +60,11 @@ SRCS =	mini.c \
 		tokenize/operation_error.c\
 		tokenize/handle_tokens.c\
 		tokenize/handle_redirection.c\
-		tokenize/input_utils.c\
 		signal/signal.c\
-		signal/terminal_settings.c\
 		heredoc_string/herestring.c\
 		heredoc_string/herestring_parsing.c\
-		heredoc_string/heredoc_read.c\
 		heredoc_string/heredoc_write.c\
 		heredoc_string/heredoc_parsing.c\
-		heredoc_string/preprocess.c\
 		parsing/create_astnode.c\
 		parsing/create_command.c\
 		parsing/initialize_func.c\
@@ -86,7 +83,8 @@ SRCS =	mini.c \
 		execution/utils.c\
 		execution/pipe_execution.c\
 		execution/execution_node.c\
-		error_log/log_file.c\
+		error/log_errors.c\
+		error/error_handling.c\
 		expand/expand.c\
 		expand/curly_braces.c\
 		expand/merge.c\

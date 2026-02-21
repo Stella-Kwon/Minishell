@@ -12,65 +12,62 @@
 
 #include "../../includes/minishell.h"
 
-void set_ref(char *start, char *ref)
+static char *handle_quote_in_word(t_For_tokenize *tokenize, char *start, char ref)
 {
-	int i;
+	char *prefix;
+	char *combined;
 
-	i = 0;
-	*ref = '\0';
-	while (start[i])
+	if (tokenize->start > start)
 	{
-		if (start[i] == '"')
-		{
-			*ref = '"';
-			break;
-		}
-		else if (start[i] == '\'')
-		{
-			*ref = '\'';
-			break;
-		}
-		i++;
+		prefix = ft_strndup(start, tokenize->start - start);
+		// printf("tokenize->tokens[%d]: %s\n", tokenize->token_count, tokenize->tokens[tokenize->token_count]);
+		// printf("prefix : %s\n", prefix);
+		if (!prefix)
+			return (NULL);
+		handle_set(tokenize, ref); 
+		// printf("tokenize->tokens[%d]: %s\n", tokenize->token_count, tokenize->tokens[tokenize->token_count]);
+		tokenize->token_count--;
+		// printf("tokenize->tokens[%d]: %s\n", tokenize->token_count, tokenize->tokens[tokenize->token_count]);
+		combined = ft_strjoin(prefix, tokenize->tokens[tokenize->token_count]);
+		// printf("combined : %s\n", combined);
+		free(prefix);
+		free(tokenize->tokens[tokenize->token_count]);
+		return (combined);
 	}
-}
-
-void set_ref_and_tmp_start(char *start, t_Set *set, char *ref)
-{
-	set_ref(start, ref);
-	while (*set->tmp_start)
+	else
 	{
-		update_quotes_and_depth(&set->single_quote, &set->double_quote,
-								&set->depth, *set->tmp_start);
-		set->tmp_start++;
+		handle_set(tokenize, ref);
+		tokenize->token_count--;
+		return (tokenize->tokens[tokenize->token_count]);
 	}
-	set->tmp_start = start;
 }
 
 char *store_words(t_For_tokenize *tokenize)
 {
-	t_Set set;
-	char ref;
 	char *start;
+	char *result;
 
 	start = tokenize->start;
-	initialize_set(tokenize->start, &set);
 	while (*tokenize->start && !ft_isspace(*tokenize->start) &&
-		   *tokenize->start != '(' && *tokenize->start != ')' &&
 		   *tokenize->start != '|' && *tokenize->start != '&' &&
 		   *tokenize->start != '>' && *tokenize->start != '<')
 	{
-		if (*tokenize->start == '"' || *tokenize->start == '\'')
-		{
-			set_ref_and_tmp_start(tokenize->start, &set, &ref);
-			if (check_quotes_and_depth(tokenize, &set, ref) == SUCCESS)
-			{
-				tokenize->start = set.tmp_end;
-				break;
-			}
-		}
-		(tokenize->start)++;
+		if (*tokenize->start == '\'')
+			return (handle_quote_in_word(tokenize, start, '\''));
+		else if (*tokenize->start == '"')
+			return (handle_quote_in_word(tokenize, start, '"'));
+		else if (*tokenize->start == '(')
+			return (handle_quote_in_word(tokenize, start, '('));
+		else
+			(tokenize->start)++;
 	}
-	return (ft_strndup(start, tokenize->start - start));
+	result = ft_strndup(start, tokenize->start - start);
+	if (!result)
+	{
+		log_errors("Failed to store word", "");
+		return (NULL);
+	}
+	return (result);
 }
 
 int store_str(t_For_tokenize *tokenize)
@@ -81,7 +78,7 @@ int store_str(t_For_tokenize *tokenize)
 		if (!tokenize->tokens[tokenize->token_count])
 		{
 			all_free(&tokenize->tokens);
-			return (log_errors("Failed to store word", ""));
+			return (FAIL);
 		}
 		tokenize->token_count++;
 		tokenize->tokens = ft_realloc_double(tokenize->tokens,

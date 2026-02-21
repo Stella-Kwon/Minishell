@@ -78,24 +78,24 @@ int handle_double_quote(char *input, t_Dollar *dol, char **env,
 	return (SUCCESS);
 }
 
-char *remove_quotes(char *s)
-{
-	int len;
-	char *new_s;
+// char *remove_quotes(char *s)
+// {
+// 	int len;
+// 	char *new_s;
 
-	len = ft_strlen(s);
-	if ((s[0] == '"' && s[len - 1] == '"') || (s[0] == '\'' && s[len - 1] == '\''))
-	{
-		new_s = malloc((len - 1) * sizeof(char));
-		if (!new_s)
-		{
-			log_errors("Failed malloc in remove_quotes\n", "");
-			free(s);
-		}
-		ft_strncpy(new_s, s + 1, len - 2);
-		new_s[len - 2] = '\0';
-		free(s);
-		return (new_s);
-	}
-	return (s);
-}
+// 	len = ft_strlen(s);
+// 	if ((s[0] == '"' && s[len - 1] == '"') || (s[0] == '\'' && s[len - 1] == '\''))
+// 	{
+// 		new_s = malloc((len - 1) * sizeof(char));
+// 		if (!new_s)
+// 		{
+// 			log_errors("Failed malloc in remove_quotes\n", "");
+// 			free(s);
+// 		}
+// 		ft_strncpy(new_s, s + 1, len - 2);
+// 		new_s[len - 2] = '\0';
+// 		free(s);
+// 		return (new_s);
+// 	}
+// 	return (s);
+// }

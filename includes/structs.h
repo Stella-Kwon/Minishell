@@ -11,56 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
-# define STRUCTS_H
+#define STRUCTS_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-
-struct	s_astnode;
-
-typedef struct s_Command
-{
-	char				*cmd;
-	char				***env;
-	char				**args;
-	char				**tmp_args;
-	int					exitcode;
-	int					wstatus;
-	struct s_astnode	**root_node;
-}	t_Command;
-
-typedef struct s_Set
-{
-	int		depth;
-	int		single_quote;
-	int		double_quote;
-	char	*tmp_start;
-	char	*tmp_end;
-}	t_Set;
-
-typedef struct s_Line
-{
-	char	c;
-	int		r_byte;
-	int		i;
-	int		buf_size;
-}	t_Line;
-
-typedef struct s_Pipeline
-{
-	int		fd[2];
-	pid_t	pid;
-	pid_t	left_pid;
-	pid_t	right_pid;
-}	t_Pipeline;
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 typedef enum e_redirect
 {
 	REDIRECT_INPUT,
 	REDIRECT_OUTPUT,
 	REDIRECT_APPEND
-}	t_REDIRECT;
+} t_REDIRECT;
 
 typedef enum e_nodetype
 {
@@ -70,31 +31,69 @@ typedef enum e_nodetype
 	NODE_OR
 } t_NodeType;
 
-typedef struct s_remove_args
+typedef struct s_For_tokenize
 {
-	char **new_args;
-	int i;
-	int origin_i;
-	int buffersize;
-} t_rm_args;
+	char *input;
+	char *start;
+	char **tokens;
+	int token_count;
+	int buffsize;
+
+	char **heredoc_limiters;
+	char **heredoc_bodies;
+	int *heredoc_quoted;
+	int heredoc_count;
+	int heredoc_buffsize;
+	char ***env;
+	int *last_exit_code;
+
+} t_For_tokenize;
+
+typedef struct s_TokenizeResult
+{
+	char **tokens;
+	char **heredoc_limiters;
+	char **heredoc_bodies;
+	int *heredoc_quoted;
+	int heredoc_count;
+	int current_heredoc_index;
+} t_TokenizeResult;
 
 typedef struct s_Redirection
 {
-	int		infile;
-	int		outfile;
-	int		heredoc_infile;
-	char	*in_filename;
-	char	*out_filename;
-	int		direction_type;
-	char	**heredoc_limiter;
-	char 	***heredoc_body;
-	int 	heredoc_i;
-	char	*herestring_str;
-	int		heredoc_buffsize;
-	int 	last_stdin_type;
+	int infile;
+	int outfile;
+	char *in_filename;
+	char *out_filename;
+	int direction_type;
+	char **heredoc_limiter;
+	char **heredoc_body;
+	int heredoc_i;
+	char *herestring_str;
+	int heredoc_buffsize;
+	int last_stdin_type;
 	int errno_in;
-	int		errno_out;
-}	t_Redirection;
+	int errno_out;
+} t_Redirection;
+
+typedef struct s_Command
+{
+	char *cmd;
+	char ***env;
+	char **args;
+	char **tmp_args;
+	int exitcode;
+	int wstatus;
+	struct s_astnode **root_node;
+} t_Command;
+
+typedef struct s_Pipeline
+{
+	int fd[2];
+	pid_t pid;
+	pid_t left_pid;
+	pid_t right_pid;
+} t_Pipeline;
 
 typedef struct s_astnode
 {
@@ -106,9 +105,24 @@ typedef struct s_astnode
 	struct s_astnode *right;
 	int last_exitcode;
 	int pipecmd;
-	int term_stdin;
-	int term_stdout;
 } t_ASTNode;
+
+typedef struct s_Set
+{
+	int single_quote;
+	int double_quote;
+	int parenthesis;
+	char *tmp_start;
+	char *tmp_end;
+} t_Set;
+
+typedef struct s_remove_args
+{
+	char **new_args;
+	int i;
+	int origin_i;
+	int buffersize;
+} t_rm_args;
 
 typedef struct s_Dollar
 {
@@ -122,23 +136,5 @@ typedef struct s_Dollar
 	char *var;
 	char *var_value;
 } t_Dollar;
-
-typedef struct s_For_tokenize
-{
-	char *input;
-	char *start;
-	char **tokens;
-	int token_count;
-	int buffsize;
-	int error_code;
-} t_For_tokenize;
-
-typedef struct s_line
-{
-	char c;
-	int r_byte;
-	int i;
-	int buf_size;
-} t_line;
 
 #endif

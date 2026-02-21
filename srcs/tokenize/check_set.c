@@ -12,22 +12,87 @@
 
 #include "../../includes/minishell.h"
 
-char *store_inside_set(char *tmp_start, char *tmp_end)
+void initialize_set(char *start, t_Set *set)
+{
+	set->single_quote = 0;
+	set->double_quote = 0;
+	set->parenthesis = 0;
+	set->tmp_start = start;
+	set->tmp_end = NULL;
+}
+
+void check_pairs(int *single_quote, int *double_quote,
+				 int *prarenthesis, char c)
+{
+	if (c == '\'' && !*double_quote)
+		*single_quote = !*single_quote;
+	else if (c == '"' && !*single_quote)
+		*double_quote = !*double_quote;
+	else if (!*single_quote && !*double_quote)
+	{
+		if (c == '(')
+			(*prarenthesis)++;
+		else if (c == ')')
+			(*prarenthesis)--;
+	}
+}
+
+static void check_quotes_in_loop(t_Set *set, char ref, int *count)
+{
+	while (*set->tmp_end)
+	{
+		if (*set->tmp_end == ref)
+		{
+			(*count)++;
+			if ((*count % 2) == 0 && (*(set->tmp_end + 1) == '\0'))
+				break;
+		}
+		if ((*count % 2) == 0 && (*set->tmp_end == ' ' || *set->tmp_end == '\t'))
+			break;
+		set->tmp_end++;
+	}
+}
+
+static int call_readline_again(t_For_tokenize *tokenize, t_Set *set, char ref)
+{
+	int count;
+	int ret;
+
+	count = 0;
+	if (set->parenthesis == 0 && !set->single_quote && !set->double_quote)
+	{
+		set->tmp_end = tokenize->start;
+		check_quotes_in_loop(set, ref, &count);
+		if ((count % 2) == 0 && *set->tmp_end == ref)
+		{
+			set->tmp_end++;
+			tokenize->start = set->tmp_end;
+		}
+		else
+			tokenize->start = set->tmp_end;
+	}
+	else
+	{
+		ret = readline_again_for_quotes(tokenize, set, ref);
+		if (ret != SUCCESS)
+			return (ret);
+	}
+	return (SUCCESS);
+}
+
+static char *store_inside_set(char **tmp_start, char **tmp_end, char ref)
 {
 	char *tmp;
 	ptrdiff_t offset;
-	char *st;
-	char *end;
 
+	(void)ref;
 	if (!tmp_start || !tmp_end || tmp_start > tmp_end)
 	{
 		log_errors("Invalid pointers in store_inside_set", "");
 		return (NULL);
 	}
-	st = tmp_start;
-	end = tmp_end - 1;
-	offset = end - st;
-	tmp = ft_strndup(tmp_start, offset + 1);
+	offset = *tmp_end - *tmp_start;
+	tmp = ft_strndup(*tmp_start, offset);
 	if (!tmp)
 	{
 		log_errors("Failed to allocate memory in store_inside_set", "");
@@ -36,88 +101,47 @@ char *store_inside_set(char *tmp_start, char *tmp_end)
 	return (tmp);
 }
 
-void check_quotes_in_loop(t_Set *set, char ref, int *count)
-{
-	while (*set->tmp_end)
-	{
-		if (*set->tmp_end == ref)
-			(*count)++;
-		if ((*count % 2) == 0 && *set->tmp_end == ref)
-		{
-			while (ft_isspace(*(set->tmp_end)) == FALSE && *set->tmp_end)
-			{
-				set->tmp_end++;
-			}
-			break;
-		}
-		set->tmp_end++;
-	}
-}
-
-int check_quotes_and_depth(t_For_tokenize *tokenize,
-						   t_Set *set, char ref)
-{
-	int count;
-	int ret;
-
-	count = 0;
-	if (set->depth == 0 && !set->single_quote && !set->double_quote)
-	{
-		if (*set->tmp_start == ref)
-			count++;
-		set->tmp_end = tokenize->start + 1;
-		check_quotes_in_loop(set, ref, &count);
-		tokenize->start = set->tmp_end;
-	}
-	else
-	{
-		ret = readline_again(tokenize, set);
-		if (ret != SUCCESS)
-			return (ret);
-	}
-	return (SUCCESS);
-}
-
-void initialize_set(char *start, t_Set *set)
-{
-	set->depth = 0;
-	set->single_quote = 0;
-	set->double_quote = 0;
-	set->tmp_start = start;
-	set->tmp_end = NULL;
-}
-
-char *check_set(t_For_tokenize *tokenize, char ref)
+int check_set(t_For_tokenize *tokenize, char ref)
 {
 	t_Set set;
 	char *original_input;
-	ptrdiff_t start_offset;
 	int ret;
+	char *tokens;
 
 	original_input = tokenize->input;
-	start_offset = tokenize->start - tokenize->input;
 	initialize_set(tokenize->start, &set);
 	while (*set.tmp_start)
 	{
-		update_quotes_and_depth(&set.single_quote, &set.double_quote,
-								&set.depth, *set.tmp_start);
+		check_pairs(&set.single_quote, &set.double_quote, &set.parenthesis, *set.tmp_start);
 		set.tmp_start++;
 	}
 	set.tmp_start = tokenize->start;
-	ret = check_quotes_and_depth(tokenize, &set, ref);
+	ret = call_readline_again(tokenize, &set, ref);
 	if (ret != SUCCESS)
-	{
-		tokenize->error_code = ret;
-		return (NULL);
-	}
+		return (ret);
 	if (tokenize->input != original_input)
 	{
-		tokenize->start = tokenize->input + start_offset;
 		return (check_set(tokenize, ref));
 	}
-	tokenize->tokens[tokenize->token_count] = store_inside_set(set.tmp_start,
-															   set.tmp_end);
-	if (!tokenize->tokens[tokenize->token_count])
-		return (NULL);
-	return (tokenize->tokens[tokenize->token_count]);
+	tokens = store_inside_set(&set.tmp_start, &set.tmp_end, ref);
+	if (!tokens)
+		return (FAIL);
+	tokenize->tokens[tokenize->token_count] = tokens;
+	return (SUCCESS);
+}
+
+int handle_set(t_For_tokenize *tokenize, char ref)
+{
+	int result = check_set(tokenize, ref);
+	if (result != SUCCESS)
+	{
+		all_free(&tokenize->tokens);
+		log_errors("Failed to handle set token in tokenize_input", "");
+		return (result);
+	}
+	tokenize->token_count++;
+	tokenize->tokens = ft_realloc_double(tokenize->tokens, tokenize->token_count, &tokenize->buffsize);
+	if (!tokenize->tokens)
+		return (log_errors("Failed to \"reallocate\" memory for tokens", ""));
+	return (SUCCESS);
 }

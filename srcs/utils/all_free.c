@@ -12,25 +12,19 @@
 
 #include "../../includes/minishell.h"
 
-void	all_free(char ***res)
+void all_free(char ***res)
 {
-	int	i;
+	int i;
 
+	if (!res || !*res)
+		return;
 	i = 0;
-	if (*res && **res)
+	while ((*res)[i])
 	{
-		while ((*res)[i])
-		{
-			free((*res)[i]);
-			(*res)[i] = NULL;
-			i++;
-		}
-		free(*res);
-		*res = NULL;
+		free((*res)[i]);
+		(*res)[i] = NULL;
+		i++;
 	}
-	if (*res)
-	{
-		free(*res);
-		*res = NULL;
-	}
+	free(*res);
+	*res = NULL;
 }

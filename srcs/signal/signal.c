@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlee-sun <hlee-sun@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 15:04:06 by skwon2            #+#    #+#             */
-/*   Updated: 2024/10/25 18:44:52 by hlee-sun         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:44:52 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <setjmp.h>
 
+volatile sig_atomic_t g_interrupt_signal = FALSE;
+volatile sig_atomic_t g_no_child = TRUE;
+volatile sig_atomic_t g_child_count = 0;
 sigjmp_buf g_readline_jmp_buf;
 volatile sig_atomic_t g_readline_jmp_active = FALSE;
 
@@ -37,7 +40,6 @@ static void ctrl_c_function(int signal)
 static void ctrl_c_function_rl(int signal)
 {
 	(void)signal;
-	g_interrupt_signal = TRUE;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	if (g_readline_jmp_active)
 	{
@@ -54,7 +56,8 @@ static void sigquit_function(int signal)
 
 void signal_setup(void)
 {
-	g_interrupt_signal = FALSE;
+	if (g_interrupt_signal == TRUE)
+		g_interrupt_signal = FALSE;
 	signal(SIGINT, ctrl_c_function);
 	signal(SIGQUIT, SIG_IGN);
 }
@@ -69,6 +72,8 @@ void signal_set_exec(void)
 
 void signal_set_rl(void)
 {
+	if (g_interrupt_signal == TRUE)
+		g_interrupt_signal = FALSE;
 	signal(SIGINT, ctrl_c_function_rl);
 	signal(SIGQUIT, SIG_IGN);
 }
