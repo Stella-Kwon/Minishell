@@ -29,7 +29,7 @@ A POSIX-style shell with pipelines, redirections, and logical operators—built 
 
 End-to-end flow from prompt to execution and cleanup:
 
-![Work Flow of Minishell](assets/workflow.png)
+![Work Flow of Minishell](assets/minishell-workflow.png)
 
 - **Start** — Copy environment, set up terminal.
 - **Set-Signal** — Different behavior in parent vs child: `SIGINT` (new prompt / terminate), `SIGQUIT` (ignore / quit), `EOF` (exit shell).
