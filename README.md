@@ -47,7 +47,7 @@ End-to-end flow from prompt to execution and cleanup:
 
 Commands and operators are represented as a tree; parsing builds it, execution walks it.
 
-![AST Node structure](assets/ast-node.png)
+![AST Node structure](assets/AST_node(minishell).png)
 
 - **Operation nodes** (pipe, `&&`, `||`) form the inner nodes and define control flow between children.
 - **Command nodes** hold the actual command and arguments (and redirections).

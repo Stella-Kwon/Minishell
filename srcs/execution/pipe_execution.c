@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:18:11 by skwon2            #+#    #+#             */
-/*   Updated: 2026/03/05 11:20:36 by skwon2           ###   ########.fr       */
+/*   Updated: 2026/03/05 11:21:54 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void pipenode_right_exec_child(t_ASTNode **node, int *exitcode)
 		close((*node)->pipeline->fd[1]);
 		if (dup_and_close((*node)->pipeline->fd[0], STDIN_FILENO) != SUCCESS)
 		{
-			(*node)->command->exitcode = EXIT_FAILURE;
 			all_free((*node)->command->env);
 			free_astnode((*node)->command->root_node);
 			exit(EXIT_FAILURE);
