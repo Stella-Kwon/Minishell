@@ -49,10 +49,17 @@ Commands and operators are represented as a tree; parsing builds it, execution w
 
 ![AST Node structure](assets/AST_node(minishell).png)
 
-- **Operation nodes** (pipe, `&&`, `||`) form the inner nodes and define control flow between children.
-- **Command nodes** hold the actual command and arguments (and redirections).
-- **Red arrows** correspond to **creation/linking** during parsing (e.g. linking a command as the right child of a pipe).
-- **Blue arrows** correspond to **execution flow**: traverse left/right, respect short-circuit, set up pipes and FDs.
+- **Operation nodes** (`|`, `&&`, `||`): inner nodes that define **control flow** between children.
+  - `&&` / `||` apply short-circuit evaluation
+  - `|` executes both sides unconditionally and connects FDs
+
+- **Command nodes**: leaf nodes that hold the **command, arguments, and redirections** to be executed.
+
+- **Red arrows** → **parsing (construction) phase**: node creation and tree linking  
+  (e.g. linking a command node as the right child of a pipe node)
+
+- **Blue arrows** → **execution phase**: tree traversal,  
+  short-circuit evaluation, `pipe()` syscall, and FD (stdin/stdout) setup
 
 This separation keeps parsing and execution phases clear and makes operator precedence and complex expressions straightforward to handle.
 
@@ -67,7 +74,7 @@ This separation keeps parsing and execution phases clear and makes operator prec
    Tokens are turned into an **Abstract Syntax Tree** that encodes precedence and structure (command vs operation nodes).
 
 3. **Recursive execution**  
-   The AST is executed by recursive traversal, enforcing precedence (`|` > `&&` > `||`) and short-circuit behavior. Stdin source precedence for `<`, `<<`, and `<<<` is explicitly resolved to match Bash.
+   The AST is executed by recursive traversal, enforcing precedence (`|` > `&&` = `||`) and short-circuit behavior. Stdin source precedence for `<`, `<<`, and `<<<` is explicitly resolved to match Bash.
 
 ---
 
