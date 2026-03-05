@@ -49,6 +49,7 @@ Commands and operators are represented as a tree; parsing builds it, execution w
 
 ![AST Node structure](assets/AST_node(minishell).png)
 
+
 - **Operation nodes** (`|`, `&&`, `||`): inner nodes that define **control flow** between children.
   - `&&` / `||` apply short-circuit evaluation
   - `|` executes both sides unconditionally and connects FDs
