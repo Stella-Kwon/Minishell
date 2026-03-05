@@ -6,7 +6,7 @@
 /*   By: skwon2 <skwon2@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 20:18:11 by skwon2            #+#    #+#             */
-/*   Updated: 2026/03/05 10:56:59 by skwon2           ###   ########.fr       */
+/*   Updated: 2026/03/05 11:17:26 by skwon2           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,10 @@ static int pipenode_exec_normal(t_ASTNode **node)
 	pipenode_right_exec_child(node, &exitcode);
 	close((*node)->pipeline->fd[0]);
 	if (waitpid((*node)->pipeline->left_pid, &status, 0) == -1)
-	{
-		(*node)->command->exitcode = waitpid_status(status);
-		return ((*node)->command->exitcode);
-	}
+		return (log_errors("Failed to wait left_pipe in pipenode_exec_normal", strerror(errno)));
 	child_reaped();
 	if (waitpid((*node)->pipeline->right_pid, &status, 0) == -1)
-	{
-		(*node)->command->exitcode = waitpid_status(status);
-		return ((*node)->command->exitcode);
-	}
+		return (log_errors("Failed to wait right_pipe in pipenode_exec_normal", strerror(errno)));
 	child_reaped();
 	(*node)->command->exitcode = waitpid_status(status);
 	return ((*node)->command->exitcode);
@@ -95,18 +89,12 @@ static int pipenode_exec_heredoc(t_ASTNode **node)
 	pipenode_left_exec_child(node, &exitcode, TRUE);
 	close((*node)->pipeline->fd[1]);
 	if (waitpid((*node)->pipeline->left_pid, &status, 0) == -1)
-	{
-		(*node)->command->exitcode = waitpid_status(status);
-		return ((*node)->command->exitcode);
-	}
+		return (log_errors("Failed to wait left_pipe in pipenode_exec_heredoc", strerror(errno)));
 	child_reaped();
 	pipenode_right_exec_child(node, &exitcode);
 	close((*node)->pipeline->fd[0]);
 	if (waitpid((*node)->pipeline->right_pid, &status, 0) == -1)
-	{
-		(*node)->command->exitcode = waitpid_status(status);
-		return ((*node)->command->exitcode);
-	}
+		return (log_errors("Failed to wait right_pipe in pipenode_exec_heredoc", strerror(errno)));
 	child_reaped();
 	(*node)->command->exitcode = waitpid_status(status);
 	return ((*node)->command->exitcode);
